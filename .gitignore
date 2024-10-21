@@ -37,4 +37,13 @@ yarn-error.log*
 next-env.d.ts
 
 # todo
-todo.mdx
+todo.md
+
+# db
+/prisma/schema_extended.prisma
+/prisma/sample.json
+/prisma/migrations
+
+
+# IntelliJ
+/.idea

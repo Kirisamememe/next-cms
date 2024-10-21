@@ -12,3 +12,276 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  password String
+  role     Role    @default(ADMIN)
+  image    String?
+
+  contents Content[]
+  article  Article[]
+
+  accounts Account[]
+  sessions Session[]
+
+  @@map("user")
+}
+
+model Account {
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_token")
+}
+
+model Article {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  title      String
+  body       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  author_id Int
+  author    User @relation(fields: [author_id], references: [id])
+
+  @@map("article")
+}
+
+model TextValue {
+  id           Int      @id @default(autoincrement())
+  value        String
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("text_value")
+}
+
+model NumberValue {
+  id           Int      @id @default(autoincrement())
+  value        Float
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("number_value")
+}
+
+model UrlValue {
+  id           Int      @id @default(autoincrement())
+  value        String
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("url_value")
+}
+
+model DateValue {
+  id           Int      @id @default(autoincrement())
+  value        DateTime @db.Date
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("date_value")
+}
+
+model DateTimeValue {
+  id           Int      @id @default(autoincrement())
+  value        DateTime
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("datetime_value")
+}
+
+model BooleanValue {
+  id           Int      @id @default(autoincrement())
+  value        Boolean
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+
+  field_id Int
+  field    Field @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("boolean_value")
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  contents Content[]
+
+  @@map("category")
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  content_fields TagJunction[]
+
+  @@index([name])
+  @@map("tag")
+}
+
+model TagJunction {
+  content_id Int
+  content    Content @relation(fields: [content_id], references: [id])
+  tag_id     Int
+  tag        Tag     @relation(fields: [tag_id], references: [id])
+
+  @@id([content_id, tag_id])
+  @@map("tag_junction")
+}
+
+model Field {
+  id Int @id @default(autoincrement())
+
+  field_type_id Int?
+  content_id    Int
+  field_type    FieldType? @relation(fields: [field_type_id], references: [id])
+  content       Content    @relation(fields: [content_id], references: [id])
+
+  text_value     TextValue[]
+  number_value   NumberValue[]
+  url_value      UrlValue[]
+  date_value     DateValue[]
+  datetime_value DateTimeValue[]
+  boolean_value  BooleanValue[]
+
+  @@index([field_type_id])
+  @@map("field")
+}
+
+model FieldType {
+  id         Int       @id @default(autoincrement())
+  field_name String
+  required   Boolean
+  value_type ValueType
+
+  collection_id Int
+  collection    Collection @relation(fields: [collection_id], references: [id])
+
+  fields Field[]
+
+  @@index([collection_id])
+  @@map("field_type")
+}
+
+model Content {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  name         String?
+  description  String?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  published_at DateTime?
+  archived_at  DateTime?
+
+  collection_id Int?
+  author_id     Int
+  category_id   Int?
+  category      Category?   @relation(fields: [category_id], references: [id])
+  author        User        @relation(fields: [author_id], references: [id])
+  collection    Collection? @relation(fields: [collection_id], references: [id])
+
+  fields Field[]
+  tags   TagJunction[]
+
+  @@map("content")
+}
+
+model Collection {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  contents       Content[]
+  content_schema FieldType[]
+
+  @@map("collection")
+}
+
+enum ValueType {
+  TEXT
+  NUMBER
+  IMAGE
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Locale {
+  EN
+  JA
+  ZH_CN
+  ZH_TW
+  KO
+  VI
+  FR
+  ES
+  PT
+  DE
+  RU
+  IT
+}
