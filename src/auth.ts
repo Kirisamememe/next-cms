@@ -1,42 +1,72 @@
 import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
-import Credentials from "next-auth/providers/credentials"
-import { saltAndHashPassword } from "@/lib/utils"
-import { getUserByName } from "./actions/user"
-import { compare } from 'bcrypt-ts';
-import { signInSchema } from "./types/auth-schema";
+import { authConfig } from "./auth.config"
+import { getUserRoleByEmail, isAllowedEmail } from "./actions/user"
+
+declare module "next-auth" {
+  interface User {
+    role: "ADMIN" | "USER"
+  }
+
+  interface Session {
+    expires: Date
+  }
+
+  interface JWT {
+    absoluteExp: number
+  }
+}
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  pages: {
-    signIn: '/admin',
-  },
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   providers: [
-    Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      authorize: async ({ name, password }) => {
-        const { data, error } = await signInSchema.safeParseAsync({ name, password })
-
-        if (error) {
-          throw new Error(error.format()._errors.join(', '))
-        }
-        
-        const user = await getUserByName(data.name)
-        if (!user) {
-          throw new Error("User not found.")
-        }
-
-        const pwHash = saltAndHashPassword(data.password)
-        const passwordsMatch = await compare(pwHash, user?.password)
-
-        if (!passwordsMatch) {
-          throw new Error("Password not matched.")
-        }
-
-        return user
-      },
-    }),
+    Google,
+    Resend,
   ],
+  callbacks: {
+    async signIn({user, account}) {
+      // providerから認証成功のオブジェクトが返却されると、まずここに来る
+      if (!user.email) return false
+
+      if (!await isAllowedEmail(user.email)) {
+        throw new Error("Email not allowed")
+      }
+      
+      return true
+    },
+    async jwt({ token, user }) {
+      // signInに成功すると、ここにでJWTの加工が行われる
+      // 非同期関数のため、ここでの早期returnはあまり意味ない
+      if (user) {
+        const role = await getUserRoleByEmail(user.email || "")
+        token = {
+          ...token,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          role: role?.role
+        }
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // JWTの加工が完了すると、ここでセッションに入れられる
+      if (token) {
+        const { email, name, role } = token as { email: string, name: string, role: "ADMIN" | "USER" }
+        const { user } = session
+
+        session = { 
+          ...session, 
+          user: { ...user, email, role, name }
+        }
+      } 
+
+      return session
+    }
+  },
 })

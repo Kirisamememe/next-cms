@@ -5,20 +5,24 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  name     String  @unique
-  password String
-  role     Role    @default(ADMIN)
-  image    String?
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  role          Role      @default(ADMIN)
+  image         String?
 
   contents Content[]
   article  Article[]
@@ -27,6 +31,13 @@ model User {
   sessions Session[]
 
   @@map("user")
+}
+
+model AllowedEmail {
+  id Int       @id @default(autoincrement())
+  email String @unique
+
+  @@map("allowed_email")
 }
 
 model Account {
@@ -269,6 +280,7 @@ enum ValueType {
 enum Role {
   ADMIN
   USER
+  BLOCKED
 }
 
 enum Locale {
