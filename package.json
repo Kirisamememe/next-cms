@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/pg-adapter": "^1.7.2",
     "@auth/prisma-adapter": "^2.7.2",
+    "@formatjs/intl-localematcher": "^0.5.5",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.9.5",
     "@prisma/adapter-neon": "^5.21.1",
@@ -25,13 +26,15 @@
     "bcrypt-ts": "^5.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.453.0",
-    "next": "14.2.14",
+    "negotiator": "^1.0.0",
+    "next": "15.0.1",
     "next-auth": "^5.0.0-beta.25",
     "next-themes": "^0.3.0",
     "pg": "^8.13.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "19.0.0-rc-69d4b800-20241021",
+    "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-hook-form": "^7.53.0",
     "react-icons": "^5.3.0",
     "tailwind-merge": "^2.5.4",
@@ -40,16 +43,22 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/negotiator": "^0.6.3",
     "@types/node": "^20",
     "@types/pg": "^8.11.10",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@types/ws": "^8.5.12",
     "eslint": "^8",
-    "eslint-config-next": "14.2.14",
+    "eslint-config-next": "15.0.1",
     "postcss": "^8",
     "prisma": "^5.21.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }
