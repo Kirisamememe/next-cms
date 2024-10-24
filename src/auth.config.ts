@@ -1,4 +1,5 @@
 import { NextAuthConfig } from 'next-auth';
+import { locales } from "./i18n-config";
 
 /**
  * ミドルウェア(edge runtime)用のNextAuthオブジェクト
@@ -6,13 +7,13 @@ import { NextAuthConfig } from 'next-auth';
  */
 export const authConfig = {
   pages: {
-    signIn: '/admin',
+    signIn: '/sign-in',
   },
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = request.nextUrl.pathname.startsWith('/dashboard');
+      const isOnDashboard = request.nextUrl.pathname.match(`^(/(${locales.join('|')}))?/dashboard.*`);
 
       if (isOnDashboard) {
         if (isLoggedIn) return true;
@@ -21,11 +22,11 @@ export const authConfig = {
         return Response.redirect(new URL('/dashboard', request.nextUrl));
       }
 
-      if (!isLoggedIn) {
-        return false
-      }
+      // if (!isLoggedIn) {
+      //   return false
+      // }
 
-      return true;
+      return false;
     },
   },
   session: {

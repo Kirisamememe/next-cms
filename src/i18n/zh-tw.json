@@ -1,0 +1,25 @@
+{
+  "common": {
+    "confirm": "確認",
+    "cancel": "取消",
+    "submit": "發送",
+    "delete": "刪除",
+    "ok": "是",
+    "no": "否"
+  },
+  "auth": {
+    "signIn": "登入",
+    "signInWithGoogle": "使用 Google 登入",
+    "signInWithMagicLink": "使用 Magic Link 登入",
+    "emailPlaceholder": "請輸入有效的電子郵件地址",
+    "signOut": "登出"
+  },
+  "dashboard": {
+    "summary": "摘要",
+    "singleContent": "單一內容",
+    "collection": "集合",
+    "restApi": "RESTful API",
+    "editor": "用戶管理",
+    "configuration": "設定"
+  }
+}

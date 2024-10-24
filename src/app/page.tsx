@@ -1,12 +1,7 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
-export default async function Home() {
-  const session = await auth()
+// This page only renders when the app is built statically (output: 'export')
+export default function LocaleWrapperPage() {
 
-  if (session?.user?.name) {
-    redirect('/dashboard')
-  }
-  
-  redirect('/admin')
+  redirect('/');
 }

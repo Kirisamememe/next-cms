@@ -1,0 +1,25 @@
+{
+  "common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "delete": "Delete",
+    "ok": "OK",
+    "no": "NO"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signInWithGoogle": "Sign in with google",
+    "signInWithMagicLink": "Sign in with magic link",
+    "emailPlaceholder": "Please enter a valid email address",
+    "signOut": "Sign out"
+  },
+  "dashboard": {
+    "summary": "Summary",
+    "singleContent": "Single content",
+    "collection": "Collection",
+    "restApi": "RESTful API",
+    "editor": "Editor",
+    "configuration": "Configuration"
+  }
+}

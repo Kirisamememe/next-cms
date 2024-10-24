@@ -4,7 +4,7 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
 import { authConfig } from "./auth.config"
-import { getUserRoleByEmail, isAllowedEmail } from "./actions/user"
+import { getUserRoleByEmail, getAllowedEmails, addAllowedEmail } from "./actions/user"
 
 declare module "next-auth" {
   interface User {
@@ -29,19 +29,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Resend,
   ],
   callbacks: {
-    async signIn({user, account}) {
+    async signIn({ user }) {
       // providerから認証成功のオブジェクトが返却されると、まずここに来る
-      if (!user.email) return false
+      const { email } = user
+      if (!email) {
+        console.error("User email is missing")
+        return false
+      }
 
-      if (!await isAllowedEmail(user.email)) {
+      const allowedEmails = await getAllowedEmails()
+
+      if (allowedEmails.length === 0) {
+        const result = await addAllowedEmail(email)
+        if (!result.email) {
+          throw new Error("DB Error")
+        }
+        return true
+      }
+
+      if (!allowedEmails.some(val => val.email === email)) {
         throw new Error("Email not allowed")
       }
-      
+
       return true
     },
     async jwt({ token, user }) {
       // signInに成功すると、ここにでJWTの加工が行われる
-      // 非同期関数のため、ここでの早期returnはあまり意味ない
+      // ここのuserはなぜか同期的に取得できない
       if (user) {
         const role = await getUserRoleByEmail(user.email || "")
         token = {
@@ -60,11 +74,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, name, role } = token as { email: string, name: string, role: "ADMIN" | "USER" }
         const { user } = session
 
-        session = { 
-          ...session, 
+        session = {
+          ...session,
           user: { ...user, email, role, name }
         }
-      } 
+      }
 
       return session
     }
