@@ -7,24 +7,20 @@ import { locales } from "./i18n-config";
  */
 export const authConfig = {
   pages: {
-    signIn: '/sign-in',
+    signIn: '/admin',
   },
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = request.nextUrl.pathname.match(`^(/(${locales.join('|')}))?/dashboard.*`);
+      const isOnAdmin = request.nextUrl.pathname.match(`^(/(${locales.join('|')}))?/admin/.+`);
 
-      if (isOnDashboard) {
+      if (isOnAdmin) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
+        return Response.redirect(new URL(`/admin`, request.nextUrl)); // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', request.nextUrl));
+        return Response.redirect(new URL('/admin/dashboard', request.nextUrl));
       }
-
-      // if (!isLoggedIn) {
-      //   return false
-      // }
 
       return false;
     },

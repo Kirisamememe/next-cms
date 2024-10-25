@@ -19,13 +19,14 @@ export async function addAllowedEmail(email: string) {
   })
 }
 
-export async function getUserRoleByEmail(email: string) {
+export async function getUserByEmail(email: string) {
   const user = await prisma.user.findUnique({
     where: {
       email: email
     },
     select: {
       role: true,
+      nickname: true,
     }
   })
 

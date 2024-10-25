@@ -6,12 +6,16 @@ import { locales } from "./i18n-config";
 import { NextRequest, NextResponse } from "next/server";
 import { getLocale } from "./lib/get-locale";
 
-const publicPages = [
-  '/docs'
+export const publicPages = [
+  '/docs',
+  '/article',
+  '/timeline',
+  '/work',
+  '/about-me'
 ];
 
-const authPages = [
-  '/sign-in',
+export const authPages = [
+  '/admin',
 ]
 
 

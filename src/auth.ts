@@ -4,11 +4,12 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
 import { authConfig } from "./auth.config"
-import { getUserRoleByEmail, getAllowedEmails, addAllowedEmail } from "./actions/user"
+import { getUserByEmail, getAllowedEmails, addAllowedEmail } from "./actions/user"
 
 declare module "next-auth" {
   interface User {
-    role: "ADMIN" | "USER"
+    role: "ADMIN" | "USER",
+    nickname: string
   }
 
   interface Session {
@@ -57,26 +58,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // signInに成功すると、ここにでJWTの加工が行われる
       // ここのuserはなぜか同期的に取得できない
       if (user) {
-        const role = await getUserRoleByEmail(user.email || "")
         token = {
           ...token,
           name: user.name,
           email: user.email,
           image: user.image,
-          role: role?.role
         }
       }
       return token
     },
     async session({ session, token }) {
       // JWTの加工が完了すると、ここでセッションに入れられる
-      if (token) {
-        const { email, name, role } = token as { email: string, name: string, role: "ADMIN" | "USER" }
-        const { user } = session
+      if (!token.email) return session
+      const res = await getUserByEmail(token.email)
+      if (!res) return session
 
-        session = {
-          ...session,
-          user: { ...user, email, role, name }
+      const { email, name } = token as { email: string, name: string, nickname: string, role: "ADMIN" | "USER" }
+      const { user } = session
+
+      console.log('---- session実行 -----')
+
+      session = {
+        ...session,
+        user: { 
+          ...user,
+          email,
+          name,
+          role: res.role as "ADMIN" | "USER",
+          nickname: res.nickname || ""
         }
       }
 
