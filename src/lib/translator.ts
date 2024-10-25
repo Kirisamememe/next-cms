@@ -11,7 +11,4 @@ const dictionaries = Object.fromEntries(locales.map((locale) => [
   () => import(`../i18n/${locale.toLowerCase()}.json`).then((module) => module.default)
 ]))
 
-export const getDictionary = async (locale: Locale) => {
-
-  return dictionaries[locale]()
-}
+export const getDictionary = async (locale: Locale) => dictionaries[locale]()

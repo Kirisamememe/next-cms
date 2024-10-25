@@ -1,11 +1,11 @@
 import { signIn } from "@/auth"
 import { FcGoogle } from 'react-icons/fc';
-import { Flexbox, FlexRow } from "../ui/flexbox"
+import { Flexbox, FlexRow } from "../../../../components/ui/flexbox"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Heading } from "../ui/typography"
-import { Separator } from "../ui/separator"
-import LocaleSwitcher from "../locale-switcher";
+import { Heading } from "../../../../components/ui/typography"
+import { Separator } from "../../../../components/ui/separator"
+import LocaleSwitcher from "../../../../components/locale-switcher";
 import { Locale } from "@/i18n-config";
 import { getDictionary } from "@/lib/translator";
 
@@ -24,7 +24,7 @@ export async function SignIn({ locale }: Props) {
           <Heading size={24}>
             {dictionary["auth"].signIn}
           </Heading>
-          <LocaleSwitcher variant="ghost" />
+          <LocaleSwitcher />
         </FlexRow>
         <form action={async () => {
           'use server'
@@ -37,11 +37,11 @@ export async function SignIn({ locale }: Props) {
         </form>
 
         <FlexRow center gap={4}>
-          <Separator className="shrink"/>
+          <Separator className="shrink" />
           or
           <Separator className="shrink" />
         </FlexRow>
-        
+
         <form action={async (formData) => {
           'use server'
           await signIn("Resend", formData)
@@ -54,7 +54,7 @@ export async function SignIn({ locale }: Props) {
           </Button>
         </form>
       </Flexbox>
-      
+
     </Flexbox>
   )
 }
