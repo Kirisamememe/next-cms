@@ -1,6 +1,6 @@
 "use client";
 
-import { Languages, Check } from 'lucide-react';
+import { Languages, Check, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -15,11 +15,12 @@ import { cn } from '@/lib/utils';
 import { useParams } from 'next/navigation'
 
 type Props = {
+  className?: string;
   variant?: "ghost" | "outline";
   side?: "top" | "bottom" | "left" | "right"
 }
 
-export default function LocaleSwitcher({ variant = "outline", side = "bottom" }: Props) {
+export default function LocaleSwitcher({ className, variant = "outline", side = "bottom" }: Props) {
   const params = useParams<{ locale: string }>()
   const pathname = usePathname();
   const localeParam = params.locale
@@ -40,11 +41,16 @@ export default function LocaleSwitcher({ variant = "outline", side = "bottom" }:
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant={variant} size="icon">
-            <Languages size={20} className="rotate-0 scale-100 transition-all" />
+          <Button variant={variant} size="sm" className={cn("w-full h-9 justify-start", variant === 'outline' && "w-auto p-0 size-10 justify-center", className)}>
+            <Languages size={16} />
+            {variant === 'ghost' && 
+            <>
+              Language
+              <ChevronRight className="ml-auto" size={16} />
+            </>}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" side={side}>
+        <DropdownMenuContent align="end" side={"right"} className='-ml-1'>
           {locales.map((locale, index) => (
             <DropdownMenuItem key={index} onClick={() => changeLocale(locale as Locale)}>
               <Check size={16} className={cn(locale !== localeParam && "text-transparent", "mr-2")} />

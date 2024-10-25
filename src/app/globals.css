@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 @layer utilities {
@@ -23,11 +23,11 @@ body {
     --popover-foreground: 240 10% 3.9%;
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
+    --secondary: 240 4.8% 93.9%;
     --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
+    --muted: 240 4.8% 93.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
+    --accent: 240 4.8% 93.9%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -75,7 +75,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
+    --sidebar-background: 240 5.9% 7%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -104,4 +104,47 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+@keyframes popover {
+  0% {
+    transform: scale(0.5) translateY(20px);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.1) translateY(-5px);
+    opacity: 0.7;
+  }
+  60% {
+    transform: scale(0.9) translateY(3px);
+    opacity: 0.9;
+  }
+  80% {
+    transform: scale(1.03) translateY(-2px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.popover {
+  animation: popover 0.4s ease-out;
+}
+
+@keyframes faceIn {
+  0% {
+    /*transform: translateY(-200%) translateX(-50%);*/
+    opacity: 0;
+  }
+  100% {
+    /*transform: translateY(-50%) translateX(-50%);*/
+    opacity: 100%;
+  }
+}
+
+.faceIn {
+  animation: faceIn 0.15s ease-in-out;
 }
