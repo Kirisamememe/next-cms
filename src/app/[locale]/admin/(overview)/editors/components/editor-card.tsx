@@ -14,7 +14,7 @@ export function EditorCard({ editor }: Props) {
 
   return (
     <Link href={`/admin/editors/${editor.id.toString()}`}>
-      <FlexRow border p={4} gap={2} radius={"md"} className="items-center transition-all duration-300">
+      <FlexRow border p={4} gap={2} radius={"md"} className="items-center transition-transform hover:bg-muted/50 active:scale-95">
         <Avatar className="size-9 group-data-[collapsible=icon]:size-8">
           {editor.image &&
             <AvatarImage src={editor.image} />}

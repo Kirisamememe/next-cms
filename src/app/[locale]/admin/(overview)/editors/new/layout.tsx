@@ -2,7 +2,7 @@ import { Flexbox } from "@/components/ui/flexbox";
 import Link from "next/link";
 
 
-export default async function EditorProfilePageLayout({
+export default async function NewEditorPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

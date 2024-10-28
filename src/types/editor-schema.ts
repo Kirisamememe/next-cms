@@ -20,8 +20,12 @@ export const roles = [
 ] as const
 
 export const editorProfileSchema = z.object({
-  nickname: z.string().min(1, "").max(12, ""),
+  nickname: z.string().max(12, "editor.profile.nicknameValidationMax"),
   role: z.enum(roles)
+})
+
+export const newEditorSchema = z.object({
+  email: z.string().email("editor.email.validation")
 })
 
 export type Role = typeof roles[number]

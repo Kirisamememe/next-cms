@@ -6,45 +6,22 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { prisma } from "@/prisma"
-import { roles, Role } from "@/types/editor-schema"
+import { roles } from "@/types/editor-schema"
 import { ComponentProps } from "react"
 import { EditorCard } from "./editor-card"
 import { FlexRow } from "@/components/ui/flexbox"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { redirect } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
 import { Submit } from "@/components/ui/submit-button"
 import { useTranslations } from "next-intl"
 
-type Props = Pick<ComponentProps<typeof EditorCard>, "editor"> & {
-  id: number
-}
+type Props = Pick<ComponentProps<typeof EditorCard>, "editor">
 
-export function EditEditorProfile({ id, editor }: Props) {
-  const t = useTranslations('editor')
+export function EditEditorProfile({ editor }: Props) {
+  const t = useTranslations()
 
   return (
-    <form action={async (formData) => {
-      'use server'
-
-
-      const res = await prisma.user.update({
-        where: {
-          id: id
-        },
-        data: {
-          nickname: formData.get('nickname') as string,
-          role: formData.get('role') as Role
-        }
-      })
-
-      if (!res.id) {
-        redirect(`/admin/editors/${id}?error=failed`,)
-      }
-
-      redirect(`/admin/editors?message=success`)
-    }} className="flex flex-col gap-3">
+    <>
       <FlexRow px={1} py={2} gap={2} radius={"md"}>
         <Avatar className="size-9 group-data-[collapsible=icon]:size-8">
           {editor.image &&
@@ -65,14 +42,14 @@ export function EditEditorProfile({ id, editor }: Props) {
 
       <label className="flex flex-col gap-2 text-sm">
         <span className="ml-1 font-semibold">
-          {t('profile.nickname')}
+          {t('editor.profile.nickname')}
         </span>
-        <Input name="nickname" placeholder={t('profile.nicknamePlaceholder')} />
+        <Input name="nickname" placeholder={t('editor.profile.nicknamePlaceholder')} />
       </label>
 
       <label className="flex flex-col gap-2 text-sm">
         <span className="ml-1 font-semibold">
-          {t('profile.role')}
+          {t('editor.profile.role')}
         </span>
         <Select name="role" defaultValue={editor.role}>
           <SelectTrigger className="w-full">
@@ -80,14 +57,14 @@ export function EditEditorProfile({ id, editor }: Props) {
           </SelectTrigger>
           <SelectContent className="w-full z-[1000]">
             {roles.map((role) => (
-              <SelectItem key={role} value={role}>{t(`${role}`)}</SelectItem>
+              <SelectItem key={role} value={role}>{t(`editor.${role}`)}</SelectItem>
             ))}
           </SelectContent>
         </Select>
       </label>
       <Submit className="mt-4">
-        Submit
+        {t("common.submit")}
       </Submit>
-    </form>
+    </>
   )
 }

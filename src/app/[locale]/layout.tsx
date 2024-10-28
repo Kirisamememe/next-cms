@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getMessages } from 'next-intl/server';
+import { ResultToaster } from '@/components/result-toaster';
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -55,6 +56,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <main className="flex flex-col min-h-dvh">
               {children}
+              <ResultToaster />
             </main>
             <Toaster />
           </NextIntlClientProvider>
