@@ -6,7 +6,14 @@
     "delete": "Delete",
     "ok": "OK",
     "no": "NO",
-    "invalidData": "Invalid Data"
+    "formResult": {
+      "success": "Success!",
+      "failed": "Failed!",
+      "saved": "Changes saved!",
+      "invalidData": "Invalid data.",
+      "internalError": "An internal error has occurred.",
+      "databaseError": "A database error has occurred."
+    }
   },
   "auth": {
     "signIn": "Sign in",
@@ -101,6 +108,15 @@
     "EDITOR": "Editor",
     "VIEWER": "Viewer",
     "BLOCKED": "Blocked",
+    "newEditor": "Add a new editor",
+    "authorized": "Authorized Editor",
+    "unauthorized": "Unauthorized Editor",
+    "email": {
+      "name": "Email",
+      "placeholder": "Enter your email address",
+      "description": "Input field for your email address",
+      "validation": "Please enter a valid email address"
+    },
     "profile": {
       "nickname": "Nickname",
       "nicknamePlaceholder": "Input your nickname",

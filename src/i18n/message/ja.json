@@ -6,7 +6,14 @@
     "delete": "削除",
     "ok": "はい",
     "no": "いいえ",
-    "invalidData": "Invalid Data"
+    "formResult": {
+      "success": "成功!",
+      "failed": "失敗!",
+      "saved": "変更が保存されました！",
+      "invalidData": "無効なデータです。",
+      "internalError": "内部エラーが発生しました。",
+      "databaseError": "データベースエラーが発生しました。"
+    }
   },
   "auth": {
     "signIn": "ログイン",
@@ -101,6 +108,15 @@
     "EDITOR": "編集者",
     "VIEWER": "閲覧者",
     "BLOCKED": "利用不可",
+    "newEditor": "編集者を追加",
+    "authorized": "認証済みの編集者",
+    "unauthorized": "認証待ちの編集者",
+    "email": {
+      "name": "メールアドレス",
+      "placeholder": "メールアドレスを入力してください",
+      "description": "メールアドレスを入力する欄です",
+      "validation": "有効なメールアドレスを入力してください"
+    },
     "profile": {
       "nickname": "ニックネーム",
       "nicknamePlaceholder": "12文字以内で入力してください",

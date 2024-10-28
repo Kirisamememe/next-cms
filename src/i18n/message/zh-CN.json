@@ -6,7 +6,14 @@
     "delete": "删除",
     "ok": "是",
     "no": "否",
-    "invalidData": "Invalid Data"
+    "formResult": {
+      "success": "成功!",
+      "failed": "失败!",
+      "saved": "更改已保存！",
+      "invalidData": "无效数据",
+      "internalError": "内部错误",
+      "databaseError": "数据库错误"
+    }
   },
   "auth": {
     "signIn": "登录",
@@ -101,6 +108,15 @@
     "EDITOR": "編集者",
     "VIEWER": "閲覧者",
     "BLOCKED": "利用不可",
+    "newEditor": "新增编辑者",
+    "authorized": "已认证编辑者",
+    "unauthorized": "未认证编辑者",
+    "email": {
+      "name": "邮箱",
+      "placeholder": "请输入邮箱地址",
+      "description": "用于输入邮箱地址的输入框",
+      "validation": "请输入有效的邮箱地址"
+    },
     "profile": {
       "nickname": "昵称",
       "nicknamePlaceholder": "请输入12字以内的昵称",

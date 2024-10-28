@@ -6,7 +6,14 @@
     "delete": "刪除",
     "ok": "是",
     "no": "否",
-    "invalidData": "Invalid Data"
+    "formResult": {
+      "success": "成功!",
+      "failed": "失敗!",
+      "saved": "更改已儲存！",
+      "invalidData": "無效資料",
+      "internalError": "內部錯誤",
+      "databaseError": "資料庫錯誤"
+    }
   },
   "auth": {
     "signIn": "登入",
@@ -101,6 +108,15 @@
     "EDITOR": "編集者",
     "VIEWER": "閲覧者",
     "BLOCKED": "利用不可",
+    "newEditor": "新增編輯者",
+    "authorized": "已認證編輯者",
+    "unauthorized": "未認證編輯者",
+    "email": {
+      "name": "電子郵件",
+      "placeholder": "請輸入電子郵件地址",
+      "description": "用於輸入電子郵件地址的輸入欄",
+      "validation": "請輸入有效的電子郵件地址"
+    },
     "profile": {
       "nickname": "暱稱",
       "nicknamePlaceholder": "請輸入12字以內的暱稱",
