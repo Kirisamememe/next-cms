@@ -1,0 +1,159 @@
+{
+  "common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "delete": "Delete",
+    "ok": "OK",
+    "no": "NO",
+    "invalidData": "Invalid Data"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signInWithGoogle": "Sign in with google",
+    "signInWithMagicLink": "Sign in with magic link",
+    "emailPlaceholder": "Please enter a valid email address",
+    "signOut": "Sign out"
+  },
+  "breadcrumb": {
+    "dashboard": {
+      "1": "Dashboard"
+    },
+    "editors": {
+      "1": "Editors Management",
+      "2": "Edit Profile"
+    },
+    "preference": {
+      "1": "Preferences"
+    },
+    "docs": {
+      "1": "Documentation"
+    },
+    "homepage": {
+      "1": "Homepage"
+    },
+    "articles": {
+      "1": "Articles",
+      "2": "Edit Article"
+    },
+    "portfolio": {
+      "1": "Portfolio"
+    },
+    "gallery": {
+      "1": "Gallery"
+    },
+    "about-me": {
+      "1": "About Me"
+    },
+    "single-contents": {
+      "1": "Single Content"
+    },
+    "collections": {
+      "1": "Collections"
+    },
+    "restful-api": {
+      "1": "RESTful API"
+    },
+    "log": {
+      "1": "Log Analytics"
+    },
+    "restful-api-test": {
+      "1": "API Test"
+    }
+  },
+  "sidebar": {
+    "overview": {
+      "name": "Overview",
+      "dashboard": "Dashboard",
+      "editors": "Editor Management",
+      "preference": "Preferences",
+      "docs": "Documentation"
+    },
+    "mainContents": {
+      "name": "Main Contents",
+      "homepage": "Homepage",
+      "articles": "Blog Articles",
+      "portfolio": "Portfolio",
+      "gallery": "Gallery",
+      "aboutMe": "About Me"
+    },
+    "customContents": {
+      "name": "Custom Contents",
+      "singleContents": "Single Contents",
+      "collections": "Collections"
+    },
+    "restful": {
+      "name": "RESTful API",
+      "restfulApi": "RESTful API",
+      "log": "Log Analytics",
+      "apiTest": "Test"
+    },
+    "footer": {
+      "theme": "Theme",
+      "profile": "Profile",
+      "setting": "Setting",
+      "language": "Language"
+    }
+  },
+  "editor": {
+    "ADMIN": "Admin",
+    "INSPECTOR": "Inspector",
+    "EDITOR": "Editor",
+    "VIEWER": "Viewer",
+    "BLOCKED": "Blocked",
+    "profile": {
+      "nickname": "Nickname",
+      "nicknamePlaceholder": "Input your nickname",
+      "nicknameValidationMax": "Nickname must be less than 12 characters",
+      "role": "Role",
+      "rolePlaceholder": "Please assign a role to this user."
+    }
+  },
+  "article": {
+    "newArticle": "Write a new article",
+    "title": {
+      "name": "Title",
+      "placeholder": "Enter the article title",
+      "description": "Main title of the article",
+      "validationMax": "Title must be less than 64 characters"
+    },
+    "slug": {
+      "name": "Slug",
+      "placeholder": "Enter URL-friendly name",
+      "description": "URL path for the article",
+      "validationMin": "Slug is required",
+      "validationMax": "Slug must be less than 64 characters"
+    },
+    "summary": {
+      "name": "Summary",
+      "placeholder": "Enter a brief summary of the article",
+      "description": "Short description of the article content",
+      "validationMax": "Summary must be less than 256 characters"
+    },
+    "image": {
+      "name": "Image",
+      "placeholder": "Enter image URL",
+      "description": "Featured image for the article",
+      "validationMax": "Image URL must be less than 512 characters"
+    },
+    "body": {
+      "name": "Body",
+      "placeholder": "Write your article content here",
+      "description": "Main content of the article",
+      "validationMin": "Article content is required",
+      "validationMax": "Article content must be less than 20000 characters"
+    },
+    "commitMsg": {
+      "name": "Commit message",
+      "placeholder": "Describe your changes",
+      "description": "Brief description of the changes made",
+      "validationMax": "Commit message must be less than 128 characters"
+    },
+    "authorNote": {
+      "name": "Author note",
+      "placeholder": "Add notes for other editors",
+      "description": "Additional notes for editors",
+      "validationMax": "Author note must be less than 1024 characters"
+    }
+  }
+}

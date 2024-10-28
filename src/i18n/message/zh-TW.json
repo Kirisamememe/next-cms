@@ -1,0 +1,159 @@
+{
+  "common": {
+    "confirm": "確認",
+    "cancel": "取消",
+    "submit": "發送",
+    "delete": "刪除",
+    "ok": "是",
+    "no": "否",
+    "invalidData": "Invalid Data"
+  },
+  "auth": {
+    "signIn": "登入",
+    "signInWithGoogle": "使用 Google 登入",
+    "signInWithMagicLink": "使用 Magic Link 登入",
+    "emailPlaceholder": "請輸入有效的電子郵件地址",
+    "signOut": "登出"
+  },
+  "breadcrumb": {
+    "dashboard": {
+      "1": "儀表板"
+    },
+    "editors": {
+      "1": "編輯者管理",
+      "2": "編輯個人資料"
+    },
+    "preference": {
+      "1": "偏好設定"
+    },
+    "docs": {
+      "1": "文件"
+    },
+    "homepage": {
+      "1": "首頁"
+    },
+    "articles": {
+      "1": "文章",
+      "2": "編輯文章"
+    },
+    "portfolio": {
+      "1": "作品集"
+    },
+    "gallery": {
+      "1": "圖庫"
+    },
+    "about-me": {
+      "1": "關於我"
+    },
+    "single-contents": {
+      "1": "單頁內容"
+    },
+    "collections": {
+      "1": "合集"
+    },
+    "restful-api": {
+      "1": "RESTful API"
+    },
+    "log": {
+      "1": "日誌分析"
+    },
+    "restful-api-test": {
+      "1": "API測試"
+    }
+  },
+  "sidebar": {
+    "overview": {
+      "name": "通用",
+      "dashboard": "儀表板",
+      "editors": "編輯者管理",
+      "preference": "偏好設定",
+      "docs": "文檔"
+    },
+    "mainContents": {
+      "name": "主要內容",
+      "homepage": "首頁",
+      "articles": "部落格文章",
+      "portfolio": "作品集",
+      "gallery": "圖庫",
+      "aboutMe": "關於我"
+    },
+    "customContents": {
+      "name": "自定義內容",
+      "singleContents": "單一內容",
+      "collections": "集合"
+    },
+    "restful": {
+      "name": "RESTful API",
+      "restfulApi": "RESTful API",
+      "log": "日誌分析",
+      "apiTest": "測試"
+    },
+    "footer": {
+      "theme": "主題",
+      "profile": "個人資料",
+      "setting": "設定",
+      "language": "語言"
+    }
+  },
+  "editor": {
+    "ADMIN": "管理者",
+    "INSPECTOR": "監察",
+    "EDITOR": "編集者",
+    "VIEWER": "閲覧者",
+    "BLOCKED": "利用不可",
+    "profile": {
+      "nickname": "暱稱",
+      "nicknamePlaceholder": "請輸入12字以內的暱稱",
+      "nicknameValidationMax": "請輸入12字以內的暱稱。",
+      "role": "職能",
+      "rolePlaceholder": "請給該用戶分配一個職能"
+    }
+  },
+  "article": {
+    "newArticle": "撰寫新文章",
+    "title": {
+      "name": "標題",
+      "placeholder": "請輸入文章標題",
+      "description": "文章的主標題",
+      "validationMax": "標題不能超過64個字元"
+    },
+    "slug": {
+      "name": "網址別名",
+      "placeholder": "請輸入URL友善的名稱",
+      "description": "文章的URL路徑",
+      "validationMin": "網址別名不能為空",
+      "validationMax": "網址別名不能超過64個字元"
+    },
+    "summary": {
+      "name": "摘要",
+      "placeholder": "請輸入文章摘要",
+      "description": "文章內容的簡短描述",
+      "validationMax": "摘要不能超過256個字元"
+    },
+    "image": {
+      "name": "圖片",
+      "placeholder": "請輸入圖片URL",
+      "description": "文章的特色圖片",
+      "validationMax": "圖片URL不能超過512個字元"
+    },
+    "body": {
+      "name": "內文",
+      "placeholder": "請在此輸入文章內容",
+      "description": "文章的主要內容",
+      "validationMin": "內文不能為空",
+      "validationMax": "內文不能超過20000個字元"
+    },
+    "commitMsg": {
+      "name": "提交說明",
+      "placeholder": "描述您的更改",
+      "description": "更改內容的簡要說明",
+      "validationMax": "提交說明不能超過128個字元"
+    },
+    "authorNote": {
+      "name": "作者備註",
+      "placeholder": "新增給其他編輯的備註",
+      "description": "給編輯的附加說明",
+      "validationMax": "作者備註不能超過1024個字元"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { NextAuthConfig } from 'next-auth';
-import { locales } from "./i18n-config";
+import { locales } from "./i18n/config";
 
 /**
  * ミドルウェア(edge runtime)用のNextAuthオブジェクト
@@ -12,14 +12,23 @@ export const authConfig = {
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
+      // console.log("！！！！！！！　authorizedに入った　！！！！！！！")
       const isLoggedIn = !!auth?.user;
-      const isOnAdmin = request.nextUrl.pathname.match(`^(/(${locales.join('|')}))?/admin/.+`);
+      const isOnAdmin = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin/.+`);
+      const isOnAuthPage = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin$`);
 
       if (isOnAdmin) {
         if (isLoggedIn) return true;
         return Response.redirect(new URL(`/admin`, request.nextUrl)); // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/admin/dashboard', request.nextUrl));
+      }
+
+      if (isLoggedIn && isOnAuthPage) {
+        // 
+        return Response.redirect(new URL(`/admin/dashboard`, request.nextUrl));
+      }
+
+      if (isLoggedIn) {
+        return true;
       }
 
       return false;
@@ -29,4 +38,5 @@ export const authConfig = {
     strategy: "jwt",
     maxAge: 24 * 60 * 60,
   },
+  trustHost: true
 } satisfies NextAuthConfig;

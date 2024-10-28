@@ -5,15 +5,16 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
 import { authConfig } from "./auth.config"
 import { getUserByEmail, getAllowedEmails, addAllowedEmail } from "./actions/user"
+import { Role } from "./types/editor-schema"
 
 declare module "next-auth" {
   interface User {
-    role: "ADMIN" | "USER",
+    role: Role,
     nickname: string
   }
 
   interface Session {
-    expires: Date
+    authorId: number
   }
 
   interface JWT {
@@ -73,18 +74,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const res = await getUserByEmail(token.email)
       if (!res) return session
 
-      const { email, name } = token as { email: string, name: string, nickname: string, role: "ADMIN" | "USER" }
+      const { email, name } = token as { email: string, name: string, nickname: string, role: Role }
       const { user } = session
 
-      console.log('---- session実行 -----')
+      // console.log('---- session実行 -----')
 
       session = {
         ...session,
-        user: { 
+        authorId: res.id,
+        user: {
           ...user,
           email,
           name,
-          role: res.role as "ADMIN" | "USER",
+          role: res.role,
           nickname: res.nickname || ""
         }
       }

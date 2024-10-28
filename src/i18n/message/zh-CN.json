@@ -1,0 +1,159 @@
+{
+  "common": {
+    "confirm": "确认",
+    "cancel": "取消",
+    "submit": "提交",
+    "delete": "删除",
+    "ok": "是",
+    "no": "否",
+    "invalidData": "Invalid Data"
+  },
+  "auth": {
+    "signIn": "登录",
+    "signInWithGoogle": "使用谷歌账户登录",
+    "signInWithMagicLink": "使用魔术链接登录",
+    "emailPlaceholder": "请输入有效的电子邮件地址",
+    "signOut": "退出登录"
+  },
+  "breadcrumb": {
+    "dashboard": {
+      "1": "仪表盘"
+    },
+    "editors": {
+      "1": "编辑者管理",
+      "2": "编辑个人资料"
+    },
+    "preference": {
+      "1": "偏好设置"
+    },
+    "docs": {
+      "1": "文档"
+    },
+    "homepage": {
+      "1": "主页"
+    },
+    "articles": {
+      "1": "文章",
+      "2": "编辑文章"
+    },
+    "portfolio": {
+      "1": "作品集"
+    },
+    "gallery": {
+      "1": "图库"
+    },
+    "about-me": {
+      "1": "关于我"
+    },
+    "single-contents": {
+      "1": "单页内容"
+    },
+    "collections": {
+      "1": "合集"
+    },
+    "restful-api": {
+      "1": "RESTful API"
+    },
+    "log": {
+      "1": "日志分析"
+    },
+    "restful-api-test": {
+      "1": "API测试"
+    }
+  },
+  "sidebar": {
+    "overview": {
+      "name": "通用",
+      "dashboard": "仪表盘",
+      "editors": "编辑者管理",
+      "preference": "偏好设置",
+      "docs": "文档"
+    },
+    "mainContents": {
+      "name": "主要内容",
+      "homepage": "主页",
+      "articles": "博客文章",
+      "portfolio": "作品集",
+      "gallery": "图库",
+      "aboutMe": "关于我"
+    },
+    "customContents": {
+      "name": "自定义内容",
+      "singleContents": "单一内容",
+      "collections": "集合"
+    },
+    "restful": {
+      "name": "RESTful API",
+      "restfulApi": "RESTful API",
+      "log": "日志分析",
+      "apiTest": "测试"
+    },
+    "footer": {
+      "theme": "主题",
+      "profile": "个人资料",
+      "setting": "设置",
+      "language": "语言"
+    }
+  },
+  "editor": {
+    "ADMIN": "管理者",
+    "INSPECTOR": "監察",
+    "EDITOR": "編集者",
+    "VIEWER": "閲覧者",
+    "BLOCKED": "利用不可",
+    "profile": {
+      "nickname": "昵称",
+      "nicknamePlaceholder": "请输入12字以内的昵称",
+      "nicknameValidationMax": "请输入12字以内的昵称。",
+      "role": "职能",
+      "rolePlaceholder": "请给该用户分配一个职能"
+    }
+  },
+  "article": {
+    "newArticle": "撰写新博文",
+    "title": {
+      "name": "标题",
+      "placeholder": "请输入文章标题",
+      "description": "文章的主标题",
+      "validationMax": "标题不能超过64个字符"
+    },
+    "slug": {
+      "name": "别名",
+      "placeholder": "请输入URL友好的名称",
+      "description": "文章的URL路径",
+      "validationMin": "别名不能为空",
+      "validationMax": "别名不能超过64个字符"
+    },
+    "summary": {
+      "name": "摘要",
+      "placeholder": "请输入文章摘要",
+      "description": "文章内容的简短描述",
+      "validationMax": "摘要不能超过256个字符"
+    },
+    "image": {
+      "name": "图片",
+      "placeholder": "请输入图片URL",
+      "description": "文章的特色图片",
+      "validationMax": "图片URL不能超过512个字符"
+    },
+    "body": {
+      "name": "正文",
+      "placeholder": "请在此输入文章内容",
+      "description": "文章的主要内容",
+      "validationMin": "正文不能为空",
+      "validationMax": "正文不能超过20000个字符"
+    },
+    "commitMsg": {
+      "name": "提交说明",
+      "placeholder": "描述您的更改",
+      "description": "更改内容的简要说明",
+      "validationMax": "提交说明不能超过128个字符"
+    },
+    "authorNote": {
+      "name": "作者备注",
+      "placeholder": "添加给其他编辑的备注",
+      "description": "给编辑的附加说明",
+      "validationMax": "作者备注不能超过1024个字符"
+    }
+  }
+}
