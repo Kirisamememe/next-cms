@@ -25,8 +25,9 @@ model User {
   role          Role      @default(ADMIN)
   image         String?
 
-  contents Content[]
-  article  Article[]
+  contents     Content[]
+  article      Article[]
+  article_atom ArticleAtom[]
 
   accounts Account[]
   sessions Session[]
@@ -88,16 +89,61 @@ model VerificationToken {
   @@map("verification_token")
 }
 
-model Article {
-  id         Int      @id @default(autoincrement())
-  slug       String   @unique
-  title      String
-  body       String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+model Homepage {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  heading      String
+  introduction String?
+  biography    String?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  archived_at  DateTime?
+  published_at DateTime?
+
+  locale Locale
+
+  contents Content[]
+
+  @@map("homepage")
+}
+
+model ArticleAtom {
+  id           Int       @id @default(autoincrement())
+  title        String?
+  summary      String?
+  body         String
+  image        String?
+  commit_msg   String?
+  created_at   DateTime  @default(now())
+  published_at DateTime?
 
   author_id Int
   author    User @relation(fields: [author_id], references: [id])
+
+  article_id Int
+  article    Article @relation(fields: [article_id], references: [id])
+
+  @@map("article_atom")
+}
+
+model Article {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  author_note  String?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  archived_at  DateTime?
+  published_at DateTime?
+  admin_only   Boolean   @default(false)
+
+  category_id Int?
+  category    Category? @relation(fields: [category_id], references: [id])
+
+  author_id Int
+  author    User @relation(fields: [author_id], references: [id])
+
+  article_atoms ArticleAtom[]
+  tags          ArticleTagJunction[]
 
   @@map("article")
 }
@@ -185,6 +231,7 @@ model Category {
   name String
 
   contents Content[]
+  articles Article[]
 
   @@map("category")
 }
@@ -193,20 +240,31 @@ model Tag {
   id   Int    @id @default(autoincrement())
   name String
 
-  content_fields TagJunction[]
+  articles ArticleTagJunction[]
+  contents ContentTagJunction[]
 
   @@index([name])
   @@map("tag")
 }
 
-model TagJunction {
+model ArticleTagJunction {
+  article_id Int
+  article    Article @relation(fields: [article_id], references: [id])
+  tag_id     Int
+  tag        Tag     @relation(fields: [tag_id], references: [id])
+
+  @@id([article_id, tag_id])
+  @@map("article_tag_junction")
+}
+
+model ContentTagJunction {
   content_id Int
   content    Content @relation(fields: [content_id], references: [id])
   tag_id     Int
   tag        Tag     @relation(fields: [tag_id], references: [id])
 
   @@id([content_id, tag_id])
-  @@map("tag_junction")
+  @@map("content_tag_junction")
 }
 
 model Field {
@@ -253,15 +311,17 @@ model Content {
   published_at DateTime?
   archived_at  DateTime?
 
-  collection_id Int?
   author_id     Int
+  collection_id Int?
   category_id   Int?
-  category      Category?   @relation(fields: [category_id], references: [id])
+  homepage_id   Int?
   author        User        @relation(fields: [author_id], references: [id])
+  category      Category?   @relation(fields: [category_id], references: [id])
   collection    Collection? @relation(fields: [collection_id], references: [id])
+  homepage      Homepage?   @relation(fields: [homepage_id], references: [id])
 
   fields Field[]
-  tags   TagJunction[]
+  tags   ContentTagJunction[]
 
   @@map("content")
 }
@@ -284,7 +344,9 @@ enum ValueType {
 
 enum Role {
   ADMIN
-  USER
+  INSPECTOR
+  EDITOR
+  VIEWER
   BLOCKED
 }
 

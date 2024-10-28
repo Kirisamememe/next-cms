@@ -25,6 +25,7 @@ export async function getUserByEmail(email: string) {
       email: email
     },
     select: {
+      id: true,
       role: true,
       nickname: true,
     }
