@@ -28,14 +28,13 @@ export function Header() {
             <BreadcrumbList>
               {pathname.split('/').slice(1, 4).map((_, index, arr) => {
                 if (index === 0) return null
-
                 const href = '/' + arr.slice(0, index + 1).join('/')
 
                 return (
                   <React.Fragment key={index}>
                     {index !== arr.length - 1 ? 
                     <>
-                      <BreadcrumbItem className="text-base font-bold">
+                      <BreadcrumbItem className="text-base font-bold hover:text-foreground">
                         <Link href={href}>
                           {t(`${arr[1]}.${index}`)}
                         </Link>
