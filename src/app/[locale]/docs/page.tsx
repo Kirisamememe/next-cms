@@ -1,4 +1,5 @@
-export default function DocsPage() {
+
+export default async function DocsPage() {
   return (
     <div>
       docs

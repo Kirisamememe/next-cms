@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -7,28 +6,30 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { editorProfileSchema } from "@/types/user-schema"
-import { LabelText } from "@/components/ui/typography"
 import { prisma } from "@/prisma"
-import { revalidatePath } from "next/cache"
-import { Editor, Role } from "@/types/editor"
+import { roles, Role } from "@/types/editor-schema"
 import { ComponentProps } from "react"
 import { EditorCard } from "./editor-card"
 import { FlexRow } from "@/components/ui/flexbox"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { redirect } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
+import { Submit } from "@/components/ui/submit-button"
+import { useTranslations } from "next-intl"
 
 type Props = Pick<ComponentProps<typeof EditorCard>, "editor"> & {
   id: number
 }
 
 export function EditEditorProfile({ id, editor }: Props) {
+  const t = useTranslations('editor')
 
   return (
     <form action={async (formData) => {
       'use server'
-      await prisma.user.update({
+
+
+      const res = await prisma.user.update({
         where: {
           id: id
         },
@@ -36,11 +37,13 @@ export function EditEditorProfile({ id, editor }: Props) {
           nickname: formData.get('nickname') as string,
           role: formData.get('role') as Role
         }
-      }).then((res) => {
-        revalidatePath('/admin/editors')
-        redirect('/admin/editors')
       })
 
+      if (!res.id) {
+        redirect(`/admin/editors/${id}?error=failed`,)
+      }
+
+      redirect(`/admin/editors?message=success`)
     }} className="flex flex-col gap-3">
       <FlexRow px={1} py={2} gap={2} radius={"md"}>
         <Avatar className="size-9 group-data-[collapsible=icon]:size-8">
@@ -62,28 +65,29 @@ export function EditEditorProfile({ id, editor }: Props) {
 
       <label className="flex flex-col gap-2 text-sm">
         <span className="ml-1 font-semibold">
-          Nickname
+          {t('profile.nickname')}
         </span>
-        <Input name="nickname" placeholder="Input you nickname" />
+        <Input name="nickname" placeholder={t('profile.nicknamePlaceholder')} />
       </label>
 
       <label className="flex flex-col gap-2 text-sm">
         <span className="ml-1 font-semibold">
-          Role
+          {t('profile.role')}
         </span>
         <Select name="role" defaultValue={editor.role}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Role" />
           </SelectTrigger>
           <SelectContent className="w-full z-[1000]">
-            <SelectItem value="ADMIN">Admin</SelectItem>
-            <SelectItem value="USER">Normal user</SelectItem>
-            <SelectItem value="BLOCKED">Blocked</SelectItem>
+            {roles.map((role) => (
+              <SelectItem key={role} value={role}>{t(`${role}`)}</SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </label>
-
-      <Button type="submit" className="mt-4">Submit</Button>
+      <Submit className="mt-4">
+        Submit
+      </Submit>
     </form>
   )
 }

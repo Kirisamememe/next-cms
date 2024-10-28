@@ -1,14 +1,17 @@
-import { Editor } from "@/types/editor"
-import { Flexbox, FlexRow } from "../../../../../../components/ui/flexbox"
-import { Avatar, AvatarFallback, AvatarImage } from "../../../../../../components/ui/avatar"
+import { Editor } from "@/types/editor-schema"
+import { FlexRow } from "@/components/ui/flexbox"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
-import { LabelText } from "../../../../../../components/ui/typography"
+import { LabelText } from "@/components/ui/typography"
+import { useTranslations } from "next-intl"
 
 type Props = {
   editor: Editor
 }
 
 export function EditorCard({ editor }: Props) {
+  const t = useTranslations();
+
   return (
     <Link href={`/admin/editors/${editor.id.toString()}`}>
       <FlexRow border p={4} gap={2} radius={"md"} className="items-center transition-all duration-300">
@@ -26,7 +29,7 @@ export function EditorCard({ editor }: Props) {
           </span>
         </div>
         <LabelText color="foreground" weight={600} className="ml-auto">
-          {editor.role}
+          {t(`editor.${editor.role}`)}
         </LabelText>
       </FlexRow>
     </Link>

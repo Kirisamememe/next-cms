@@ -1,18 +1,9 @@
 import { auth } from "@/auth";
 import { Dashboard } from "@/app/[locale]/admin/(overview)/dashboard/components/dashboard";
-import { Flexbox } from "@/components/ui/flexbox";
 import { LabelText } from "@/components/ui/typography";
-import { Locale } from "@/i18n-config";
-import { getDictionary } from "@/lib/translator";
-import { Revalidate } from "./revalidate";
+import { Locale } from "@/i18n/config";
 
-export default async function DashboardPage({
-  params
-}: {
-  params: { locale: Locale }
-}) {
-  const { locale } = await params
-  const dictionary = await getDictionary(locale);
+export default async function DashboardPage() {
   const session = await auth()
 
   if (!session?.user) {
@@ -23,7 +14,7 @@ export default async function DashboardPage({
     <>
       <DateComp />
       {/* <Revalidate /> */}
-      <Dashboard dictionary={dictionary} name={session?.user?.name} email={session?.user?.email} role={session?.user?.role} image={session?.user?.image} />
+      <Dashboard name={session?.user?.name} email={session?.user?.email} role={session?.user?.role} image={session?.user?.image} />
     </>
 
   )

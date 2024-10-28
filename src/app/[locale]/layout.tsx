@@ -1,9 +1,14 @@
+import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/app/globals.css";
 import React from "react";
 import { ThemeProvider } from "next-themes";
-import { Locale } from "@/i18n-config";
+import { Locale } from "@/i18n/config";
+import { Toaster } from "@/components/ui/toaster"
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
+import { getMessages } from 'next-intl/server';
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -26,9 +31,15 @@ export default async function RootLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }>) {
   const { locale } = await params
+  
+  if (!routing.locales.includes(locale as Locale)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
 
   return (
     <html lang={locale} suppressHydrationWarning={true}>
@@ -41,9 +52,12 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex flex-col min-h-dvh">
-            {children}
-          </main>
+          <NextIntlClientProvider messages={messages}>
+            <main className="flex flex-col min-h-dvh">
+              {children}
+            </main>
+            <Toaster />
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

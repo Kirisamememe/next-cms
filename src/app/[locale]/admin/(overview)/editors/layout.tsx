@@ -1,18 +1,13 @@
 import { EditorCard } from "@/app/[locale]/admin/(overview)/editors/components/editor-card";
-import { Flexbox, FlexRow } from "@/components/ui/flexbox";
-import { Locale } from "@/i18n-config";
-import { getDictionary } from "@/lib/translator";
+import { Flexbox } from "@/components/ui/flexbox";
 import { prisma } from "@/prisma";
+import { ResultToaster } from "@/components/result-toaster";
 
 export default async function EditorsPageLayout({
   children,
-  params
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: Locale }
 }>) {
-  const { locale } = await params
-  const dictionary = await getDictionary(locale);
 
   const editors = await prisma.user.findMany()
 
@@ -22,12 +17,13 @@ export default async function EditorsPageLayout({
 
   return (
     <>
-      <Flexbox gap={3} className="w-full transition-all duration-300">
-        {editors.map((editor) => (
-          <EditorCard editor={editor} />
+      <Flexbox gap={3} className="appear w-full transition-all duration-300">
+        {editors.map((editor, index) => (
+          <EditorCard key={index} editor={editor} />
         ))}
       </Flexbox>
       {children}
+      <ResultToaster />
     </>
   )
 }

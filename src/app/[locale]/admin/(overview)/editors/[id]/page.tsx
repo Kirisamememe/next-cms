@@ -3,9 +3,9 @@ import { Flexbox } from "@/components/ui/flexbox";
 import { prisma } from "@/prisma";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function EditorProfilePage({ params }: Props) {
