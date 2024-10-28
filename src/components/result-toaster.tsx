@@ -1,10 +1,12 @@
 'use client'
 
 import { useToast } from "@/hooks/use-toast"
+import { useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
 export function ResultToaster() {
+  const t = useTranslations()
   const { toast } = useToast()
   const router = useRouter()
   const pathname = usePathname()
@@ -15,7 +17,8 @@ export function ResultToaster() {
   useEffect(() => {
     if (error) {
       toast({
-        title: "変更が保存できませんでした",
+        title: t('common.formResult.failed'),
+        description: t(error),
         variant: "destructive"
       })
       router.replace(pathname)
@@ -24,14 +27,13 @@ export function ResultToaster() {
 
     if (message) {
       toast({
-        title: message,
-        description: "変更が保存されました！"
+        title: t('common.formResult.saved'),
       })
       router.replace(pathname)
       return
     }
 
-  }, [error, message, pathname, router, toast])
+  }, [error, message, pathname, router, t, toast])
 
   return null
 }

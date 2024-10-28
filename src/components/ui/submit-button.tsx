@@ -2,21 +2,37 @@
 
 import { useFormStatus } from "react-dom";
 import { Button } from "./button";
-import React from "react";
+import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useTranslations } from "next-intl";
+import { AlertCircle } from "lucide-react";
 
 const Submit = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, ...props }, ref) => {
-  const { pending, data } = useFormStatus()
-  console.log(`Data: ${data}`)
+  const { pending } = useFormStatus()
+  const t = useTranslations()
+  const params = useSearchParams()
+  const [errorMsg] = useState(params.get('formError'))
+
 
   return (
-    <Button ref={ref} type="submit" disabled={pending} {...props}>
-      {pending ?
-        <div className="circle-spin-2-invert" /> :
-      children}
-    </Button>
+    <>
+      {errorMsg && 
+      <Alert variant="destructive" className="mt-3">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription className="font-semibold">
+          {t(errorMsg)}
+        </AlertDescription>
+      </Alert>}
+      <Button ref={ref} type="submit" disabled={pending} {...props}>
+        {pending ?
+          <div className="circle-spin-2-invert" /> :
+          children}
+      </Button>
+    </>
   )
 }) 
 Submit.displayName = "Submit"

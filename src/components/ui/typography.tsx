@@ -40,6 +40,13 @@ const headingVariants = cva(
         1: "py-1",
         2: "py-2",
       },
+      mx: {
+        0.5: "mx-0.5",
+        1: "mx-1",
+        1.5: "mx-1.5",
+        2: "mx-2",
+        3: "mx-3",
+      },
       mb: {
         0.5: "mb-0.5",
         1: "mb-1",
@@ -58,11 +65,11 @@ const headingVariants = cva(
 const Heading = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof headingVariants>
-  >(({ className, children, size, height, weight, color, py, mb, ...props }, ref) => (
+  >(({ className, children, size, height, weight, color, py, mx, mb, ...props }, ref) => (
   <h6 
     ref={ref} 
     className={cn(
-      headingVariants({ size, height, weight, color, py, mb }),
+      headingVariants({ size, height, weight, color, py, mx, mb }),
       className
     )}
     {...props}
