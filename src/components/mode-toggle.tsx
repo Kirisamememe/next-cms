@@ -12,9 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
+  const t = useTranslations()
 
   return (
     <DropdownMenu>
@@ -23,7 +25,7 @@ export function ModeToggle() {
           <Monitor size={16} className={cn("hidden", theme === 'system' && "block")} />
           <Sun size={16} className={cn("hidden", theme === 'light' && "block")} />
           <Moon size={16} className={cn("hidden", theme === 'dark' && "block")} />
-          Theme
+          {t('sidebar.footer.theme')}
           <ChevronRight className="ml-auto" size={16} />
           <span className="sr-only">Toggle theme</span>
         </Button>

@@ -48,7 +48,7 @@ const headingVariants = cva(
       }
     },
     defaultVariants: {
-      size: 18,
+      size: 16,
       color: "foreground",
       weight: 700
     }
@@ -130,7 +130,7 @@ const paragraphVariants = cva(
       }
     },
     defaultVariants: {
-      size: 16,
+      size: 14,
       color: "foreground",
       weight: 400
     }

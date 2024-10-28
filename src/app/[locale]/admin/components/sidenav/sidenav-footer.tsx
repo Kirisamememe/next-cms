@@ -1,13 +1,8 @@
 import {
-  Sidebar,
-  SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarRail
 } from "@/components/ui/sidebar"
 import {
   DropdownMenu,
@@ -18,20 +13,18 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
-import LocaleSwitcher from "../../../../../components/locale-switcher"
-import { ModeToggle } from "../../../../../components/mode-toggle"
+import LocaleSwitcher from "@/components/locale-switcher"
+import { ModeToggle } from "@/components/mode-toggle"
 import { auth, signOut } from "@/auth"
-import { Button } from "../../../../../components/ui/button"
-import { FlexRow } from "../../../../../components/ui/flexbox"
-import { Avatar, AvatarFallback, AvatarImage } from "../../../../../components/ui/avatar"
-import { ComponentProps } from "react"
-import { SideNav } from "./sidenav"
-import { ChevronsUpDown, LogOut, CircleUser, Cog, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ChevronsUpDown, LogOut, CircleUser, Cog } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
-type Props = Pick<ComponentProps<typeof SideNav>, "dictionary">
 
-export async function SideNavFooterContainer({ dictionary }: Props) {
+export async function SideNavFooterContainer() {
   const session = await auth()
+  const t = await getTranslations()
 
   const avatarLabel = (
     <>
@@ -88,11 +81,11 @@ export async function SideNavFooterContainer({ dictionary }: Props) {
               {/* その他諸々 */}
               <DropdownMenuItem className="h-9" disabled >
                 <CircleUser size={16} />
-                Profile
+                {t('sidebar.footer.profile')}
               </DropdownMenuItem>
               <DropdownMenuItem className="h-9" disabled >
                 <Cog size={16} />
-                Setting
+                {t('sidebar.footer.setting')}
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <LocaleSwitcher variant="ghost" className="font-normal" />
@@ -109,7 +102,7 @@ export async function SideNavFooterContainer({ dictionary }: Props) {
                   }}>
                     <Button variant={"ghost"} size={"icon"} className="p-0 h-9 w-full justify-start">
                       <LogOut size={16} />
-                      {dictionary["auth"].signOut}
+                      {t(`auth.signOut`)}
                     </Button>
                   </form>
                 </DropdownMenuItem>

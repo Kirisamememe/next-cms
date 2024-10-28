@@ -5,134 +5,19 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail
 } from "@/components/ui/sidebar"
-import { Heading } from "../../../../../components/ui/typography"
-import { Button } from "../../../../../components/ui/button"
-import { getDictionary } from "@/lib/translator";
-import { Flexbox, FlexRow } from "../../../../../components/ui/flexbox";
+import { FlexRow } from "@/components/ui/flexbox";
 import { SideNavFooterContainer } from "./sidenav-footer";
 import { Logo } from "./logo";
 import { LogoText } from "./logo-text";
-import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, PencilRuler, House, BookImage, Images, BookCopy, BookOpenText } from "lucide-react";
-import { cn } from "@/lib/utils"
 import { NavLink } from "./nav-link"
+import { useTranslations } from "next-intl";
+import { customContents, navMain, overview, restful } from "./nav-content";
 
-type Props = {
-  dictionary: Awaited<ReturnType<typeof getDictionary>>;
-}
-
-export function SideNav({ dictionary }: Props) {
-
-  const navMain = [
-    {
-      title: "ホームページ",
-      url: "/admin/homepage",
-      icon: House,
-      items: [],
-    },
-    {
-      title: "ブログ記事",
-      url: "/admin/articles",
-      icon: Newspaper,
-      items: [],
-    },
-    {
-      title: "ポートフォリオ",
-      url: "/admin/portfolio",
-      icon: BookCopy,
-      items: [],
-    },
-    {
-      title: "ギャラリー",
-      url: "/admin/gallery",
-      icon: Images,
-      items: [],
-    },
-    {
-      title: "略歴",
-      url: "/admin/about-me",
-      icon: LayoutTemplate,
-      items: [],
-    },
-  ]
-
-  const customContents = [
-    {
-      title: "単体コンテンツ",
-      url: "/admin/single-contents",
-      icon: FileText,
-      items: [],
-    },
-    {
-      title: "コレクション",
-      url: "/admin/collections",
-      icon: LibraryBig,
-      items: [],
-    }
-  ]
-
-  const restful = [
-    {
-      title: "API管理",
-      url: "/admin/restful-api",
-      icon: Server,
-    },
-    {
-      title: "ログ集計",
-      url: "/admin/log",
-      icon: PieChart,
-    },
-    {
-      title: "テスト",
-      url: "#",
-      icon: PencilRuler,
-    },
-  ]
-
-  const overview = [
-    {
-      title: "ダッシュボード",
-      url: "/admin/dashboard",
-      icon: CircleGauge,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "編集者管理",
-      url: "/admin/editors",
-      icon: Users,
-    },
-    {
-      title: "環境設定",
-      url: "/admin/preference",
-      icon: Settings2,
-    },
-    {
-      title: "ドキュメント",
-      url: "/admin/docs",
-      icon: BookOpenText,
-    },
-  ]
+export function SideNav() {
+  const t = useTranslations('sidebar');
 
   return (
     <Sidebar collapsible="icon">
@@ -147,14 +32,14 @@ export function SideNav({ dictionary }: Props) {
 
         <SidebarGroup className="">
           <SidebarGroupLabel>
-            Overview
+            {t(`overview.name`)}
           </SidebarGroupLabel>
           <SidebarMenu>
-            {overview.map((item) => (
-              <SidebarMenuItem>
+            {overview.map((item, index) => (
+              <SidebarMenuItem key={index}>
                 <NavLink url={item.url} title={item.title}>
                   {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+                  <span>{t(`overview.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -162,13 +47,15 @@ export function SideNav({ dictionary }: Props) {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Main Contents</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            {t(`mainContents.name`)}
+          </SidebarGroupLabel>
           <SidebarMenu>
-            {navMain.map((item) => (
-              <SidebarMenuItem>
+            {navMain.map((item, index) => (
+              <SidebarMenuItem key={index}>
                 <NavLink url={item.url} title={item.title}>
                   {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+                  <span>{t(`mainContents.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -176,13 +63,15 @@ export function SideNav({ dictionary }: Props) {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>Custom Contents</SidebarGroupLabel>
+          <SidebarGroupLabel>
+            {t(`customContents.name`)}
+          </SidebarGroupLabel>
           <SidebarMenu>
-            {customContents.map((item) => (
-              <SidebarMenuItem>
+            {customContents.map((item, index) => (
+              <SidebarMenuItem key={index}>
                 <NavLink url={item.url} title={item.title}>
                   {item.icon && <item.icon />}
-                  <span>{item.title}</span>
+                  <span>{t(`customContents.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -191,15 +80,14 @@ export function SideNav({ dictionary }: Props) {
 
         <SidebarGroup className="">
           <SidebarGroupLabel>
-            Restful API
+            {t(`restful.name`)}
           </SidebarGroupLabel>
           <SidebarMenu>
-            {restful.map((item) => (
-              <SidebarMenuItem>
+            {restful.map((item, index) => (
+              <SidebarMenuItem key={index}>
                 <NavLink url={item.url} title={item.title}>
                   {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  {/* <ChevronRight className="ml-auto transition-transform duration-200" /> */}
+                  <span>{t(`restful.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -208,7 +96,7 @@ export function SideNav({ dictionary }: Props) {
 
       </SidebarContent>
 
-      <SideNavFooterContainer dictionary={dictionary} />
+      <SideNavFooterContainer />
 
       <SidebarRail />
     </Sidebar>

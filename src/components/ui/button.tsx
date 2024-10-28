@@ -39,15 +39,23 @@ export interface ButtonProps
   asChild?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+const Button = React.forwardRef<
+  HTMLButtonElement, 
+  ButtonProps & { isPending?: boolean }
+>(
+  ({ className, variant, size, asChild = false, isPending, disabled, children, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={isPending === undefined ? disabled : isPending}
         {...props}
-      />
+      >
+        {isPending ? 
+          <div className="circle-spin-2-invert" /> : 
+        children}
+      </Comp>
     )
   }
 )

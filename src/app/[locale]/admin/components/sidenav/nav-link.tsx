@@ -1,13 +1,10 @@
 'use client'
 
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
-import { ReactNode } from "react";
-import { Button } from "../../../../../components/ui/button";
-import { SidebarMenuButton } from "../../../../../components/ui/sidebar";
+import React, { useEffect, useState } from "react";
+import { SidebarMenuButton } from "@/components/ui/sidebar";
 
 type Props = {
   url: string
@@ -19,9 +16,32 @@ export const NavLink = React.forwardRef<
   React.HTMLAttributes<HTMLAnchorElement> & Props
 >(({ url, title, children, ...props }, ref) => {
   const pathname = usePathname()
+  const [navigating, setNavigating] = useState(false)
+
+  useEffect(() => {
+    if (pathname.endsWith(url)) {
+      setNavigating(false)
+    }
+    return () => {
+      setNavigating(false)
+    }
+  }, [pathname, url])
+
+  const onClick = () => {
+    if (!pathname.endsWith(url)) {
+      setNavigating(true)
+    }
+  }
 
   return (
-    <SidebarMenuButton asChild tooltip={title} className={cn(pathname.endsWith(url) && "bg-accent font-bold hover:bg-accent")}>
+    <SidebarMenuButton 
+      asChild tooltip={title}
+      onClick={onClick}
+      className={cn(
+        "active:scale-95 transition-transform", 
+        navigating && "navigating bg-accent/50",
+        pathname.endsWith(url) && "bg-accent font-bold hover:bg-accent")
+      }>
       <Link ref={ref} href={url} {...props}>
         {children}
       </Link>

@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@radix-ui/colors/blue-dark.css';
+@import '@radix-ui/colors/slate-dark.css';
+
+
+@layer base {
+  :root {
+    --accentBase: var(--blue-1);
+    --accentBgSubtle: var(--blue-2);
+    --accentBg: var(--blue-3);
+    --accentBgHover: var(--blue-4);
+    --accentBgActive: var(--blue-5);
+    --accentLine: var(--blue-6);
+    --accentBorder: var(--blue-7);
+    --accentBorderHover: var(--blue-8);
+    --accentSolid: var(--blue-9);
+    --accentSolidHover: var(--blue-10);
+    --accentText: var(--blue-11);
+    --accentTextContrast: var(--blue-12);
+
+    --basePageBg: hsl(var(--background));
+    --baseBase: hsl(var(--background));
+    --baseBgSubtle: var(--slate-2);
+    --baseBg: var(--slate-3);
+    --baseBgHover: var(--slate-4);
+    --baseBgActive: var(--slate-5);
+    --baseLine: var(--slate-6);
+    --baseBorder: hsl(var(--border));
+    --baseBorderHover: hsl(var(--muted-foreground)/30);
+    --baseSolid: var(--slate-9);
+    --baseSolidHover: var(--slate-10);
+    --baseText: var(--slate-11);
+    --baseTextContrast: var(--slate-12);
+
+    --admonitionTipBg: var(--cyan-4);
+    --admonitionTipBorder: var(--cyan-8);
+
+    --admonitionInfoBg: var(--grass-4);
+    --admonitionInfoBorder: var(--grass-8);
+
+    --admonitionCautionBg: var(--amber-4);
+    --admonitionCautionBorder: var(--amber-8);
+
+    --admonitionDangerBg: var(--red-4);
+    --admonitionDangerBorder: var(--red-8);
+
+    --admonitionNoteBg: var(--slate-4);
+    --admonitionNoteBorder: var(--slate-8);
+
+    --error-color: var(--red-10);
+  }
+
+  .dark {
+    --accentBase: var(--blue-1);
+    --accentBgSubtle: var(--blue-2);
+    --accentBg: var(--blue-3);
+    --accentBgHover: var(--blue-4);
+    --accentBgActive: var(--blue-5);
+    --accentLine: var(--blue-6);
+    --accentBorder: var(--blue-7);
+    --accentBorderHover: var(--blue-8);
+    --accentSolid: var(--blue-9);
+    --accentSolidHover: var(--blue-10);
+    --accentText: var(--blue-11);
+    --accentTextContrast: var(--blue-12);
+
+    --basePageBg: hsl(var(--muted));
+    --baseBase: hsl(var(--background));
+    --baseBgSubtle: var(--slate-2);
+    --baseBg: var(--slate-3);
+    --baseBgHover: var(--slate-4);
+    --baseBgActive: var(--slate-5);
+    --baseLine: var(--slate-6);
+    --baseBorder: hsl(var(--border));
+    --baseBorderHover: hsl(var(--muted-foreground)/20);
+    --baseSolid: var(--slate-9);
+    --baseSolidHover: var(--slate-10);
+    --baseText: var(--slate-11);
+    --baseTextContrast: var(--slate-12);
+
+    --admonitionTipBg: var(--cyan-4);
+    --admonitionTipBorder: var(--cyan-8);
+
+    --admonitionInfoBg: var(--grass-4);
+    --admonitionInfoBorder: var(--grass-8);
+
+    --admonitionCautionBg: var(--amber-4);
+    --admonitionCautionBorder: var(--amber-8);
+
+    --admonitionDangerBg: var(--red-4);
+    --admonitionDangerBorder: var(--red-8);
+
+    --admonitionNoteBg: var(--slate-4);
+    --admonitionNoteBorder: var(--slate-8);
+
+    --error-color: var(--red-10);
+  }
+}
+
+
+.mdxeditor {
+  @apply text-foreground 
+}
+
+.mdxeditor-popup-container {
+
+}
+
+.mdxeditor-toolbar {
+  @apply bg-muted w-full top-20 mb-4 
+}
+
+.mdxeditor-toolbar span button {
+  @apply dark:bg-muted-foreground/30 data-[placeholder=true]:text-muted-foreground
+}
+
+.mdxeditor-rich-text-editor {
+
+}
+
+.mdxeditor-source-editor {
+
+}
+
+.cm-editor {
+  @apply bg-transparent
+}
+
+
+
+.cm-gutters {
+  
+}
+
+.cm-gutterElement {
+  @apply text-muted-foreground/50
+}
+
+.cm-gutters  .cm-activeLineGutter {
+  @apply bg-muted text-muted-foreground flex justify-center items-center
+}
+
+
+
+.cm-scroller {
+  @apply text-muted-foreground bg-transparent
+}
+
+.mdxeditor-diff-editor {
+
+}
+
+.contentEditableC {
+
+}
+
+.mdxeditor-select-content {
+  @apply max-h-96 overflow-scroll
+}
+
+.mdxeditor-select-content div div {
+  @apply dark:hover:bg-muted-foreground/20 data-[state=checked]:bg-muted-foreground/20
+}
+
+._codeMirrorToolbar_uazmk_408 button {
+  @apply my-2 mr-2
+}
+
+
+.prose ul li[role=checkbox] {
+  @apply pl-8
+}
+
+.prose ul li[role=checkbox]::before {
+  transform: translateY(6px);
+}
