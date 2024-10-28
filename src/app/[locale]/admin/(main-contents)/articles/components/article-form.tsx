@@ -1,15 +1,12 @@
 'use client'
 
-import React, { useTransition } from "react"
+import React from "react"
 import { MDXEditor } from "./forward-ref-editor"
-import { MDXEditorMethods } from "@mdxeditor/editor"
-import { createArticle, updateArticle } from "@/actions/articles"
-import { useParams } from "next/navigation"
+import { MDXEditorMethods, MDXEditorProps } from "@mdxeditor/editor"
 import { Flexbox, FlexColumn } from "@/components/ui/flexbox"
 import { useToast } from "@/hooks/use-toast"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
+import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 import { Article, articleSubmitFormSchema } from "@/types/article-schema"
 import { Input } from "@/components/ui/input"
@@ -18,76 +15,33 @@ import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
 
 type Props = {
-  article?: Article | null
+  form: UseFormReturn<{
+    body: string;
+    slug: string;
+    summary?: string | undefined;
+    title?: string | undefined;
+    image?: string | undefined;
+    commit_msg?: string | undefined;
+    author_note?: string | undefined;
+    author_id: number;
+  }, any, undefined>
+  onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
+  isPending: boolean
+  // article: Article
 }
 
-export default function ArticleForm({ article }: Props) {
-  const ref = React.useRef<MDXEditorMethods>(null)
-  const { id } = useParams()
-  const { toast } = useToast()
+export const ArticleForm = React.forwardRef<
+  MDXEditorMethods, MDXEditorProps & Props
+>(({ className, form, isPending, onSubmit, ...props }, ref) => {
+  
   const t = useTranslations()
-
-  const [isPending, startTransition] = useTransition()
-
-  const form = useForm<z.infer<typeof articleSubmitFormSchema>>({
-    resolver: zodResolver(articleSubmitFormSchema),
-    mode: "onChange",
-    defaultValues: {
-      title: article?.article_atoms[0].title || "",
-      slug: article?.slug || "",
-      summary: article?.article_atoms[0].summary || "",
-      image: article?.article_atoms[0].image || "",
-      body: ref.current?.getMarkdown() || "",
-      commit_msg: article?.article_atoms[0].commit_msg || "",
-      author_id: article?.author_id
-    }
-  });
-
-  const onSubmit = (values: z.infer<typeof articleSubmitFormSchema>) => {
-    const markdown = ref.current?.getMarkdown()
-    if (!markdown) return;
-
-    startTransition(async () => {
-      if (article) {
-        const res = await updateArticle(Number(id), values)
-        if (!res.id) {
-          toast({
-            title: "変更が保存できませんでした",
-            variant: "destructive"
-          })
-          console.error("失敗した")
-          return
-        }
-
-        toast({
-          title: "変更が保存されました！",
-        })
-        return
-      }
-
-
-      const res = await createArticle(values)
-
-      if (!res.id) {
-        toast({
-          title: "投稿できませんでした",
-          variant: "destructive"
-        })
-        console.error("失敗した")
-      }
-
-      toast({
-        title: "記事の投稿が完了しました！",
-      })
-    })
-  }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex border rounded-lg justify-stretch">
         <FlexColumn className="p-3 flex-grow border-r">
           <MDXEditor
-            ref={ref} markdown={article?.article_atoms[0].body || ""}
+            ref={ref} {...props}
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
@@ -199,4 +153,4 @@ export default function ArticleForm({ article }: Props) {
       </form>
     </Form>
   )
-}
+})

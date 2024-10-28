@@ -1,6 +1,9 @@
-import ArticleForm from "../../components/article-form";
+
 import { prisma } from "@/prisma";
 import { Locale } from "@/i18n/config";
+import { auth } from "@/auth";
+import { NewArticle } from "../../components/new-article";
+import { EditArticle } from "../../components/edit-article";
 
 type Props = {
   params: Promise<{
@@ -10,12 +13,16 @@ type Props = {
 }
 
 export default async function EditArticlePage({ params }: Props) {
-
-
   const { id } = await params
+
   if (!id) {
+    const session = await auth()
+    if (!session?.authorId) {
+      return null
+    }
+
     return (
-      <ArticleForm />
+      <NewArticle authorId={session.authorId} />
     )
   }
 
@@ -24,11 +31,20 @@ export default async function EditArticlePage({ params }: Props) {
       id: Number(id),
     },
     include: {
-      article_atoms: true
+      article_atoms: {
+        orderBy: {
+          created_at: 'desc'
+        },
+        take: 1
+      }
     }
   })
 
+  if (!article) {
+    throw new Error('DB Error')
+  }
+
   return (
-    <ArticleForm article={article} />
+    <EditArticle article={article} />
   )
 }

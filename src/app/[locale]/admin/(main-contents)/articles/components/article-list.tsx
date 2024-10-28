@@ -1,5 +1,6 @@
 import { prisma } from "@/prisma";
 import { ArticleCard } from "./article-card";
+import { FlexColumn } from "@/components/ui/flexbox";
 
 export default async function ArticleList() {
   const articles = await prisma.article.findMany({
@@ -9,7 +10,7 @@ export default async function ArticleList() {
   })
 
   return (
-    <>
+    <FlexColumn gap={3}>
       {articles.length &&
         articles.map((article, index) => {
           const title = article.article_atoms[0].title || extractTitleFromMarkdown(article.article_atoms[0].body)
@@ -18,7 +19,7 @@ export default async function ArticleList() {
           return <ArticleCard key={index} id={article.id} title={title} summary={summary} />
         })
       }
-    </>
+    </FlexColumn>
   )
 }
 
