@@ -72,12 +72,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // JWTの加工が完了すると、ここでセッションに入れられる
       if (!token.email) return session
       const res = await getUserByEmail(token.email)
-      if (!res) return session
+      if (!res) {
+        throw new Error('DB Error has occurred!')
+      }
 
       const { email, name } = token as { email: string, name: string, nickname: string, role: Role }
       const { user } = session
 
-      // console.log('---- session実行 -----')
+      console.log(`----${new Date()} session実行 -----`)
 
       session = {
         ...session,
