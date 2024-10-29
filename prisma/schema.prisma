@@ -25,6 +25,9 @@ model User {
   role          Role      @default(ADMIN)
   image         String?
 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
   contents     Content[]
   article      Article[]
   article_atom ArticleAtom[]
@@ -343,6 +346,7 @@ enum ValueType {
 }
 
 enum Role {
+  SUPER_ADMIN
   ADMIN
   INSPECTOR
   EDITOR

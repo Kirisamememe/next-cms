@@ -14,7 +14,7 @@ declare module "next-auth" {
   }
 
   interface Session {
-    authorId: number
+    operatorId: number
   }
 
   interface JWT {
@@ -81,7 +81,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       session = {
         ...session,
-        authorId: res.id,
+        operatorId: res.id,
         user: {
           ...user,
           email,

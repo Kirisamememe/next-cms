@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Editor } from "./editor-schema";
 
 
 export const articleSubmitFormSchema = z.object({
@@ -43,4 +44,24 @@ export type Article = {
 
   article_atoms: ArticleAtom[]
 }
+
+export type ArticleWithAuthor = {
+  id: number
+  slug: string
+  author_note: string | null
+  admin_only: boolean
+
+  created_at: Date
+  updated_at: Date
+  published_at: Date | null
+  archived_at: Date | null
+
+  category_id: number | null
+  author_id: number
+  author: Editor
+
+  article_atoms: ArticleAtom[]
+}
+
+
 

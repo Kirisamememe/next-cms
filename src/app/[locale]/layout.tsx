@@ -9,7 +9,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { getMessages } from 'next-intl/server';
-import { ResultToaster } from '@/components/result-toaster';
+import { ResultToaster } from '@/components/result-toaster-container';
+
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
