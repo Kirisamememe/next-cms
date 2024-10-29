@@ -68,7 +68,8 @@ const Flexbox = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof flexboxVariants> & 
   { 
     border?: boolean, 
-    bg?: boolean, 
+    bg?: boolean,
+    shadow?: boolean,
     trans?: boolean,
     centerX?: boolean,
     centerY?: boolean,
@@ -84,6 +85,7 @@ const Flexbox = React.forwardRef<
   py, 
   border = false, 
   bg = false, 
+  shadow = false,
   trans = false, 
   centerX = false,
   centerY = false,
@@ -96,6 +98,7 @@ const Flexbox = React.forwardRef<
         flexboxVariants({ orientation, radius, gap, p, px, py }),
         border && "border",
         bg && "bg-card",
+        shadow && "shadow-sm dark:shadow-none",
         trans && "transition-all",
         centerX && orientation === "horizontal" && "justify-center",
         centerY && orientation === "horizontal" && "items-center",
@@ -161,7 +164,7 @@ const flexRowVariants = cva(
         6: "py-6",
         7: "py-7",
         8: "py-8",
-      }
+      },
     }
   }
 )
@@ -172,6 +175,7 @@ const FlexRow = React.forwardRef<
   {
     border?: boolean,
     bg?: boolean,
+    shadow?: boolean,
     trans?: boolean,
     centerX?: boolean,
     centerY?: boolean,
@@ -186,6 +190,7 @@ const FlexRow = React.forwardRef<
   py,
   border = false,
   bg = false,
+  shadow = false,
   trans = false,
   centerX = false,
   centerY = false,
@@ -198,6 +203,7 @@ const FlexRow = React.forwardRef<
       flexRowVariants({ radius, gap, p, px, py }),
       border && "border",
       bg && "bg-card",
+      shadow && "shadow-sm dark:shadow-none",
       trans && "transition-all",
       centerX && "justify-center",
       centerY && "items-center",
@@ -272,6 +278,7 @@ const FlexColumn = React.forwardRef<
   {
     border?: boolean,
     bg?: boolean,
+    shadow?: boolean
     trans?: boolean,
     centerX?: boolean,
     centerY?: boolean,
@@ -286,6 +293,7 @@ const FlexColumn = React.forwardRef<
   py,
   border = false,
   bg = false,
+  shadow = false,
   trans = false,
   centerX = false,
   centerY = false,
@@ -298,6 +306,7 @@ const FlexColumn = React.forwardRef<
       flexColumnVariants({ radius, gap, p, px, py }),
       border && "border",
       bg && "bg-card",
+      shadow && "shadow-sm dark:shadow-none",
       trans && "transition-all",
       centerX && "items-center",
       centerY && "justify-center",

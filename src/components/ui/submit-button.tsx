@@ -22,7 +22,7 @@ const Submit = React.forwardRef<
     <>
       {errorMsg && 
       <Alert variant="destructive" className="mt-3">
-        <AlertCircle className="h-4 w-4" />
+        <AlertCircle size={18} />
         <AlertDescription className="font-semibold">
           {t(errorMsg)}
         </AlertDescription>

@@ -142,7 +142,7 @@ const gridColumnVariants = cva(
       }
     },
     defaultVariants: {
-      gap: 3,
+      gap: 4,
       radius: "lg"
     }
   }
