@@ -12,7 +12,7 @@ export function EditorCard({ editor }: Props) {
   const t = useTranslations();
 
   return (
-    <FlexRow border p={4} gap={2} radius={"md"} className="items-center">
+    <FlexRow border p={4} gap={2} radius={"lg"} bg center shadow>
       <Avatar className="size-9 group-data-[collapsible=icon]:size-8">
         {editor.image &&
           <AvatarImage src={editor.image} />}

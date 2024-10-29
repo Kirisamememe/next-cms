@@ -60,6 +60,9 @@
     "collections": {
       "1": "Collections"
     },
+    "pages": {
+      "1": "Pages"
+    },
     "restful-api": {
       "1": "RESTful API"
     },
@@ -113,8 +116,8 @@
     "VIEWER": "Viewer",
     "BLOCKED": "Blocked",
     "newEditor": "Add a new editor",
-    "authorized": "Authorized Editor",
-    "unauthorized": "Unauthorized Editor",
+    "authenticate": "Authenticate Editor",
+    "unauthenticated": "Unauthenticated Editor",
     "email": {
       "name": "Email",
       "placeholder": "Enter your email address",

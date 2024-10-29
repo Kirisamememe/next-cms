@@ -12,7 +12,7 @@ type Props = {
   action: (formData: FormData) => Promise<never>
 }
 
-export function EditNicknameForm({ email, image, name, nickname, action }: Props) {
+export function EditProfileForm({ email, image, name, nickname, action }: Props) {
   const t = useTranslations()
 
   return (

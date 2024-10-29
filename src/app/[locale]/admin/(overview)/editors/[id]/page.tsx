@@ -2,8 +2,9 @@ import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 import { EditEditorRole } from "../components/edit-editor-role";
 import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
-import { EditNickName } from "../components/edit-nickname";
+import { EditProfile } from "../components/edit-profile";
 import { getSession } from "@/lib/getSession";
+
 
 type Props = {
   params: Promise<{
@@ -36,7 +37,7 @@ export default async function SpecificEditorPage({ params }: Props) {
   // このページで自分の権限を設定することはできない
   // 自分自身の場合、必ずNicknameのFormを返す
   if (targetId === operatorId) {
-    return <EditNickName editor={editor} />
+    return <EditProfile editor={editor} />
   }
 
   // ターゲットユーザーの権限が自分より高い

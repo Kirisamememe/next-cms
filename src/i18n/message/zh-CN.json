@@ -60,6 +60,9 @@
     "collections": {
       "1": "合集"
     },
+    "pages": {
+      "1": "页面"
+    },
     "restful-api": {
       "1": "RESTful API"
     },
@@ -113,8 +116,8 @@
     "VIEWER": "閲覧者",
     "BLOCKED": "利用不可",
     "newEditor": "新增编辑者",
-    "authorized": "已认证编辑者",
-    "unauthorized": "未认证编辑者",
+    "authenticate": "已认证编辑者",
+    "unauthenticated": "未认证编辑者",
     "email": {
       "name": "邮箱",
       "placeholder": "请输入邮箱地址",

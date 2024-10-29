@@ -2,13 +2,13 @@ import { Flexbox } from "@/components/ui/flexbox"
 import { prisma } from "@/prisma"
 import { editNicknameFormSchema, Editor } from "@/types/editor-schema"
 import { redirect } from "next/navigation"
-import { EditNicknameForm } from "./edit-nickname-form"
+import { EditProfileForm } from "./edit-profile-form"
 
 type Props = {
   editor: Editor,
 }
 
-export async function EditNickName({ editor }: Props) {
+export async function EditProfile({ editor }: Props) {
 
   const action = async (formData: FormData) => {
     'use server'
@@ -39,7 +39,7 @@ export async function EditNickName({ editor }: Props) {
 
   return (
     <Flexbox border p={4} radius={"lg"} className="popover w-96 shrink-0 bg-background">
-      <EditNicknameForm email={editor.email} image={editor.image} name={editor.name} nickname={editor.nickname} action={action} />
+      <EditProfileForm email={editor.email} image={editor.image} name={editor.name} nickname={editor.nickname} action={action} />
     </Flexbox>
   )
 }

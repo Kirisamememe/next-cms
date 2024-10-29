@@ -11,9 +11,9 @@ type Props = {
   operatorRole: Role
 }
 
-export async function UnauthorizedEditorList({ operatorRole }: Props) {
+export async function UnauthenticatedEditorList({ operatorRole }: Props) {
   const isAdminRole = adminRole.includes(operatorRole)
-  
+
   const t = await getTranslations('editor')
   const unauthorizedEditors = await prisma.allowedEmail.findMany({
     where: {
@@ -24,20 +24,20 @@ export async function UnauthorizedEditorList({ operatorRole }: Props) {
   return (
     <Flexbox gap={3} className="appear w-full transition-all duration-300">
       <Heading>
-        {t('unauthorized')}
+        {t('unauthenticated')}
       </Heading>
       <GridColumn lg={2} xl={3}>
-        {isAdminRole && 
-        <Button
-          asChild
-          variant={"outline"}
-          className="min-h-12 h-full"
-        >
-          <Link href={"/admin/editors/new"}>{t('newEditor')}</Link>
-        </Button>}
-        
+        {isAdminRole &&
+          <Button
+            asChild
+            variant={"outline"}
+            className="min-h-12 h-full"
+          >
+            <Link href={"/admin/editors/new"}>{t('newEditor')}</Link>
+          </Button>}
+
         {unauthorizedEditors.map((editor, index) => (
-          <FlexRow key={index} border radius={"lg"} p={4}>
+          <FlexRow key={index} border radius={"lg"} p={4} bg shadow>
             {editor.email}
           </FlexRow>
         ))}

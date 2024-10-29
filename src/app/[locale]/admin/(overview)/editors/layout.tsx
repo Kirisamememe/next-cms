@@ -1,5 +1,5 @@
-import { AuthorizedEditorList } from "./components/authorized-editors";
-import { UnauthorizedEditorList } from "./components/unauthorized-editors";
+import { AuthenticateEditorList } from "./components/authenticate-editors";
+import { UnauthenticatedEditorList } from "./components/unauthenticated-editors";
 import { getSession } from "@/lib/getSession";
 
 export default async function EditorsPageLayout({
@@ -11,8 +11,8 @@ export default async function EditorsPageLayout({
 
   return (
     <>
-      <AuthorizedEditorList operatorId={operatorId} operatorRole={user.role} />
-      <UnauthorizedEditorList operatorRole={user.role} />
+      <AuthenticateEditorList operatorId={operatorId} operatorRole={user.role} />
+      <UnauthenticatedEditorList operatorRole={user.role} />
       {children}
     </>
   )

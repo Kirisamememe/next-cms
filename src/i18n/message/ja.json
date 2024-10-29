@@ -60,6 +60,9 @@
     "collections": {
       "1": "コレクション"
     },
+    "pages": {
+      "1": "ページ"
+    },
     "restful-api": {
       "1": "RESTful API"
     },
@@ -113,8 +116,8 @@
     "VIEWER": "閲覧者",
     "BLOCKED": "利用不可",
     "newEditor": "編集者を追加",
-    "authorized": "認証済みの編集者",
-    "unauthorized": "認証待ちの編集者",
+    "authenticate": "認証済みの編集者",
+    "unauthenticated": "認証待ちの編集者",
     "email": {
       "name": "メールアドレス",
       "placeholder": "メールアドレスを入力してください",
