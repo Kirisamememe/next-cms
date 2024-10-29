@@ -17,12 +17,12 @@ export default async function EditArticlePage({ params }: Props) {
 
   if (!id) {
     const session = await auth()
-    if (!session?.authorId) {
+    if (!session?.operatorId) {
       return null
     }
 
     return (
-      <NewArticle authorId={session.authorId} />
+      <NewArticle operatorId={session.operatorId} />
     )
   }
 

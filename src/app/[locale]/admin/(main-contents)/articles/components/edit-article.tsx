@@ -5,7 +5,6 @@ import { useToast } from "@/hooks/use-toast"
 import { Article, articleSubmitFormSchema } from "@/types/article-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
-import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import React from "react"
 import { useTransition } from "react"
@@ -22,7 +21,6 @@ export function EditArticle({ article }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { id } = useParams()
   const { toast } = useToast()
-  const t = useTranslations()
 
   const [isPending, startTransition] = useTransition()
 

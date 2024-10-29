@@ -4,11 +4,10 @@ import React from "react"
 import { MDXEditor } from "./forward-ref-editor"
 import { MDXEditorMethods, MDXEditorProps } from "@mdxeditor/editor"
 import { Flexbox, FlexColumn } from "@/components/ui/flexbox"
-import { useToast } from "@/hooks/use-toast"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
-import { Article, articleSubmitFormSchema } from "@/types/article-schema"
+import { articleSubmitFormSchema } from "@/types/article-schema"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
@@ -38,14 +37,14 @@ export const ArticleForm = React.forwardRef<
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex border rounded-lg justify-stretch">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex border rounded-lg justify-stretch max-w-[76rem] 2xl:w-[76rem] 2xl:m-auto">
         <FlexColumn className="p-3 flex-grow border-r">
           <MDXEditor
             ref={ref} {...props}
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
-        <Flexbox className="sticky top-[86px] shrink-0 w-72 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll">
+        <Flexbox className="sticky top-[86px] shrink-0 w-72 xl:w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll">
           <FormField
             control={form.control}
             name="title"
@@ -154,3 +153,4 @@ export const ArticleForm = React.forwardRef<
     </Form>
   )
 })
+ArticleForm.displayName = "ArticleForm"
