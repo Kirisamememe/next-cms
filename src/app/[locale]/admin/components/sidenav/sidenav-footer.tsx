@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronsUpDown, LogOut, CircleUser, Cog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { Link } from "@/i18n/routing"
 
 
 export async function SideNavFooterContainer() {
@@ -79,10 +80,13 @@ export async function SideNavFooterContainer() {
               <DropdownMenuSeparator />
 
               {/* その他諸々 */}
-              <DropdownMenuItem className="h-9" disabled >
-                <CircleUser size={16} />
-                {t('sidebar.footer.profile')}
-              </DropdownMenuItem>
+              <Link href={`/admin/editors/${session?.operatorId}`}>
+                <DropdownMenuItem className="h-9">
+                  <CircleUser size={16} />
+                  {t('sidebar.footer.profile')}
+                </DropdownMenuItem>
+              </Link>
+
               <DropdownMenuItem className="h-9" disabled >
                 <Cog size={16} />
                 {t('sidebar.footer.setting')}

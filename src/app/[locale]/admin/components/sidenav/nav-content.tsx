@@ -1,4 +1,4 @@
-import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, PencilRuler, House, Images, BookCopy, BookOpenText } from "lucide-react";
+import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, PencilRuler, House, Images, BookCopy, BookOpenText, FileUser } from "lucide-react";
 
 export const navMain = [
   {
@@ -26,9 +26,9 @@ export const navMain = [
     items: [],
   },
   {
-    title: "aboutMe",
-    url: "/admin/about-me",
-    icon: LayoutTemplate,
+    title: "biography",
+    url: "/admin/biography",
+    icon: FileUser,
     items: [],
   },
 ]
@@ -45,6 +45,12 @@ export const customContents = [
     url: "/admin/collections",
     icon: LibraryBig,
     items: [],
+  },
+  {
+    title: "pages",
+    url: "/admin/pages",
+    icon: LayoutTemplate,
+    items: [],
   }
 ]
 
@@ -58,11 +64,6 @@ export const restful = [
     title: "log",
     url: "/admin/log",
     icon: PieChart,
-  },
-  {
-    title: "apiTest",
-    url: "/admin/restful-api-test",
-    icon: PencilRuler,
   },
 ]
 

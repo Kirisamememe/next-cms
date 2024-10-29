@@ -3,21 +3,21 @@
 import { useToast } from "@/hooks/use-toast"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 
-export function ResultToaster() {
+export default function ResultToaster() {
   const t = useTranslations()
   const { toast } = useToast()
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
-  const error = params.get('error')
-  const message = params.get('message')
+  const error = useMemo(() => params.get('error'), [params])
+  const message = useMemo(() => params.get('message'), [params])
 
   useEffect(() => {
     if (error) {
       toast({
-        title: t('common.formResult.failed'),
+        title: t('common.error.failed'),
         description: t(error),
         variant: "destructive"
       })
@@ -27,7 +27,7 @@ export function ResultToaster() {
 
     if (message) {
       toast({
-        title: t('common.formResult.saved'),
+        title: t('common.error.saved'),
       })
       router.replace(pathname)
       return

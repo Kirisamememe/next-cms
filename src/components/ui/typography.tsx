@@ -119,6 +119,9 @@ const paragraphVariants = cva(
         1.5: "mt-1.5",
         2: "mt-2",
         3: "mt-3",
+        4: "mt-4",
+        5: "mt-5",
+        6: "mt-6",
       },
       mb: {
         0.5: "mb-0.5",
@@ -126,6 +129,9 @@ const paragraphVariants = cva(
         1.5: "mb-1.5",
         2: "mb-2",
         3: "mb-3",
+        4: "mb-4",
+        5: "mb-5",
+        6: "mb-6",
       },
       clamp: {
         1: "line-clamp-1",

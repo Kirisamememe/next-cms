@@ -15,6 +15,7 @@ import { LogoText } from "./logo-text";
 import { NavLink } from "./nav-link"
 import { useTranslations } from "next-intl";
 import { customContents, navMain, overview, restful } from "./nav-content";
+import { Link } from "@/i18n/routing";
 
 export function SideNav() {
   const t = useTranslations('sidebar');
@@ -22,10 +23,12 @@ export function SideNav() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4 group-data-[collapsible=icon]:p-2 transition-all">
-        <FlexRow gap={3} className="shrink-0">
-          <Logo />
-          <LogoText />
-        </FlexRow>
+        <Link href={"/admin/dashboard"}>
+          <FlexRow gap={3} className="shrink-0">
+            <Logo />
+            <LogoText />
+          </FlexRow>
+        </Link>
       </SidebarHeader>
 
       <SidebarContent>
