@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { EditEditorRole } from "../components/edit-editor-role";
 import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
 import { EditProfile } from "../components/edit-profile";
@@ -31,7 +31,7 @@ export default async function SpecificEditorPage({ params }: Props) {
   })
   // ターゲットユーザーが存在しない
   if (!editor?.id) {
-    redirect('/admin/editors?error=common.error.notfound')
+    notFound()
   }
 
   // このページで自分の権限を設定することはできない

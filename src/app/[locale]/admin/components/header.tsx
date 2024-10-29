@@ -32,7 +32,7 @@ export function Header() {
 
                 return (
                   <React.Fragment key={index}>
-                    {index !== arr.length - 1 ? 
+                    {index < arr.length - 1 ? 
                     <>
                       <BreadcrumbItem className="text-base font-bold hover:text-foreground">
                         <Link href={href}>

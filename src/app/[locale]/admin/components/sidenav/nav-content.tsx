@@ -1,4 +1,4 @@
-import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, PencilRuler, House, Images, BookCopy, BookOpenText, FileUser } from "lucide-react";
+import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, House, Images, BookCopy, BookOpenText, FileUser } from "lucide-react";
 
 export const navMain = [
   {

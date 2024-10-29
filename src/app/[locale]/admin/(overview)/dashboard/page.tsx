@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { Dashboard } from "@/app/[locale]/admin/(overview)/dashboard/components/dashboard";
 import { LabelText } from "@/components/ui/typography";
-import { Locale } from "@/i18n/config";
 
 export default async function DashboardPage() {
   const session = await auth()

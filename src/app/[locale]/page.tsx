@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation";
-
 export default async function Home() {
 
-  notFound()
+  return (
+    <div className="m-auto">
+      HomePage    
+    </div>
+  )
 }

@@ -1,9 +1,6 @@
+import NotFound from "@/components/not-found";
 
-export default function NotFound() {
-  return (
-    <div>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-    </div>
-  )
+export default function NotFoundPage() {
+
+  return <NotFound href="/admin/dashboard" />
 }

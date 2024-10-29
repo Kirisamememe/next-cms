@@ -1,27 +1,10 @@
-import { NextIntlClientProvider } from 'next-intl';
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@/app/globals.css";
 import React from "react";
-import { ThemeProvider } from "next-themes";
 import { Locale } from "@/i18n/config";
-import { Toaster } from "@/components/ui/toaster"
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
-import { getMessages } from 'next-intl/server';
-import { ResultToaster } from '@/components/result-toaster-container';
+import BaseLayout from '@/components/base-layout';
 
-
-const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "../fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -41,28 +24,9 @@ export default async function RootLayout({
     notFound();
   }
 
-  const messages = await getMessages();
-
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NextIntlClientProvider messages={messages}>
-            <main className="flex flex-col min-h-dvh">
-              {children}
-              <ResultToaster />
-            </main>
-            <Toaster />
-          </NextIntlClientProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+    <BaseLayout locale={locale}>
+      {children}
+    </BaseLayout>
+  )
 }
