@@ -6,13 +6,15 @@
     "delete": "删除",
     "ok": "是",
     "no": "否",
-    "formResult": {
+    "error": {
       "success": "成功!",
       "failed": "失败!",
       "saved": "更改已保存！",
       "invalidData": "无效数据",
       "internalError": "内部错误",
-      "databaseError": "数据库错误"
+      "databaseError": "数据库错误",
+      "permission": "您没有相应权限",
+      "notfound": "未找到相应用户"
     }
   },
   "auth": {
@@ -49,7 +51,7 @@
     "gallery": {
       "1": "图库"
     },
-    "about-me": {
+    "biography": {
       "1": "关于我"
     },
     "single-contents": {
@@ -82,12 +84,13 @@
       "articles": "博客文章",
       "portfolio": "作品集",
       "gallery": "图库",
-      "aboutMe": "关于我"
+      "biography": "关于我"
     },
     "customContents": {
       "name": "自定义内容",
       "singleContents": "单一内容",
-      "collections": "集合"
+      "collections": "集合",
+      "pages": "页面"
     },
     "restful": {
       "name": "RESTful API",
@@ -103,7 +106,8 @@
     }
   },
   "editor": {
-    "ADMIN": "管理者",
+    "SUPER_ADMIN": "超级管理员",
+    "ADMIN": "管理员",
     "INSPECTOR": "監察",
     "EDITOR": "編集者",
     "VIEWER": "閲覧者",

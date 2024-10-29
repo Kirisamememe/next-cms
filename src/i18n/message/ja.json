@@ -6,13 +6,15 @@
     "delete": "削除",
     "ok": "はい",
     "no": "いいえ",
-    "formResult": {
+    "error": {
       "success": "成功!",
       "failed": "失敗!",
       "saved": "変更が保存されました！",
       "invalidData": "無効なデータです。",
       "internalError": "内部エラーが発生しました。",
-      "databaseError": "データベースエラーが発生しました。"
+      "databaseError": "データベースエラーが発生しました。",
+      "permission": "権限がありません。",
+      "notfound": "該当ユーザーが見つかりません。"
     }
   },
   "auth": {
@@ -49,8 +51,8 @@
     "gallery": {
       "1": "ギャラリー"
     },
-    "about-me": {
-      "1": "略歴"
+    "biography": {
+      "1": "バイオグラフィー"
     },
     "single-contents": {
       "1": "単体コンテンツ"
@@ -82,12 +84,13 @@
       "articles": "ブログ記事",
       "portfolio": "ポートフォリオ",
       "gallery": "ギャラリー",
-      "aboutMe": "略歴"
+      "biography": "バイオグラフィー"
     },
     "customContents": {
       "name": "カスタムコンテンツ",
       "singleContents": "単体コンテンツ",
-      "collections": "コレクション"
+      "collections": "コレクション",
+      "pages": "ページ"
     },
     "restful": {
       "name": "RESTful API",
@@ -103,6 +106,7 @@
     }
   },
   "editor": {
+    "SUPER_ADMIN": "管理者総括",
     "ADMIN": "管理者",
     "INSPECTOR": "監察",
     "EDITOR": "編集者",
@@ -126,7 +130,7 @@
     }
   },
   "article": {
-    "newArticle": "ブログ記事を投稿",
+    "newArticle": "ブログ記事を作成",
     "title": {
       "name": "タイトル",
       "placeholder": "記事のタイトルを入力",

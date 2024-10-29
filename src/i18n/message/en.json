@@ -6,13 +6,15 @@
     "delete": "Delete",
     "ok": "OK",
     "no": "NO",
-    "formResult": {
+    "error": {
       "success": "Success!",
       "failed": "Failed!",
       "saved": "Changes saved!",
       "invalidData": "Invalid data.",
       "internalError": "An internal error has occurred.",
-      "databaseError": "A database error has occurred."
+      "databaseError": "A database error has occurred.",
+      "permission": "Permission error.",
+      "notfound": "No matching user found."
     }
   },
   "auth": {
@@ -49,7 +51,7 @@
     "gallery": {
       "1": "Gallery"
     },
-    "about-me": {
+    "biography": {
       "1": "About Me"
     },
     "single-contents": {
@@ -82,12 +84,13 @@
       "articles": "Blog Articles",
       "portfolio": "Portfolio",
       "gallery": "Gallery",
-      "aboutMe": "About Me"
+      "biography": "Biography"
     },
     "customContents": {
       "name": "Custom Contents",
       "singleContents": "Single Contents",
-      "collections": "Collections"
+      "collections": "Collections",
+      "pages": "Pages"
     },
     "restful": {
       "name": "RESTful API",
@@ -103,6 +106,7 @@
     }
   },
   "editor": {
+    "SUPER_ADMIN": "Super Admin",
     "ADMIN": "Admin",
     "INSPECTOR": "Inspector",
     "EDITOR": "Editor",
