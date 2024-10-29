@@ -1,8 +1,9 @@
-import { EditEditorProfile } from "@/app/[locale]/admin/(overview)/editors/components/edit-editor-profile";
-import { Flexbox } from "@/components/ui/flexbox";
 import { prisma } from "@/prisma";
-import { editorProfileSchema, Role } from "@/types/editor-schema";
 import { redirect } from "next/navigation";
+import { EditEditorRole } from "../components/edit-editor-role";
+import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
+import { EditNickName } from "../components/edit-nickname";
+import { getSession } from "@/lib/getSession";
 
 type Props = {
   params: Promise<{
@@ -10,52 +11,38 @@ type Props = {
   }>
 }
 
-export default async function EditorProfilePage({ params }: Props) {
+export default async function SpecificEditorPage({ params }: Props) {
+  // ログイン状態＆権限を確認
+  const { user, operatorId } = await getSession()
   const { id } = await params
+  const targetId = Number(id)
+
+  // 自分のページではないし、管理者でもない
+  if (!isAdminGroup(user.role) && targetId !== operatorId) {
+    redirect('/admin/editors?error=common.error.permission')
+  }
+
+  // ターゲットユーザーの存在を確認
   const editor = await prisma.user.findUnique({
     where: {
-      id: Number(id)
+      id: targetId
     }
   })
-
+  // ターゲットユーザーが存在しない
   if (!editor?.id) {
-    return null
+    redirect('/admin/editors?error=common.error.notfound')
   }
 
-  const action = async (formData: FormData) => {
-    'use server'
-    const parse = editorProfileSchema.safeParse({ 
-      nickname: formData.get('nickname'),
-      role: formData.get('role')
-    })
-
-    if (parse.error) {
-      const errorMsg = parse.error.format().nickname?._errors
-      redirect(`/admin/editors/${id}?formError=${errorMsg}`,)
-    }
-
-    const res = await prisma.user.update({
-      where: {
-        id: Number(id)
-      },
-      data: {
-        nickname: formData.get('nickname') as string,
-        role: formData.get('role') as Role
-      }
-    })
-
-    if (!res.id) {
-      redirect(`/admin/editors/${id}?formError=failed`,)
-    }
-
-    redirect(`/admin/editors?message=success`)
+  // このページで自分の権限を設定することはできない
+  // 自分自身の場合、必ずNicknameのFormを返す
+  if (targetId === operatorId) {
+    return <EditNickName editor={editor} />
   }
 
-  return (
-    <Flexbox border p={4} radius={"lg"} className="popover w-96 shrink-0 bg-background">
-      <form action={action} className="flex flex-col gap-3">
-        <EditEditorProfile editor={editor} />
-      </form>
-    </Flexbox>
-  )
+  // ターゲットユーザーの権限が自分より高い
+  if (!isPermissible({ targetRole: editor.role, operatorRole: user.role })) {
+    redirect('/admin/editors?error=common.error.permission')
+  }
+
+  return <EditEditorRole editor={editor} operatorRole={user.role} />
 }
