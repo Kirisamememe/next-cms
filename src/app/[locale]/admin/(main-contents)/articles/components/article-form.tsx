@@ -146,7 +146,9 @@ export const ArticleForm = React.forwardRef<
             type="submit" disabled={isPending}
             className="sticky bottom-0"
           >
-            {t("common.submit")}
+            {isPending ?
+              <div className="circle-spin-2-invert" /> :
+              t("common.submit")}
           </Button>
         </Flexbox>
       </form>
