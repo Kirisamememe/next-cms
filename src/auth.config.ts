@@ -12,7 +12,6 @@ export const authConfig = {
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
-      // console.log("！！！！！！！　authorizedに入った　！！！！！！！")
       const isLoggedIn = !!auth?.user;
       const isOnAdmin = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin/.+`);
       const isOnAuthPage = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin$`);
