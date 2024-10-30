@@ -28,8 +28,31 @@ export async function getUserByEmail(email: string) {
       id: true,
       role: true,
       nickname: true,
+      image: true
     }
   })
 
   return user
+}
+
+
+export async function noSuperAdmin() {
+  const superAdmin = await prisma.user.findMany({
+    where: {
+      role: "SUPER_ADMIN"
+    }
+  })
+
+  return superAdmin.length === 0;
+}
+
+export async function setAsSuperAdmin(email: string) {
+  return await prisma.user.update({
+    where: {
+      email: email
+    },
+    data: {
+      role: "SUPER_ADMIN"
+    }
+  })
 }

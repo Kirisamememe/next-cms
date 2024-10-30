@@ -4,7 +4,7 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
 import { authConfig } from "./auth.config"
-import { getUserByEmail, getAllowedEmails, addAllowedEmail } from "./actions/user"
+import { getUserByEmail, getAllowedEmails, addAllowedEmail, noSuperAdmin, setAsSuperAdmin } from "./actions/user"
 import { Role } from "./types/editor-schema"
 
 declare module "next-auth" {
@@ -41,10 +41,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const allowedEmails = await getAllowedEmails()
 
-      if (allowedEmails.length === 0) {
+      if (!allowedEmails.length) {
         const result = await addAllowedEmail(email)
         if (!result.email) {
-          throw new Error("DB Error")
+          throw new Error("common.error.databaseError")
         }
         return true
       }
@@ -55,9 +55,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return true
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       // signInに成功すると、ここにでJWTの加工が行われる
       // ここのuserはなぜか同期的に取得できない
+      if (trigger === "signUp" && await noSuperAdmin() && user.email) {
+        const res = await setAsSuperAdmin(user.email)
+        if (!res) {
+          console.error("Database error has occurred: setAsSuperAdmin")
+        }
+      }
+
       if (user) {
         token = {
           ...token,
@@ -70,16 +77,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       // JWTの加工が完了すると、ここでセッションに入れられる
-      if (!token.email) return session
+      if (!token.email) {
+        throw new Error('common.error.permission')
+      }
       const res = await getUserByEmail(token.email)
       if (!res) {
-        throw new Error('DB Error has occurred!')
+        throw new Error('common.error.databaseError')
       }
 
       const { email, name } = token as { email: string, name: string, nickname: string, role: Role }
       const { user } = session
 
-      console.log(`----${new Date()} session実行 -----`)
+      console.log(`---- session実行 ${new Date()} -----`)
 
       session = {
         ...session,
@@ -89,7 +98,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email,
           name,
           role: res.role,
-          nickname: res.nickname || ""
+          nickname: res.nickname || "",
+          image: res.image
         }
       }
 
