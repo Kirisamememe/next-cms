@@ -54,6 +54,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user, trigger }) {
       // signInに成功すると、ここにでJWTの加工が行われる
       // ここのuserはなぜか同期的に取得できない
+      // まず、allowed_emailがuserにリンク済みか確認
+      // まだリンクしていない場合、リンクを開始
       if ((trigger === "signUp" || trigger === "signIn") && await noSuperAdmin() && user.email) {
         const res = await setAsSuperAdmin(user.email)
         if (!res) {
@@ -62,7 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       // 要検証！！
-      if (trigger === "signIn" && user.email) {
+      if ((trigger === "signUp" || trigger === "signIn") && user.email) {
         const res = await authenticateEmail(user.email)
         if (!res) {
           console.error("Database error has occurred: setAsSuperAdmin")
