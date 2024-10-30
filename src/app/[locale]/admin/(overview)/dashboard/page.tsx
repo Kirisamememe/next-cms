@@ -1,30 +1,8 @@
-import { auth } from "@/auth";
 import { Dashboard } from "@/app/[locale]/admin/(overview)/dashboard/components/dashboard";
-import { LabelText } from "@/components/ui/typography";
+import { getSession } from "@/lib/getSession";
 
 export default async function DashboardPage() {
-  const session = await auth()
+  const { user } = await getSession()
 
-  if (!session?.user) {
-    return null
-  }
-
-  return (
-    <>
-      <DateComp />
-      {/* <Revalidate /> */}
-      <Dashboard name={session?.user?.name} email={session?.user?.email} role={session?.user?.role} image={session?.user?.image} />
-    </>
-
-  )
-}
-
-function DateComp() {
-  const data = new Date().toUTCString()
-
-  return (
-    <LabelText>
-      {data}
-    </LabelText>
-  )
+  return <Dashboard name={user.name} nickname={user.nickname} role={user.role} image={user.image} />
 }

@@ -1,30 +1,31 @@
-'use client'
-
 import Image from "next/image";
-import { Flexbox } from "@/components/ui/flexbox";
-import { Heading, LabelText } from "@/components/ui/typography";
+import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
+import { Heading } from "@/components/ui/typography";
 import { Role } from "@/types/editor-schema";
+import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
 
 type Props = {
   name?: string | null
-  email?: string | null
+  nickname?: string | null
   role?: Role
   image?: string | null
 }
 
-export function Dashboard({ name, email, role, image }: Props) {
+export function Dashboard({ name, nickname, role, image }: Props) {
+  const t = useTranslations()
+
   return (
-    <Flexbox border p={8} radius={"lg"} className="appear">
-      <Heading>
-        {name}
-      </Heading>
-      <LabelText>
-        {email}
-      </LabelText>
-      <LabelText>
-        {role}
-      </LabelText>
-      <Image height={200} width={200} src={image || ""} alt="" />
-    </Flexbox>
+    <FlexRow border p={8} radius={"lg"} gap={6} centerY bg className="appear">
+      <Image height={120} width={120} src={image || ""} alt="avatar image" className="rounded-full" />
+      <FlexColumn>
+        <Heading size={24} mb={2}>
+          {t('dashboard.welcome', { name: nickname || name })}
+        </Heading>
+        <Badge className="w-fit">
+          {t(`editor.${role}`)}
+        </Badge>
+      </FlexColumn>
+    </FlexRow>
   )
 }
