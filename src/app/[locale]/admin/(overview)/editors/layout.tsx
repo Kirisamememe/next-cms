@@ -12,11 +12,11 @@ export default async function EditorsPageLayout({
 
   return (
     <>
-      <AuthenticateEditorList operatorId={operatorId} operatorRole={user.role} />
-      <UnauthenticatedEditorList operatorRole={user.role} />
-      <Flexbox center className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-[70%] z-[100]">
+      <Flexbox center className="fixed top-0 left-0 w-dvw h-dvh z-[50] pointer-events-none">
         {children}
       </Flexbox>
+      <AuthenticateEditorList operatorId={operatorId} operatorRole={user.role} />
+      <UnauthenticatedEditorList operatorRole={user.role} />
     </>
   )
 }
