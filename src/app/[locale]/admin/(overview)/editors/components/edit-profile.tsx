@@ -1,6 +1,6 @@
 import { Flexbox } from "@/components/ui/flexbox"
 import { prisma } from "@/prisma"
-import { editNicknameFormSchema, Editor } from "@/types/editor-schema"
+import { editProfileFormSchema, Editor } from "@/types/editor-schema"
 import { redirect } from "next/navigation"
 import { EditProfileForm } from "./edit-profile-form"
 
@@ -12,8 +12,9 @@ export async function EditProfile({ editor }: Props) {
 
   const action = async (formData: FormData) => {
     'use server'
-    const parse = editNicknameFormSchema.safeParse({
+    const parse = await editProfileFormSchema.safeParseAsync({
       nickname: formData.get('nickname'),
+      image: formData.get('image')
     })
 
     if (parse.error) {
@@ -27,6 +28,7 @@ export async function EditProfile({ editor }: Props) {
       },
       data: {
         nickname: parse.data.nickname,
+        image: parse.data.image
       }
     })
 

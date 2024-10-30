@@ -13,7 +13,7 @@ export async function EditEditorRole({ editor, operatorRole }: Props) {
 
   const action = async (formData: FormData) => {
     'use server'
-    const parse = editRoleFormSchema.safeParse({
+    const parse = await editRoleFormSchema.safeParseAsync({
       role: formData.get('role')
     })
 

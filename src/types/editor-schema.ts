@@ -27,11 +27,11 @@ export const roleLevel = {
 } as const
 
 export const roles = [
-  "SUPER_ADMIN", 
-  "ADMIN", 
-  "INSPECTOR", 
-  "EDITOR", 
-  "VIEWER", 
+  "SUPER_ADMIN",
+  "ADMIN",
+  "INSPECTOR",
+  "EDITOR",
+  "VIEWER",
   "BLOCKED"
 ] as const
 
@@ -64,8 +64,9 @@ export const editRoleFormSchema = z.object({
   role: z.enum(roles, { message: "role.error" })
 })
 
-export const editNicknameFormSchema = z.object({
+export const editProfileFormSchema = z.object({
   nickname: z.string().max(12, "editor.profile.nicknameValidationMax"),
+  image: z.string().max(1024, "editor.profile.imageValidationMax").url({ message: "editor.profile.imageValidationUrl" })
 })
 
 

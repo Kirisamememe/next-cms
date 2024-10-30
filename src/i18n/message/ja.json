@@ -9,6 +9,7 @@
     "error": {
       "success": "成功!",
       "failed": "失敗!",
+      "error": "エラー発生",
       "saved": "変更が保存されました！",
       "invalidData": "無効なデータです。",
       "internalError": "内部エラーが発生しました。",
@@ -108,6 +109,9 @@
       "language": "言語"
     }
   },
+  "dashboard": {
+    "welcome": "お帰りなさい、{name}さん！"
+  },
   "editor": {
     "SUPER_ADMIN": "管理者総括",
     "ADMIN": "管理者",
@@ -128,6 +132,10 @@
       "nickname": "ニックネーム",
       "nicknamePlaceholder": "12文字以内で入力してください",
       "nicknameValidationMax": "ニックネームは12文字以内で入力してください。",
+      "image": "プロフィール画像",
+      "imagePlaceholder": "アバター画像のURLを入力してください",
+      "imageValidationMax": "画像URLは1024文字以内で入力してください",
+      "imageValidationUrl": "URLのフォーマットが正しくありません",
       "role": "権限",
       "rolePlaceholder": "権限を設定してください"
     }

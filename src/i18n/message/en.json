@@ -9,6 +9,7 @@
     "error": {
       "success": "Success!",
       "failed": "Failed!",
+      "error": "Something went wrong!",
       "saved": "Changes saved!",
       "invalidData": "Invalid data.",
       "internalError": "An internal error has occurred.",
@@ -108,6 +109,9 @@
       "language": "Language"
     }
   },
+  "dashboard": {
+    "welcome": "Welcome back, {name}!"
+  },
   "editor": {
     "SUPER_ADMIN": "Super Admin",
     "ADMIN": "Admin",
@@ -128,6 +132,10 @@
       "nickname": "Nickname",
       "nicknamePlaceholder": "Input your nickname",
       "nicknameValidationMax": "Nickname must be less than 12 characters",
+      "image": "Avatar Image",
+      "imagePlaceholder": "Input the url of your avatar image",
+      "imageValidationMax": "Image url must be less than 1024 characters",
+      "imageValidationUrl": "Image url must be a URL",
       "role": "Role",
       "rolePlaceholder": "Please assign a role to this user."
     }

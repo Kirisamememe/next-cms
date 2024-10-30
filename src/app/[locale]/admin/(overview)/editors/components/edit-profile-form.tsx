@@ -25,7 +25,14 @@ export function EditProfileForm({ email, image, name, nickname, action }: Props)
         <span className="ml-1 font-semibold">
           {t('editor.profile.nickname')}
         </span>
-        <Input name="nickname" defaultValue={nickname || ""} placeholder={t('editor.profile.nicknamePlaceholder')} />
+        <Input name="nickname" defaultValue={nickname || ""} placeholder={t('editor.profile.nicknamePlaceholder')} aria-description={t('editor.profile.nicknamePlaceholder')} />
+      </label>
+
+      <label className="flex flex-col gap-2 text-sm">
+        <span className="ml-1 font-semibold">
+          {t('editor.profile.image')}
+        </span>
+        <Input name="image" defaultValue={image || ""} placeholder={t('editor.profile.imagePlaceholder')} aria-description={t('editor.profile.imagePlaceholder')} />
       </label>
 
       <Submit className="mt-4">

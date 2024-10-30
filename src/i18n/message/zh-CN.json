@@ -9,6 +9,7 @@
     "error": {
       "success": "成功!",
       "failed": "失败!",
+      "error": "程序异常",
       "saved": "更改已保存！",
       "invalidData": "无效数据",
       "internalError": "内部错误",
@@ -108,6 +109,9 @@
       "language": "语言"
     }
   },
+  "dashboard": {
+    "welcome": "欢迎回来，{name}！"
+  },
   "editor": {
     "SUPER_ADMIN": "超级管理员",
     "ADMIN": "管理员",
@@ -128,6 +132,10 @@
       "nickname": "昵称",
       "nicknamePlaceholder": "请输入12字以内的昵称",
       "nicknameValidationMax": "请输入12字以内的昵称。",
+      "image": "头像",
+      "imagePlaceholder": "请输入您的头像图片链接",
+      "imageValidationMax": "图片链接不能超过1024个字符",
+      "imageValidationUrl": "链接格式錯誤",
       "role": "职能",
       "rolePlaceholder": "请给该用户分配一个职能"
     }

@@ -9,6 +9,7 @@
     "error": {
       "success": "成功!",
       "failed": "失敗!",
+      "error": "程式異常",
       "saved": "更改已儲存！",
       "invalidData": "無效資料",
       "internalError": "內部錯誤",
@@ -108,6 +109,9 @@
       "language": "語言"
     }
   },
+  "dashboard": {
+    "welcome": "歡迎回來，{name}！"
+  },
   "editor": {
     "SUPER_ADMIN": "超級管理員",
     "ADMIN": "管理員",
@@ -128,6 +132,10 @@
       "nickname": "暱稱",
       "nicknamePlaceholder": "請輸入12字以內的暱稱",
       "nicknameValidationMax": "請輸入12字以內的暱稱。",
+      "image": "頭貼",
+      "imagePlaceholder": "請輸入您的頭像圖片鏈接",
+      "imageValidationMax": "圖片鏈接不能超過1024個字元",
+      "imageValidationUrl": "鏈接格式錯誤",
       "role": "職能",
       "rolePlaceholder": "請給該用戶分配一個職能"
     }
