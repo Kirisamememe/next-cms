@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Article, articleSubmitFormSchema } from "@/types/article-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import React from "react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -19,8 +19,9 @@ type Props = {
 
 export function EditArticle({ article }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
-  const { id } = useParams()
+  const { slug } = useParams<{ slug: string[] }>()
   const { toast } = useToast()
+  const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
 
@@ -32,7 +33,7 @@ export function EditArticle({ article }: Props) {
       slug: article?.slug || "",
       summary: article?.article_atoms[0].summary || "",
       image: article?.article_atoms[0].image || "",
-      body: ref.current?.getMarkdown() || "",
+      body: article.article_atoms[0].body || "",
       commit_msg: article?.article_atoms[0].commit_msg || "",
       author_id: article?.author_id
     }
@@ -43,7 +44,7 @@ export function EditArticle({ article }: Props) {
     if (!markdown) return;
 
     startTransition(async () => {
-      const res = await updateArticle(Number(id), values)
+      const res = await updateArticle(Number(slug[1]), values)
       if (!res.id) {
         toast({
           title: "変更が保存できませんでした",
@@ -56,6 +57,7 @@ export function EditArticle({ article }: Props) {
       toast({
         title: "変更が保存されました！",
       })
+      router.push('/admin/articles')
       return
     })
   }

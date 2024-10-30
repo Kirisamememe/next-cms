@@ -18,18 +18,19 @@ export default async function EditArticlePage({ params }: Props) {
     notFound()
   }
 
+  // 記事idあるか確認、なければ記事作成
+  if (!slug[1]) {
+    const { operatorId } = await getSession()
+    return <NewArticle operatorId={operatorId} />
+  }
+
+  // 記事idあれば、バリデーション
   const parseId = await idSchema.safeParseAsync(Number(slug[1]))
   if (parseId.error) {
     notFound()
   }
 
   const id = parseId.data
-  const { operatorId } = await getSession()
-
-  if (!slug[1]) {
-    return <NewArticle operatorId={operatorId} />
-  }
-
   const article = await prisma.article.findUnique({
     where: {
       id: id,

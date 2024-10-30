@@ -18,13 +18,13 @@ export default async function ArticleList() {
 
   return (
     <GridColumn lg={2} xl={3} xxl={4}>
-      <Button asChild variant={"outline"} size={"lg"} className="min-h-12 h-full font-bold">
+      <Button asChild variant={"outline"} size={"lg"} className="min-h-12　sm:min-h-32 h-full font-bold">
         <Link href={'/admin/articles/edit'}>
           <Plus size={20} />
           {t('article.newArticle')}
         </Link>
       </Button>
-      {articles.length &&
+      {articles.length > 0 &&
         articles.map((article, index) => <ArticleCard key={index} article={article} />)
       }
     </GridColumn>

@@ -10,6 +10,7 @@ import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ArticleForm } from "./article-form"
+import { useRouter } from "next/navigation"
 
 type Props = {
   operatorId: number
@@ -18,6 +19,7 @@ type Props = {
 export function NewArticle({ operatorId }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
+  const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
 
@@ -26,7 +28,6 @@ export function NewArticle({ operatorId }: Props) {
     mode: "onChange",
     defaultValues: {
       title: "",
-      slug: "",
       summary: "",
       image: "",
       body: "",
@@ -53,6 +54,7 @@ export function NewArticle({ operatorId }: Props) {
       toast({
         title: "記事の投稿が完了しました！",
       })
+      router.push(`/admin/articles/${res.id}`)
     })
   }
 

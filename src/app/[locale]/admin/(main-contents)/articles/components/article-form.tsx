@@ -32,7 +32,7 @@ type Props = {
 export const ArticleForm = React.forwardRef<
   MDXEditorMethods, MDXEditorProps & Props
 >(({ className, form, isPending, onSubmit, ...props }, ref) => {
-  
+
   const t = useTranslations()
 
   return (
@@ -142,7 +142,7 @@ export const ArticleForm = React.forwardRef<
             )}
           />
 
-          <Button 
+          <Button
             type="submit" disabled={isPending}
             className="sticky bottom-0"
           >

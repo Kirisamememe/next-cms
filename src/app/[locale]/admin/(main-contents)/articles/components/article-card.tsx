@@ -24,7 +24,7 @@ export function ArticleCard({ article }: Props) {
           {summary}
         </Paragraph>
         <LabelText size={14} weight={400} className="inline-flex items-center gap-2 mt-auto">
-          <Image src={article.author.image || ""} width={22} height={22} alt="" className="rounded-full"/>
+          <Image src={article.author.image || ""} width={22} height={22} alt="" className="rounded-full" />
           {article.author.nickname || article.author.name}
           <span className="ml-auto">{format(article.updated_at, "yyyy/MM/dd HH:mm")}</span>
         </LabelText>
