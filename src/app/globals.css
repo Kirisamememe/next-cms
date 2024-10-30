@@ -2,26 +2,270 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* @import '@mdxeditor/editor/style.css';
+@import '@radix-ui/colors/blue-dark.css';
+@import '@radix-ui/colors/slate-dark.css'; */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@import './markdown-editor-ui.css';
+@import './markdown-editor-color.css';
+
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 98.8%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 91.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 91.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 91.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 92.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 5.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 12.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 12.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 12.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 64.8% 40.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 7%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground min-h-dvh;
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+@keyframes popover {
+  0% {
+    transform: scale(0.5) translateY(20px);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.1) translateY(-5px);
+    opacity: 0.7;
+  }
+  60% {
+    transform: scale(0.9) translateY(3px);
+    opacity: 0.9;
+  }
+  80% {
+    transform: scale(1.03) translateY(-2px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.popover {
+  animation: popover 0.4s ease-out;
+}
+
+@keyframes faceIn {
+  0% {
+    /*transform: translateY(-200%) translateX(-50%);*/
+    opacity: 0;
+  }
+  100% {
+    /*transform: translateY(-50%) translateX(-50%);*/
+    opacity: 100%;
+  }
+}
+
+.faceIn {
+  animation: faceIn 0.15s ease-in-out;
+}
+
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+}
+
+.appear {
+  animation: appear 250ms ease-in-out;
+}
+
+@keyframes navigating {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 60%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.navigating {
+  animation: navigating 0.8s ease infinite;
+}
+
+.circle-spin-2 {
+  --size: 24px;
+  --stroke-width: calc(var(--size) / 6);
+  --accent-opacity: .25;
+  --color: hsl(var(--primary));
+  --animation-timing-function: linear;
+  --animation-duration: 1s;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+.circle-spin-2::before,
+.circle-spin-2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-width: var(--stroke-width);
+  border-style: solid;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  animation: var(--animation-timing-function) var(--animation-duration) infinite circle-spin-2-animation;
+}
+
+.circle-spin-2::before {
+  border-color: var(--color) var(--color) var(--color) transparent;
+  opacity: var(--accent-opacity);
+}
+
+.circle-spin-2::after {
+  border-color: transparent transparent transparent var(--color);
+}
+
+
+.circle-spin-2-invert {
+  --size: 24px;
+  --stroke-width: calc(var(--size) / 6);
+  --accent-opacity: .25;
+  --color: hsl(var(--background));
+  --animation-timing-function: linear;
+  --animation-duration: 1s;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+.circle-spin-2-invert::before,
+.circle-spin-2-invert::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-width: var(--stroke-width);
+  border-style: solid;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  animation: var(--animation-timing-function) var(--animation-duration) infinite circle-spin-2-animation;
+}
+
+.circle-spin-2-invert::before {
+  border-color: var(--color) var(--color) var(--color) transparent;
+  opacity: var(--accent-opacity);
+}
+
+.circle-spin-2-invert::after {
+  border-color: transparent transparent transparent var(--color);
+}
+
+@keyframes circle-spin-2-animation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

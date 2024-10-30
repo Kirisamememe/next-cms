@@ -39,3 +39,11 @@ next-env.d.ts
 # todo
 todo.md
 
+# db
+/prisma/schema_extended.prisma
+/prisma/sample.json
+
+
+# IDE
+/.idea
+/.vscode

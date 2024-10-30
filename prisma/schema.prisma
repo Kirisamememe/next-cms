@@ -1,14 +1,337 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String?
+  password      String?
+  role          Role      @default(VIEWER)
+  image         String?
+  email         String    @unique
+  emailVerified DateTime?
+  nickname      String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  allowed_email AllowedEmail?
+
+  article      Article[]
+  article_atom ArticleAtom[]
+  contents     Content[]
+  sessions     Session[]
+  accounts     Account[]
+
+  @@map("user")
+}
+
+model AllowedEmail {
+  id      Int    @id @default(autoincrement())
+  email   String @unique
+  user_id Int?   @unique
+  user    User?  @relation(fields: [user_id], references: [id])
+
+  @@map("allowed_email")
+}
+
+model Account {
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_token")
+}
+
+model Homepage {
+  id           Int       @id @default(autoincrement())
+  slug         String    @unique
+  heading      String
+  introduction String?
+  biography    String?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  archived_at  DateTime?
+  published_at DateTime?
+  locale       Locale
+  contents     Content[]
+
+  @@map("homepage")
+}
+
+model ArticleAtom {
+  id           Int       @id @default(autoincrement())
+  title        String?
+  summary      String?
+  body         String
+  image        String?
+  commit_msg   String?
+  created_at   DateTime  @default(now())
+  published_at DateTime?
+  author_id    Int
+  article_id   Int
+  article      Article   @relation(fields: [article_id], references: [id])
+  author       User      @relation(fields: [author_id], references: [id])
+
+  @@map("article_atom")
+}
+
+model Article {
+  id            Int                  @id @default(autoincrement())
+  slug          String               @unique
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+  author_id     Int
+  archived_at   DateTime?
+  category_id   Int?
+  published_at  DateTime?
+  admin_only    Boolean              @default(false)
+  author_note   String?
+  author        User                 @relation(fields: [author_id], references: [id])
+  category      Category?            @relation(fields: [category_id], references: [id])
+  article_atoms ArticleAtom[]
+  tags          ArticleTagJunction[]
+
+  @@map("article")
+}
+
+model TextValue {
+  id           Int      @id @default(autoincrement())
+  value        String
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("text_value")
+}
+
+model NumberValue {
+  id           Int      @id @default(autoincrement())
+  value        Float
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("number_value")
+}
+
+model UrlValue {
+  id           Int      @id @default(autoincrement())
+  value        String
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("url_value")
+}
+
+model DateValue {
+  id           Int      @id @default(autoincrement())
+  value        DateTime @db.Date
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("date_value")
+}
+
+model DateTimeValue {
+  id           Int      @id @default(autoincrement())
+  value        DateTime
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("datetime_value")
+}
+
+model BooleanValue {
+  id           Int      @id @default(autoincrement())
+  value        Boolean
+  created_at   DateTime @default(now())
+  is_published Boolean  @default(true)
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
+
+  @@index([field_id])
+  @@map("boolean_value")
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  articles Article[]
+  contents Content[]
+
+  @@map("category")
+}
+
+model Tag {
+  id       Int                  @id @default(autoincrement())
+  name     String
+  articles ArticleTagJunction[]
+  contents ContentTagJunction[]
+
+  @@index([name])
+  @@map("tag")
+}
+
+model ArticleTagJunction {
+  article_id Int
+  tag_id     Int
+  article    Article @relation(fields: [article_id], references: [id])
+  tag        Tag     @relation(fields: [tag_id], references: [id])
+
+  @@id([article_id, tag_id])
+  @@map("article_tag_junction")
+}
+
+model ContentTagJunction {
+  content_id Int
+  tag_id     Int
+  content    Content @relation(fields: [content_id], references: [id])
+  tag        Tag     @relation(fields: [tag_id], references: [id])
+
+  @@id([content_id, tag_id])
+  @@map("content_tag_junction")
+}
+
+model Field {
+  id             Int             @id @default(autoincrement())
+  field_type_id  Int?
+  content_id     Int
+  boolean_value  BooleanValue[]
+  date_value     DateValue[]
+  datetime_value DateTimeValue[]
+  content        Content         @relation(fields: [content_id], references: [id])
+  field_type     FieldType?      @relation(fields: [field_type_id], references: [id])
+  number_value   NumberValue[]
+  text_value     TextValue[]
+  url_value      UrlValue[]
+
+  @@index([field_type_id])
+  @@map("field")
+}
+
+model FieldType {
+  id            Int        @id @default(autoincrement())
+  field_name    String
+  required      Boolean
+  value_type    ValueType
+  collection_id Int
+  fields        Field[]
+  collection    Collection @relation(fields: [collection_id], references: [id])
+
+  @@index([collection_id])
+  @@map("field_type")
+}
+
+model Content {
+  id            Int                  @id @default(autoincrement())
+  slug          String               @unique
+  name          String?
+  description   String?
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+  published_at  DateTime?
+  archived_at   DateTime?
+  author_id     Int
+  category_id   Int?
+  collection_id Int?
+  homepage_id   Int?
+  author        User                 @relation(fields: [author_id], references: [id])
+  category      Category?            @relation(fields: [category_id], references: [id])
+  collection    Collection?          @relation(fields: [collection_id], references: [id])
+  homepage      Homepage?            @relation(fields: [homepage_id], references: [id])
+  tags          ContentTagJunction[]
+  fields        Field[]
+
+  @@map("content")
+}
+
+model Collection {
+  id             Int         @id @default(autoincrement())
+  name           String
+  contents       Content[]
+  content_schema FieldType[]
+
+  @@map("collection")
+}
+
+enum ValueType {
+  TEXT
+  NUMBER
+  IMAGE
+}
+
+enum Role {
+  ADMIN
+  INSPECTOR
+  EDITOR
+  VIEWER
+  BLOCKED
+  SUPER_ADMIN
+}
+
+enum Locale {
+  EN
+  JA
+  ZH_CN
+  ZH_TW
+  KO
+  VI
+  FR
+  ES
+  PT
+  DE
+  RU
+  IT
 }

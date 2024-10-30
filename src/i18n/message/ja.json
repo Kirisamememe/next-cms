@@ -1,0 +1,190 @@
+{
+  "common": {
+    "confirm": "確認",
+    "cancel": "キャンセル",
+    "submit": "送信",
+    "delete": "削除",
+    "ok": "はい",
+    "no": "いいえ",
+    "error": {
+      "success": "成功!",
+      "failed": "失敗!",
+      "error": "エラー発生",
+      "saved": "変更が保存されました！",
+      "invalidData": "無効なデータです。",
+      "internalError": "内部エラーが発生しました。",
+      "databaseError": "データベースエラーが発生しました。",
+      "permission": "権限がありません。",
+      "notfound": "該当ユーザーが見つかりません。"
+    }
+  },
+  "auth": {
+    "signIn": "ログイン",
+    "signInWithGoogle": "Google でログイン",
+    "signInWithMagicLink": "Magic Link でログイン",
+    "emailPlaceholder": "受信可能なEmailを入力してください",
+    "signOut": "ログアウト"
+  },
+  "breadcrumb": {
+    "dashboard": {
+      "1": "ダッシュボード"
+    },
+    "editors": {
+      "1": "編集者管理",
+      "2": "プロフィール"
+    },
+    "preference": {
+      "1": "環境設定"
+    },
+    "docs": {
+      "1": "ドキュメント"
+    },
+    "homepage": {
+      "1": "ホームページ"
+    },
+    "articles": {
+      "1": "ブログ記事",
+      "2": "記事編集"
+    },
+    "portfolio": {
+      "1": "ポートフォリオ"
+    },
+    "gallery": {
+      "1": "ギャラリー"
+    },
+    "biography": {
+      "1": "バイオグラフィー"
+    },
+    "single-contents": {
+      "1": "単体コンテンツ"
+    },
+    "collections": {
+      "1": "コレクション"
+    },
+    "pages": {
+      "1": "ページ"
+    },
+    "restful-api": {
+      "1": "RESTful API"
+    },
+    "log": {
+      "1": "ログ集計"
+    },
+    "restful-api-test": {
+      "1": "APIテスト"
+    }
+  },
+  "sidebar": {
+    "overview": {
+      "name": "共通",
+      "dashboard": "ダッシュボード",
+      "editors": "編集者管理",
+      "preference": "環境設定",
+      "docs": "ドキュメント"
+    },
+    "mainContents": {
+      "name": "主要コンテンツ",
+      "homepage": "ホームページ",
+      "articles": "ブログ記事",
+      "portfolio": "ポートフォリオ",
+      "gallery": "ギャラリー",
+      "biography": "バイオグラフィー"
+    },
+    "customContents": {
+      "name": "カスタムコンテンツ",
+      "singleContents": "単体コンテンツ",
+      "collections": "コレクション",
+      "pages": "ページ"
+    },
+    "restful": {
+      "name": "RESTful API",
+      "restfulApi": "RESTful API",
+      "log": "ログ集計",
+      "apiTest": "テスト"
+    },
+    "footer": {
+      "theme": "テーマ",
+      "profile": "プロフィール",
+      "setting": "設定",
+      "language": "言語"
+    }
+  },
+  "dashboard": {
+    "welcome": "お帰りなさい、{name}さん！"
+  },
+  "editor": {
+    "SUPER_ADMIN": "管理者総括",
+    "ADMIN": "管理者",
+    "INSPECTOR": "監察",
+    "EDITOR": "編集者",
+    "VIEWER": "閲覧者",
+    "BLOCKED": "利用不可",
+    "newEditor": "編集者を追加",
+    "authenticate": "認証済みの編集者",
+    "unauthenticated": "認証待ちの編集者",
+    "email": {
+      "name": "メールアドレス",
+      "placeholder": "メールアドレスを入力してください",
+      "description": "メールアドレスを入力する欄です",
+      "validation": "有効なメールアドレスを入力してください"
+    },
+    "profile": {
+      "nickname": "ニックネーム",
+      "nicknamePlaceholder": "12文字以内で入力してください",
+      "nicknameValidationMax": "ニックネームは12文字以内で入力してください。",
+      "image": "プロフィール画像",
+      "imagePlaceholder": "アバター画像のURLを入力してください",
+      "imageValidationMax": "画像URLは1024文字以内で入力してください",
+      "imageValidationUrl": "URLのフォーマットが正しくありません",
+      "role": "権限",
+      "rolePlaceholder": "権限を設定してください"
+    }
+  },
+  "article": {
+    "newArticle": "ブログ記事を作成",
+    "title": {
+      "name": "タイトル",
+      "placeholder": "記事のタイトルを入力",
+      "description": "記事の見出し",
+      "validationMax": "タイトルは64文字以内で入力してください"
+    },
+    "slug": {
+      "name": "スラッグ",
+      "placeholder": "URL用の識別子を入力",
+      "description": "記事のURL用パス",
+      "validationMin": "スラッグは必須項目です",
+      "validationMax": "スラッグは64文字以内で入力してください"
+    },
+    "summary": {
+      "name": "要約",
+      "placeholder": "記事の概要を入力",
+      "description": "記事の内容を簡潔に説明",
+      "validationMax": "要約は256文字以内で入力してください"
+    },
+    "image": {
+      "name": "画像",
+      "placeholder": "画像URLを入力",
+      "description": "記事のメイン画像",
+      "validationMax": "画像URLは512文字以内で入力してください"
+    },
+    "body": {
+      "name": "本文",
+      "placeholder": "記事の本文を入力",
+      "description": "記事の主要な内容",
+      "validationMin": "本文は必須項目です",
+      "validationMax": "本文は20000文字以内で入力してください"
+    },
+    "commitMsg": {
+      "name": "コミットメッセージ",
+      "placeholder": "変更内容を説明",
+      "description": "変更点の簡単な説明",
+      "validationMax": "コミットメッセージは128文字以内で入力してください"
+    },
+    "authorNote": {
+      "name": "作成者メモ",
+      "placeholder": "他の編集者向けのメモを追加",
+      "description": "編集者向けの追加情報",
+      "validationMax": "作成者メモは1024文字以内で入力してください"
+    }
+  }
+}
