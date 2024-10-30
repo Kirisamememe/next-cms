@@ -61,7 +61,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
-      if (trigger === "signUp" && user.email) {
+      // 要検証！！
+      if (trigger === "signIn" && user.email) {
         const res = await authenticateEmail(user.email)
         if (!res) {
           console.error("Database error has occurred: setAsSuperAdmin")
