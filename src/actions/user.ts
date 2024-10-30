@@ -52,7 +52,35 @@ export async function setAsSuperAdmin(email: string) {
       email: email
     },
     data: {
-      role: "SUPER_ADMIN"
+      role: "SUPER_ADMIN",
+      allowed_email: {
+        create: {
+          email: email
+        }
+      }
     }
   })
+}
+
+export async function authenticateEmail(email: string) {
+  return await prisma.$transaction(async (trx) => {
+    const user = await trx.user.findUnique({
+      where: {
+        email: email
+      }
+    })
+    if (!user) {
+      return
+    }
+
+    return await trx.allowedEmail.update({
+      where: {
+        email: email
+      },
+      data: {
+        user: { connect: { id: user.id } }
+      }
+    })
+  })
+
 }

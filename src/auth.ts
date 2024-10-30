@@ -4,13 +4,13 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { authConfig } from "./auth.config"
-import { getUserByEmail, getAllowedEmails, addAllowedEmail, noSuperAdmin, setAsSuperAdmin } from "./actions/user"
+import { getUserByEmail, getAllowedEmails, noSuperAdmin, setAsSuperAdmin, authenticateEmail } from "./actions/user"
 import { Role } from "./types/editor-schema"
 
 declare module "next-auth" {
   interface User {
     role: Role,
-    nickname: string
+    nickname?: string
   }
 
   interface Session {
@@ -42,10 +42,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const allowedEmails = await getAllowedEmails()
 
       if (!allowedEmails.length) {
-        const result = await addAllowedEmail(email)
-        if (!result.email) {
-          throw new Error("common.error.databaseError")
-        }
         return true
       }
 
@@ -65,9 +61,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+      if (trigger === "signUp" && user.email) {
+        const res = await authenticateEmail(user.email)
+        if (!res) {
+          console.error("Database error has occurred: setAsSuperAdmin")
+        }
+      }
+
       if (user) {
         token = {
           ...token,
+          id: user.id,
           name: user.name,
           email: user.email,
           image: user.image,
@@ -78,11 +82,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       // JWTの加工が完了すると、ここでセッションに入れられる
       if (!token.email) {
-        throw new Error('common.error.permission')
+        console.error('common.error.permission')
+        return { ...session, user: { role: "BLOCKED" } }
       }
       const res = await getUserByEmail(token.email)
       if (!res) {
-        throw new Error('common.error.databaseError')
+        console.error('common.error.permission')
+        return { ...session, user: { role: "BLOCKED" } }
       }
 
       const { email, name } = token as { email: string, name: string, nickname: string, role: Role }
