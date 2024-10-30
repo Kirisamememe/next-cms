@@ -15,16 +15,6 @@ export default function ResultToaster() {
   const message = useMemo(() => params.get('message'), [params])
 
   useEffect(() => {
-    if (error) {
-      toast({
-        title: t('common.error.failed'),
-        description: t(error),
-        variant: "destructive"
-      })
-      router.replace(pathname)
-      return
-    }
-
     if (message) {
       toast({
         title: t('common.error.saved'),

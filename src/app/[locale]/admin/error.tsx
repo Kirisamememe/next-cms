@@ -19,8 +19,8 @@ export default function Error({
 
   useEffect(() => {
     toast({
-      title: t('common.error.failed'),
-      description: t(error.message),
+      title: t('common.error.error'),
+      description: t('common.error.internalError'),
       variant: "destructive"
     })
     // Log the error to an error reporting service
