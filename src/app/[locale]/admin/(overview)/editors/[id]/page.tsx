@@ -4,6 +4,7 @@ import { EditEditorRole } from "../components/edit-editor-role";
 import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
 import { EditProfile } from "../components/edit-profile";
 import { getSession } from "@/lib/getSession";
+import { idSchema } from "@/types/id-schema";
 
 
 type Props = {
@@ -16,7 +17,13 @@ export default async function SpecificEditorPage({ params }: Props) {
   // ログイン状態＆権限を確認
   const { user, operatorId } = await getSession()
   const { id } = await params
-  const targetId = Number(id)
+
+  const parseId = await idSchema.safeParseAsync(Number(id))
+  if (parseId.error) {
+    notFound()
+  }
+
+  const targetId = parseId.data
 
   // 自分のページではないし、管理者でもない
   if (!isAdminGroup(user.role) && targetId !== operatorId) {

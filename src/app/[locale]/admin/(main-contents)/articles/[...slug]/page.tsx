@@ -4,6 +4,7 @@ import { NewArticle } from "../components/new-article";
 import { EditArticle } from "../components/edit-article";
 import { getSession } from "@/lib/getSession";
 import { notFound } from "next/navigation";
+import { idSchema } from "@/types/id-schema";
 
 type Props = {
   params: Promise<{
@@ -16,8 +17,13 @@ export default async function EditArticlePage({ params }: Props) {
   if (slug[0] !== 'edit' || slug.length > 2 ) {
     notFound()
   }
+  
+  const parseId = await idSchema.safeParseAsync(Number(slug[1]))
+  if (parseId.error) {
+    notFound()
+  }
 
-  const id = Number(slug[1])
+  const id = parseId.data
   const { operatorId } = await getSession()
 
   if (!slug[1]) {
