@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { Editor } from "./editor-schema";
+import { createId } from '@paralleldrive/cuid2';
 
 
 export const articleSubmitFormSchema = z.object({
   title: z.string().optional(),
   summary: z.string().optional(),
-  slug: z.string().min(1, "slugは必須です"),
+  slug: z.string().default(createId()),
   image: z.string().optional(),
   body: z.string().min(1, "本文は必須です"),
   commit_msg: z.string().optional(),
@@ -23,7 +24,7 @@ export type ArticleAtom = {
 
   created_at: Date
   published_at: Date | null
-  
+
   author_id: number
   article_id: number
 }
