@@ -42,7 +42,6 @@ todo.md
 # db
 /prisma/schema_extended.prisma
 /prisma/sample.json
-/prisma/migrations
 
 
 # IDE

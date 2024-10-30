@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -18,24 +12,22 @@ datasource db {
 model User {
   id            Int       @id @default(autoincrement())
   name          String?
-  nickname      String?
-  email         String    @unique
-  emailVerified DateTime?
   password      String?
   role          Role      @default(VIEWER)
   image         String?
+  email         String    @unique
+  emailVerified DateTime?
+  nickname      String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  allowed_email AllowedEmail?
 
-  contents     Content[]
   article      Article[]
   article_atom ArticleAtom[]
-
-  accounts Account[]
-  sessions Session[]
-
-  allowed_email AllowedEmail[]
+  contents     Content[]
+  sessions     Session[]
+  accounts     Account[]
 
   @@map("user")
 }
@@ -61,11 +53,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
   @@map("account")
@@ -75,10 +65,9 @@ model Session {
   sessionToken String   @unique
   userId       Int
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@map("session")
 }
@@ -102,10 +91,8 @@ model Homepage {
   updated_at   DateTime  @updatedAt
   archived_at  DateTime?
   published_at DateTime?
-
-  locale Locale
-
-  contents Content[]
+  locale       Locale
+  contents     Content[]
 
   @@map("homepage")
 }
@@ -119,32 +106,27 @@ model ArticleAtom {
   commit_msg   String?
   created_at   DateTime  @default(now())
   published_at DateTime?
-
-  author_id Int
-  author    User @relation(fields: [author_id], references: [id])
-
-  article_id Int
-  article    Article @relation(fields: [article_id], references: [id])
+  author_id    Int
+  article_id   Int
+  article      Article   @relation(fields: [article_id], references: [id])
+  author       User      @relation(fields: [author_id], references: [id])
 
   @@map("article_atom")
 }
 
 model Article {
-  id           Int       @id @default(autoincrement())
-  slug         String    @unique
-  author_note  String?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  archived_at  DateTime?
-  published_at DateTime?
-  admin_only   Boolean   @default(false)
-
-  category_id Int?
-  category    Category? @relation(fields: [category_id], references: [id])
-
-  author_id Int
-  author    User @relation(fields: [author_id], references: [id])
-
+  id            Int                  @id @default(autoincrement())
+  slug          String               @unique
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+  author_id     Int
+  archived_at   DateTime?
+  category_id   Int?
+  published_at  DateTime?
+  admin_only    Boolean              @default(false)
+  author_note   String?
+  author        User                 @relation(fields: [author_id], references: [id])
+  category      Category?            @relation(fields: [category_id], references: [id])
   article_atoms ArticleAtom[]
   tags          ArticleTagJunction[]
 
@@ -156,9 +138,8 @@ model TextValue {
   value        String
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("text_value")
@@ -169,9 +150,8 @@ model NumberValue {
   value        Float
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("number_value")
@@ -182,9 +162,8 @@ model UrlValue {
   value        String
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("url_value")
@@ -195,9 +174,8 @@ model DateValue {
   value        DateTime @db.Date
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("date_value")
@@ -208,9 +186,8 @@ model DateTimeValue {
   value        DateTime
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("datetime_value")
@@ -221,28 +198,25 @@ model BooleanValue {
   value        Boolean
   created_at   DateTime @default(now())
   is_published Boolean  @default(true)
-
-  field_id Int
-  field    Field @relation(fields: [field_id], references: [id])
+  field_id     Int
+  field        Field    @relation(fields: [field_id], references: [id])
 
   @@index([field_id])
   @@map("boolean_value")
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  contents Content[]
+  id       Int       @id @default(autoincrement())
+  name     String
   articles Article[]
+  contents Content[]
 
   @@map("category")
 }
 
 model Tag {
-  id   Int    @id @default(autoincrement())
-  name String
-
+  id       Int                  @id @default(autoincrement())
+  name     String
   articles ArticleTagJunction[]
   contents ContentTagJunction[]
 
@@ -252,8 +226,8 @@ model Tag {
 
 model ArticleTagJunction {
   article_id Int
-  article    Article @relation(fields: [article_id], references: [id])
   tag_id     Int
+  article    Article @relation(fields: [article_id], references: [id])
   tag        Tag     @relation(fields: [tag_id], references: [id])
 
   @@id([article_id, tag_id])
@@ -262,8 +236,8 @@ model ArticleTagJunction {
 
 model ContentTagJunction {
   content_id Int
-  content    Content @relation(fields: [content_id], references: [id])
   tag_id     Int
+  content    Content @relation(fields: [content_id], references: [id])
   tag        Tag     @relation(fields: [tag_id], references: [id])
 
   @@id([content_id, tag_id])
@@ -271,68 +245,61 @@ model ContentTagJunction {
 }
 
 model Field {
-  id Int @id @default(autoincrement())
-
-  field_type_id Int?
-  content_id    Int
-  field_type    FieldType? @relation(fields: [field_type_id], references: [id])
-  content       Content    @relation(fields: [content_id], references: [id])
-
-  text_value     TextValue[]
-  number_value   NumberValue[]
-  url_value      UrlValue[]
+  id             Int             @id @default(autoincrement())
+  field_type_id  Int?
+  content_id     Int
+  boolean_value  BooleanValue[]
   date_value     DateValue[]
   datetime_value DateTimeValue[]
-  boolean_value  BooleanValue[]
+  content        Content         @relation(fields: [content_id], references: [id])
+  field_type     FieldType?      @relation(fields: [field_type_id], references: [id])
+  number_value   NumberValue[]
+  text_value     TextValue[]
+  url_value      UrlValue[]
 
   @@index([field_type_id])
   @@map("field")
 }
 
 model FieldType {
-  id         Int       @id @default(autoincrement())
-  field_name String
-  required   Boolean
-  value_type ValueType
-
+  id            Int        @id @default(autoincrement())
+  field_name    String
+  required      Boolean
+  value_type    ValueType
   collection_id Int
+  fields        Field[]
   collection    Collection @relation(fields: [collection_id], references: [id])
-
-  fields Field[]
 
   @@index([collection_id])
   @@map("field_type")
 }
 
 model Content {
-  id           Int       @id @default(autoincrement())
-  slug         String    @unique
-  name         String?
-  description  String?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  published_at DateTime?
-  archived_at  DateTime?
-
+  id            Int                  @id @default(autoincrement())
+  slug          String               @unique
+  name          String?
+  description   String?
+  created_at    DateTime             @default(now())
+  updated_at    DateTime             @updatedAt
+  published_at  DateTime?
+  archived_at   DateTime?
   author_id     Int
-  collection_id Int?
   category_id   Int?
+  collection_id Int?
   homepage_id   Int?
-  author        User        @relation(fields: [author_id], references: [id])
-  category      Category?   @relation(fields: [category_id], references: [id])
-  collection    Collection? @relation(fields: [collection_id], references: [id])
-  homepage      Homepage?   @relation(fields: [homepage_id], references: [id])
-
-  fields Field[]
-  tags   ContentTagJunction[]
+  author        User                 @relation(fields: [author_id], references: [id])
+  category      Category?            @relation(fields: [category_id], references: [id])
+  collection    Collection?          @relation(fields: [collection_id], references: [id])
+  homepage      Homepage?            @relation(fields: [homepage_id], references: [id])
+  tags          ContentTagJunction[]
+  fields        Field[]
 
   @@map("content")
 }
 
 model Collection {
-  id   Int    @id @default(autoincrement())
-  name String
-
+  id             Int         @id @default(autoincrement())
+  name           String
   contents       Content[]
   content_schema FieldType[]
 
@@ -346,12 +313,12 @@ enum ValueType {
 }
 
 enum Role {
-  SUPER_ADMIN
   ADMIN
   INSPECTOR
   EDITOR
   VIEWER
   BLOCKED
+  SUPER_ADMIN
 }
 
 enum Locale {
