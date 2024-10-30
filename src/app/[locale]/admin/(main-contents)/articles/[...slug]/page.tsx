@@ -1,5 +1,5 @@
 
-import { prisma } from "@/prisma";
+import { prisma } from "@/lib/prisma";
 import { NewArticle } from "../components/new-article";
 import { EditArticle } from "../components/edit-article";
 import { getSession } from "@/lib/getSession";
@@ -14,10 +14,10 @@ type Props = {
 
 export default async function EditArticlePage({ params }: Props) {
   const { slug } = await params
-  if (slug[0] !== 'edit' || slug.length > 2 ) {
+  if (slug[0] !== 'edit' || slug.length > 2) {
     notFound()
   }
-  
+
   const parseId = await idSchema.safeParseAsync(Number(slug[1]))
   if (parseId.error) {
     notFound()

@@ -1,5 +1,5 @@
 import { Locale } from "@/i18n/config"
-import { prisma } from "@/prisma"
+import { prisma } from "@/lib/prisma"
 import Markdown from 'react-markdown'
 
 type Props = {

@@ -1,6 +1,6 @@
 import { Flexbox } from "@/components/ui/flexbox";
 import { Heading } from "@/components/ui/typography";
-import { prisma } from "@/prisma";
+import { prisma } from "@/lib/prisma";
 import { EditorCard } from "./editor-card";
 import { getTranslations } from "next-intl/server";
 import { GridColumn } from "@/components/ui/grid";

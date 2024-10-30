@@ -1,5 +1,5 @@
 import { Flexbox } from "@/components/ui/flexbox";
-import { prisma } from "@/prisma";
+import { prisma } from "@/lib/prisma";
 import { newEditorSchema } from "@/types/editor-schema";
 import { redirect } from "next/navigation";
 import { NewEditorForm } from "./new-editor-form";

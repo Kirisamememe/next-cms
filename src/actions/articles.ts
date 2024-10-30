@@ -1,6 +1,6 @@
 'use server'
 
-import { prisma } from "@/prisma"
+import { prisma } from "@/lib/prisma"
 import { articleSubmitFormSchema } from "@/types/article-schema"
 import { z } from "zod"
 

@@ -1,5 +1,5 @@
 import { Flexbox } from "@/components/ui/flexbox"
-import { prisma } from "@/prisma"
+import { prisma } from "@/lib/prisma"
 import { editProfileFormSchema, Editor } from "@/types/editor-schema"
 import { redirect } from "next/navigation"
 import { EditProfileForm } from "./edit-profile-form"

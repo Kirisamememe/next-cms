@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma";
+import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
 import { EditEditorRole } from "../components/edit-editor-role";
 import { isAdminGroup, isPermissible } from "@/lib/roleUtils";

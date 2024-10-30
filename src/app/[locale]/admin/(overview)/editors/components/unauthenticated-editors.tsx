@@ -3,7 +3,7 @@ import { Flexbox, FlexRow } from "@/components/ui/flexbox";
 import { GridColumn } from "@/components/ui/grid";
 import { Heading } from "@/components/ui/typography";
 import { Link } from "@/i18n/routing";
-import { prisma } from "@/prisma";
+import { prisma } from "@/lib/prisma";
 import { adminRole, Role } from "@/types/editor-schema";
 import { getTranslations } from "next-intl/server";
 
