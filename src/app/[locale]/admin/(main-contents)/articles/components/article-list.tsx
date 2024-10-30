@@ -11,8 +11,15 @@ export default async function ArticleList() {
 
   const articles = await prisma.article.findMany({
     include: {
-      article_atoms: true,
+      article_atoms: {
+        orderBy: {
+          created_at: "desc"
+        }
+      },
       author: true
+    },
+    orderBy: {
+      updated_at: "desc"
     }
   })
 
