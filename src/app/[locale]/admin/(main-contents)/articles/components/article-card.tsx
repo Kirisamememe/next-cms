@@ -16,8 +16,8 @@ export function ArticleCard({ article }: Props) {
 
   return (
     <Link href={`/admin/articles/edit/${article.id}`}>
-      <Card className="flex flex-col bg-card hover:bg-muted/50 gap-1 px-5 py-4 h-full border rounded-lg">
-        <Heading py={1}>
+      <Card className="flex flex-col bg-card hover:bg-muted/50 gap-1 px-5 py-4 h-fit sm:h-48 border rounded-lg">
+        <Heading py={1} clamp={2}>
           {title}
         </Heading>
         <Paragraph color="muted" clamp={3} mb={5}>
