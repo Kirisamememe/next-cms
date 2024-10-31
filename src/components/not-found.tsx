@@ -2,7 +2,7 @@ import { NotFoundIllustration } from "@/components/404";
 import { Button } from "@/components/ui/button";
 import { Flexbox } from "@/components/ui/flexbox";
 import { Heading } from "@/components/ui/typography";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 type Props = {
   href?: string

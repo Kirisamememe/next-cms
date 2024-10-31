@@ -1,6 +1,6 @@
 import { Editor } from "@/types/editor-schema";
-import Link from "next/link";
 import { EditorCard } from "./editor-card";
+import { Link } from "@/i18n/routing";
 
 type Props = {
   editor: Editor
