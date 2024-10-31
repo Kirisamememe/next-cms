@@ -32,6 +32,7 @@ export function NewArticle({ operatorId }: Props) {
       image: "",
       body: "",
       commit_msg: "",
+      author_note: "",
       author_id: operatorId
     }
   });

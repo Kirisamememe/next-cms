@@ -35,6 +35,7 @@ export function EditArticle({ article }: Props) {
       image: article?.article_atoms[0].image || "",
       body: article.article_atoms[0].body || "",
       commit_msg: article?.article_atoms[0].commit_msg || "",
+      author_note: article?.author_note || "",
       author_id: article?.author_id
     }
   });
