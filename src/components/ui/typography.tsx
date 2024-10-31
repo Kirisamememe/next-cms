@@ -52,6 +52,14 @@ const headingVariants = cva(
         1: "mb-1",
         2: "mb-2",
         3: "mb-3",
+      },
+      clamp: {
+        1: "line-clamp-1",
+        2: "line-clamp-2",
+        3: "line-clamp-3",
+        4: "line-clamp-4",
+        5: "line-clamp-5",
+        6: "line-clamp-6",
       }
     },
     defaultVariants: {
@@ -65,11 +73,11 @@ const headingVariants = cva(
 const Heading = React.forwardRef<
   HTMLHeadingElement,
   React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof headingVariants>
-  >(({ className, children, size, height, weight, color, py, mx, mb, ...props }, ref) => (
-  <h6 
-    ref={ref} 
+>(({ className, children, size, height, weight, color, py, mx, mb, clamp, ...props }, ref) => (
+  <h6
+    ref={ref}
     className={cn(
-      headingVariants({ size, height, weight, color, py, mx, mb }),
+      headingVariants({ size, height, weight, color, py, mx, mb, clamp }),
       className
     )}
     {...props}
@@ -153,7 +161,7 @@ const paragraphVariants = cva(
 const Paragraph = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement> & VariantProps<typeof paragraphVariants>
-  >(({ className, children, size, height, weight, color, mt, mb, clamp, ...props }, ref) => (
+>(({ className, children, size, height, weight, color, mt, mb, clamp, ...props }, ref) => (
   <p
     ref={ref}
     className={cn(
@@ -245,7 +253,7 @@ const labelTextVariants = cva(
 const LabelText = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement> & VariantProps<typeof labelTextVariants>
-  >(({ className, children, size, height, weight, color, mx, mt, mb, ...props }, ref) => (
+>(({ className, children, size, height, weight, color, mx, mt, mb, ...props }, ref) => (
   <p
     ref={ref}
     className={cn(
