@@ -1,10 +1,10 @@
 import { Card } from "@/components/ui/card"
 import { Heading, LabelText, Paragraph } from "@/components/ui/typography"
+import { Link } from "@/i18n/routing"
 import { extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib/utils"
 import { ArticleWithAuthor } from "@/types/article-schema"
 import { format } from 'date-fns'
 import Image from "next/image"
-import Link from "next/link"
 
 type Props = {
   article: ArticleWithAuthor
