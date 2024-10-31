@@ -186,3 +186,6 @@
   border-bottom: solid 2px hsl(var(--background));
   border-right: solid 2px hsl(var(--background));
 }
+.prose a {
+  @apply text-blue-500
+}
