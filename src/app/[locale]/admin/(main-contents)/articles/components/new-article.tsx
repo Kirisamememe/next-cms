@@ -32,6 +32,7 @@ export function NewArticle({ operatorId }: Props) {
       image: "",
       body: "",
       commit_msg: "",
+      author_note: "",
       author_id: operatorId
     }
   });
@@ -54,7 +55,7 @@ export function NewArticle({ operatorId }: Props) {
       toast({
         title: "記事の投稿が完了しました！",
       })
-      router.push(`/admin/articles/${res.id}`)
+      router.push(`/admin/articles/edit/${res.article.id}`)
     })
   }
 
