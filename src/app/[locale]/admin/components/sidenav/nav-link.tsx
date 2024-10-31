@@ -1,10 +1,10 @@
 'use client'
 
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
+import { Link } from "@/i18n/routing";
 
 type Props = {
   url: string
@@ -34,11 +34,11 @@ export const NavLink = React.forwardRef<
   }
 
   return (
-    <SidebarMenuButton 
+    <SidebarMenuButton
       asChild tooltip={title}
       onClick={onClick}
       className={cn(
-        "active:scale-95 transition-transform", 
+        "active:scale-95 transition-transform",
         navigating && "navigating bg-accent/50",
         pathname.endsWith(url) && "bg-accent font-bold hover:bg-accent")
       }>
