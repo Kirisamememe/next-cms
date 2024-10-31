@@ -1,9 +1,10 @@
+@import '@radix-ui/colors/blue-dark.css';
+@import '@radix-ui/colors/slate-dark.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import '@radix-ui/colors/blue-dark.css';
-@import '@radix-ui/colors/slate-dark.css';
 
 
 @layer base {
