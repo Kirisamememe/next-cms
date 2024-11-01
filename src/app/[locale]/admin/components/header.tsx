@@ -20,7 +20,7 @@ export function Header() {
   const t = useTranslations('breadcrumb')
 
   return (
-    <FlexRow className="sticky top-0 h-16 w-full border-b justify-between items-center bg-background/50 backdrop-blur-xl z-50">
+    <FlexRow className="sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-background/50 backdrop-blur-xl z-50">
       <FlexRow p={3} gap={2} center>
         <SidebarTrigger className="size-8" />
         <Heading>
@@ -32,18 +32,18 @@ export function Header() {
 
                 return (
                   <React.Fragment key={index}>
-                    {index < arr.length - 1 ? 
-                    <>
-                      <BreadcrumbItem className="text-base font-bold hover:text-foreground">
-                        <Link href={href}>
-                          {t(`${arr[1]}.${index}`)}
-                        </Link>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                    </> :
-                    <BreadcrumbPage className="text-base font-bold">
-                      {t(`${arr[1]}.${index}`)}
-                    </BreadcrumbPage>}
+                    {index < arr.length - 1 ?
+                      <>
+                        <BreadcrumbItem className="text-base font-bold hover:text-foreground">
+                          <Link href={href}>
+                            {t(`${arr[1]}.${index}`)}
+                          </Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                      </> :
+                      <BreadcrumbPage className="text-base font-bold">
+                        {t(`${arr[1]}.${index}`)}
+                      </BreadcrumbPage>}
                   </React.Fragment>
                 )
               })}

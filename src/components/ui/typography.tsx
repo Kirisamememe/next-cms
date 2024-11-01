@@ -160,12 +160,15 @@ const paragraphVariants = cva(
 
 const Paragraph = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement> & VariantProps<typeof paragraphVariants>
->(({ className, children, size, height, weight, color, mt, mb, clamp, ...props }, ref) => (
+  React.HTMLAttributes<HTMLParagraphElement> & VariantProps<typeof paragraphVariants> & {
+    noWrap?: boolean
+  }
+>(({ className, children, size, height, weight, color, mt, mb, clamp, noWrap = false, ...props }, ref) => (
   <p
     ref={ref}
     className={cn(
       paragraphVariants({ size, height, weight, color, mt, mb, clamp }),
+      noWrap && "text-nowrap",
       className
     )}
     {...props}

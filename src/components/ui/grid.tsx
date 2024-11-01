@@ -143,7 +143,8 @@ const gridColumnVariants = cva(
     },
     defaultVariants: {
       gap: 4,
-      radius: "lg"
+      radius: "lg",
+      grid: 1
     }
   }
 )
@@ -161,7 +162,7 @@ type Props = {
 
 const GridColumn = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & 
+  React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof gridColumnVariants> &
   Props
 >(({
