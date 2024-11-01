@@ -23,7 +23,7 @@ export default function ArticlePageLayout({ children }: Props) {
           {t('article.newArticle')}
         </Link>
       </Button>
-      <div className="relative">
+      <div className="relative h-full">
         {children}
       </div>
     </>

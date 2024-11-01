@@ -39,7 +39,7 @@ export function EditArticle({ article, operatorId }: Props) {
       commit_msg: article?.article_atoms[0].commit_msg || "",
       author_note: article?.author_note || "",
       author_id: article?.author_id,
-      published_at: article?.published_at || undefined
+      published_at: article?.published_at || null
     }
   });
 
