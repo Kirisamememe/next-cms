@@ -64,7 +64,6 @@ export function DateTimePicker({ field }: Props) {
           disabled={(date) =>
             date < new Date("1970-01-01")
           }
-          initialFocus
         />
         <Input
           type="datetime-local"
