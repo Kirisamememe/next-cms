@@ -85,12 +85,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       // JWTの加工が完了すると、ここでセッションに入れられる
       if (!token.email) {
-        console.error('common.error.permission')
+        console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }
       const res = await getUserByEmail(token.email)
       if (!res) {
-        console.error('common.error.permission')
+        console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }
 

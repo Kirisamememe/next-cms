@@ -1,10 +1,10 @@
 
 import { prisma } from "@/lib/prisma";
-import { NewArticle } from "../components/new-article";
-import { EditArticle } from "../components/edit-article";
 import { getSession } from "@/lib/getSession";
 import { notFound } from "next/navigation";
 import { idSchema } from "@/types/id-schema";
+import { NewArticle } from "../../(list)/components/new-article";
+import { EditArticle } from "../../(list)/components/edit-article";
 
 type Props = {
   params: Promise<{
@@ -17,10 +17,10 @@ export default async function EditArticlePage({ params }: Props) {
   if (slug[0] !== 'edit' || slug.length > 2) {
     notFound()
   }
+  const { operatorId } = await getSession()
 
   // 記事idあるか確認、なければ記事作成
   if (!slug[1]) {
-    const { operatorId } = await getSession()
     return <NewArticle operatorId={operatorId} />
   }
 
@@ -41,7 +41,9 @@ export default async function EditArticlePage({ params }: Props) {
           created_at: 'desc'
         },
         take: 1
-      }
+      },
+      author: true,
+      last_edited: true
     }
   })
 
@@ -50,6 +52,6 @@ export default async function EditArticlePage({ params }: Props) {
   }
 
   return (
-    <EditArticle article={article} />
+    <EditArticle article={article} operatorId={operatorId} />
   )
 }

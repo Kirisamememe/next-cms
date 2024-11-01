@@ -23,11 +23,12 @@ model User {
 
   allowed_email AllowedEmail?
 
-  article      Article[]
-  article_atom ArticleAtom[]
-  contents     Content[]
-  sessions     Session[]
-  accounts     Account[]
+  articles        Article[]     @relation("ArticleAuthor")
+  edited_articles Article[]     @relation("ArticleEditor")
+  article_atom    ArticleAtom[]
+  contents        Content[]
+  sessions        Session[]
+  accounts        Account[]
 
   @@map("user")
 }
@@ -115,18 +116,24 @@ model ArticleAtom {
 }
 
 model Article {
-  id            Int                  @id @default(autoincrement())
-  slug          String               @unique
-  created_at    DateTime             @default(now())
-  updated_at    DateTime             @updatedAt
-  author_id     Int
-  archived_at   DateTime?
-  category_id   Int?
-  published_at  DateTime?
-  admin_only    Boolean              @default(false)
-  author_note   String?
-  author        User                 @relation(fields: [author_id], references: [id])
-  category      Category?            @relation(fields: [category_id], references: [id])
+  id               Int     @id @default(autoincrement())
+  slug             String  @unique
+  author_note      String?
+  admin_only       Boolean @default(false)
+  permission_level Int     @default(3)
+
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  archived_at  DateTime?
+  published_at DateTime?
+
+  author_id      Int
+  last_edited_by Int
+  category_id    Int?
+  author         User      @relation("ArticleAuthor", fields: [author_id], references: [id])
+  last_edited    User      @relation("ArticleEditor", fields: [last_edited_by], references: [id])
+  category       Category? @relation(fields: [category_id], references: [id])
+
   article_atoms ArticleAtom[]
   tags          ArticleTagJunction[]
 
@@ -275,24 +282,28 @@ model FieldType {
 }
 
 model Content {
-  id            Int                  @id @default(autoincrement())
-  slug          String               @unique
-  name          String?
-  description   String?
-  created_at    DateTime             @default(now())
-  updated_at    DateTime             @updatedAt
-  published_at  DateTime?
-  archived_at   DateTime?
+  id               Int     @id @default(autoincrement())
+  slug             String  @unique
+  name             String?
+  description      String?
+  permission_level Int     @default(3)
+
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  published_at DateTime?
+  archived_at  DateTime?
+
   author_id     Int
   category_id   Int?
   collection_id Int?
   homepage_id   Int?
-  author        User                 @relation(fields: [author_id], references: [id])
-  category      Category?            @relation(fields: [category_id], references: [id])
-  collection    Collection?          @relation(fields: [collection_id], references: [id])
-  homepage      Homepage?            @relation(fields: [homepage_id], references: [id])
-  tags          ContentTagJunction[]
-  fields        Field[]
+  author        User        @relation(fields: [author_id], references: [id])
+  category      Category?   @relation(fields: [category_id], references: [id])
+  collection    Collection? @relation(fields: [collection_id], references: [id])
+  homepage      Homepage?   @relation(fields: [homepage_id], references: [id])
+
+  tags   ContentTagJunction[]
+  fields Field[]
 
   @@map("content")
 }

@@ -27,7 +27,7 @@ export default async function SpecificEditorPage({ params }: Props) {
 
   // 自分のページではないし、管理者でもない
   if (!isAdminGroup(user.role) && targetId !== operatorId) {
-    redirect('/admin/editors?error=common.error.permission')
+    redirect('/admin/editors?error=common.form.permission')
   }
 
   // ターゲットユーザーの存在を確認
@@ -49,7 +49,7 @@ export default async function SpecificEditorPage({ params }: Props) {
 
   // ターゲットユーザーの権限が自分より高い
   if (!isPermissible({ targetRole: editor.role, operatorRole: user.role })) {
-    redirect('/admin/editors?error=common.error.permission')
+    redirect('/admin/editors?error=common.form.permission')
   }
 
   return <EditEditorRole editor={editor} operatorRole={user.role} />

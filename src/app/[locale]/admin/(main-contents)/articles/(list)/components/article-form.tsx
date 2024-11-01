@@ -12,21 +12,23 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
+import { DateTimePicker } from "@/components/ui/datetime-picker"
+
 
 type Props = {
   form: UseFormReturn<{
     body: string;
     slug: string;
-    summary?: string | undefined;
-    title?: string | undefined;
-    image?: string | undefined;
-    commit_msg?: string | undefined;
-    author_note?: string | undefined;
+    summary?: string;
+    title?: string;
+    image?: string;
+    commit_msg?: string;
+    author_note?: string;
     author_id: number;
+    published_at: Date | null;
   }, any, undefined>
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   isPending: boolean
-  // article: Article
 }
 
 export const ArticleForm = React.forwardRef<
@@ -142,13 +144,28 @@ export const ArticleForm = React.forwardRef<
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="published_at"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("article.publishedAt.name")}
+                </FormLabel>
+                <DateTimePicker field={field} />
+                <FormDescription hidden>{t("article.publishedAt.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button
             type="submit" disabled={isPending}
             className="sticky bottom-0"
           >
             {isPending ?
               <div className="circle-spin-2-invert" /> :
-              t("common.submit")}
+              t("common.save")}
           </Button>
         </Flexbox>
       </form>
