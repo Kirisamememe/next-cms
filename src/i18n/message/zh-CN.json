@@ -3,10 +3,12 @@
     "confirm": "确认",
     "cancel": "取消",
     "submit": "提交",
+    "save": "保存",
+    "continue": "继续",
     "delete": "删除",
     "ok": "是",
     "no": "否",
-    "error": {
+    "form": {
       "success": "成功!",
       "failed": "失败!",
       "error": "程序异常",
@@ -141,7 +143,28 @@
     }
   },
   "article": {
+    "tabs": {
+      "all": "所有博文",
+      "draft": "草稿",
+      "published": "已发布",
+      "archive": "归档"
+    },
     "newArticle": "撰写新博文",
+    "lastEdited": "{name} 于 {datetime} 编辑此文",
+    "status": {
+      "draft": "草稿",
+      "scheduled": "定时发布",
+      "published": "已发布",
+      "archive": "已归档"
+    },
+    "archiveAlert": {
+      "title": "是否归档此文章？",
+      "description": "归档的文章将不再发送给客户端。"
+    },
+    "restoreAlert": {
+      "title": "是否要恢复这篇文章？",
+      "description": "恢复后的文章将会发送给客户端。"
+    },
     "title": {
       "name": "标题",
       "placeholder": "请输入文章标题",
@@ -185,6 +208,11 @@
       "placeholder": "添加给其他编辑的备注",
       "description": "给编辑的附加说明",
       "validationMax": "作者备注不能超过1024个字符"
+    },
+    "publishedAt": {
+      "name": "发布时间",
+      "placeholder": "设置发布时间",
+      "description": "切换发布状态"
     }
   }
 }

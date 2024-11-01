@@ -3,10 +3,12 @@
     "confirm": "確認",
     "cancel": "キャンセル",
     "submit": "送信",
+    "save": "保存",
+    "continue": "続ける",
     "delete": "削除",
     "ok": "はい",
     "no": "いいえ",
-    "error": {
+    "form": {
       "success": "成功!",
       "failed": "失敗!",
       "error": "エラー発生",
@@ -141,7 +143,28 @@
     }
   },
   "article": {
-    "newArticle": "ブログ記事を作成",
+    "tabs": {
+      "all": "全部",
+      "draft": "下書き",
+      "published": "公開中",
+      "archive": "アーカイブ"
+    },
+    "newArticle": "記事を作成",
+    "lastEdited": "{name} が {datetime} に編集しました",
+    "status": {
+      "draft": "下書き",
+      "scheduled": "公開予定",
+      "published": "公開中",
+      "archive": "アーカイブ"
+    },
+    "archiveAlert": {
+      "title": "この記事をアーカイブしますか？",
+      "description": "アーカイブされた記事はクライアントには送信されなくなります。"
+    },
+    "restoreAlert": {
+      "title": "この記事を復元しますか?",
+      "description": "復元された記事はクライアントに送信されるようになります。"
+    },
     "title": {
       "name": "タイトル",
       "placeholder": "記事のタイトルを入力",
@@ -185,6 +208,11 @@
       "placeholder": "他の編集者向けのメモを追加",
       "description": "編集者向けの追加情報",
       "validationMax": "作成者メモは1024文字以内で入力してください"
+    },
+    "publishedAt": {
+      "name": "公開日時",
+      "placeholder": "日時を選択してください",
+      "description": "現在の日時より前"
     }
   }
 }

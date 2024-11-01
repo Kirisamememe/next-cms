@@ -3,10 +3,12 @@
     "confirm": "Confirm",
     "cancel": "Cancel",
     "submit": "Submit",
+    "save": "Save",
+    "continue": "Continue",
     "delete": "Delete",
     "ok": "OK",
     "no": "NO",
-    "error": {
+    "form": {
       "success": "Success!",
       "failed": "Failed!",
       "error": "Something went wrong!",
@@ -141,7 +143,28 @@
     }
   },
   "article": {
-    "newArticle": "Write a new article",
+    "tabs": {
+      "all": "All",
+      "draft": "Draft",
+      "published": "Published",
+      "archive": "Archive"
+    },
+    "newArticle": "New article",
+    "lastEdited": "Last edited by {name} at {datetime}",
+    "status": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "published": "Published",
+      "archive": "Archive"
+    },
+    "archiveAlert": {
+      "title": "Archive this article?",
+      "description": "Archived articles will no longer be sent to clients."
+    },
+    "restoreAlert": {
+      "title": "Restore this article?",
+      "description": "Restored articles will be sent to clients."
+    },
     "title": {
       "name": "Title",
       "placeholder": "Enter the article title",
@@ -185,6 +208,11 @@
       "placeholder": "Add notes for other editors",
       "description": "Additional notes for editors",
       "validationMax": "Author note must be less than 1024 characters"
+    },
+    "publishedAt": {
+      "name": "Publication Datetime",
+      "placeholder": "Pick a datetime",
+      "description": ""
     }
   }
 }
