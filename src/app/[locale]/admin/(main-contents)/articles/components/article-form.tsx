@@ -39,12 +39,13 @@ type Props = {
   lastEdit?: Editor
   createdAt?: Date
   updatedAt?: Date
+  archivedAt?: Date | null
   isPending: boolean
 }
 
 export const ArticleForm = React.forwardRef<
   MDXEditorMethods, MDXEditorProps & Props
->(({ className, form, isPending, onSubmit, author, lastEdit, createdAt, updatedAt, ...props }, ref) => {
+>(({ className, form, isPending, onSubmit, author, lastEdit, createdAt, updatedAt, archivedAt, ...props }, ref) => {
 
   const t = useTranslations()
   const params = useParams<{ locale: string }>()
@@ -194,11 +195,20 @@ export const ArticleForm = React.forwardRef<
             {t("common.save")}
           </Button>
 
-          {createdAt &&
-            <LabelText>
-              {t('article.createdAt', { date: format(createdAt, 'yyyy-MM-dd HH:mm:ss') })}
-            </LabelText>
-          }
+          <FlexColumn gap={2} className="shrink-0 py-2">
+            {createdAt &&
+              <LabelText>
+                {t('article.createdAt', { date: format(createdAt, 'yyyy-MM-dd HH:mm:ss') })}
+              </LabelText>
+            }
+
+            {archivedAt &&
+              <LabelText>
+                {t('article.archivedAt', { date: format(archivedAt, 'yyyy-MM-dd HH:mm:ss') })}
+              </LabelText>
+            }
+          </FlexColumn>
+
         </Flexbox>
       </form>
     </Form>

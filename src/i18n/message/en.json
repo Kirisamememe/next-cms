@@ -159,7 +159,8 @@
     "noArticles": "No articles found",
     "lastEdited": "Last edit: {name}, {datetime}",
     "author": "Author: {name}",
-    "createdAt": "Created At：{date}",
+    "createdAt": "Created At: {date}",
+    "archivedAt": "Archived At: {date}",
     "status": {
       "draft": "Draft",
       "scheduled": "Scheduled",

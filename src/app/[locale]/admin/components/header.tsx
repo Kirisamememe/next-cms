@@ -22,7 +22,7 @@ export function Header() {
   return (
     <FlexRow className="sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-background/50 backdrop-blur-xl z-50">
       <FlexRow p={3} gap={2} center>
-        <SidebarTrigger className="size-8" />
+        <SidebarTrigger className="size-10" />
         <Heading>
           <Breadcrumb>
             <BreadcrumbList>
@@ -30,7 +30,7 @@ export function Header() {
                 if (index === 0) return null
                 if (arr.length === 2) {
                   return (
-                    <BreadcrumbPage key={token} className="text-base font-bold">
+                    <BreadcrumbPage key={token} className="text-base font-semibold">
                       {t(`${arr[1]}.${index}`)}
                     </BreadcrumbPage>
                   )
@@ -40,7 +40,7 @@ export function Header() {
 
                 if (index === 1) {
                   return (
-                    <BreadcrumbItem key={token} className="text-base font-bold hover:text-foreground">
+                    <BreadcrumbItem key={token} className="text-base font-semibold hover:text-foreground">
                       <Link href={href}>
                         {t(`${arr[1]}.1`)}
                       </Link>
@@ -51,7 +51,7 @@ export function Header() {
                 return (
                   <React.Fragment key={token}>
                     <BreadcrumbSeparator />
-                    <BreadcrumbPage className="text-base font-bold">
+                    <BreadcrumbPage className="text-base font-semibold">
                       {t(`${arr[1]}.2${token.match(/^[0-9]+$/) ? '' : `.${token}`}`)}
                     </BreadcrumbPage>
                   </React.Fragment>

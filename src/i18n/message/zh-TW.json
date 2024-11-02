@@ -160,6 +160,7 @@
     "lastEdited": "{name} 於 {datetime} 編輯此文",
     "author": "作者：{name}",
     "createdAt": "撰寫於：{date}",
+    "archivedAt": "封存於：{date}",
     "status": {
       "draft": "草稿",
       "scheduled": "定時發表",

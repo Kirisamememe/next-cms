@@ -91,7 +91,9 @@ export async function SideNavFooterContainer() {
                 <Cog size={16} />
                 {t('sidebar.footer.setting')}
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
+
+
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <LocaleSwitcher variant="ghost" className="font-normal" />
               </DropdownMenuItem>
 

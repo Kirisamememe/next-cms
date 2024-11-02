@@ -40,7 +40,7 @@ export function SideNav() {
           <SidebarMenu>
             {overview.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={item.title}>
+                <NavLink url={item.url} title={t(`overview.${item.title}`)}>
                   {item.icon && <item.icon />}
                   <span>{t(`overview.${item.title}`)}</span>
                 </NavLink>
@@ -56,7 +56,7 @@ export function SideNav() {
           <SidebarMenu>
             {navMain.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={item.title}>
+                <NavLink url={item.url} title={t(`mainContents.${item.title}`)}>
                   {item.icon && <item.icon />}
                   <span>{t(`mainContents.${item.title}`)}</span>
                 </NavLink>
@@ -72,7 +72,7 @@ export function SideNav() {
           <SidebarMenu>
             {customContents.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={item.title}>
+                <NavLink url={item.url} title={t(`customContents.${item.title}`)}>
                   {item.icon && <item.icon />}
                   <span>{t(`customContents.${item.title}`)}</span>
                 </NavLink>
@@ -88,7 +88,7 @@ export function SideNav() {
           <SidebarMenu>
             {restful.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={item.title}>
+                <NavLink url={item.url} title={t(`restful.${item.title}`)}>
                   {item.icon && <item.icon />}
                   <span>{t(`restful.${item.title}`)}</span>
                 </NavLink>

@@ -22,10 +22,10 @@ type Props = {
   sideOffset?: number
 }
 
-export default function LocaleSwitcher({ 
-  className, 
-  variant = "outline", 
-  side = "right", 
+export default function LocaleSwitcher({
+  className,
+  variant = "outline",
+  side = "right",
   align = "end",
   sideOffset = -2
 }: Props) {
@@ -38,16 +38,22 @@ export default function LocaleSwitcher({
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant={variant} size="sm" className={cn("w-full h-9 justify-start", variant === 'outline' && "w-auto p-0 size-10 justify-center", className)}>
+          <Button
+            variant={variant} size="sm"
+            className={cn(
+              "w-full h-9 justify-start active:scale-100 cursor-pointer",
+              variant === 'outline' && "w-auto p-0 size-10 justify-center",
+              className
+            )}>
             <Languages size={16} />
             {variant === 'ghost' &&
               <>
-              {t('sidebar.footer.language')}
+                {t('sidebar.footer.language')}
                 <ChevronRight className="ml-auto" size={16} />
               </>}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent 
+        <DropdownMenuContent
           align={align} side={side} sideOffset={sideOffset} >
           {locales.map((locale, index) => (
             <DropdownMenuItem key={index} asChild>
