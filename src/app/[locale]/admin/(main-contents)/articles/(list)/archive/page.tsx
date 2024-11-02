@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { ArticleList } from "../components/article-list";
+import { ArticleList } from "../../components/article-list";
 
 export default async function ArchivedArticlePage() {
   const articles = await prisma.article.findMany({
@@ -27,14 +27,6 @@ export default async function ArchivedArticlePage() {
       created_at: "desc"
     }
   })
-
-  if (!articles.length) {
-    return (
-      <>
-        NO ARTICLES
-      </>
-    )
-  }
 
   return <ArticleList articles={articles} />
 }

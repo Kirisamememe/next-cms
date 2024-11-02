@@ -40,7 +40,7 @@ export async function updateArticle(id: number, operatorId: number, values: z.in
         summary: values.summary,
         image: values.image,
         commit_msg: values.commit_msg,
-        author: { connect: { id: values.author_id } },
+        author: { connect: { id: operatorId } },
         published_at: values.published_at,
         article: {
           connect: { id: id }

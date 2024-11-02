@@ -1,4 +1,4 @@
-import { ArticleList } from "./components/article-list";
+import { ArticleList } from "../components/article-list";
 import { prisma } from "@/lib/prisma";
 
 

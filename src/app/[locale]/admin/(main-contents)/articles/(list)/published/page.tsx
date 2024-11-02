@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { ArticleList } from "../components/article-list";
+import { ArticleList } from "../../components/article-list";
 
 export default async function PublishedArticlePage() {
   const articles = await prisma.article.findMany({

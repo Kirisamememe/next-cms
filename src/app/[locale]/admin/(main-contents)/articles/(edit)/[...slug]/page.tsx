@@ -3,8 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/getSession";
 import { notFound } from "next/navigation";
 import { idSchema } from "@/types/id-schema";
-import { NewArticle } from "../../(list)/components/new-article";
-import { EditArticle } from "../../(list)/components/edit-article";
+import { NewArticle } from "../../components/new-article";
+import { EditArticle } from "../../components/edit-article";
 
 type Props = {
   params: Promise<{
