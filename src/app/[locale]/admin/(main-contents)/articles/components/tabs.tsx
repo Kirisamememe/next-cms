@@ -15,7 +15,7 @@ export function ArticleTabs() {
   const pathname = usePathname()
 
   return (
-    <FlexRow gap={1} className="w-fit bg-muted rounded-lg p-1">
+    <FlexRow gap={1} className="bg-muted rounded-lg p-1 shrink-0 w-full @[40rem]:w-fit">
       {tabs.map((tab, index) => (
         <Button key={index} asChild variant={"ghost"}
           className={cn(

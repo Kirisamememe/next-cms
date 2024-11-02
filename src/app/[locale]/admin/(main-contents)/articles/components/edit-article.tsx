@@ -68,6 +68,15 @@ export function EditArticle({ article, operatorId }: Props) {
   }
 
   return (
-    <ArticleForm ref={ref} markdown={article.article_atoms[0].body} form={form} onSubmit={onSubmit} isPending={isPending} />
+    <ArticleForm
+      ref={ref} form={form}
+      markdown={article.article_atoms[0].body}
+      onSubmit={onSubmit}
+      isPending={isPending}
+      author={article.author}
+      lastEdit={article.last_edited}
+      createdAt={article.created_at}
+      updatedAt={article.updated_at}
+    />
   )
 }

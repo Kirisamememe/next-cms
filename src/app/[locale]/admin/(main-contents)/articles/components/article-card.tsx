@@ -39,7 +39,7 @@ export function ArticleCard({ article }: Props) {
             <Image src={article.author.image || ""} width={20} height={20} alt="" className="rounded-full" />
             {article.author.nickname || article.author.name}
             <Separator orientation="vertical" className="h-4 mx-1" />
-            <LastEdit nickname={article.author.nickname} name={article.author.name} updatedAt={article.updated_at} locale={params.locale} />
+            <LastEdit nickname={article.last_edited.nickname} name={article.last_edited.name} updatedAt={article.updated_at} locale={params.locale} />
           </FlexRow>
         </div>
 
@@ -119,7 +119,7 @@ function ButtonArea({
 }
 
 
-function LastEdit({
+export function LastEdit({
   nickname,
   name,
   updatedAt,
