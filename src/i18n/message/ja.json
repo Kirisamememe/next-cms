@@ -160,6 +160,7 @@
     "lastEdited": "最終編集：{name} {datetime}",
     "author": "作者：{name}",
     "createdAt": "作成日時：{date}",
+    "archivedAt": "アーカイブ日時：{date}",
     "status": {
       "draft": "下書き",
       "scheduled": "公開予定",

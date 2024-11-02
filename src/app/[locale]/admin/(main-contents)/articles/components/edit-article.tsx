@@ -77,6 +77,7 @@ export function EditArticle({ article, operatorId }: Props) {
       lastEdit={article.last_edited}
       createdAt={article.created_at}
       updatedAt={article.updated_at}
+      archivedAt={article.archived_at}
     />
   )
 }
