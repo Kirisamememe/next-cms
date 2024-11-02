@@ -1,9 +1,11 @@
-@import './markdown-editor-ui.css';
-@import './markdown-editor-color.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import './markdown-editor-ui.css';
+@import './markdown-editor-color.css';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap');
+
 
 /* @import '@mdxeditor/editor/style.css';
 @import '@radix-ui/colors/blue-dark.css';
@@ -20,6 +22,17 @@ body {
   }
 }
 
+ :lang(ja) {
+  font-family: "Hiragino Sans", "Noto Sans JP", "system-ui", sans-serif;
+}
+
+:lang(zh-CN) {
+  font-family: "PingFang SC", "Noto Sans SC", "system-ui", sans-serif;
+}
+
+:lang(zh-TW) {
+  font-family: "PingFang TC", "Noto Sans TC", "system-ui", sans-serif;
+}
 
 
 

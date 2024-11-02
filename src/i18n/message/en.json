@@ -150,7 +150,8 @@
       "archive": "Archive"
     },
     "newArticle": "New article",
-    "lastEdited": "Last edited by {name} at {datetime}",
+    "lastEdited": "Last edit: {name}, {datetime}",
+    "author": "Author: {name}",
     "status": {
       "draft": "Draft",
       "scheduled": "Scheduled",

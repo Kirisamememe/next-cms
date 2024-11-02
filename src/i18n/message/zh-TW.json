@@ -151,6 +151,7 @@
     },
     "newArticle": "撰寫新文章",
     "lastEdited": "{name} 於 {datetime} 編輯此文",
+    "author": "作者：{name}",
     "status": {
       "draft": "草稿",
       "scheduled": "定時發表",

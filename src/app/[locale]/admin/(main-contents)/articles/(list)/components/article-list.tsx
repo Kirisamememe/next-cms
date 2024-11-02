@@ -31,7 +31,7 @@ export function ArticleList({ articles }: Props) {
       <Button onClick={handleSort} variant={"outline"} size={"icon"} className="absolute right-0 -top-14 h-10">
         {sortOrder === 'asc' ? <ArrowDownNarrowWide /> : <ArrowDownWideNarrow />}
       </Button>
-      <GridColumn gap={4} className="@[96rem]:grid-cols-2">
+      <GridColumn className="appear @[96rem]:grid-cols-2 gap-3 @[40rem]:gap-4">
         {articles.length > 0 &&
           sort(articles, sortOrder).map((article, index) => <ArticleCard key={index} article={article} />)
         }

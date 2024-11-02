@@ -19,9 +19,9 @@ export default async function DashboardLayout({
     <SessionProvider>
       <SidebarProvider>
         <SideNav />
-        <Flexbox className="w-full">
+        <Flexbox className="@container w-full">
           <Header />
-          <Flexbox gap={4} p={6} className="@container h-full">
+          <Flexbox className="h-full gap-4 p-4 @[40rem]:p-6">
             {children}
           </Flexbox>
         </Flexbox>
