@@ -12,11 +12,11 @@ export const articleSubmitFormSchema = z.object({
   commit_msg: z.string().optional(),
   author_note: z.string().optional(),
   author_id: z.number(),
-  published_at: z.date().nullable()
+  published_at: z.date().nullish()
 })
 
 export const articlePublicationForm = z.object({
-  published_at: z.date({ message: "フォーマットが不正" }).nullable()
+  published_at: z.date().nullish()
 })
 
 export type ArticleAtom = {

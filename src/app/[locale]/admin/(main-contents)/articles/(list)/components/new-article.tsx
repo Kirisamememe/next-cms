@@ -36,7 +36,6 @@ export function NewArticle({ operatorId }: Props) {
       commit_msg: "",
       author_note: "",
       author_id: operatorId,
-      published_at: null
     }
   });
 

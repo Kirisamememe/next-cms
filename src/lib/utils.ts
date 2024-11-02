@@ -39,7 +39,7 @@ export const getTimeString = (date?: Date | null) => {
 }
 
 export const combineDateAndTime = (date: Date | undefined, timeString: string) => {
-  if (!date) return undefined
+  if (!date) return null
   const [hours, minutes] = timeString.split(':').map(Number)
   const newDate = new Date(date)
   newDate.setHours(hours, minutes)

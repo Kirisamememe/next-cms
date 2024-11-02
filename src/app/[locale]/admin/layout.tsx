@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react"
 import { Header } from "@/app/[locale]/admin/components/header";
 import { SideNav } from "@/app/[locale]/admin/components/sidenav/sidenav";
 import { Flexbox } from "@/components/ui/flexbox";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default async function DashboardLayout({
   children,
@@ -19,12 +19,12 @@ export default async function DashboardLayout({
     <SessionProvider>
       <SidebarProvider>
         <SideNav />
-        <Flexbox className="@container w-full">
+        <SidebarInset className="@container">
           <Header />
           <Flexbox className="h-full gap-4 p-4 @[40rem]:p-6">
             {children}
           </Flexbox>
-        </Flexbox>
+        </SidebarInset>
       </SidebarProvider>
     </SessionProvider>
   )

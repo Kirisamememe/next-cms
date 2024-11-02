@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { DateTimePicker } from "@/components/ui/datetime-picker"
+import { DateTimePopover } from "@/app/[locale]/admin/(main-contents)/articles/(list)/components/article-form-popover"
 
 
 type Props = {
@@ -25,7 +25,7 @@ type Props = {
     commit_msg?: string;
     author_note?: string;
     author_id: number;
-    published_at: Date | null;
+    published_at?: Date | null;
   }, any, undefined>
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   isPending: boolean
@@ -152,7 +152,7 @@ export const ArticleForm = React.forwardRef<
                 <FormLabel>
                   {t("article.publishedAt.name")}
                 </FormLabel>
-                <DateTimePicker field={field} />
+                <DateTimePopover field={field} defaultDate={form.formState.defaultValues?.published_at} />
                 <FormDescription hidden>{t("article.publishedAt.description")}</FormDescription>
                 <FormMessage />
               </FormItem>

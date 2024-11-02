@@ -22,16 +22,16 @@ body {
   }
 }
 
- :lang(ja) {
-  font-family: "Hiragino Sans", "Noto Sans JP", "system-ui", sans-serif;
+:lang(ja) {
+  font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
 }
 
 :lang(zh-CN) {
-  font-family: "PingFang SC", "Noto Sans SC", "system-ui", sans-serif;
+  font-family: "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
 }
 
 :lang(zh-TW) {
-  font-family: "PingFang TC", "Noto Sans TC", "system-ui", sans-serif;
+  font-family: "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
 }
 
 
@@ -99,7 +99,7 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 7%;
+    --sidebar-background: 240 5.9% 8%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;

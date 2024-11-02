@@ -33,7 +33,7 @@ export function ArticleList({ articles }: Props) {
       </Button>
       <GridColumn className="appear @[96rem]:grid-cols-2 gap-3 @[40rem]:gap-4">
         {articles.length > 0 &&
-          sort(articles, sortOrder).map((article, index) => <ArticleCard key={index} article={article} />)
+          sort(articles, sortOrder).map((article) => <ArticleCard key={article.id} article={article} />)
         }
       </GridColumn>
     </>

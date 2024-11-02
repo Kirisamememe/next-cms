@@ -66,7 +66,7 @@ export function ArticleCard({ article }: Props) {
         <FlexRow className="justify-between text-sm mt-2 inline-flex items-center gap-2 shrink-0">
           <FlexRow className="items-center gap-2">
             <Image src={article.author.image || ""} width={30} height={30} alt="" className="rounded-full h-fit shrink-0" />
-            <FlexColumn className="text-sm font-bold text-muted-foreground">
+            <FlexColumn className="text-sm font-medium text-muted-foreground">
               {t('article.author', { name: article.author.nickname || article.author.name })}
             </FlexColumn>
           </FlexRow>
@@ -88,7 +88,7 @@ function TitleAndSummary({
 }) {
   return (
     <>
-      <Heading py={1} clamp={1} className="">
+      <Heading py={1} clamp={1} weight={600}>
         {title}
       </Heading>
       <Paragraph color="muted" clamp={1} mb={1}>
@@ -136,7 +136,7 @@ function LastEdit({
 
   return (
     <>
-      <span className={cn("shrink-0 text-xs @[52rem]:text-sm font-medium text-muted-foreground/70", className)}>
+      <span className={cn("shrink-0 text-xs @[52rem]:text-sm font-medium @[52rem]:font-normal text-muted-foreground/70", className)}>
         {t('article.lastEdited', {
           name: nickname || name,
           datetime: formatDistanceToNow(updatedAt, {
