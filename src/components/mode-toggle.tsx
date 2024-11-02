@@ -21,7 +21,7 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-full justify-start h-9 p-2 rounded-sm">
+        <Button variant="ghost" size="sm" className="w-full justify-start h-9 p-2 rounded-sm active:scale-100">
           <Monitor size={16} className={cn("hidden", theme === 'system' && "block")} />
           <Sun size={16} className={cn("hidden", theme === 'light' && "block")} />
           <Moon size={16} className={cn("hidden", theme === 'dark' && "block")} />
@@ -45,6 +45,6 @@ export function ModeToggle() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-    
+
   )
 }
