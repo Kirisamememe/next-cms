@@ -40,7 +40,7 @@ export const NavLink = React.forwardRef<
       className={cn(
         "active:scale-95 transition-transform",
         navigating && "navigating bg-accent/50",
-        pathname.endsWith(url) && "bg-accent font-bold hover:bg-accent")
+        pathname.endsWith(url) && "bg-accent font-semibold hover:bg-accent")
       }>
       <Link ref={ref} href={url} {...props}>
         {children}

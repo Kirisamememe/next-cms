@@ -33,5 +33,18 @@ export function extractTitleFromMarkdown(markdown: string): string {
 };
 
 
+export const getTimeString = (date?: Date | null) => {
+  if (!date) return "10:30"
+  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+}
+
+export const combineDateAndTime = (date: Date | undefined, timeString: string) => {
+  if (!date) return null
+  const [hours, minutes] = timeString.split(':').map(Number)
+  const newDate = new Date(date)
+  newDate.setHours(hours, minutes)
+  return newDate
+}
+
 
 

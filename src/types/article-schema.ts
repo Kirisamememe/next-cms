@@ -11,7 +11,12 @@ export const articleSubmitFormSchema = z.object({
   body: z.string().min(1, "本文は必須です"),
   commit_msg: z.string().optional(),
   author_note: z.string().optional(),
-  author_id: z.number()
+  author_id: z.number(),
+  published_at: z.date().nullish()
+})
+
+export const articlePublicationForm = z.object({
+  published_at: z.date().nullish()
 })
 
 export type ArticleAtom = {
@@ -25,7 +30,8 @@ export type ArticleAtom = {
   created_at: Date
   published_at: Date | null
 
-  author_id: number
+  author_id?: number
+  author?: Editor
   article_id: number
 }
 
@@ -60,6 +66,8 @@ export type ArticleWithAuthor = {
   category_id: number | null
   author_id: number
   author: Editor
+  last_edited_by: number
+  last_edited: Editor
 
   article_atoms: ArticleAtom[]
 }

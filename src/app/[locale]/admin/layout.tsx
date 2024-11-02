@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react"
 import { Header } from "@/app/[locale]/admin/components/header";
 import { SideNav } from "@/app/[locale]/admin/components/sidenav/sidenav";
 import { Flexbox } from "@/components/ui/flexbox";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export default async function DashboardLayout({
   children,
@@ -11,18 +12,20 @@ export default async function DashboardLayout({
 }>) {
   const session = await auth()
   if (!session?.user) {
-    return <>{children}</>
+    return children
   }
 
   return (
-    <SidebarProvider>
-      <SideNav />
-      <Flexbox className="w-full">
-        <Header />
-        <Flexbox gap={6} p={6} className="h-full">
-          {children}
-        </Flexbox>
-      </Flexbox>
-    </SidebarProvider>
+    <SessionProvider>
+      <SidebarProvider>
+        <SideNav />
+        <SidebarInset className="@container">
+          <Header />
+          <Flexbox className="h-full gap-4 p-4 @[40rem]:p-6">
+            {children}
+          </Flexbox>
+        </SidebarInset>
+      </SidebarProvider>
+    </SessionProvider>
   )
 }

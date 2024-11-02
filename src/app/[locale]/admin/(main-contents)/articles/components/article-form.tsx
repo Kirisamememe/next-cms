@@ -1,9 +1,10 @@
 'use client'
 
 import React from "react"
+import Image from "next/image"
 import { MDXEditor } from "./forward-ref-editor"
 import { MDXEditorMethods, MDXEditorProps } from "@mdxeditor/editor"
-import { Flexbox, FlexColumn } from "@/components/ui/flexbox"
+import { Flexbox, FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
@@ -12,28 +13,41 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
+import { DateTimePopover } from "@/app/[locale]/admin/(main-contents)/articles/components/article-form-popover"
+import { LabelText } from "@/components/ui/typography"
+import { Editor } from "@/types/editor-schema"
+import { LastEdit } from "./article-card"
+import { useParams } from "next/navigation"
+import { Separator } from "@/components/ui/separator"
+import { format } from 'date-fns'
+
 
 type Props = {
   form: UseFormReturn<{
     body: string;
     slug: string;
-    summary?: string | undefined;
-    title?: string | undefined;
-    image?: string | undefined;
-    commit_msg?: string | undefined;
-    author_note?: string | undefined;
+    summary?: string;
+    title?: string;
+    image?: string;
+    commit_msg?: string;
+    author_note?: string;
     author_id: number;
+    published_at?: Date | null;
   }, any, undefined>
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
+  author?: Editor
+  lastEdit?: Editor
+  createdAt?: Date
+  updatedAt?: Date
   isPending: boolean
-  // article: Article
 }
 
 export const ArticleForm = React.forwardRef<
   MDXEditorMethods, MDXEditorProps & Props
->(({ className, form, isPending, onSubmit, ...props }, ref) => {
+>(({ className, form, isPending, onSubmit, author, lastEdit, createdAt, updatedAt, ...props }, ref) => {
 
   const t = useTranslations()
+  const params = useParams<{ locale: string }>()
 
   return (
     <Form {...form}>
@@ -44,7 +58,27 @@ export const ArticleForm = React.forwardRef<
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
-        <Flexbox className="sticky top-[86px] shrink-0 w-72 xl:w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll">
+        <Flexbox className="sticky top-[86px] shrink-0 w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll">
+          {author && lastEdit && updatedAt &&
+            <>
+              <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-1">
+                <div className="relative">
+                  <Image src={author.image || ""} width={36} height={36} alt="avatar" className="rounded-full" />
+                  {author.id !== lastEdit.id &&
+                    <Image src={lastEdit.image || ""} width={20} height={20} alt="avatar" className="absolute -right-1 -bottom-1 rounded-full ring-background ring-2" />
+                  }
+                </div>
+                <FlexColumn gap={0.5}>
+                  <LabelText size={14} weight={500}>
+                    {t('article.author', { name: author?.nickname || author.name })}
+                  </LabelText>
+                  <LastEdit className="@[52rem]:text-xs" nickname={lastEdit?.nickname} name={lastEdit.name} updatedAt={updatedAt} locale={params.locale} />
+                </FlexColumn>
+              </FlexRow>
+              <Separator className="" />
+            </>
+          }
+
           <FormField
             control={form.control}
             name="title"
@@ -141,15 +175,30 @@ export const ArticleForm = React.forwardRef<
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="published_at"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("article.publishedAt.name")}
+                </FormLabel>
+                <DateTimePopover field={field} defaultDate={form.formState.defaultValues?.published_at} />
+                <FormDescription hidden>{t("article.publishedAt.description")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <Button
-            type="submit" disabled={isPending}
-            className="sticky bottom-0"
-          >
-            {isPending ?
-              <div className="circle-spin-2-invert" /> :
-              t("common.submit")}
+          <Button type="submit" isPending={isPending} className="sticky bottom-0">
+            {t("common.save")}
           </Button>
+
+          {createdAt &&
+            <LabelText>
+              {t('article.createdAt', { date: format(createdAt, 'yyyy-MM-dd HH:mm:ss') })}
+            </LabelText>
+          }
         </Flexbox>
       </form>
     </Form>

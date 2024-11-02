@@ -19,7 +19,7 @@ export default function Error({
 
   useEffect(() => {
     toast({
-      title: t('common.error.failed'),
+      title: t('common.form.failed'),
       description: t(error.message),
       variant: "destructive"
     })

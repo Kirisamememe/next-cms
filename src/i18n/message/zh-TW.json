@@ -3,10 +3,12 @@
     "confirm": "確認",
     "cancel": "取消",
     "submit": "發送",
+    "save": "存儲",
+    "continue": "繼續",
     "delete": "刪除",
     "ok": "是",
     "no": "否",
-    "error": {
+    "form": {
       "success": "成功!",
       "failed": "失敗!",
       "error": "程式異常",
@@ -44,7 +46,12 @@
     },
     "articles": {
       "1": "文章",
-      "2": "編輯文章"
+      "2": {
+        "edit": "編輯文章",
+        "draft": "草稿",
+        "published": "已發表",
+        "archive": "已封存"
+      }
     },
     "portfolio": {
       "1": "作品集"
@@ -141,7 +148,32 @@
     }
   },
   "article": {
+    "tabs": {
+      "all": "所有文章",
+      "draft": "草稿",
+      "published": "已發表",
+      "archive": "已封存"
+    },
     "newArticle": "撰寫新文章",
+    "filter": "按標題或內容篩選",
+    "noArticles": "未找到相關文章",
+    "lastEdited": "{name} 於 {datetime} 編輯此文",
+    "author": "作者：{name}",
+    "createdAt": "撰寫於：{date}",
+    "status": {
+      "draft": "草稿",
+      "scheduled": "定時發表",
+      "published": "已發表",
+      "archive": "已封存"
+    },
+    "archiveAlert": {
+      "title": "是否封存此文章？",
+      "description": "封存的文章將不再發送給客戶端。"
+    },
+    "restoreAlert": {
+      "title": "是否要復原這篇文章？",
+      "description": "復原後的文章將會發送給客戶端。"
+    },
     "title": {
       "name": "標題",
       "placeholder": "請輸入文章標題",
@@ -185,6 +217,11 @@
       "placeholder": "新增給其他編輯的備註",
       "description": "給編輯的附加說明",
       "validationMax": "作者備註不能超過1024個字元"
+    },
+    "publishedAt": {
+      "name": "發表時間",
+      "placeholder": "設置發表時間",
+      "description": "切換發表狀態"
     }
   }
 }

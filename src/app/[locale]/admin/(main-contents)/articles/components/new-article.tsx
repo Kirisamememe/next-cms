@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ArticleForm } from "./article-form"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 type Props = {
   operatorId: number
@@ -20,6 +21,7 @@ export function NewArticle({ operatorId }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations()
 
   const [isPending, startTransition] = useTransition()
 
@@ -33,7 +35,7 @@ export function NewArticle({ operatorId }: Props) {
       body: "",
       commit_msg: "",
       author_note: "",
-      author_id: operatorId
+      author_id: operatorId,
     }
   });
 
@@ -46,14 +48,14 @@ export function NewArticle({ operatorId }: Props) {
 
       if (!res.id) {
         toast({
-          title: "投稿できませんでした",
+          title: t('common.form.databaseError'),
           variant: "destructive"
         })
         console.error("失敗した")
       }
 
       toast({
-        title: "記事の投稿が完了しました！",
+        title: t('common.form.saved'),
       })
       router.push(`/admin/articles/edit/${res.article.id}`)
     })

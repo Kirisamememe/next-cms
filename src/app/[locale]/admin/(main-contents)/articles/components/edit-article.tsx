@@ -2,7 +2,7 @@
 
 import { updateArticle } from "@/actions/articles"
 import { useToast } from "@/hooks/use-toast"
-import { Article, articleSubmitFormSchema } from "@/types/article-schema"
+import { articleSubmitFormSchema, ArticleWithAuthor } from "@/types/article-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
 import { useParams, useRouter } from "next/navigation"
@@ -11,17 +11,19 @@ import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ArticleForm } from "./article-form"
+import { useTranslations } from "next-intl"
 
 type Props = {
-  article: Article
-
+  article: ArticleWithAuthor
+  operatorId: number
 }
 
-export function EditArticle({ article }: Props) {
+export function EditArticle({ article, operatorId }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { slug } = useParams<{ slug: string[] }>()
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations()
 
   const [isPending, startTransition] = useTransition()
 
@@ -36,7 +38,8 @@ export function EditArticle({ article }: Props) {
       body: article.article_atoms[0].body || "",
       commit_msg: article?.article_atoms[0].commit_msg || "",
       author_note: article?.author_note || "",
-      author_id: article?.author_id
+      author_id: article?.author_id,
+      published_at: article?.published_at || null
     }
   });
 
@@ -45,10 +48,11 @@ export function EditArticle({ article }: Props) {
     if (!markdown) return;
 
     startTransition(async () => {
-      const res = await updateArticle(Number(slug[1]), values)
+      // atomに変更がない場合は、atomを新しく作らない
+      const res = await updateArticle(Number(slug[1]), operatorId, values)
       if (!res.id) {
         toast({
-          title: "変更が保存できませんでした",
+          title: t('common.form.databaseError'),
           variant: "destructive"
         })
         console.error("失敗した")
@@ -56,7 +60,7 @@ export function EditArticle({ article }: Props) {
       }
 
       toast({
-        title: "変更が保存されました！",
+        title: t('common.form.saved'),
       })
       router.push('/admin/articles')
       return
@@ -64,6 +68,15 @@ export function EditArticle({ article }: Props) {
   }
 
   return (
-    <ArticleForm ref={ref} markdown={article.article_atoms[0].body} form={form} onSubmit={onSubmit} isPending={isPending} />
+    <ArticleForm
+      ref={ref} form={form}
+      markdown={article.article_atoms[0].body}
+      onSubmit={onSubmit}
+      isPending={isPending}
+      author={article.author}
+      lastEdit={article.last_edited}
+      createdAt={article.created_at}
+      updatedAt={article.updated_at}
+    />
   )
 }

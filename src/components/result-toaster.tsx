@@ -17,7 +17,7 @@ export default function ResultToaster() {
   useEffect(() => {
     if (message) {
       toast({
-        title: t('common.error.saved'),
+        title: t('common.form.saved'),
       })
       router.replace(pathname)
       return
