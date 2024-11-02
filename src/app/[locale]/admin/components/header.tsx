@@ -26,24 +26,34 @@ export function Header() {
         <Heading>
           <Breadcrumb>
             <BreadcrumbList>
-              {pathname.split('/').slice(1, 4).map((_, index, arr) => {
+              {pathname.split('/').slice(1, 4).map((token, index, arr) => {
                 if (index === 0) return null
+                if (arr.length === 2) {
+                  return (
+                    <BreadcrumbPage key={token} className="text-base font-bold">
+                      {t(`${arr[1]}.${index}`)}
+                    </BreadcrumbPage>
+                  )
+                }
+
                 const href = '/' + arr.slice(0, index + 1).join('/')
 
+                if (index === 1) {
+                  return (
+                    <BreadcrumbItem key={token} className="text-base font-bold hover:text-foreground">
+                      <Link href={href}>
+                        {t(`${arr[1]}.1`)}
+                      </Link>
+                    </BreadcrumbItem>
+                  )
+                }
+
                 return (
-                  <React.Fragment key={index}>
-                    {index < arr.length - 1 ?
-                      <>
-                        <BreadcrumbItem className="text-base font-bold hover:text-foreground">
-                          <Link href={href}>
-                            {t(`${arr[1]}.${index}`)}
-                          </Link>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                      </> :
-                      <BreadcrumbPage className="text-base font-bold">
-                        {t(`${arr[1]}.${index}`)}
-                      </BreadcrumbPage>}
+                  <React.Fragment key={token}>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbPage className="text-base font-bold">
+                      {t(`${arr[1]}.2${token.match(/^[0-9]+$/) ? '' : `.${token}`}`)}
+                    </BreadcrumbPage>
                   </React.Fragment>
                 )
               })}

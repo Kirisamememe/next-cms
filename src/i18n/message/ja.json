@@ -46,7 +46,12 @@
     },
     "articles": {
       "1": "ブログ記事",
-      "2": "記事編集"
+      "2": {
+        "edit": "記事編集",
+        "draft": "下書き",
+        "published": "公開中",
+        "archive": "アーカイブ"
+      }
     },
     "portfolio": {
       "1": "ポートフォリオ"
@@ -150,8 +155,11 @@
       "archive": "アーカイブ"
     },
     "newArticle": "記事を作成",
+    "filter": "タイトル / 本文で検索",
+    "noArticles": "記事が見つかりませんでした",
     "lastEdited": "最終編集：{name} {datetime}",
     "author": "作者：{name}",
+    "createdAt": "作成日時：{date}",
     "status": {
       "draft": "下書き",
       "scheduled": "公開予定",

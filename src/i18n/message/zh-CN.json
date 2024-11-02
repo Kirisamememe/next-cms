@@ -46,7 +46,12 @@
     },
     "articles": {
       "1": "文章",
-      "2": "编辑文章"
+      "2": {
+        "edit": "编辑文章",
+        "draft": "草稿",
+        "published": "已发布",
+        "archive": "已归档"
+      }
     },
     "portfolio": {
       "1": "作品集"
@@ -150,8 +155,11 @@
       "archive": "归档"
     },
     "newArticle": "撰写新博文",
+    "filter": "按标题或内容筛选",
+    "noArticles": "未找到相关文章",
     "lastEdited": "{name} 于 {datetime} 编辑此文",
     "author": "作者：{name}",
+    "createdAt": "撰写于：{date}",
     "status": {
       "draft": "草稿",
       "scheduled": "定时发布",

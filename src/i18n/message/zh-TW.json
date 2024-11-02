@@ -46,7 +46,12 @@
     },
     "articles": {
       "1": "文章",
-      "2": "編輯文章"
+      "2": {
+        "edit": "編輯文章",
+        "draft": "草稿",
+        "published": "已發表",
+        "archive": "已封存"
+      }
     },
     "portfolio": {
       "1": "作品集"
@@ -150,8 +155,11 @@
       "archive": "已封存"
     },
     "newArticle": "撰寫新文章",
+    "filter": "按標題或內容篩選",
+    "noArticles": "未找到相關文章",
     "lastEdited": "{name} 於 {datetime} 編輯此文",
     "author": "作者：{name}",
+    "createdAt": "撰寫於：{date}",
     "status": {
       "draft": "草稿",
       "scheduled": "定時發表",

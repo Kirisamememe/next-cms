@@ -46,7 +46,12 @@
     },
     "articles": {
       "1": "Articles",
-      "2": "Edit Article"
+      "2": {
+        "edit": "Edit Article",
+        "draft": "Draft",
+        "published": "Published",
+        "archive": "Archive"
+      }
     },
     "portfolio": {
       "1": "Portfolio"
@@ -150,8 +155,11 @@
       "archive": "Archive"
     },
     "newArticle": "New article",
+    "filter": "Filter by title or body",
+    "noArticles": "No articles found",
     "lastEdited": "Last edit: {name}, {datetime}",
     "author": "Author: {name}",
+    "createdAt": "Created At：{date}",
     "status": {
       "draft": "Draft",
       "scheduled": "Scheduled",
