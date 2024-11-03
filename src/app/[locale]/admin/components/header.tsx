@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Link, usePathname } from "@/i18n/routing";
 import React from "react";
+import { Separator } from "@/components/ui/separator";
 
 
 export function Header() {
@@ -22,7 +23,8 @@ export function Header() {
   return (
     <FlexRow className="sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-background/50 backdrop-blur-xl z-50">
       <FlexRow p={3} gap={2} center>
-        <SidebarTrigger className="size-10" />
+        <SidebarTrigger className="size-9" />
+        <Separator orientation="vertical" className="h-4 mr-1" />
         <Heading>
           <Breadcrumb>
             <BreadcrumbList>

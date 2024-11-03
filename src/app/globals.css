@@ -23,7 +23,7 @@ body {
 }
 
 :lang(ja) {
-  font-family: "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  font-family: "SF Pro", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
 }
 
 :lang(zh-CN) {
