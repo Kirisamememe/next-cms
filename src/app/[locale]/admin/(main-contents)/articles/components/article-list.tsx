@@ -49,7 +49,7 @@ export function ArticleList({ articles }: Props) {
         </Button>
       </FlexRow>
 
-      <GridColumn className="appear @[96rem]:grid-cols-2 gap-3 @[40rem]:gap-4">
+      <GridColumn className="appear @[96rem]:grid-cols-2 gap-3">
         {articleList.map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}

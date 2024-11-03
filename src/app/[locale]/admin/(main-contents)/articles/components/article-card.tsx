@@ -32,7 +32,7 @@ export function ArticleCard({ article }: Props) {
   return (
     <Link href={`/admin/articles/edit/${article.id}`}>
       <FlexRow className="hidden @[52rem]:flex justify-between items-center bg-card hover:bg-muted/50 gap-8 px-5 py-3 h-fit border rounded-lg shadow-sm">
-        <div className="overflow-hidden">
+        <FlexColumn className="overflow-hidden">
           <TitleAndSummary title={title} summary={summary} />
 
           <FlexRow className="text-sm font-medium text-muted-foreground/70 mt-2 inline-flex items-center gap-2 shrink-0">
@@ -41,7 +41,7 @@ export function ArticleCard({ article }: Props) {
             <Separator orientation="vertical" className="h-4 mx-1" />
             <LastEdit nickname={article.last_edited.nickname} name={article.last_edited.name} updatedAt={article.updated_at} locale={params.locale} />
           </FlexRow>
-        </div>
+        </FlexColumn>
 
         <FlexRow center gap={4} className="shrink-0" onClick={(e) => e.preventDefault()}>
           <ArticleStatus published_at={article.published_at} isArchived={!!article.archived_at} />
@@ -88,10 +88,10 @@ function TitleAndSummary({
 }) {
   return (
     <>
-      <Heading py={1} clamp={1} weight={600}>
+      <Heading clamp={1} size={16} weight={600}>
         {title}
       </Heading>
-      <Paragraph color="muted" clamp={1} mb={1}>
+      <Paragraph color="muted" size={14} clamp={1} mb={1}>
         {summary}
       </Paragraph>
     </>

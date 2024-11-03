@@ -38,7 +38,7 @@ export const NavLink = React.forwardRef<
       asChild tooltip={title}
       onClick={onClick}
       className={cn(
-        "active:scale-95 transition-transform",
+        "active:scale-95 transition-transform h-9 px-3",
         navigating && "navigating bg-accent/50",
         pathname.endsWith(url) && "bg-accent font-semibold hover:bg-accent")
       }>
