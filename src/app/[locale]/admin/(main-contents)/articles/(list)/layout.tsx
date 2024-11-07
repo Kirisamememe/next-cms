@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ArticleTabs } from "../components/tabs";
+import { ArticleTabs } from "../_components/tabs";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { SquarePen } from "lucide-react";
@@ -27,6 +27,7 @@ export default function ArticlePageLayout({ children }: Props) {
           ""
         )}>
         <Link href={'/admin/articles/edit'}>
+          {/* <EditIcon /> */}
           <SquarePen size={24} />
           <span>
             {t('article.newArticle')}

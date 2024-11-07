@@ -9,14 +9,14 @@ export const articleSubmitFormSchema = z.object({
   slug: z.string().default(createId()),
   image: z.string().optional(),
   body: z.string().min(1, "本文は必須です"),
-  commit_msg: z.string().optional(),
-  author_note: z.string().optional(),
-  author_id: z.number(),
-  published_at: z.date().nullish()
+  categoryId: z.number().optional(),
+  commitMsg: z.string().optional(),
+  authorNote: z.string().optional(),
+  publishedAt: z.date().nullish()
 })
 
 export const articlePublicationForm = z.object({
-  published_at: z.date().nullish()
+  publishedAt: z.date().nullish()
 })
 
 export type ArticleAtom = {
@@ -25,52 +25,36 @@ export type ArticleAtom = {
   summary: string | null
   image: string | null
   body: string
-  commit_msg: string | null
+  commitMsg: string | null
 
-  created_at: Date
-  published_at: Date | null
+  createdAt: Date
+  publishedAt: Date | null
 
-  author_id?: number
+  authorId: number
   author?: Editor
-  article_id: number
+  articleId: number
 }
+
 
 export type Article = {
   id: number
   slug: string
-  author_note: string | null
-  admin_only: boolean
+  authorNote: string | null
+  adminOnly: boolean
+  categoryId: number | null
 
-  created_at: Date
-  updated_at: Date
-  published_at: Date | null
-  archived_at: Date | null
+  createdAt: Date
+  updatedAt: Date
+  publishedAt: Date | null
+  archivedAt: Date | null
 
-  category_id: number | null
-  author_id: number
-
-  article_atoms: ArticleAtom[]
-}
-
-export type ArticleWithAuthor = {
-  id: number
-  slug: string
-  author_note: string | null
-  admin_only: boolean
-
-  created_at: Date
-  updated_at: Date
-  published_at: Date | null
-  archived_at: Date | null
-
-  category_id: number | null
-  author_id: number
   author: Editor
-  last_edited_by: number
-  last_edited: Editor
+  lastEdited: Editor
 
-  article_atoms: ArticleAtom[]
+  atom: ArticleAtom
 }
 
+
+export type filter = 'draft' | 'publish' | 'archive'
 
 

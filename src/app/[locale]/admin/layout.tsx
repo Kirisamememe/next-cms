@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react"
-import { Header } from "@/app/[locale]/admin/components/header";
-import { SideNav } from "@/app/[locale]/admin/components/sidenav/sidenav";
+import { Header } from "@/app/[locale]/admin/_components/header";
+import { SideNav } from "@/app/[locale]/admin/_components/sidenav/sidenav";
 import { Flexbox } from "@/components/ui/flexbox";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 

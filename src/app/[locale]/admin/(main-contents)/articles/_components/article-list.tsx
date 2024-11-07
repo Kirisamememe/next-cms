@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { ArticleCard } from "./article-card";
-import { ArticleWithAuthor } from "@/types/article-schema";
+import { Article } from "@/types/article-schema";
 import { Button } from "@/components/ui/button";
 import { ArrowDownNarrowWide, ArrowDownWideNarrow, Search } from 'lucide-react';
 import { GridColumn } from "@/components/ui/grid";
@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { NoArticleFound } from "./no-article-found";
 
 type Props = {
-  articles: ArticleWithAuthor[]
+  articles: Article[]
 }
 
 export function ArticleList({ articles }: Props) {
@@ -24,16 +24,16 @@ export function ArticleList({ articles }: Props) {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
   }
 
-  const sort = useCallback((articles: ArticleWithAuthor[], order: 'asc' | 'desc') => {
+  const sort = useCallback((articles: Article[], order: 'asc' | 'desc') => {
     return [...articles].sort((a, b) => {
-      const dateA = new Date(a.updated_at).getTime()
-      const dateB = new Date(b.updated_at).getTime()
+      const dateA = new Date(a.updatedAt).getTime()
+      const dateB = new Date(b.updatedAt).getTime()
       return order === 'asc' ? dateA - dateB : dateB - dateA
     })
   }, [])
 
   const articleList = sort(articles, sortOrder)
-    .filter((article) => article.article_atoms[0].body.includes(searchQuery))
+    .filter((article) => article.atom.body.includes(searchQuery) || article.atom.title?.includes(searchQuery))
 
   return (
     <>
@@ -49,7 +49,7 @@ export function ArticleList({ articles }: Props) {
         </Button>
       </FlexRow>
 
-      <GridColumn className="appear @[96rem]:grid-cols-2 gap-3">
+      <GridColumn className="appear @[105rem]:grid-cols-2 gap-3">
         {articleList.map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}
@@ -60,3 +60,5 @@ export function ArticleList({ articles }: Props) {
     </>
   )
 }
+
+

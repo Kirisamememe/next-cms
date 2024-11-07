@@ -155,7 +155,7 @@
       "archive": "归档"
     },
     "newArticle": "撰写新博文",
-    "filter": "按标题或内容筛选",
+    "filter": "按标题或内容搜索",
     "noArticles": "未找到相关文章",
     "lastEdited": "{name} 于 {datetime} 编辑此文",
     "author": "作者：{name}",

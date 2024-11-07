@@ -4,7 +4,7 @@ import { Heading, Paragraph } from "@/components/ui/typography"
 import { getLocale } from "@/i18n/get-locale"
 import { Link } from "@/i18n/routing"
 import { cn, extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib/utils"
-import { ArticleWithAuthor } from "@/types/article-schema"
+import { Article } from "@/types/article-schema"
 import { formatDistanceToNow } from 'date-fns'
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -15,7 +15,7 @@ import { ArchiveAlertDialog } from "./archive-dialog"
 import { useSession } from "next-auth/react"
 
 type Props = {
-  article: ArticleWithAuthor
+  article: Article
 }
 
 export function ArticleCard({ article }: Props) {
@@ -26,8 +26,8 @@ export function ArticleCard({ article }: Props) {
     return null
   }
 
-  const title = article.article_atoms[0].title || extractTitleFromMarkdown(article.article_atoms[0].body)
-  const summary = article.article_atoms[0].summary || extractFirstNCharacters(article.article_atoms[0].body, 120)
+  const title = article.atom.title || extractTitleFromMarkdown(article.atom.body)
+  const summary = article.atom.summary || extractFirstNCharacters(article.atom.body, 120)
 
   return (
     <Link href={`/admin/articles/edit/${article.id}`}>
@@ -39,14 +39,14 @@ export function ArticleCard({ article }: Props) {
             <Image src={article.author.image || ""} width={20} height={20} alt="" className="rounded-full" />
             {article.author.nickname || article.author.name}
             <Separator orientation="vertical" className="h-4 mx-1" />
-            <LastEdit nickname={article.last_edited.nickname} name={article.last_edited.name} updatedAt={article.updated_at} locale={params.locale} />
+            <LastEdit nickname={article.lastEdited.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={params.locale} />
           </FlexRow>
         </FlexColumn>
 
         <FlexRow center gap={4} className="shrink-0" onClick={(e) => e.preventDefault()}>
-          <ArticleStatus published_at={article.published_at} isArchived={!!article.archived_at} />
+          <ArticleStatus publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
           <Separator orientation="vertical" className="h-10 mx-1" />
-          <ButtonArea articleId={article.id} atomId={article.article_atoms[0].id} publishedAt={article.published_at} isArchived={!!article.archived_at} />
+          <ButtonArea articleId={article.id} atomId={article.atom.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
         </FlexRow>
 
       </FlexRow>
@@ -55,11 +55,11 @@ export function ArticleCard({ article }: Props) {
       <FlexColumn className="@[52rem]:hidden justify-between bg-card hover:bg-muted/50 gap-2 px-4 @[40rem]:px-5 py-3 h-fit border rounded-lg shadow-sm">
         <FlexColumn>
           <ArticleStatus
-            published_at={article.published_at}
-            isArchived={!!article.archived_at}
+            publishedAt={article.publishedAt}
+            isArchived={!!article.archivedAt}
             className="-ml-1 mb-2 w-fit"
           />
-          <LastEdit className="mb-2" nickname={article.author.nickname} name={article.author.name} updatedAt={article.updated_at} locale={params.locale} />
+          <LastEdit className="mb-2" nickname={article.author.nickname} name={article.author.name} updatedAt={article.updatedAt} locale={params.locale} />
           <TitleAndSummary title={title} summary={summary} />
         </FlexColumn>
 
@@ -72,7 +72,7 @@ export function ArticleCard({ article }: Props) {
           </FlexRow>
 
           <FlexRow center className="shrink-0 gap-3 @[40rem]:gap-4" onClick={(e) => e.preventDefault()}>
-            <ButtonArea articleId={article.id} atomId={article.article_atoms[0].id} publishedAt={article.published_at} isArchived={!!article.archived_at} />
+            <ButtonArea articleId={article.id} atomId={article.atom.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
           </FlexRow>
         </FlexRow>
       </FlexColumn>

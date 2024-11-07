@@ -1,6 +1,6 @@
-import { SignIn } from "@/app/[locale]/admin/components/sign-in";
+import { SignIn } from "@/app/[locale]/admin/_components/sign-in";
 
 export default async function AdminPage() {
 
-  return <SignIn  />
+  return <SignIn />
 }

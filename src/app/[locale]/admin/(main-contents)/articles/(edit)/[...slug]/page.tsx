@@ -1,10 +1,9 @@
-
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/getSession";
 import { notFound } from "next/navigation";
 import { idSchema } from "@/types/id-schema";
-import { NewArticle } from "../../components/new-article";
-import { EditArticle } from "../../components/edit-article";
+import { NewArticle } from "../../_components/new-article";
+import { EditArticle } from "../../_components/edit-article";
+import { fetchById } from "../../_actions/fetch";
+
 
 type Props = {
   params: Promise<{
@@ -17,11 +16,10 @@ export default async function EditArticlePage({ params }: Props) {
   if (slug[0] !== 'edit' || slug.length > 2) {
     notFound()
   }
-  const { operatorId } = await getSession()
 
   // 記事idあるか確認、なければ記事作成
   if (!slug[1]) {
-    return <NewArticle operatorId={operatorId} />
+    return <NewArticle />
   }
 
   // 記事idあれば、バリデーション
@@ -31,27 +29,12 @@ export default async function EditArticlePage({ params }: Props) {
   }
 
   const id = parseId.data
-  const article = await prisma.article.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      article_atoms: {
-        orderBy: {
-          created_at: 'desc'
-        },
-        take: 1
-      },
-      author: true,
-      last_edited: true
-    }
-  })
-
-  if (!article) {
+  const res = await fetchById(id)
+  if (!res.isSuccess) {
     notFound()
   }
 
   return (
-    <EditArticle article={article} operatorId={operatorId} />
+    <EditArticle article={res.data} />
   )
 }

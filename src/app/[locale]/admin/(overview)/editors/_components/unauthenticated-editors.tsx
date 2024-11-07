@@ -17,7 +17,7 @@ export async function UnauthenticatedEditorList({ operatorRole }: Props) {
   const t = await getTranslations('editor')
   const unauthorizedEditors = await prisma.allowedEmail.findMany({
     where: {
-      user_id: null
+      userId: null
     }
   })
 

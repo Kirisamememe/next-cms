@@ -18,26 +18,26 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   nickname      String?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
 
   allowed_email AllowedEmail?
 
-  articles        Article[]     @relation("ArticleAuthor")
-  edited_articles Article[]     @relation("ArticleEditor")
-  article_atom    ArticleAtom[]
-  contents        Content[]
-  sessions        Session[]
-  accounts        Account[]
+  articles       Article[]     @relation("ArticleAuthor")
+  editedArticles Article[]     @relation("ArticleEditor")
+  articleAtom    ArticleAtom[]
+  contents       Content[]
+  sessions       Session[]
+  accounts       Account[]
 
   @@map("user")
 }
 
 model AllowedEmail {
-  id      Int    @id @default(autoincrement())
-  email   String @unique
-  user_id Int?   @unique
-  user    User?  @relation(fields: [user_id], references: [id])
+  id     Int    @id @default(autoincrement())
+  email  String @unique
+  userId Int?   @unique @map("user_id")
+  user   User?  @relation(fields: [userId], references: [id])
 
   @@map("allowed_email")
 }
@@ -99,43 +99,43 @@ model Homepage {
 }
 
 model ArticleAtom {
-  id           Int       @id @default(autoincrement())
-  title        String?
-  summary      String?
-  body         String
-  image        String?
-  commit_msg   String?
-  created_at   DateTime  @default(now())
-  published_at DateTime?
-  author_id    Int
-  article_id   Int
-  article      Article   @relation(fields: [article_id], references: [id])
-  author       User      @relation(fields: [author_id], references: [id])
+  id          Int       @id @default(autoincrement())
+  title       String?
+  summary     String?
+  body        String
+  image       String?
+  commitMsg   String?   @map("commit_msg")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  publishedAt DateTime? @map("published_at")
+  authorId    Int       @map("author_id")
+  articleId   Int       @map("article_id")
+  article     Article   @relation(fields: [articleId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])
 
   @@map("article_atom")
 }
 
 model Article {
-  id               Int     @id @default(autoincrement())
-  slug             String  @unique
-  author_note      String?
-  admin_only       Boolean @default(false)
-  permission_level Int     @default(3)
+  id              Int     @id @default(autoincrement())
+  slug            String  @unique
+  authorNote      String? @map("author_note")
+  adminOnly       Boolean @default(false) @map("admin_only")
+  permissionLevel Int     @default(3) @map("permission_level")
 
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  archived_at  DateTime?
-  published_at DateTime?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  archivedAt  DateTime? @map("archived_at")
+  publishedAt DateTime? @map("published_at")
 
-  author_id      Int
-  last_edited_by Int
-  category_id    Int?
-  author         User      @relation("ArticleAuthor", fields: [author_id], references: [id])
-  last_edited    User      @relation("ArticleEditor", fields: [last_edited_by], references: [id])
-  category       Category? @relation(fields: [category_id], references: [id])
+  authorId     Int       @map("author_id")
+  lastEditedBy Int       @map("last_edited_by")
+  categoryId   Int?      @map("category_id")
+  author       User      @relation("ArticleAuthor", fields: [authorId], references: [id])
+  lastEdited   User      @relation("ArticleEditor", fields: [lastEditedBy], references: [id])
+  category     Category? @relation(fields: [categoryId], references: [id])
 
-  article_atoms ArticleAtom[]
-  tags          ArticleTagJunction[]
+  atoms ArticleAtom[]
+  tags  ArticleTagJunction[]
 
   @@map("article")
 }
@@ -143,72 +143,72 @@ model Article {
 model TextValue {
   id           Int      @id @default(autoincrement())
   value        String
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("text_value")
 }
 
 model NumberValue {
   id           Int      @id @default(autoincrement())
   value        Float
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("number_value")
 }
 
 model UrlValue {
   id           Int      @id @default(autoincrement())
   value        String
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("url_value")
 }
 
 model DateValue {
   id           Int      @id @default(autoincrement())
   value        DateTime @db.Date
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("date_value")
 }
 
 model DateTimeValue {
   id           Int      @id @default(autoincrement())
   value        DateTime
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("datetime_value")
 }
 
 model BooleanValue {
   id           Int      @id @default(autoincrement())
   value        Boolean
-  created_at   DateTime @default(now())
+  createdAt    DateTime @default(now()) @map("created_at")
   is_published Boolean  @default(true)
-  field_id     Int
-  field        Field    @relation(fields: [field_id], references: [id])
+  fieldId      Int      @map("field_id")
+  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([field_id])
+  @@index([fieldId])
   @@map("boolean_value")
 }
 

@@ -155,7 +155,7 @@
       "archive": "Archive"
     },
     "newArticle": "New article",
-    "filter": "Filter by title or body",
+    "filter": "Search by title or body",
     "noArticles": "No articles found",
     "lastEdited": "Last edit: {name}, {datetime}",
     "author": "Author: {name}",

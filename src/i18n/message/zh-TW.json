@@ -39,7 +39,7 @@
       "1": "偏好設定"
     },
     "docs": {
-      "1": "文件"
+      "1": "文檔"
     },
     "homepage": {
       "1": "首頁"
@@ -155,7 +155,7 @@
       "archive": "已封存"
     },
     "newArticle": "撰寫新文章",
-    "filter": "按標題或內容篩選",
+    "filter": "按標題或內容搜尋",
     "noArticles": "未找到相關文章",
     "lastEdited": "{name} 於 {datetime} 編輯此文",
     "author": "作者：{name}",

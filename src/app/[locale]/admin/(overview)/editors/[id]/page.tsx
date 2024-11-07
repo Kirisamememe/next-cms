@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
-import { EditEditorRole } from "../components/edit-editor-role";
+import { EditEditorRole } from "../_components/edit-editor-role";
 import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
-import { EditProfile } from "../components/edit-profile";
+import { EditProfile } from "../_components/edit-profile";
 import { getSession } from "@/lib/getSession";
 import { idSchema } from "@/types/id-schema";
 
@@ -27,7 +27,7 @@ export default async function SpecificEditorPage({ params }: Props) {
 
   // 自分のページではないし、管理者でもない
   if (!isAdminGroup(user.role) && targetId !== operatorId) {
-    redirect('/admin/editors?error=common.form.permission')
+    notFound()
   }
 
   // ターゲットユーザーの存在を確認

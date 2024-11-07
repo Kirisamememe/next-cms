@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/getSession";
 import { isAdminGroup } from "@/lib/roleUtils";
 import { notFound } from "next/navigation";
-import { NewEditor } from "./components/new-editor";
+import { NewEditor } from "./_components/new-editor";
 
 
 export default async function NewEditorFormPage() {

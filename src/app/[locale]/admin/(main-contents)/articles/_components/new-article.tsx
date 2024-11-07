@@ -1,6 +1,5 @@
 'use client'
 
-import { createArticle } from "@/actions/articles"
 import { useToast } from "@/hooks/use-toast"
 import { articleSubmitFormSchema } from "@/types/article-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,12 +11,11 @@ import { z } from "zod"
 import { ArticleForm } from "./article-form"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { createArticle } from "../_actions/create"
 
-type Props = {
-  operatorId: number
-}
 
-export function NewArticle({ operatorId }: Props) {
+
+export function NewArticle() {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const router = useRouter()
@@ -30,12 +28,12 @@ export function NewArticle({ operatorId }: Props) {
     mode: "onChange",
     defaultValues: {
       title: "",
+      slug: "",
       summary: "",
       image: "",
       body: "",
-      commit_msg: "",
-      author_note: "",
-      author_id: operatorId,
+      commitMsg: "",
+      authorNote: "",
     }
   });
 
@@ -57,7 +55,7 @@ export function NewArticle({ operatorId }: Props) {
       toast({
         title: t('common.form.saved'),
       })
-      router.push(`/admin/articles/edit/${res.article.id}`)
+      router.push(`/admin/articles/edit/${res.articleId}`)
     })
   }
 

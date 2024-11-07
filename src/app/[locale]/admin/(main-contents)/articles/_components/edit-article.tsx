@@ -1,26 +1,24 @@
 'use client'
 
-import { updateArticle } from "@/actions/articles"
 import { useToast } from "@/hooks/use-toast"
-import { articleSubmitFormSchema, ArticleWithAuthor } from "@/types/article-schema"
+import { articleSubmitFormSchema, Article } from "@/types/article-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import React from "react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ArticleForm } from "./article-form"
 import { useTranslations } from "next-intl"
+import { updateArticleCreateNewAtom, updateArticleUpdateAtom } from "../_actions/update"
 
 type Props = {
-  article: ArticleWithAuthor
-  operatorId: number
+  article: Article
 }
 
-export function EditArticle({ article, operatorId }: Props) {
+export function EditArticle({ article }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
-  const { slug } = useParams<{ slug: string[] }>()
   const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations()
@@ -31,15 +29,14 @@ export function EditArticle({ article, operatorId }: Props) {
     resolver: zodResolver(articleSubmitFormSchema),
     mode: "onChange",
     defaultValues: {
-      title: article?.article_atoms[0].title || "",
-      slug: article?.slug || "",
-      summary: article?.article_atoms[0].summary || "",
-      image: article?.article_atoms[0].image || "",
-      body: article.article_atoms[0].body || "",
-      commit_msg: article?.article_atoms[0].commit_msg || "",
-      author_note: article?.author_note || "",
-      author_id: article?.author_id,
-      published_at: article?.published_at || null
+      title: article.atom.title || "",
+      slug: article.slug || "",
+      summary: article.atom.summary || "",
+      image: article.atom.image || "",
+      body: article.atom.body || "",
+      commitMsg: article.atom.commitMsg || "",
+      authorNote: article.authorNote || "",
+      publishedAt: article.publishedAt || null
     }
   });
 
@@ -47,9 +44,22 @@ export function EditArticle({ article, operatorId }: Props) {
     const markdown = ref.current?.getMarkdown()
     if (!markdown) return;
 
+    const hasAtomChanged = () => {
+      const contentFields = ['title', 'summary', 'image', 'body', 'commitMsg'] as const
+      return contentFields.some(field =>
+        values[field] !== article.atom[field]
+      )
+    }
+
     startTransition(async () => {
-      // atomに変更がない場合は、atomを新しく作らない
-      const res = await updateArticle(Number(slug[1]), operatorId, values)
+      let res
+
+      if (hasAtomChanged()) {
+        res = await updateArticleCreateNewAtom(article.id, values)
+      } else {
+        res = await updateArticleUpdateAtom(article.atom.id, article.id, values)
+      }
+
       if (!res.id) {
         toast({
           title: t('common.form.databaseError'),
@@ -70,14 +80,10 @@ export function EditArticle({ article, operatorId }: Props) {
   return (
     <ArticleForm
       ref={ref} form={form}
-      markdown={article.article_atoms[0].body}
+      markdown={article.atom.body}
       onSubmit={onSubmit}
       isPending={isPending}
-      author={article.author}
-      lastEdit={article.last_edited}
-      createdAt={article.created_at}
-      updatedAt={article.updated_at}
-      archivedAt={article.archived_at}
+      article={article}
     />
   )
 }
