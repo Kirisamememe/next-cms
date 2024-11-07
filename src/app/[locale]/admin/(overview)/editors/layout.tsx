@@ -1,5 +1,5 @@
-import { AuthenticateEditorList } from "./components/authenticate-editors";
-import { UnauthenticatedEditorList } from "./components/unauthenticated-editors";
+import { AuthenticateEditorList } from "./_components/authenticate-editors";
+import { UnauthenticatedEditorList } from "./_components/unauthenticated-editors";
 import { getSession } from "@/lib/getSession";
 
 export default async function EditorsPageLayout({

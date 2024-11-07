@@ -1,4 +1,4 @@
-import { Dashboard } from "@/app/[locale]/admin/(overview)/dashboard/components/dashboard";
+import { Dashboard } from "@/app/[locale]/admin/(overview)/dashboard/_components/dashboard";
 import { getSession } from "@/lib/getSession";
 
 export default async function DashboardPage() {

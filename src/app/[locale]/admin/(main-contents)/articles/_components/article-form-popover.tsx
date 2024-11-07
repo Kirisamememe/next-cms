@@ -22,11 +22,10 @@ type Props = {
     summary?: string;
     title?: string;
     image?: string;
-    commit_msg?: string;
-    author_note?: string;
-    author_id: number;
-    published_at?: Date | null;
-  }, "published_at">;
+    commitMsg?: string;
+    authorNote?: string;
+    publishedAt?: Date | null;
+  }, "publishedAt">;
   defaultDate?: Date | null;
 }
 

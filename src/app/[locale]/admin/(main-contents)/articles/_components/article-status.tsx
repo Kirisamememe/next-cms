@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
 type Props = {
-  published_at: Date | null
+  publishedAt: Date | null
   isArchived: boolean
-  className?: string
+  className?: string | null
 }
 
-export function ArticleStatus({ published_at, isArchived, className }: Props) {
+export function ArticleStatus({ publishedAt, isArchived, className }: Props) {
   const t = useTranslations()
 
   if (isArchived) {
@@ -20,7 +20,7 @@ export function ArticleStatus({ published_at, isArchived, className }: Props) {
     )
   }
 
-  const status = published_at ? published_at < new Date() ? "published" : "scheduled" : "draft"
+  const status = publishedAt ? publishedAt < new Date() ? "published" : "scheduled" : "draft"
 
   return (
     <Badge variant={"custom"}

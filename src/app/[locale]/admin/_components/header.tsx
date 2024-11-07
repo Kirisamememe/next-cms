@@ -28,11 +28,11 @@ export function Header() {
         <Heading>
           <Breadcrumb>
             <BreadcrumbList>
-              {pathname.split('/').slice(1, 4).map((token, index, arr) => {
+              {pathname.split('/').slice(1, 4).map((segment, index, arr) => {
                 if (index === 0) return null
                 if (arr.length === 2) {
                   return (
-                    <BreadcrumbPage key={token} className="text-base font-semibold">
+                    <BreadcrumbPage key={segment} className="text-base font-semibold">
                       {t(`${arr[1]}.${index}`)}
                     </BreadcrumbPage>
                   )
@@ -42,7 +42,7 @@ export function Header() {
 
                 if (index === 1) {
                   return (
-                    <BreadcrumbItem key={token} className="text-base font-semibold hover:text-foreground">
+                    <BreadcrumbItem key={segment} className="text-base font-semibold hover:text-foreground">
                       <Link href={href}>
                         {t(`${arr[1]}.1`)}
                       </Link>
@@ -51,10 +51,10 @@ export function Header() {
                 }
 
                 return (
-                  <React.Fragment key={token}>
+                  <React.Fragment key={segment}>
                     <BreadcrumbSeparator />
                     <BreadcrumbPage className="text-base font-semibold">
-                      {t(`${arr[1]}.2${token.match(/^[0-9]+$/) ? '' : `.${token}`}`)}
+                      {t(`${arr[1]}.2${segment.match(/^[0-9]+$/) ? '' : `.${segment}`}`)}
                     </BreadcrumbPage>
                   </React.Fragment>
                 )

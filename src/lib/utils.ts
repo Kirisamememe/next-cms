@@ -48,3 +48,13 @@ export const combineDateAndTime = (date: Date | undefined, timeString: string) =
 
 
 
+export const removeNull = <T extends Record<string, any>>(obj: T): Partial<T> => {
+  return Object.fromEntries(
+    Object.entries(obj || {}).filter(([_, value]) => {
+      if (typeof value === 'object') {
+        return !!value.length
+      }
+      return value !== null
+    })
+  ) as Partial<T>
+}

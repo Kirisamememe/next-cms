@@ -1,4 +1,3 @@
-import { archiveArticle, restoreArticle } from "@/actions/articles"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +15,7 @@ import { Archive, ArchiveRestore } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useTranslations } from "next-intl"
 import { useTransition } from "react"
+import { archiveArticle, restoreArticle } from "../_actions/update"
 
 type Props = {
   articleId: number

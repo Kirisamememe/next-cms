@@ -1,5 +1,5 @@
 import { Locale } from "@/i18n/config"
-import { prisma } from "@/lib/prisma"
+import { articleService } from "@/services/article-service"
 import Markdown from 'react-markdown'
 
 type Props = {
@@ -11,22 +11,15 @@ type Props = {
 
 export default async function ArticlePage({ params }: Props) {
   const { id } = await params
-  const article = await prisma.article.findUnique({
-    where: {
-      id: Number(id),
-    },
-    include: {
-      article_atoms: true
-    }
-  })
+  const res = await articleService.findById(Number(id))
 
-  if (!article?.article_atoms[0].body) {
+  if (!res.isSuccess) {
     return null
   }
 
   return (
     <Markdown className={"prose dark:prose-invert"}>
-      {article?.article_atoms[0].body}
+      {res.data.atom.body}
     </Markdown>
   )
 }

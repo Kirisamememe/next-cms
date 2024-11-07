@@ -4,7 +4,7 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { authConfig } from "./auth.config"
-import { getUserByEmail, getAllowedEmails, noSuperAdmin, setAsSuperAdmin, authenticateEmail } from "./actions/user"
+import { getUserByEmail, getAllowedEmails, noSuperAdmin, setAsSuperAdmin, authenticateEmail } from "./app/[locale]/admin/(overview)/_actions/user"
 import { Role } from "./types/editor-schema"
 
 declare module "next-auth" {

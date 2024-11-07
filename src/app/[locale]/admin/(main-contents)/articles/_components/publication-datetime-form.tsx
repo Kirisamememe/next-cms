@@ -9,7 +9,7 @@ import { DateTimePicker } from "./datetime-picker"
 
 type Props = {
   form: UseFormReturn<{
-    published_at?: Date | null;
+    publishedAt?: Date | null;
   }, any, undefined>
   onSubmit: (values: z.infer<typeof articlePublicationForm>) => void
   isPending: boolean
@@ -24,12 +24,12 @@ export function PublicationDatetimeForm({ form, onSubmit, isPending }: Props) {
       <form className="flex flex-col gap-4 p-4">
         <FormField
           control={form.control}
-          name="published_at"
+          name="publishedAt"
           render={({ field }) => (
             <FormItem className="relative">
               <DateTimePicker
                 value={field.value}
-                defaultDate={form.formState.defaultValues?.published_at}
+                defaultDate={form.formState.defaultValues?.publishedAt}
                 onChange={field.onChange}
               />
               <FormControl>
