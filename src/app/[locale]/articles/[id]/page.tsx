@@ -11,15 +11,15 @@ type Props = {
 
 export default async function ArticlePage({ params }: Props) {
   const { id } = await params
-  const res = await articleService.findById(Number(id))
+  const { data, noData } = await articleService.getById(Number(id))
 
-  if (!res.isSuccess) {
+  if (noData) {
     return null
   }
 
   return (
     <Markdown className={"prose dark:prose-invert"}>
-      {res.data.atom.body}
+      {data.atom.body}
     </Markdown>
   )
 }

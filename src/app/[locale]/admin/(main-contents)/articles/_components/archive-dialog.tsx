@@ -34,8 +34,8 @@ export function ArchiveAlertDialog({ articleId, isArchived }: Props) {
   const handleClick = () => {
     startTransition(async () => {
       const res = isArchived ?
-        await restoreArticle(articleId, session.data.operatorId) :
-        await archiveArticle(articleId, session.data.operatorId)
+        await restoreArticle(articleId) :
+        await archiveArticle(articleId)
 
       if (!res) {
         toast({

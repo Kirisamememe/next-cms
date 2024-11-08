@@ -7,18 +7,20 @@ import { articleAtomsRepository } from '@/repositories/article-atoms-repository'
 
 class ArticleService {
 
-  async findById(id: number) {
+  /**
+   * 
+   * @param id 
+   * @returns 
+   */
+  async getById(id: number) {
     const article = await articleRepository.findById(id)
-
-    if (!article) {
+    if (!article || !article?.atoms.length) {
       return {
-        isSuccess: false as const,
-        error: "Not Found"
+        noData: 'Not Found' as const
       }
     }
 
     return {
-      isSuccess: true as const,
       data: {
         ...article,
         atom: article?.atoms[0]
@@ -27,7 +29,12 @@ class ArticleService {
   }
 
 
-  async findArticles(filter?: filter) {
+  /**
+   * 
+   * @param filter 
+   * @returns 
+   */
+  async getArticles(filter?: filter) {
     const articles = await articleRepository.findManyOrderByUpdatedAt(filter)
 
     return articles.map((article) => ({
@@ -37,6 +44,12 @@ class ArticleService {
   }
 
 
+  /**
+   * 
+   * @param operatorId 
+   * @param values 
+   * @returns 
+   */
   createWithAtom(
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
@@ -50,7 +63,8 @@ class ArticleService {
 
   /**
    * atomを新規作成して、articleを更新する
-   * @param articleId 
+   * @param articleId
+   * @param operatorId
    * @param values 
    * @returns 
    */
@@ -68,8 +82,9 @@ class ArticleService {
 
   /**
    * articleを更新する。atomは公開日だけ更新する
-   * @param atomId \
-   * @param articleId 
+   * @param atomId
+   * @param articleId
+   * @param operatorId
    * @param values 
    * @returns 
    */
@@ -106,6 +121,12 @@ class ArticleService {
   }
 
 
+  /**
+   * 
+   * @param articleId 
+   * @param operatorId 
+   * @returns 
+   */
   updateArchivedAt(
     articleId: number,
     operatorId: number,
@@ -113,6 +134,13 @@ class ArticleService {
     return articleRepository.updateDate(articleId, operatorId, { archivedAt: new Date() })
   }
 
+
+  /**
+   * 
+   * @param articleId 
+   * @param operatorId 
+   * @returns 
+   */
   restore(
     articleId: number,
     operatorId: number,

@@ -1,10 +1,18 @@
 import 'server-only'
-import { prisma, DB } from '../lib/prisma'
+import { prisma, DB } from '@/lib/prisma'
 import { z } from 'zod'
 import { articleSubmitFormSchema } from '@/types/article-schema'
 
 class ArticleAtomsRepository {
 
+  /**
+   * 
+   * @param articleId 
+   * @param operatorId 
+   * @param values 
+   * @param db 
+   * @returns 
+   */
   async create(
     articleId: number,
     operatorId: number,
@@ -29,6 +37,14 @@ class ArticleAtomsRepository {
     })
   }
 
+
+  /**
+   * 
+   * @param atomId 
+   * @param values 
+   * @param db 
+   * @returns 
+   */
   async updatePublishedAt(
     atomId: number,
     values: { publishedAt: Date | null },

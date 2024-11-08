@@ -9,18 +9,17 @@ import { articleService } from "@/services/article-service"
 
 /**
  * atomを新規作成せず、公開日のみ更新
- * @param id 
+ * @param articleId
  * @param atomId 
- * @param operatorId 
  * @param values 
  * @returns 
  */
 async function updatePublishedAt(
   atomId: number,
   articleId: number,
-  operatorId: number,
   values: z.infer<typeof articlePublicationForm>
 ) {
+  const { operatorId } = await getSession()
   const res = await articleService.updatePublishAt(atomId, articleId, operatorId, values)
   revalidatePath('/admin/articles')
   return res
@@ -28,11 +27,11 @@ async function updatePublishedAt(
 
 /**
  * 記事をアーカイブする
- * @param id 
- * @param operatorId 
+ * @param articleId
  * @returns 
  */
-async function archiveArticle(articleId: number, operatorId: number) {
+async function archiveArticle(articleId: number) {
+  const { operatorId } = await getSession()
   const res = articleService.updateArchivedAt(articleId, operatorId)
   revalidatePath('/admin/articles')
   return res
@@ -41,11 +40,11 @@ async function archiveArticle(articleId: number, operatorId: number) {
 
 /**
  * 記事のアーカイブ状態を解除する
- * @param id 
- * @param operatorId 
+ * @param articleId
  * @returns 
  */
-export async function restoreArticle(articleId: number, operatorId: number) {
+export async function restoreArticle(articleId: number) {
+  const { operatorId } = await getSession()
   const res = await articleService.restore(articleId, operatorId)
   revalidatePath('/admin/articles')
   return res

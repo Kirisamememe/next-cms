@@ -13,7 +13,6 @@ import { z } from "zod"
 import { useState, useTransition } from "react"
 import { toast } from "@/hooks/use-toast"
 import { useTranslations } from "next-intl"
-import { useSession } from "next-auth/react"
 import { updatePublishedAt } from "../_actions/update"
 
 type Props = {
@@ -26,7 +25,6 @@ export function PublicationDatetimePopover({ articleId, atomId, date }: Props) {
   const t = useTranslations()
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState(false)
-  const session = useSession()
 
   const form = useForm<z.infer<typeof articlePublicationForm>>({
     resolver: zodResolver(articlePublicationForm),
@@ -36,13 +34,9 @@ export function PublicationDatetimePopover({ articleId, atomId, date }: Props) {
     mode: "onChange",
   })
 
-  if (!session.data?.operatorId) {
-    return null
-  }
-
   const onSubmit = (values: z.infer<typeof articlePublicationForm>) => {
     startTransition(async () => {
-      const res = await updatePublishedAt(atomId, articleId, session.data.operatorId, values)
+      const res = await updatePublishedAt(atomId, articleId, values)
       if (!res) {
         toast({
           title: t('common.form.databaseError'),
