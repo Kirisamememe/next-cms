@@ -1,5 +1,5 @@
 import 'server-only'
-import { DB, prisma } from '../lib/prisma'
+import { DB, prisma } from '@/lib/prisma'
 import { articleSubmitFormSchema, filter } from '@/types/article-schema'
 import { z } from 'zod'
 import { createId } from '@paralleldrive/cuid2'
@@ -123,6 +123,14 @@ class ArticleRepository {
   }
 
 
+  /**
+   * 
+   * @param articleId 
+   * @param operatorId 
+   * @param values 
+   * @param db 
+   * @returns 
+   */
   async update(
     articleId: number,
     operatorId: number,
@@ -150,6 +158,14 @@ class ArticleRepository {
   }
 
 
+  /**
+   * 
+   * @param articleId 
+   * @param operatorId 
+   * @param values 
+   * @param db 
+   * @returns 
+   */
   async updateDate(
     articleId: number,
     operatorId: number,
@@ -164,12 +180,8 @@ class ArticleRepository {
         id: articleId
       },
       data: {
-        ...(values.publishedAt !== undefined && {
-          publishedAt: values.publishedAt,
-        }),
-        ...(values.archivedAt !== undefined && {
-          archivedAt: values.archivedAt,
-        }),
+        publishedAt: values.publishedAt,
+        archivedAt: values.archivedAt,
         lastEdited: {
           connect: { id: operatorId }
         }

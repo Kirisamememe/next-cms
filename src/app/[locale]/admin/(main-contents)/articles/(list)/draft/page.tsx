@@ -1,8 +1,8 @@
-import { fetchDrafts } from "../../_actions/fetch";
+import { articleService } from "@/services/article-service";
 import { ArticleList } from "../../_components/article-list";
 
 export default async function DraftArticlePage() {
-  const articles = await fetchDrafts()
+  const articles = await articleService.getArticles('draft')
 
   return (
     <ArticleList articles={articles} />

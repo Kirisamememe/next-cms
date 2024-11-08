@@ -1,8 +1,8 @@
-import { fetchPublications } from "../../_actions/fetch";
+import { articleService } from "@/services/article-service";
 import { ArticleList } from "../../_components/article-list";
 
 export default async function PublishedArticlePage() {
-  const articles = await fetchPublications()
+  const articles = await articleService.getArticles('publish')
 
   return (
     <ArticleList articles={articles} />

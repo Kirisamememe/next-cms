@@ -4,8 +4,9 @@ import Resend from "next-auth/providers/resend"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { authConfig } from "./auth.config"
-import { getUserByEmail, getAllowedEmails, noSuperAdmin, setAsSuperAdmin, authenticateEmail } from "./app/[locale]/admin/(overview)/_actions/user"
 import { Role } from "./types/editor-schema"
+import { userService } from "./services/user-service"
+import { allowedEmailService } from "./services/allowed-email-service"
 
 declare module "next-auth" {
   interface User {
@@ -39,13 +40,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false
       }
 
-      const allowedEmails = await getAllowedEmails()
+      const { data, noData } = await allowedEmailService.getAll()
 
-      if (!allowedEmails.length) {
+      if (noData) {
         return true
       }
 
-      if (!allowedEmails.some(val => val.email === email)) {
+      if (!data.some(val => val.email === email)) {
         throw new Error("Email not allowed")
       }
 
@@ -56,17 +57,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // ここのuserはなぜか同期的に取得できない
       // まず、allowed_emailがuserにリンク済みか確認
       // まだリンクしていない場合、リンクを開始
-      if ((trigger === "signUp" || trigger === "signIn") && await noSuperAdmin() && user.email) {
-        const res = await setAsSuperAdmin(user.email)
-        if (!res) {
-          console.error("Database error has occurred: setAsSuperAdmin")
+      if ((trigger === "signUp" || trigger === "signIn") && await userService.noSuperAdmin() && user.email) {
+        const { error } = userService.setSuperAdmin(user.email)
+        if (error) {
+          console.error(error)
         }
       }
 
       // 要検証！！
       if ((trigger === "signUp" || trigger === "signIn") && user.email) {
-        const res = await authenticateEmail(user.email)
-        if (!res) {
+        const { error } = userService.authenticateEmail(user.email)
+        if (error) {
           console.error("Database error has occurred: setAsSuperAdmin")
         }
       }
@@ -88,8 +89,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }
-      const res = await getUserByEmail(token.email)
-      if (!res) {
+      const { data, error } = await userService.getByEmail(token.email)
+      if (error) {
         console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }
@@ -101,14 +102,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       session = {
         ...session,
-        operatorId: res.id,
+        operatorId: data.id,
         user: {
           ...user,
           email,
           name,
-          role: res.role,
-          nickname: res.nickname || "",
-          image: res.image
+          role: data.role,
+          nickname: data.nickname || "",
+          image: data.image
         }
       }
 

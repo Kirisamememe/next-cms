@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { idSchema } from "@/types/id-schema";
 import { NewArticle } from "../../_components/new-article";
 import { EditArticle } from "../../_components/edit-article";
-import { fetchById } from "../../_actions/fetch";
+import { articleService } from "@/services/article-service";
 
 
 type Props = {
@@ -29,12 +29,12 @@ export default async function EditArticlePage({ params }: Props) {
   }
 
   const id = parseId.data
-  const res = await fetchById(id)
-  if (!res.isSuccess) {
+  const { data, noData } = await articleService.getById(id)
+  if (noData) {
     notFound()
   }
 
   return (
-    <EditArticle article={res.data} />
+    <EditArticle article={data} />
   )
 }
