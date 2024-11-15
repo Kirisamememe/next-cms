@@ -46,14 +46,14 @@ export const ArticleForm = React.forwardRef<
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex border rounded-lg justify-stretch max-w-[76rem] 2xl:w-[76rem] 2xl:m-auto">
-        <FlexColumn className="p-3 flex-grow border-r">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row border rounded-lg justify-stretch max-w-[76rem] 2xl:w-[76rem] 2xl:m-auto">
+        <FlexColumn className="p-3 flex-grow @[54rem]:border-r">
           <MDXEditor
             ref={ref} {...props}
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
-        <Flexbox className="sticky top-[86px] shrink-0 w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll">
+        <Flexbox className="sticky top-[86px] shrink-0 w-full @[54rem]:w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll border-t @[54rem]:border-none">
           {article?.author && article?.lastEdited && article?.updatedAt &&
             <>
               <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-1">
@@ -193,6 +193,12 @@ export const ArticleForm = React.forwardRef<
             {article?.createdAt &&
               <LabelText>
                 {t('article.createdAt', { date: format(article?.createdAt, 'yyyy-MM-dd HH:mm:ss') })}
+              </LabelText>
+            }
+
+            {article?.atom.version &&
+              <LabelText>
+                {`Version: ${article.atom.version}`}
               </LabelText>
             }
 

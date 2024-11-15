@@ -46,7 +46,7 @@ export function ArticleCard({ article }: Props) {
         <FlexRow center gap={4} className="shrink-0" onClick={(e) => e.preventDefault()}>
           <ArticleStatus publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
           <Separator orientation="vertical" className="h-10 mx-1" />
-          <ButtonArea articleId={article.id} atomId={article.atom.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
+          <ButtonArea articleId={article.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
         </FlexRow>
 
       </FlexRow>
@@ -72,7 +72,7 @@ export function ArticleCard({ article }: Props) {
           </FlexRow>
 
           <FlexRow center className="shrink-0 gap-3 @[40rem]:gap-4" onClick={(e) => e.preventDefault()}>
-            <ButtonArea articleId={article.id} atomId={article.atom.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
+            <ButtonArea articleId={article.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} />
           </FlexRow>
         </FlexRow>
       </FlexColumn>
@@ -101,18 +101,16 @@ function TitleAndSummary({
 
 function ButtonArea({
   articleId,
-  atomId,
   publishedAt,
   isArchived
 }: {
   articleId: number,
-  atomId: number,
   publishedAt: Date | null,
   isArchived: boolean
 }) {
   return (
     <>
-      <PublicationDatetimePopover articleId={articleId} atomId={atomId} date={publishedAt} />
+      <PublicationDatetimePopover articleId={articleId} date={publishedAt} />
       <ArchiveAlertDialog articleId={articleId} isArchived={isArchived} />
     </>
   )

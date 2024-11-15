@@ -72,7 +72,11 @@
       "1": "页面"
     },
     "restful-api": {
-      "1": "RESTful API"
+      "1": "RESTful API",
+      "2": {
+        "main-content": "主要内容",
+        "custom-content": "自定义内容"
+      }
     },
     "log": {
       "1": "日志分析"
@@ -223,6 +227,12 @@
       "name": "发布时间",
       "placeholder": "设置发布时间",
       "description": "切换发布状态"
+    }
+  },
+  "restfulApi": {
+    "tabs": {
+      "main-content": "主要内容",
+      "custom-content": "自定义内容"
     }
   }
 }

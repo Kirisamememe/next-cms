@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { ArticleForm } from "./article-form"
 import { useTranslations } from "next-intl"
-import { updateArticleCreateNewAtom, updateArticleUpdateAtom } from "../_actions/update"
+import { updateArticle, updateArticleCreateNewAtom } from "../_actions/update"
 
 type Props = {
   article: Article
@@ -57,7 +57,7 @@ export function EditArticle({ article }: Props) {
       if (hasAtomChanged()) {
         res = await updateArticleCreateNewAtom(article.id, values)
       } else {
-        res = await updateArticleUpdateAtom(article.atom.id, article.id, values)
+        res = await updateArticle(article.id, values)
       }
 
       if (!res.id) {

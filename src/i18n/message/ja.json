@@ -72,7 +72,11 @@
       "1": "ページ"
     },
     "restful-api": {
-      "1": "RESTful API"
+      "1": "RESTful API",
+      "2": {
+        "main-content": "メインコンテンツ",
+        "custom-content": "カスタムコンテンツ"
+      }
     },
     "log": {
       "1": "ログ集計"
@@ -223,6 +227,12 @@
       "name": "公開日時",
       "placeholder": "日時を選択してください",
       "description": "現在の日時より前"
+    }
+  },
+  "restfulApi": {
+    "tabs": {
+      "main-content": "メインコンテンツ",
+      "custom-content": "カスタムコンテンツ"
     }
   }
 }

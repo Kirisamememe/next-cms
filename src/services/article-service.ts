@@ -34,7 +34,7 @@ class ArticleService {
    * @param filter 
    * @returns 
    */
-  async getArticles(filter?: filter) {
+  async getMany(filter?: filter) {
     const articles = await articleRepository.findManyOrderByUpdatedAt(filter)
 
     return articles.map((article) => ({
@@ -82,42 +82,32 @@ class ArticleService {
 
   /**
    * articleを更新する。atomは公開日だけ更新する
-   * @param atomId
    * @param articleId
    * @param operatorId
    * @param values 
    * @returns 
    */
-  updateArticleUpdateAtom(
-    atomId: number,
+  updateArticle(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
-    return prisma.$transaction(async (trx) => {
-      await articleAtomsRepository.updatePublishedAt(atomId, { publishedAt: values.publishedAt || null }, trx)
-      return await articleRepository.update(articleId, operatorId, values, trx)
-    })
+    return articleRepository.update(articleId, operatorId, values)
   }
 
   /**
    * articleとatom、両方ともpublishedAtのみ更新する
-   * @param atomId 
    * @param articleId 
    * @param operatorId 
    * @param values 
    * @returns 
    */
   updatePublishAt(
-    atomId: number,
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articlePublicationForm>,
   ) {
-    return prisma.$transaction(async (trx) => {
-      await articleAtomsRepository.updatePublishedAt(atomId, { publishedAt: values.publishedAt || null }, trx)
-      return await articleRepository.updateDate(articleId, operatorId, values, trx)
-    })
+    return articleRepository.updateDate(articleId, operatorId, values)
   }
 
 
