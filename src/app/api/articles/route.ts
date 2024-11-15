@@ -1,16 +1,18 @@
-export const dynamic = 'force-dynamic' // defaults to auto
-export async function GET(
-  request: Request,
-) {
-  const url = request.url;
-  console.log(`---- url: ${url} ----`)
-  return Response.json({ params: `${url}` })
-}
+import { apiService } from "@/services/api-service";
+import { articleService } from "@/services/article-service";
+import { NextResponse } from "next/server";
 
-export async function POST(
-  request: Request,
-) {
-  const url = request.url;
-  console.log(`---- postUrl: ${url} ----`)
-  return Response.json({ params: `${url}` })
+export const dynamic = 'force-dynamic' // defaults to auto
+
+export async function GET() {
+  const { data, noData } = await apiService.getByName('article')
+  if (noData) {
+    return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+  }
+  if (!data.activatedAt) {
+    return NextResponse.json({ error: 'Bad Request' }, { status: 400 })
+  }
+
+  const articles = await articleService.getMany()
+  return Response.json({ articles })
 }
