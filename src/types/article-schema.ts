@@ -26,9 +26,10 @@ export type ArticleAtom = {
   image: string | null
   body: string
   commitMsg: string | null
+  version: number
 
   createdAt: Date
-  publishedAt: Date | null
+  selectedAt: Date | null
 
   authorId: number
   author?: Editor

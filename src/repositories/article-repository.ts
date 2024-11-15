@@ -20,7 +20,7 @@ class ArticleRepository {
       include: {
         atoms: {
           orderBy: [{
-            publishedAt: {
+            selectedAt: {
               sort: "desc",
               nulls: "last"
             }
@@ -77,7 +77,7 @@ class ArticleRepository {
             author: true
           },
           orderBy: [{
-            publishedAt: {
+            selectedAt: {
               sort: "desc",
               nulls: "last"
             }
@@ -175,7 +175,7 @@ class ArticleRepository {
     },
     db: DB = prisma
   ) {
-    return db.article.update({
+    return await db.article.update({
       where: {
         id: articleId
       },

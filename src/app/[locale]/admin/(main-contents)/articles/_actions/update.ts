@@ -10,20 +10,50 @@ import { articleService } from "@/services/article-service"
 /**
  * atomを新規作成せず、公開日のみ更新
  * @param articleId
- * @param atomId 
  * @param values 
  * @returns 
  */
 async function updatePublishedAt(
-  atomId: number,
   articleId: number,
   values: z.infer<typeof articlePublicationForm>
 ) {
   const { operatorId } = await getSession()
-  const res = await articleService.updatePublishAt(atomId, articleId, operatorId, values)
+  const res = await articleService.updatePublishAt(articleId, operatorId, values)
   revalidatePath('/admin/articles')
   return res
 }
+
+
+/**
+ * 
+ * @param articleId 
+ * @param values 
+ * @returns 
+ */
+async function updateArticleCreateNewAtom(
+  articleId: number,
+  values: z.infer<typeof articleSubmitFormSchema>
+) {
+  const { operatorId } = await getSession()
+  return articleService.updateArticleCreateAtom(articleId, operatorId, values)
+}
+
+
+/**
+ * 
+ * @param articleId 
+ * @param values 
+ * @returns 
+ */
+async function updateArticle(
+  articleId: number,
+  values: z.infer<typeof articleSubmitFormSchema>
+) {
+  const { operatorId } = await getSession()
+  return articleService.updateArticle(articleId, operatorId, values)
+}
+
+
 
 /**
  * 記事をアーカイブする
@@ -52,29 +82,9 @@ export async function restoreArticle(articleId: number) {
 
 
 
-async function updateArticleCreateNewAtom(
-  articleId: number,
-  values: z.infer<typeof articleSubmitFormSchema>
-) {
-  const { operatorId } = await getSession()
-  return articleService.updateArticleCreateAtom(articleId, operatorId, values)
-}
-
-
-
-async function updateArticleUpdateAtom(
-  atomId: number,
-  articleId: number,
-  values: z.infer<typeof articleSubmitFormSchema>
-) {
-  const { operatorId } = await getSession()
-  return articleService.updateArticleUpdateAtom(atomId, articleId, operatorId, values)
-}
-
-
 export {
   updateArticleCreateNewAtom,
-  updateArticleUpdateAtom,
+  updateArticle,
   updatePublishedAt,
   archiveArticle
 }

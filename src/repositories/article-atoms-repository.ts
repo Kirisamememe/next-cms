@@ -26,7 +26,6 @@ class ArticleAtomsRepository {
         image: values.image,
         body: values.body,
         commitMsg: values.commitMsg,
-        publishedAt: values.publishedAt,
         article: {
           connect: { id: articleId }
         },
@@ -45,9 +44,8 @@ class ArticleAtomsRepository {
    * @param db 
    * @returns 
    */
-  async updatePublishedAt(
+  async updateSelectedAt(
     atomId: number,
-    values: { publishedAt: Date | null },
     db: DB = prisma
   ) {
     return db.articleAtom.update({
@@ -55,7 +53,7 @@ class ArticleAtomsRepository {
         id: atomId
       },
       data: {
-        publishedAt: values.publishedAt,
+        selectedAt: new Date(),
       }
     })
   }
