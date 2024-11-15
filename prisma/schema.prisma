@@ -29,6 +29,8 @@ model User {
   contents       Content[]
   sessions       Session[]
   accounts       Account[]
+  apis           Api[]         @relation("ApiAuthor")
+  editedApis     Api[]         @relation("ApiEditor")
 
   @@map("user")
 }
@@ -99,19 +101,23 @@ model Homepage {
 }
 
 model ArticleAtom {
-  id          Int       @id @default(autoincrement())
-  title       String?
-  summary     String?
-  body        String
-  image       String?
-  commitMsg   String?   @map("commit_msg")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  publishedAt DateTime? @map("published_at")
-  authorId    Int       @map("author_id")
-  articleId   Int       @map("article_id")
-  article     Article   @relation(fields: [articleId], references: [id])
-  author      User      @relation(fields: [authorId], references: [id])
+  id        Int     @id @default(autoincrement())
+  title     String?
+  summary   String?
+  body      String
+  image     String?
+  commitMsg String? @map("commit_msg")
+  version   Int     @default(1000)
 
+  createdAt  DateTime  @default(now()) @map("created_at")
+  selectedAt DateTime? @default(now()) @map("selected_at")
+
+  authorId  Int     @map("author_id")
+  articleId Int     @map("article_id")
+  article   Article @relation(fields: [articleId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id])
+
+  @@unique([articleId, version])
   @@map("article_atom")
 }
 
@@ -269,38 +275,46 @@ model Field {
 }
 
 model FieldType {
-  id            Int        @id @default(autoincrement())
-  field_name    String
-  required      Boolean
-  value_type    ValueType
+  id         Int       @id @default(autoincrement())
+  field_name String
+  required   Boolean
+  value_type ValueType
+
   collection_id Int
-  fields        Field[]
   collection    Collection @relation(fields: [collection_id], references: [id])
+
+  fields Field[]
 
   @@index([collection_id])
   @@map("field_type")
 }
 
 model Content {
-  id               Int     @id @default(autoincrement())
-  slug             String  @unique
-  name             String?
-  description      String?
-  permission_level Int     @default(3)
+  id              Int     @id @default(autoincrement())
+  slug            String  @unique
+  name            String?
+  description     String?
+  permissionLevel Int     @default(3) @map("permission_level")
 
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  published_at DateTime?
-  archived_at  DateTime?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  publishedAt DateTime? @map("published_at")
+  archivedAt  DateTime? @map("archived_at")
 
-  author_id     Int
-  category_id   Int?
-  collection_id Int?
-  homepage_id   Int?
-  author        User        @relation(fields: [author_id], references: [id])
-  category      Category?   @relation(fields: [category_id], references: [id])
-  collection    Collection? @relation(fields: [collection_id], references: [id])
-  homepage      Homepage?   @relation(fields: [homepage_id], references: [id])
+  authorId Int  @map("author_id")
+  author   User @relation(fields: [authorId], references: [id])
+
+  categoryId Int?      @map("category_id")
+  category   Category? @relation(fields: [categoryId], references: [id])
+
+  collectionId Int?        @map("collection_id")
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+
+  homepageId Int?      @map("homepage_id")
+  homepage   Homepage? @relation(fields: [homepageId], references: [id])
+
+  apiId Int? @map("api_id")
+  api   Api? @relation(fields: [apiId], references: [id])
 
   tags   ContentTagJunction[]
   fields Field[]
@@ -309,12 +323,40 @@ model Content {
 }
 
 model Collection {
-  id             Int         @id @default(autoincrement())
-  name           String
-  contents       Content[]
-  content_schema FieldType[]
+  id   Int    @id @default(autoincrement())
+  name String
+
+  apiId Int? @map("api_id")
+  api   Api? @relation(fields: [apiId], references: [id])
+
+  contents      Content[]
+  contentSchema FieldType[]
 
   @@map("collection")
+}
+
+model Api {
+  id   Int     @id @default(autoincrement())
+  name String  @unique
+  path String  @unique
+  key  String? @unique
+
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  lastAccessedAt DateTime? @map("last_accessed_at")
+  activatedAt    DateTime? @map("activated_at")
+
+  allowedOrigins String? @map("allowed_origins")
+
+  authorId     Int
+  author       User @relation("ApiAuthor", fields: [authorId], references: [id])
+  lastEditorId Int
+  lastEditor   User @relation("ApiEditor", fields: [lastEditorId], references: [id])
+
+  contents    Content[]
+  collections Collection[]
+
+  @@map("api")
 }
 
 enum ValueType {
