@@ -1,7 +1,7 @@
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Separator } from "@/components/ui/separator"
 import { Heading, Paragraph } from "@/components/ui/typography"
-import { getLocale } from "@/i18n/get-locale"
+import { getLocaleForFns } from "@/i18n/get-locale"
 import { Link } from "@/i18n/routing"
 import { cn, extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib/utils"
 import { Article } from "@/types/article-schema"
@@ -139,7 +139,7 @@ export function LastEdit({
           name: nickname || name,
           datetime: formatDistanceToNow(updatedAt, {
             addSuffix: true,
-            locale: getLocale(locale)
+            locale: getLocaleForFns(locale)
           })
         })}
       </span>

@@ -8,6 +8,7 @@
     "delete": "削除",
     "ok": "はい",
     "no": "いいえ",
+    "close": "閉じる",
     "form": {
       "success": "成功!",
       "failed": "失敗!",
@@ -74,8 +75,7 @@
     "restful-api": {
       "1": "RESTful API",
       "2": {
-        "main-content": "メインコンテンツ",
-        "custom-content": "カスタムコンテンツ"
+        "token": "アクセストークン"
       }
     },
     "log": {
@@ -230,9 +230,61 @@
     }
   },
   "restfulApi": {
+    "token": {
+      "title": "アクセストークン",
+      "description": "APIからデータを取得するために使用されます",
+      "generate": "新しいトークンを生成",
+      "dialog": {
+        "titleBeforeGenerate": "アクセストークンを生成",
+        "descriptionBeforeGenerate": "アクセストークンはAPIからデータを取得するための機密情報です。適切な管理が必要となりますので、用途をよく検討してから生成してください。",
+        "namePlaceholder": "トークン名を入力してください",
+        "generate": "生成",
+        "titleAfterGenerate": "アクセストークンが生成されました",
+        "descriptionAfterGenerate": "アクセストークンが生成されました。これはAPIアクセスに使用される機密情報です。適切なセキュリティ対策を必ず実施してください。"
+      },
+      "deleteAlert": {
+        "title": "アクセストークンの削除",
+        "description": "このアクセストークンを削除してもよろしいですか？この操作は取り消すことができず、このトークンを使用しているアプリケーションは直ちにアクセスできなくなります。"
+      },
+      "table": {
+        "name": "名称",
+        "token": "トークン",
+        "createdAt": "作成日時",
+        "expiresAt": "失効日時",
+        "createdBy": "作成者"
+      },
+      "toast": {
+        "copied": "クリップボードにコピーしました"
+      }
+    },
+    "mainApi": {
+      "title": "メインコンテンツ",
+      "description": "メインコンテンツAPIの設定を管理します",
+      "card": {
+        "path": "パス",
+        "createdAt": "作成日時",
+        "updatedAt": "更新日時",
+        "status": {
+          "title": "状態",
+          "active": "{date}前に起動",
+          "inactive": "未稼働"
+        },
+        "origin": "許可されたオリジン",
+        "badge": {
+          "notCreated": "未作成",
+          "active": "稼働中",
+          "inactive": "未稼働"
+        },
+        "btn": "作成"
+      }
+    },
+    "customApi": {
+      "title": "カスタムコンテンツ",
+      "description": "カスタムコンテンツAPIを管理します"
+    },
     "tabs": {
-      "main-content": "メインコンテンツ",
-      "custom-content": "カスタムコンテンツ"
+      "api": "API管理",
+      "token": "アクセストークン"
     }
   }
 }

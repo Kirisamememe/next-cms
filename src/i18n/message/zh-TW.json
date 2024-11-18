@@ -8,6 +8,7 @@
     "delete": "刪除",
     "ok": "是",
     "no": "否",
+    "close": "關閉",
     "form": {
       "success": "成功!",
       "failed": "失敗!",
@@ -74,8 +75,7 @@
     "restful-api": {
       "1": "RESTful API",
       "2": {
-        "main-content": "主要內容",
-        "custom-content": "自定義內容"
+        "token": "權杖"
       }
     },
     "log": {
@@ -230,9 +230,61 @@
     }
   },
   "restfulApi": {
+    "token": {
+      "title": "存取權杖",
+      "description": "用於從API獲取數據",
+      "generate": "生成新權杖",
+      "dialog": {
+        "titleBeforeGenerate": "生成存取權杖",
+        "descriptionBeforeGenerate": "存取權杖是用於從API獲取數據的機密資訊。由於需要妥善管理，請在生成之前仔細考慮使用目的。",
+        "namePlaceholder": "請輸入訪問權杖的名稱",
+        "generate": "生成",
+        "titleAfterGenerate": "存取權杖已生成",
+        "descriptionAfterGenerate": "存取權杖已生成。這是用於存取API的機密資訊，請務必確保採取適當的安全措施。"
+      },
+      "deleteAlert": {
+        "title": "刪除存取權杖",
+        "description": "您確定要刪除此存取權杖嗎？此操作無法復原，使用此權杖的所有應用程式將立即失去存取權限。"
+      },
+      "table": {
+        "name": "名稱",
+        "token": "權杖",
+        "createdAt": "生成於",
+        "expiresAt": "有效期至",
+        "createdBy": "創建者"
+      },
+      "toast": {
+        "copied": "權杖已複製至剪貼簿"
+      }
+    },
+    "mainApi": {
+      "title": "主要內容",
+      "description": "管理主要內容API設定",
+      "card": {
+        "path": "路徑",
+        "createdAt": "建立時間",
+        "updatedAt": "更新時間",
+        "status": {
+          "title": "狀態",
+          "active": "{date}前啟動",
+          "inactive": "未啟動"
+        },
+        "origin": "允許的來源",
+        "badge": {
+          "notCreated": "未建立",
+          "active": "運行中",
+          "inactive": "未啟動"
+        },
+        "btn": "建立"
+      }
+    },
+    "customApi": {
+      "title": "自定義內容",
+      "description": "管理自定義內容API"
+    },
     "tabs": {
-      "main-content": "主要內容",
-      "custom-content": "自定義內容"
+      "api": "API管理",
+      "token": "權杖"
     }
   }
 }
