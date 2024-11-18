@@ -12,11 +12,11 @@ type Props = {
   image?: string | null
 }
 
-export function Dashboard({ name, nickname, role, image }: Props) {
+export function UserInfo({ name, nickname, role, image }: Props) {
   const t = useTranslations()
 
   return (
-    <FlexRow border p={8} radius={"lg"} gap={6} centerY bg className="appear">
+    <FlexRow border p={8} radius={"lg"} gap={6} centerY bg className="w-full">
       <Image height={120} width={120} src={image || ""} alt="avatar image" className="rounded-full" />
       <FlexColumn>
         <Heading size={24} mb={2}>

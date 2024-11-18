@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl"
 import { RSCTabLink, RSCTabs } from "@/components/ui/rsc-tabs"
 
-const tabs = ["main-content", "custom-content"]
+const tabs = ["api", "token"]
 
 export function ApiTabs() {
   const t = useTranslations()
@@ -9,7 +9,7 @@ export function ApiTabs() {
   return (
     <RSCTabs>
       {tabs.map((tab) => (
-        <RSCTabLink key={tab} segment={tab} path={`/admin/restful-api/${tab}`}>
+        <RSCTabLink key={tab} segment={tab} path={`/admin/restful-api${tab === 'api' ? '' : `/${tab}`}`}>
           {t(`restfulApi.tabs.${tab}`)}
         </RSCTabLink>
       ))}

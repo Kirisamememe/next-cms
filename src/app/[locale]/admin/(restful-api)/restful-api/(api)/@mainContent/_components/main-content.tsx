@@ -1,19 +1,21 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { GridColumn } from "@/components/ui/grid"
 import { MainContentApiCard } from "./main-content-card"
+import { useTranslations } from "next-intl"
 
 const MAIN_CONTENT = ['homepage', 'article', 'portfolio', 'gallery', 'biography']
 
 export function MainContentApi() {
+  const t = useTranslations()
 
   return (
-    <Card>
+    <Card className="appear">
       <CardHeader>
         <CardTitle>
-          メインコンテンツAPI
+          {t('restfulApi.mainApi.title')}
         </CardTitle>
         <CardDescription>
-          メインコンテンツAPIの設定を管理します
+          {t('restfulApi.mainApi.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
