@@ -37,9 +37,9 @@ export async function GET(req: NextRequest) {
 
   const articles = await articleService.getMany()
 
-  const title = searchParams.get('title')
-  if (title) {
-    const filteredArticles = articles.filter((article) => article.atom.body.includes(title) || article.atom.title?.includes(title))
+  const search = searchParams.get('search')
+  if (search) {
+    const filteredArticles = articles.filter((article) => article.atom.body.includes(search) || article.atom.title?.includes(search))
     return Response.json({ data: filteredArticles })
   }
 
