@@ -7,6 +7,16 @@ import { createId } from '@paralleldrive/cuid2'
 
 class ArticleRepository {
 
+  private authorProperties = {
+    select: {
+      id: true,
+      name: true,
+      nickname: true,
+      role: true,
+      image: true
+    }
+  }
+
   /**
    * 特定の記事を取得、JOIN無し
    * @param id 
@@ -19,6 +29,9 @@ class ArticleRepository {
       },
       include: {
         atoms: {
+          include: {
+            author: this.authorProperties
+          },
           orderBy: [{
             selectedAt: {
               sort: "desc",
@@ -29,8 +42,8 @@ class ArticleRepository {
           }],
           take: 1,
         },
-        author: true,
-        lastEdited: true
+        author: this.authorProperties,
+        lastEdited: this.authorProperties
       }
     })
   }
@@ -74,7 +87,7 @@ class ArticleRepository {
       include: {
         atoms: {
           include: {
-            author: true
+            author: this.authorProperties
           },
           orderBy: [{
             selectedAt: {
@@ -86,8 +99,8 @@ class ArticleRepository {
           }],
           take: 1
         },
-        author: true,
-        lastEdited: true
+        author: this.authorProperties,
+        lastEdited: this.authorProperties
       },
       orderBy: {
         updatedAt: "desc"

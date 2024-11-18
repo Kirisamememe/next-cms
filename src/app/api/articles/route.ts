@@ -24,6 +24,24 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Token is expired or invalid' }, { status: 401 })
   }
 
+  const searchParams = req.nextUrl.searchParams
+
+  const id = searchParams.get('id')
+  if (id) {
+    const { data, noData } = await articleService.getById(Number(id))
+    if (noData) {
+      return Response.json({ error: noData })
+    }
+    return Response.json({ data })
+  }
+
   const articles = await articleService.getMany()
+
+  const title = searchParams.get('title')
+  if (title) {
+    const filteredArticles = articles.filter((article) => article.atom.body.includes(title) || article.atom.title?.includes(title))
+    return Response.json({ data: filteredArticles })
+  }
+
   return Response.json({ articles })
 }
