@@ -23,7 +23,8 @@ class ArticleService {
     return {
       data: {
         ...article,
-        atom: article?.atoms[0]
+        atom: article?.atoms[0],
+        atoms: undefined
       }
     }
   }
@@ -39,7 +40,8 @@ class ArticleService {
 
     return articles.map((article) => ({
       ...article,
-      atom: article.atoms[0]
+      atom: article.atoms[0],
+      atoms: undefined
     }))
   }
 

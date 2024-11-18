@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Editor } from "./editor-schema";
+import { EditorConcise } from "./editor-schema";
 import { createId } from '@paralleldrive/cuid2';
 
 
@@ -32,7 +32,7 @@ export type ArticleAtom = {
   selectedAt: Date | null
 
   authorId: number
-  author?: Editor
+  author?: EditorConcise
   articleId: number
 }
 
@@ -49,8 +49,8 @@ export type Article = {
   publishedAt: Date | null
   archivedAt: Date | null
 
-  author: Editor
-  lastEdited: Editor
+  author: EditorConcise
+  lastEdited: EditorConcise
 
   atom: ArticleAtom
 }

@@ -11,6 +11,14 @@ export type Editor = {
   emailVerified: Date | null;
 }
 
+export type EditorConcise = {
+  id: number;
+  name: string | null;
+  role: Role;
+  image: string | null;
+  nickname: string | null;
+}
+
 export const LEVEL_1 = 1
 export const LEVEL_2 = 2
 export const LEVEL_3 = 3
