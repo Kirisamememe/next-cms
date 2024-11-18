@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button"
 import { ControllerRenderProps } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
-import { getLocale } from "@/i18n/get-locale"
+import { getLocaleForFns } from "@/i18n/get-locale"
 import { DateTimePicker } from "./datetime-picker"
 
 
@@ -45,7 +45,7 @@ export function DateTimePopover({ field, defaultDate }: Props) {
             )}
           >
             {field.value ? (
-              format(field.value, "PPP p", { locale: getLocale(params.locale) })
+              format(field.value, "PPP p", { locale: getLocaleForFns(params.locale) })
             ) : (
               <span>{t('article.publishedAt.placeholder')}</span>
             )}

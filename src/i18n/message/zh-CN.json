@@ -8,6 +8,7 @@
     "delete": "删除",
     "ok": "是",
     "no": "否",
+    "close": "关闭",
     "form": {
       "success": "成功!",
       "failed": "失败!",
@@ -74,8 +75,7 @@
     "restful-api": {
       "1": "RESTful API",
       "2": {
-        "main-content": "主要内容",
-        "custom-content": "自定义内容"
+        "token": "令牌"
       }
     },
     "log": {
@@ -230,9 +230,61 @@
     }
   },
   "restfulApi": {
+    "token": {
+      "title": "访问令牌",
+      "description": "用于从API获取数据",
+      "generate": "生成新令牌",
+      "dialog": {
+        "titleBeforeGenerate": "生成访问令牌",
+        "descriptionBeforeGenerate": "访问令牌是用于从API获取数据的机密信息。由于需要妥善管理，请在生成之前仔细考虑使用目的。",
+        "namePlaceholder": "请输入访问令牌的名称",
+        "generate": "生成",
+        "titleAfterGenerate": "访问令牌已生成",
+        "descriptionAfterGenerate": "访问令牌已生成。这是用于访问API的机密信息，请务必确保采取适当的安全措施。"
+      },
+      "deleteAlert": {
+        "title": "删除访问令牌",
+        "description": "您确定要删除此访问令牌吗？此操作无法撤销，使用此令牌的所有应用程序将立即失去访问权限。"
+      },
+      "table": {
+        "name": "名称",
+        "token": "令牌",
+        "createdAt": "生成于",
+        "expiresAt": "有效期至",
+        "createdBy": "创建者"
+      },
+      "toast": {
+        "copied": "令牌已拷贝至剪贴板"
+      }
+    },
+    "mainApi": {
+      "title": "主要内容",
+      "description": "管理主要内容API设置",
+      "card": {
+        "path": "路径",
+        "createdAt": "创建时间",
+        "updatedAt": "更新时间",
+        "status": {
+          "title": "状态",
+          "active": "{date}前启动",
+          "inactive": "未启动"
+        },
+        "origin": "允许的来源",
+        "badge": {
+          "notCreated": "未创建",
+          "active": "运行中",
+          "inactive": "未启动"
+        },
+        "btn": "创建"
+      }
+    },
+    "customApi": {
+      "title": "自定义内容",
+      "description": "管理自定义内容API"
+    },
     "tabs": {
-      "main-content": "主要内容",
-      "custom-content": "自定义内容"
+      "api": "API管理",
+      "token": "令牌"
     }
   }
 }

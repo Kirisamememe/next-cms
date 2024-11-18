@@ -1,17 +1,15 @@
 import { ReactNode } from "react"
+import { ApiTabs } from "./_components/tabs"
 
 type Props = {
-  accessToken: ReactNode
-  mainContent: ReactNode
-  customContent: ReactNode
+  children: ReactNode
 }
 
-export default function RestfulApiLayout({ accessToken, mainContent, customContent }: Props) {
+export default function RestfulApiLayout({ children }: Props) {
   return (
     <>
-      {accessToken}
-      {mainContent}
-      {customContent}
+      <ApiTabs />
+      {children}
     </>
   )
 }

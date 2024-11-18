@@ -23,8 +23,8 @@ export type Api = {
   path: string
   key: string | null
 
-  createdAt: Date | null
-  updatedAt: Date | null
+  createdAt: Date
+  updatedAt: Date
   lastAccessedAt: Date | null
   activatedAt: Date | null
 

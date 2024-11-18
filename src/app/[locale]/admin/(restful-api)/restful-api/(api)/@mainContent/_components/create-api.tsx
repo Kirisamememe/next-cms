@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import { createMainContentApi } from "../_actions/create"
 import { Submit } from "@/components/ui/submit-button"
 
@@ -6,6 +7,8 @@ type Props = {
 }
 
 export function CreateMainContentApi({ apiName }: Props) {
+  const t = useTranslations()
+
   const action = async () => {
     'use server'
     await createMainContentApi(apiName)
@@ -14,7 +17,7 @@ export function CreateMainContentApi({ apiName }: Props) {
   return (
     <form action={action}>
       <Submit className="w-fit">
-        Create
+        {t('restfulApi.mainApi.card.btn')}
       </Submit>
     </form>
   )

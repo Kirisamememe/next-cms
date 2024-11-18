@@ -8,6 +8,7 @@
     "delete": "Delete",
     "ok": "OK",
     "no": "NO",
+    "close": "Close",
     "form": {
       "success": "Success!",
       "failed": "Failed!",
@@ -74,8 +75,7 @@
     "restful-api": {
       "1": "RESTful API",
       "2": {
-        "main-content": "Main Content",
-        "custom-content": "Custom Content"
+        "token": "Access Token"
       }
     },
     "log": {
@@ -230,9 +230,61 @@
     }
   },
   "restfulApi": {
+    "token": {
+      "title": "Access Token",
+      "description": "Access tokens are used to retrieve data from the API",
+      "generate": "Generate Access Token",
+      "dialog": {
+        "titleBeforeGenerate": "Generate Access Token",
+        "descriptionBeforeGenerate": "Access tokens are confidential credentials used to retrieve data from the API. Please carefully consider your needs before generating a token, as proper management is essential.",
+        "namePlaceholder": "Enter the token name",
+        "generate": "Generate",
+        "titleAfterGenerate": "Access Token Generated",
+        "descriptionAfterGenerate": "Your access token has been generated. This is confidential information used to access the API. Please ensure proper security measures are in place to protect this token."
+      },
+      "deleteAlert": {
+        "title": "Delete Access Token",
+        "description": "Are you sure you want to delete this access token? This action cannot be undone, and any applications using this token will lose access immediately."
+      },
+      "table": {
+        "name": "Name",
+        "token": "Token",
+        "createdAt": "Created At",
+        "expiresAt": "Expiration",
+        "createdBy": "Created By"
+      },
+      "toast": {
+        "copied": "Copied token to clipboard"
+      }
+    },
+    "mainApi": {
+      "title": "Main Contents",
+      "description": "Manage main content API settings",
+      "card": {
+        "path": "Path",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "status": {
+          "title": "Status",
+          "active": "Started {date} ago",
+          "inactive": "Inactive"
+        },
+        "origin": "Allowed Origins",
+        "badge": {
+          "notCreated": "Not Created",
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "btn": "Create"
+      }
+    },
+    "customApi": {
+      "title": "Custom Contents",
+      "description": "Manage custom content APIs"
+    },
     "tabs": {
-      "main-content": "Main Content",
-      "custom-content": "Custom Content"
+      "api": "API Management",
+      "token": "Token"
     }
   }
 }

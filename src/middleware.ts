@@ -4,7 +4,7 @@ import NextAuth from "next-auth"
 import { authConfig } from "./auth.config"
 import { locales } from "./i18n/config";
 import createMiddleware from 'next-intl/middleware';
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
 export const publicPages = [
@@ -58,6 +58,20 @@ const intlMiddleware = createMiddleware(routing);
 // }
 
 export default function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.startsWith('/api/auth')) {
+    return
+  }
+
+  if (req.nextUrl.pathname.startsWith('/api')) {
+    const authHeader = req.headers.get('authorization')
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    return
+  }
+
   const publicPathnameRegex = RegExp(
     `^(/(${locales.join('|')}))?(${publicPages
       .flatMap((p) => (p === '/' ? ['', '/'] : p))
@@ -87,5 +101,5 @@ export default function middleware(req: NextRequest) {
 
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 }
