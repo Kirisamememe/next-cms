@@ -12,8 +12,8 @@ class ArticleService {
    * @param id 
    * @returns 
    */
-  async getById(id: number) {
-    const article = await articleRepository.findById(id)
+  async getById(id: number, publishedOnly: boolean = false) {
+    const article = await articleRepository.findById(id, publishedOnly)
     if (!article || !article?.atoms.length) {
       return {
         noData: 'Not Found' as const

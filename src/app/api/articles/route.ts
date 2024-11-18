@@ -28,18 +28,18 @@ export async function GET(req: NextRequest) {
 
   const id = searchParams.get('id')
   if (id) {
-    const { data, noData } = await articleService.getById(Number(id))
+    const { data, noData } = await articleService.getById(Number(id), true)
     if (noData) {
       return Response.json({ error: noData })
     }
     return Response.json({ data })
   }
 
-  const articles = await articleService.getMany()
+  const articles = await articleService.getMany('publish')
 
-  const title = searchParams.get('title')
-  if (title) {
-    const filteredArticles = articles.filter((article) => article.atom.body.includes(title) || article.atom.title?.includes(title))
+  const search = searchParams.get('search')
+  if (search) {
+    const filteredArticles = articles.filter((article) => article.atom.body.includes(search) || article.atom.title?.includes(search))
     return Response.json({ data: filteredArticles })
   }
 
