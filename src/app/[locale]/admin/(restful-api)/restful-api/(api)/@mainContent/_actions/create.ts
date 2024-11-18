@@ -1,3 +1,5 @@
+'use server'
+
 import { getSession } from "@/lib/getSession"
 import { apiService } from "@/services/api-service"
 import { revalidatePath } from "next/cache"

@@ -52,8 +52,12 @@ class ApiRepository {
         key: values.key,
         activatedAt: values.activatedAt,
         allowedOrigins: values.allowedOrigins?.join(','),
-        authorId: operatorId,
-        lastEditorId: operatorId
+        author: {
+          connect: { id: operatorId }
+        },
+        lastEditor: {
+          connect: { id: operatorId }
+        }
       }
     })
   }
@@ -80,8 +84,12 @@ class ApiRepository {
         key: values.key,
         activatedAt: values.activatedAt,
         allowedOrigins: values.allowedOrigins?.join(','),
-        authorId: operatorId,
-        lastEditorId: operatorId
+        author: {
+          connect: { id: operatorId }
+        },
+        lastEditor: {
+          connect: { id: operatorId }
+        }
       }
     })
   }
