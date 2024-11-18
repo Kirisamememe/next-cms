@@ -31,6 +31,7 @@ model User {
   accounts       Account[]
   apis           Api[]         @relation("ApiAuthor")
   editedApis     Api[]         @relation("ApiEditor")
+  accessToken    AccessToken[]
 
   @@map("user")
 }
@@ -357,6 +358,19 @@ model Api {
   collections Collection[]
 
   @@map("api")
+}
+
+model AccessToken {
+  token String @id
+  name  String @default("AccessToken")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  @@map("access_token")
 }
 
 enum ValueType {
