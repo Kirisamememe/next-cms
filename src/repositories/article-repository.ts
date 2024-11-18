@@ -22,10 +22,16 @@ class ArticleRepository {
    * @param id 
    * @returns 
    */
-  findById(id: number) {
+  findById(id: number, publishedOnly: boolean = false) {
     return prisma.article.findUnique({
       where: {
         id: id,
+        ...(publishedOnly && {
+          publishedAt: {
+            lt: new Date()
+          },
+          archivedAt: null
+        })
       },
       include: {
         atoms: {
@@ -47,6 +53,7 @@ class ArticleRepository {
       }
     })
   }
+
 
   /**
    * 全記事と、各記事の最新版のatomを取得

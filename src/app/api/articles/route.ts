@@ -28,14 +28,14 @@ export async function GET(req: NextRequest) {
 
   const id = searchParams.get('id')
   if (id) {
-    const { data, noData } = await articleService.getById(Number(id))
+    const { data, noData } = await articleService.getById(Number(id), true)
     if (noData) {
       return Response.json({ error: noData })
     }
     return Response.json({ data })
   }
 
-  const articles = await articleService.getMany()
+  const articles = await articleService.getMany('publish')
 
   const search = searchParams.get('search')
   if (search) {
