@@ -58,7 +58,8 @@
       "1": "ポートフォリオ"
     },
     "gallery": {
-      "1": "ギャラリー"
+      "1": "ギャラリー",
+      "2": "画像プレビュー"
     },
     "biography": {
       "1": "バイオグラフィー"
@@ -227,6 +228,34 @@
       "name": "公開日時",
       "placeholder": "日時を選択してください",
       "description": "現在の日時より前"
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "新規フォルダ",
+      "form": {
+        "namePlaceholder": "フォルダ名を入力",
+        "nameDescription": "画像を整理するための新しいフォルダを作成",
+        "nameValidation": "フォルダ名は32文字以内で入力してください"
+      }
+    },
+    "newImageUrl": {
+      "btn": "画像URLを追加",
+      "title": "新規画像URLを追加",
+      "description": "BLOBストレージから新しい画像を追加します。",
+      "form": {
+        "url": "URL",
+        "urlDescription": "BLOBストレージに保存されている画像のURLを入力してください",
+        "urlPlaceholder": "画像URLを入力",
+        "urlValidation": "URLは512文字以内で入力してください",
+        "name": "名前",
+        "nameDescription": "画像の説明的な名前を入力してください",
+        "namePlaceholder": "画像名を入力",
+        "nameValidation": "名前は32文字以内で入力してください",
+        "folderPath": "フォルダパス",
+        "folderPathDescription": "画像を保存するフォルダを選択してください",
+        "folderPathPlaceholder": "フォルダを選択"
+      }
     }
   },
   "restfulApi": {

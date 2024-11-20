@@ -58,7 +58,8 @@
       "1": "作品集"
     },
     "gallery": {
-      "1": "图库"
+      "1": "图库",
+      "2": "图片预览"
     },
     "biography": {
       "1": "关于我"
@@ -227,6 +228,34 @@
       "name": "发布时间",
       "placeholder": "设置发布时间",
       "description": "切换发布状态"
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "新建文件夹",
+      "form": {
+        "namePlaceholder": "请输入文件夹名称",
+        "nameDescription": "创建新文件夹以整理图片",
+        "nameValidation": "文件夹名称不能超过32个字符"
+      }
+    },
+    "newImageUrl": {
+      "btn": "添加图片URL",
+      "title": "添加新图片URL",
+      "description": "从Blob存储添加新图片。",
+      "form": {
+        "url": "URL",
+        "urlDescription": "输入存储在Blob存储中的图片URL",
+        "urlPlaceholder": "请输入图片URL",
+        "urlValidation": "URL不能超过512个字符",
+        "name": "名称",
+        "nameDescription": "为图片输入描述性名称",
+        "namePlaceholder": "请输入图片名称",
+        "nameValidation": "名称不能超过32个字符",
+        "folderPath": "文件夹路径",
+        "folderPathDescription": "选择要存储图片的文件夹",
+        "folderPathPlaceholder": "请选择文件夹"
+      }
     }
   },
   "restfulApi": {

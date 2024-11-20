@@ -58,7 +58,8 @@
       "1": "作品集"
     },
     "gallery": {
-      "1": "圖庫"
+      "1": "圖庫",
+      "2": "圖像預覽"
     },
     "biography": {
       "1": "關於我"
@@ -227,6 +228,34 @@
       "name": "發表時間",
       "placeholder": "設置發表時間",
       "description": "切換發表狀態"
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "新增資料夾",
+      "form": {
+        "namePlaceholder": "請輸入資料夾名稱",
+        "nameDescription": "建立新資料夾以整理圖片",
+        "nameValidation": "資料夾名稱不能超過32個字元"
+      }
+    },
+    "newImageUrl": {
+      "btn": "新增圖片URL",
+      "title": "新增圖片URL",
+      "description": "從Blob儲存體新增圖片。",
+      "form": {
+        "url": "URL",
+        "urlDescription": "輸入儲存在Blob儲存體中的圖片URL",
+        "urlPlaceholder": "請輸入圖片URL",
+        "urlValidation": "URL不能超過512個字元",
+        "name": "名稱",
+        "nameDescription": "為圖片輸入描述性名稱",
+        "namePlaceholder": "請輸入圖片名稱",
+        "nameValidation": "名稱不能超過32個字元",
+        "folderPath": "資料夾路徑",
+        "folderPathDescription": "選擇要儲存圖片的資料夾",
+        "folderPathPlaceholder": "請選擇資料夾"
+      }
     }
   },
   "restfulApi": {

@@ -58,7 +58,8 @@
       "1": "Portfolio"
     },
     "gallery": {
-      "1": "Gallery"
+      "1": "Gallery",
+      "2": "Image Preview"
     },
     "biography": {
       "1": "About Me"
@@ -227,6 +228,34 @@
       "name": "Publication Datetime",
       "placeholder": "Pick a datetime",
       "description": ""
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "New Folder",
+      "form": {
+        "namePlaceholder": "Enter folder name",
+        "nameDescription": "Create a new folder to organize your images",
+        "nameValidation": "Folder name must be less than 32 characters"
+      }
+    },
+    "newImageUrl": {
+      "btn": "New Image URL",
+      "title": "Add a New Image URL",
+      "description": "Add a new image from your blob storage.",
+      "form": {
+        "url": "URL",
+        "urlDescription": "Enter the URL of the image stored in your blob storage",
+        "urlPlaceholder": "Enter image URL",
+        "urlValidation": "URL must be less than 512 characters",
+        "name": "Name",
+        "nameDescription": "Enter a descriptive name for the image",
+        "namePlaceholder": "Enter image name",
+        "nameValidation": "Name must be less than 32 characters",
+        "folderPath": "Folder Path",
+        "folderPathDescription": "Select the folder where you want to store the image",
+        "folderPathPlaceholder": "Select a folder"
+      }
     }
   },
   "restfulApi": {
