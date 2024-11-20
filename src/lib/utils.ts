@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { hashSync, genSaltSync } from 'bcrypt-ts';
+import { MediaFolder } from "@/types/media-folder-schema";
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -58,3 +59,14 @@ export const removeNull = <T extends Record<string, any>>(obj: T): Partial<T> =>
     })
   ) as Partial<T>
 }
+
+
+
+export const buildFolderTree = (folders: MediaFolder[], parentPath: string | null = null): MediaFolder[] => {
+  return folders
+    .filter(folder => folder.parentPath === parentPath)
+    .map(folder => ({
+      ...folder,
+      children: buildFolderTree(folders, folder.path)
+    }));
+};
