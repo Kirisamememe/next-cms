@@ -3,18 +3,18 @@
 import { Button } from "@/components/ui/button"
 import { FlexRow } from "@/components/ui/flexbox"
 import { Input } from "@/components/ui/input"
-import { Submit } from "@/components/ui/submit-button"
 import { Check, X, Folder } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { SetStateAction } from "react"
 
 type Props = {
+  pending: boolean
   name?: string
   setIsEditing?: React.Dispatch<SetStateAction<boolean>>
 }
 
-export function FolderNameForm({ name, setIsEditing }: Props) {
+export function FolderNameForm({ pending, name, setIsEditing }: Props) {
   const t = useTranslations()
   const router = useRouter()
 
@@ -37,9 +37,9 @@ export function FolderNameForm({ name, setIsEditing }: Props) {
         <Button type="button" variant={'outline'} size={'sm'} className="flex-grow" onClick={handleClick}>
           <X size={20} />
         </Button>
-        <Submit type="submit" variant={'outline'} size={'sm'} className="flex-grow">
+        <Button type="submit" variant={'outline'} size={'sm'} className="flex-grow" isPending={pending}>
           <Check size={20} />
-        </Submit>
+        </Button>
       </FlexRow>
     </>
   )

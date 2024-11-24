@@ -2,7 +2,7 @@ import { GridColumn } from "@/components/ui/grid"
 import { GalleryItem } from "./gallery-item"
 import { imageUrlService } from "@/services/image-url-service"
 import { mediaFolderService } from "@/services/media-folder-service"
-import { NewFolder } from "./folder.tsx/new-folder"
+import { NewFolder } from "./folder/new-folder"
 import { FolderItem } from "./folder-item"
 
 type Props = {

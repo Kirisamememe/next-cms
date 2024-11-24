@@ -20,7 +20,7 @@ export function EditFolderName({ path, name }: Props) {
 
   const [isEditing, setIsEditing] = useState(false)
 
-  const [_, action] = useActionState(async (_: any, payload: FormData) => {
+  const [_, action, pending] = useActionState(async (_: any, payload: FormData) => {
     const folderName = payload.get('name')?.toString()
     if (!folderName) {
       return
@@ -39,7 +39,7 @@ export function EditFolderName({ path, name }: Props) {
     <>
       {isEditing ?
         <form action={action} className={"group absolute inset-0 flex flex-col p-4 w-full aspect-square gap-2 justify-center bg-muted transition-all z-50"}>
-          <FolderNameForm name={name} setIsEditing={setIsEditing} />
+          <FolderNameForm pending={pending} name={name} setIsEditing={setIsEditing} />
         </form> :
         <Button
           variant={'secondary'} size={'icon'}

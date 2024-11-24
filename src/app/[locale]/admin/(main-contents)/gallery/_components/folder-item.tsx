@@ -6,7 +6,7 @@ import { Folder, FolderOpen, FolderOutput } from "lucide-react";
 import { useDraggableItem } from "../_hooks/use-draggable-item";
 import { useCallback } from "react";
 import { updateFolderPath } from "../_actions/update";
-import { EditFolderName } from "./folder.tsx/edit-folder-name";
+import { EditFolderName } from "./folder/edit-folder-name";
 
 
 type Props = {

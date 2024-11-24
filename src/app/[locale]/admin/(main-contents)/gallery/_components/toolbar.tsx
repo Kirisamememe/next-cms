@@ -1,6 +1,6 @@
 import { FlexRow } from "@/components/ui/flexbox";
 import { NewImageDialog } from "./image/new-image-dialog";
-import { NewFolderBtn } from "./folder.tsx/new-folder-btn";
+import { NewFolderBtn } from "./folder/new-folder-btn";
 
 export function GalleryToolbar() {
   return (

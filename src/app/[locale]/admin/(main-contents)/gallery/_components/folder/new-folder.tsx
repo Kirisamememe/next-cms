@@ -14,7 +14,7 @@ export function NewFolder() {
   const pathname = usePathname()
   const query = searchParams.get('query')
 
-  const [_, action] = useActionState(async (_: any, payload: FormData) => {
+  const [_, action, pending] = useActionState(async (_: any, payload: FormData) => {
     const folderName = payload.get('name')?.toString()
     if (!folderName) {
       return
@@ -30,7 +30,7 @@ export function NewFolder() {
 
   return (
     <form action={action} className="folder-appear flex flex-col p-4 w-full aspect-square gap-2 justify-center bg-muted/60 transition-all">
-      <FolderNameForm />
+      <FolderNameForm pending={pending} />
     </form>
   )
 }
