@@ -239,11 +239,17 @@
         "nameValidation": "資料夾名稱不能超過32個字元"
       }
     },
-    "newImageUrl": {
+    "imageUrl": {
       "btn": "新增圖片URL",
       "title": "新增圖片URL",
       "description": "從Blob儲存體新增圖片。",
+      "edit": {
+        "title": "編輯圖片URL資訊",
+        "description": "由於編輯已使用的圖片資訊可能會影響現有內容，請謹慎操作。"
+      },
       "form": {
+        "singleUrl": "單圖模式",
+        "multipleUrls": "多圖模式",
         "url": "URL",
         "urlDescription": "輸入儲存在Blob儲存體中的圖片URL",
         "urlPlaceholder": "請輸入圖片URL",
@@ -254,7 +260,12 @@
         "nameValidation": "名稱不能超過32個字元",
         "folderPath": "資料夾路徑",
         "folderPathDescription": "選擇要儲存圖片的資料夾",
-        "folderPathPlaceholder": "請選擇資料夾"
+        "folderPathPlaceholder": "請選擇資料夾",
+        "urlsPlaceholder": "請選擇多張圖片。\n所選圖片的URL將顯示在此處。\n在多圖片模式下，圖片名稱將自動生成。\n自動生成的圖片名稱可以稍後更改。"
+      },
+      "imagePicker": {
+        "drag&drop": "請將圖片拖放至此",
+        "selectAll": "全選"
       }
     }
   },

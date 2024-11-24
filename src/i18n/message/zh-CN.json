@@ -239,11 +239,17 @@
         "nameValidation": "文件夹名称不能超过32个字符"
       }
     },
-    "newImageUrl": {
+    "imageUrl": {
       "btn": "添加图片URL",
       "title": "添加新图片URL",
       "description": "从Blob存储添加新图片。",
+      "edit": {
+        "title": "编辑图片URL信息",
+        "description": "由于编辑已使用的图片信息可能会影响现有内容，请谨慎操作。"
+      },
       "form": {
+        "singleUrl": "单图模式",
+        "multipleUrls": "多图模式",
         "url": "URL",
         "urlDescription": "输入存储在Blob存储中的图片URL",
         "urlPlaceholder": "请输入图片URL",
@@ -254,7 +260,12 @@
         "nameValidation": "名称不能超过32个字符",
         "folderPath": "文件夹路径",
         "folderPathDescription": "选择要存储图片的文件夹",
-        "folderPathPlaceholder": "请选择文件夹"
+        "folderPathPlaceholder": "请选择文件夹",
+        "urlsPlaceholder": "请选择多张图片。\n所选图片的URL将显示在此处。\n在多图片模式下，图片名称将自动生成。\n自动生成的图片名称可以稍后更改。"
+      },
+      "imagePicker": {
+        "drag&drop": "请将图片拖放于此",
+        "selectAll": "全选"
       }
     }
   },
