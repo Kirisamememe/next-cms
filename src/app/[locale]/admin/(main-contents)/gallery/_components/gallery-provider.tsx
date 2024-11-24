@@ -88,7 +88,7 @@ export function GalleryProvider({ children, folders }: Props) {
         files,
         setFiles
       }}>
-      <div onDragOver={e => e.preventDefault()}>
+      <div onDragOver={e => e.preventDefault()} className="w-full h-full">
         {children}
       </div>
     </GalleryContext.Provider>

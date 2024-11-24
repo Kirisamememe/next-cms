@@ -28,6 +28,7 @@ export function GalleryItem({ imageUrl }: Props) {
         <AspectRatio ratio={1}>
           <Image
             src={imageUrl.url}
+            quality={20}
             width={1000} height={1000} alt="image" priority
             className="pointer-events-none object-cover object-center w-full h-full transition-transform duration-300 group-hover:scale-105" />
         </AspectRatio>

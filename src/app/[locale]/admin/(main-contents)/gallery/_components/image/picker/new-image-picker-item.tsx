@@ -46,7 +46,7 @@ export function ImageItem({ url, inserted }: Props) {
           inserted && "opacity-30"
         )}>
         <Image
-          src={url}
+          src={url} quality={1}
           width={1000} height={1000} alt="image"
           className="object-cover object-center w-full h-full transition-transform duration-300 pointer-events-none" />
       </AspectRatio>
