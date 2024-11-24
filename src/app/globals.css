@@ -327,3 +327,89 @@ body {
   pointer-events: none;
   animation: outline-pulse 1s ease-in-out infinite;
 }
+
+
+
+.no-drag {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+
+
+.tl-radius {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 100% 100%, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 100% 100%, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.tr-radius {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 0 100%, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 0 100%, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.bl-radius {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 100% 0, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 100% 0, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.br-radius {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 0 0, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 0 0, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+
+
+
+
+/* HTML: <div class="puzzle"></div> */
+.puzzle {
+  --r: 30px;  /* control the circle radius */
+  --s: 200px; /* control the main size */
+
+  width: calc(var(--s) + var(--r));
+  aspect-ratio: 1;
+  --_l:#0000 calc(100% - 1px),#000;
+  --_g:100% 0/calc(100% - var(--r)) calc(100% - var(--r)) no-repeat;
+  --_m:/calc(2*var(--r)) calc(2*var(--r)) no-repeat
+    radial-gradient(var(--r),#000 calc(100% - 1px),#0000);
+  mask: 
+    0 calc(50% - var(--r)/2) var(--_m),calc(50% + var(--r)/2) 100% var(--_m),
+    radial-gradient(var(--r) at top  ,var(--_l)) var(--_g) intersect,
+    radial-gradient(var(--r) at right,var(--_l)) var(--_g);
+  background: #774F38;
+}
