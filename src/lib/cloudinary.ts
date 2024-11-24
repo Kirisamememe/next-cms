@@ -1,5 +1,6 @@
 import 'server-only'
 import { v2 as cloudinary, ImageFormat } from 'cloudinary';
+import { CloudinaryApiResponse, CloudinaryResponse } from '@/types/image';
 
 class Cloudinary {
 
@@ -14,14 +15,15 @@ class Cloudinary {
   }
 
 
-  async upload(id: string, path: string) {
+  async upload(path: string) {
     return await this.client.uploader
       .upload(path, {
-        public_id: id,
+        folder: '',
+        resource_type: 'image'
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
   }
 
 
@@ -37,10 +39,22 @@ class Cloudinary {
   }
 
 
-  async fetchAll() {
+  async fetchAll(): Promise<CloudinaryApiResponse<CloudinaryResponse>> {
     return await this.client.api.resources({
       max_results: 200,
-    })
+    }).then((res: CloudinaryResponse) => ({
+      isSuccess: true as const,
+      data: res
+    }))
+      .catch((err) => {
+        console.log(err)
+        return {
+          isSuccess: false as const,
+          error: {
+            message: 'Cloudinary Error'
+          }
+        }
+      })
   }
 
   async fetchByRootFolders() {

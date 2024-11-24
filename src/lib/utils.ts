@@ -68,5 +68,38 @@ export const buildFolderTree = (folders: MediaFolder[], parentPath: string | nul
     .map(folder => ({
       ...folder,
       children: buildFolderTree(folders, folder.path)
-    }));
-};
+    }))
+}
+
+
+export function byteToMB(size: number) {
+  return Math.floor(size / 1024 / 1024 * 100) / 100
+}
+
+export function checkOversize(size: number) {
+  return size >= 1024 * 1024 * Number(process.env.NEXT_PUBLIC_MAX_IMAGE_SIZE)
+}
+
+
+export function animateElement(
+  element: HTMLElement | SVGElement,
+  keyframes: PropertyIndexedKeyframes | Keyframe[] | null,
+  options?: number | KeyframeAnimationOptions | undefined
+) {
+  return new Promise<{ finish: boolean }>((resolve, reject) => {
+    if (!element) {
+      reject({ finish: false })
+    }
+    const animation = element.animate(keyframes, options)
+
+    animation.onfinish = () => {
+      resolve({ finish: true })
+    }
+    animation.oncancel = () => {
+      resolve({ finish: false })
+    }
+    animation.onremove = () => {
+      resolve({ finish: false })
+    }
+  })
+}
