@@ -58,7 +58,8 @@
       "1": "Portfolio"
     },
     "gallery": {
-      "1": "Gallery"
+      "1": "Gallery",
+      "2": "Image Preview"
     },
     "biography": {
       "1": "About Me"
@@ -227,6 +228,45 @@
       "name": "Publication Datetime",
       "placeholder": "Pick a datetime",
       "description": ""
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "New Folder",
+      "form": {
+        "namePlaceholder": "Enter folder name",
+        "nameDescription": "Create a new folder to organize your images",
+        "nameValidation": "Folder name must be less than 32 characters"
+      }
+    },
+    "imageUrl": {
+      "btn": "New Image URL",
+      "title": "Add a New Image URL",
+      "description": "Add a new image from your blob storage.",
+      "edit": {
+        "title": "Edit Image URL Information",
+        "description": "Please edit carefully as modifying existing image information may affect existing content."
+      },
+      "form": {
+        "singleUrl": "Single",
+        "multipleUrls": "Multiple",
+        "url": "URL",
+        "urlDescription": "Enter the URL of the image stored in your blob storage",
+        "urlPlaceholder": "Select a image, or enter image URL manually",
+        "urlValidation": "URL must be less than 512 characters",
+        "name": "Name",
+        "nameDescription": "Enter a descriptive name for the image",
+        "namePlaceholder": "Enter image name",
+        "nameValidation": "Name must be less than 32 characters",
+        "folderPath": "Folder Path",
+        "folderPathDescription": "Select the folder where you want to store the image",
+        "folderPathPlaceholder": "Select a folder",
+        "urlsPlaceholder": "Please select multiple images.\nThe URLs of the selected images will be displayed here.\nIn multiple image mode, image names are generated automatically.\nAuto-generated image names can be changed later."
+      },
+      "imagePicker": {
+        "drag&drop": "Drop images here",
+        "selectAll": "Select All"
+      }
     }
   },
   "restfulApi": {

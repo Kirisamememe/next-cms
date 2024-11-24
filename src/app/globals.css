@@ -72,6 +72,8 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
+    --selected1: 200 95% 50%;
+    --selected2: 220 100% 50%;
   }
 
   .dark {
@@ -108,6 +110,8 @@ body {
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
+    --selected1: 205 100% 55%;
+    --selected2: 220 100% 55%;
   }
 }
 
@@ -281,4 +285,131 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+
+@keyframes folderAppear {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.folder-appear {
+  animation: folderAppear 0.3s cubic-bezier(0.34, 0.56, 0.72, 1);
+}
+
+
+@keyframes outline-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 3px hsl(var(--selected1)) inset,
+                0 0 0 5px hsl(var(--background) / 0.8) inset;
+  }
+  50% { 
+    box-shadow: 0 0 0 3px hsl(var(--selected2)) inset,
+                0 0 0 5px hsl(var(--background)) inset;
+  }
+}
+
+
+.outline-pulse::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: outline-pulse 1s ease-in-out infinite;
+}
+
+
+
+.no-drag {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+
+
+.tl-radius {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 100% 100%, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 100% 100%, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.tr-radius {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 0 100%, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 0 100%, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.bl-radius {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 100% 0, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 100% 0, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+.br-radius {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+
+  width: 0.5rem;
+  height: 0.5rem;
+  background: hsl(var(--background));
+  -webkit-mask: radial-gradient(circle at 0 0, transparent 0, transparent 70.71%, black 70.72%);
+  mask: radial-gradient(circle at 0 0, transparent 0, transparent 70.71%, black 70.72%);
+}
+
+
+
+
+
+/* HTML: <div class="puzzle"></div> */
+.puzzle {
+  --r: 30px;  /* control the circle radius */
+  --s: 200px; /* control the main size */
+
+  width: calc(var(--s) + var(--r));
+  aspect-ratio: 1;
+  --_l:#0000 calc(100% - 1px),#000;
+  --_g:100% 0/calc(100% - var(--r)) calc(100% - var(--r)) no-repeat;
+  --_m:/calc(2*var(--r)) calc(2*var(--r)) no-repeat
+    radial-gradient(var(--r),#000 calc(100% - 1px),#0000);
+  mask: 
+    0 calc(50% - var(--r)/2) var(--_m),calc(50% + var(--r)/2) 100% var(--_m),
+    radial-gradient(var(--r) at top  ,var(--_l)) var(--_g) intersect,
+    radial-gradient(var(--r) at right,var(--_l)) var(--_g);
+  background: #774F38;
 }

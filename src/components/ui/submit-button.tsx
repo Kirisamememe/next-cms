@@ -10,7 +10,7 @@ import { AlertCircle } from "lucide-react";
 
 const Submit = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+  React.ButtonHTMLAttributes<HTMLButtonElement> & React.ComponentPropsWithoutRef<typeof Button>
 >(({ children, ...props }, ref) => {
   const { pending } = useFormStatus()
   const t = useTranslations()
@@ -20,13 +20,13 @@ const Submit = React.forwardRef<
 
   return (
     <>
-      {errorMsg && 
-      <Alert variant="destructive" className="mt-3">
-        <AlertCircle size={18} />
-        <AlertDescription className="font-semibold">
-          {t(errorMsg)}
-        </AlertDescription>
-      </Alert>}
+      {errorMsg &&
+        <Alert variant="destructive" className="mt-3">
+          <AlertCircle size={18} />
+          <AlertDescription className="font-semibold">
+            {t(errorMsg)}
+          </AlertDescription>
+        </Alert>}
       <Button ref={ref} type="submit" disabled={pending} {...props}>
         {pending ?
           <div className="circle-spin-2-invert" /> :
@@ -34,7 +34,7 @@ const Submit = React.forwardRef<
       </Button>
     </>
   )
-}) 
+})
 Submit.displayName = "Submit"
 
 export { Submit }

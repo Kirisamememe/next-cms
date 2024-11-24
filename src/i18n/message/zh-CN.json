@@ -58,7 +58,8 @@
       "1": "作品集"
     },
     "gallery": {
-      "1": "图库"
+      "1": "图库",
+      "2": "图片预览"
     },
     "biography": {
       "1": "关于我"
@@ -227,6 +228,45 @@
       "name": "发布时间",
       "placeholder": "设置发布时间",
       "description": "切换发布状态"
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "新建文件夹",
+      "form": {
+        "namePlaceholder": "请输入文件夹名称",
+        "nameDescription": "创建新文件夹以整理图片",
+        "nameValidation": "文件夹名称不能超过32个字符"
+      }
+    },
+    "imageUrl": {
+      "btn": "添加图片URL",
+      "title": "添加新图片URL",
+      "description": "从Blob存储添加新图片。",
+      "edit": {
+        "title": "编辑图片URL信息",
+        "description": "由于编辑已使用的图片信息可能会影响现有内容，请谨慎操作。"
+      },
+      "form": {
+        "singleUrl": "单图模式",
+        "multipleUrls": "多图模式",
+        "url": "URL",
+        "urlDescription": "输入存储在Blob存储中的图片URL",
+        "urlPlaceholder": "请输入图片URL",
+        "urlValidation": "URL不能超过512个字符",
+        "name": "名称",
+        "nameDescription": "为图片输入描述性名称",
+        "namePlaceholder": "请输入图片名称",
+        "nameValidation": "名称不能超过32个字符",
+        "folderPath": "文件夹路径",
+        "folderPathDescription": "选择要存储图片的文件夹",
+        "folderPathPlaceholder": "请选择文件夹",
+        "urlsPlaceholder": "请选择多张图片。\n所选图片的URL将显示在此处。\n在多图片模式下，图片名称将自动生成。\n自动生成的图片名称可以稍后更改。"
+      },
+      "imagePicker": {
+        "drag&drop": "请将图片拖放于此",
+        "selectAll": "全选"
+      }
     }
   },
   "restfulApi": {

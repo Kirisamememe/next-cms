@@ -58,7 +58,8 @@
       "1": "ポートフォリオ"
     },
     "gallery": {
-      "1": "ギャラリー"
+      "1": "ギャラリー",
+      "2": "画像プレビュー"
     },
     "biography": {
       "1": "バイオグラフィー"
@@ -227,6 +228,45 @@
       "name": "公開日時",
       "placeholder": "日時を選択してください",
       "description": "現在の日時より前"
+    }
+  },
+  "gallery": {
+    "newFolder": {
+      "btn": "新規フォルダ",
+      "form": {
+        "namePlaceholder": "フォルダ名を入力",
+        "nameDescription": "画像を整理するための新しいフォルダを作成",
+        "nameValidation": "フォルダ名は32文字以内で入力してください"
+      }
+    },
+    "imageUrl": {
+      "btn": "画像URLを追加",
+      "title": "新規画像URLを追加",
+      "description": "BLOBストレージから新しい画像を追加します。",
+      "edit": {
+        "title": "画像URL情報編集",
+        "description": "すでに使われている画像情報の編集は、既存のコンテンツに影響を与える恐れがあるので、慎重に編集してください。"
+      },
+      "form": {
+        "singleUrl": "単体画像",
+        "multipleUrls": "複数画像",
+        "url": "URL",
+        "urlDescription": "BLOBストレージに保存されている画像のURLを入力してください",
+        "urlPlaceholder": "画像を選択、または画像URLを手動で入力",
+        "urlValidation": "URLは512文字以内で入力してください",
+        "name": "名前",
+        "nameDescription": "画像の説明的な名前を入力してください",
+        "namePlaceholder": "画像名を入力",
+        "nameValidation": "名前は32文字以内で入力してください",
+        "folderPath": "フォルダパス",
+        "folderPathDescription": "画像を保存するフォルダを選択してください",
+        "folderPathPlaceholder": "フォルダを選択",
+        "urlsPlaceholder": "画像を複数選択してください。\n選択された画像のURLはここに表示されます。\n複数画像モードでは、画像名は自動で生成されます。\n自動生成された画像名は後で変更できます。"
+      },
+      "imagePicker": {
+        "drag&drop": "画像をここにドロップ",
+        "selectAll": "全選択"
+      }
     }
   },
   "restfulApi": {

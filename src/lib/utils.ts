@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { hashSync, genSaltSync } from 'bcrypt-ts';
+import { MediaFolder } from "@/types/media-folder-schema";
 
 
 export function cn(...inputs: ClassValue[]) {
@@ -57,4 +58,48 @@ export const removeNull = <T extends Record<string, any>>(obj: T): Partial<T> =>
       return value !== null
     })
   ) as Partial<T>
+}
+
+
+
+export const buildFolderTree = (folders: MediaFolder[], parentPath: string | null = null): MediaFolder[] => {
+  return folders
+    .filter(folder => folder.parentPath === parentPath)
+    .map(folder => ({
+      ...folder,
+      children: buildFolderTree(folders, folder.path)
+    }))
+}
+
+
+export function byteToMB(size: number) {
+  return Math.floor(size / 1024 / 1024 * 100) / 100
+}
+
+export function checkOversize(size: number) {
+  return size >= 1024 * 1024 * Number(process.env.NEXT_PUBLIC_MAX_IMAGE_SIZE)
+}
+
+
+export function animateElement(
+  element: HTMLElement | SVGElement,
+  keyframes: PropertyIndexedKeyframes | Keyframe[] | null,
+  options?: number | KeyframeAnimationOptions | undefined
+) {
+  return new Promise<{ finish: boolean }>((resolve, reject) => {
+    if (!element) {
+      reject({ finish: false })
+    }
+    const animation = element.animate(keyframes, options)
+
+    animation.onfinish = () => {
+      resolve({ finish: true })
+    }
+    animation.oncancel = () => {
+      resolve({ finish: false })
+    }
+    animation.onremove = () => {
+      resolve({ finish: false })
+    }
+  })
 }
