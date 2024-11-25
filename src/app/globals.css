@@ -293,10 +293,6 @@ body {
     transform: scale(0.7);
     opacity: 0;
   }
-  70% {
-    transform: scale(1.05);
-    opacity: 0.9;
-  }
   100% {
     transform: scale(1);
     opacity: 1;
@@ -304,7 +300,7 @@ body {
 }
 
 .folder-appear {
-  animation: folderAppear 0.3s cubic-bezier(0.34, 0.56, 0.72, 1);
+  animation: folderAppear 0.2s cubic-bezier(0.34, 0.56, 0.72, 1);
 }
 
 
