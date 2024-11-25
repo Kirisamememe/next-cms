@@ -7,10 +7,9 @@ import { useNewImageContext } from "../new-image-provider"
 
 type Props = {
   url: string
-  inserted: boolean
 }
 
-export function ImageItem({ url, inserted }: Props) {
+export function ImageItem({ url }: Props) {
   const {
     selectedUrl,
     setSelectedUrl,
@@ -42,12 +41,11 @@ export function ImageItem({ url, inserted }: Props) {
         className={cn(
           'cursor-pointer hover:outline outline-2 -outline-offset-2 outline-[hsl(var(--selected2))]',
           ((isSingleMode && selectedUrl === url) || (!isSingleMode && selectedUrls.includes(url))) &&
-          'outline-pulse',
-          inserted && "opacity-30"
+          'outline-pulse'
         )}>
         <Image
-          src={url} quality={1}
-          width={1000} height={1000} alt="image"
+          src={url} quality={25} placeholder='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+          width={100} height={100} alt="image" loading='lazy'
           className="object-cover object-center w-full h-full transition-transform duration-300 pointer-events-none" />
       </AspectRatio>
     </>

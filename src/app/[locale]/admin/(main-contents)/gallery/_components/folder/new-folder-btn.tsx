@@ -1,22 +1,18 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
 import { FolderPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useGalleryContext } from "../gallery-provider";
 
 export function NewFolderBtn() {
   const t = useTranslations()
-  const params = useParams<{ folders?: string[] }>()
-  const currentPath = params.folders ? params.folders.join('/') : null
+  const { setCreatingNewFolder } = useGalleryContext()
 
   return (
-    <Link href={`/admin/gallery${currentPath ? `/${currentPath}` : ''}?query=newFolder`} className="w-fit">
-      <Button variant={'outline'} >
-        <FolderPlus size={16} />
-        {t('gallery.newFolder.btn')}
-      </Button>
-    </Link>
+    <Button variant={'outline'} onClick={() => setCreatingNewFolder(true)}>
+      <FolderPlus size={16} />
+      {t('gallery.newFolder.btn')}
+    </Button>
   )
 }

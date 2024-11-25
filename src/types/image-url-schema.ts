@@ -5,12 +5,12 @@ export const imageUrlSchema = z.object({
   name: z.string().max(32, '32文字以下で入力してください').default(createId()),
   url: z.string().min(1, '1文字以上512文字以下で入力してください').max(512, '1文字以上512文字以下で入力してください'),
   archivedAt: z.date().nullish(),
-  folderPath: z.string().default('')
+  folderPath: z.string().default('.')
 })
 
 export const multipleImageUrlSchema = z.object({
   urls: z.array(z.string()).min(1, 'URLを1つ以上入力してください').max(512, ''),
-  folderPath: z.string().default('')
+  folderPath: z.string().default('.')
 })
 
 

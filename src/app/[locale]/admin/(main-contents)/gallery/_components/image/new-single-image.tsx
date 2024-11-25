@@ -7,7 +7,7 @@ import { imageUrlSchema } from "@/types/image-url-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useActionState, useEffect, useRef } from "react"
+import { useActionState, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { FlexRow } from "@/components/ui/flexbox"
@@ -16,12 +16,16 @@ import { useNewImageContext } from "./new-image-provider"
 import { createImageUrl } from "../../_actions/create"
 import { SingleImageForm } from "./form/single-image-form"
 import { useGalleryContext } from "../gallery-provider"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 export function NewSingleImage() {
   const t = useTranslations()
   const { selectedUrl, setSelectedUrl } = useNewImageContext()
   const { folders } = useGalleryContext()
   const folderTree = buildFolderTree(folders)
+
+  const [error, setError] = useState('')
 
   const closeBtnRef = useRef<HTMLButtonElement>(null)
   const { folders: paramFolders } = useParams<{ folders?: string[] }>()
@@ -42,12 +46,12 @@ export function NewSingleImage() {
     if (!validation) return
 
     const values = form.getValues()
-    if (values.folderPath === '.') {
-      values.folderPath = ''
-    }
     const parse = await imageUrlSchema.parseAsync(values)
-    await createImageUrl(parse)
+    const { error } = await createImageUrl(parse)
 
+    if (error) {
+      return setError(error.message)
+    }
     setSelectedUrl('')
   }, null)
 
@@ -57,11 +61,21 @@ export function NewSingleImage() {
 
   return (
     <Form {...form}>
-      <form action={action} className="flex flex-col gap-5">
+      <form action={action} className="flex flex-col gap-5 h-[calc(100%-2.5rem)]">
         <SingleImageForm form={form} folderTree={folderTree} />
-        <FlexRow gap={3} className="ml-auto mt-3">
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertDescription className="flex gap-2 items-center">
+              <AlertCircle size={16} />
+              {error}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <FlexRow gap={3} className="ml-auto mt-auto">
           <DialogClose asChild>
-            <Button ref={closeBtnRef} variant={'outline'}>
+            <Button type="button" ref={closeBtnRef} variant={'outline'}>
               {t('common.close')}
             </Button>
           </DialogClose>

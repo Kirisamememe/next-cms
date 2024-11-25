@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react"
+import { createContext, ReactNode, RefObject, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 import { ImageFile } from "./image/new-image-provider"
 import { DropData } from "@/types/drop-data"
 import { MediaFolder } from "@/types/media-folder-schema"
@@ -14,18 +14,19 @@ export type DroppedData = {
 type GalleryContextType = {
   folders: MediaFolder[]
 
-  droppedImage: string
-  setDroppedImage: React.Dispatch<SetStateAction<string>>
-  droppedFolder: string
-  setDroppedFolder: React.Dispatch<SetStateAction<string>>
   droppedData: DroppedData[]
   setDroppedData: React.Dispatch<SetStateAction<DroppedData[]>>
 
   filesDragging: boolean
   setFilesDragging: React.Dispatch<SetStateAction<boolean>>
 
+  creatingNewFolder: boolean
+  setCreatingNewFolder: React.Dispatch<SetStateAction<boolean>>
+
   files: ImageFile[]
   setFiles: React.Dispatch<SetStateAction<ImageFile[]>>
+
+  dragImageRef: RefObject<HTMLImageElement | null>
 }
 
 const GalleryContext = createContext<GalleryContextType | undefined>(undefined)
@@ -36,14 +37,18 @@ type Props = {
 }
 
 export function GalleryProvider({ children, folders }: Props) {
-  const [droppedImage, setDroppedImage] = useState<string>('')
-  const [droppedFolder, setDroppedFolder] = useState<string>('')
   const [droppedData, setDroppedData] = useState<DroppedData[]>([])
-
   const [filesDragging, setFilesDragging] = useState(false)
   const [files, setFiles] = useState<ImageFile[]>([])
+  const [creatingNewFolder, setCreatingNewFolder] = useState(false)
+  const dragImageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
+    // 先にimg要素作っとかないとロードが間に合わず、結局ゴースト画像が表示されてしまう
+    const img = new window.Image()
+    img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+    dragImageRef.current = img
+
     const handleDragEnter = (e: DragEvent) => {
       e.preventDefault()
       if (!e.dataTransfer?.types.includes('Files')) {
@@ -75,18 +80,15 @@ export function GalleryProvider({ children, folders }: Props) {
     <GalleryContext.Provider
       value={{
         folders,
-
-        droppedImage,
-        setDroppedImage,
-        droppedFolder,
-        setDroppedFolder,
         droppedData,
         setDroppedData,
-
         filesDragging,
         setFilesDragging,
+        creatingNewFolder,
+        setCreatingNewFolder,
         files,
-        setFiles
+        setFiles,
+        dragImageRef
       }}>
       <div onDragOver={e => e.preventDefault()} className="w-full h-full">
         {children}

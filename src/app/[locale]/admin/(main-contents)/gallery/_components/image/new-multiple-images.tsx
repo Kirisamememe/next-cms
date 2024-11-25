@@ -43,9 +43,6 @@ export function NewMultipleImages() {
     if (!validation) return
 
     const values = form.getValues()
-    if (values.folderPath === '.') {
-      values.folderPath = ''
-    }
 
     await createManyImageUrls(values)
     setSelectedUrls([])
@@ -53,10 +50,10 @@ export function NewMultipleImages() {
 
   return (
     <Form {...form}>
-      <form action={action} className="flex flex-col gap-5">
+      <form action={action} className="flex flex-col gap-5 h-[calc(100%-2.5rem)]">
         <MultipleImagesForm form={form} selectedUrls={selectedUrls} folderTree={folderTree} />
 
-        <FlexRow gap={3} className="ml-auto mt-3">
+        <FlexRow gap={3} className="ml-auto mt-auto">
           <DialogClose asChild>
             <Button ref={closeBtnRef} variant={'outline'}>
               {t('common.close')}

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const mediaFolderSchema = z.object({
-  name: z.string(),
-  parentPath: z.string().nullable(),
+  name: z.string().max(64, ''),
+  parentPath: z.string(),
   archivedAt: z.date().nullish(),
 })
 

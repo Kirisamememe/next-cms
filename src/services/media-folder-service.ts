@@ -9,11 +9,7 @@ class MediaFolderService {
     return mediaFolderRepository.findMany()
   }
 
-  async getCurrentPathFolders(path: string | null) {
-    if (!path) {
-      return await mediaFolderRepository.findRootFolders()
-    }
-
+  async getCurrentPathFolders(path: string) {
     const data = await mediaFolderRepository.findManyByParentPath(path)
     if (!data) {
       throw new Error('DB Error')
@@ -31,7 +27,7 @@ class MediaFolderService {
     return mediaFolderRepository.update(path, values)
   }
 
-  move(path: string, name: string, parentPath: string | null) {
+  move(path: string, name: string, parentPath: string) {
     return mediaFolderRepository.move(path, name, parentPath)
   }
 

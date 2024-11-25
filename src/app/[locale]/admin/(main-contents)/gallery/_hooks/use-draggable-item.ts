@@ -21,22 +21,17 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
 
   const {
     droppedData,
-    setDroppedData
+    setDroppedData,
+    dragImageRef
   } = useGalleryContext()
 
   const dragOffset = useRef({ x: 0, y: 0 })
   const initialPosition = useRef({ x: 0, y: 0 })
   const mousePosition = useRef({ x: 0, y: 0 })
-  const dragImageRef = useRef<HTMLImageElement | null>(null)
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
 
   useEffect(() => {
-    // 先にimg要素作っとかないとロードが間に合わず、結局ゴースト画像が表示されてしまう
-    const img = new window.Image()
-    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='
-    dragImageRef.current = img
-
     return () => {
       if (scrollIntervalRef.current) {
         clearInterval(scrollIntervalRef.current)
@@ -112,7 +107,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
     element.style.scale = `${SCALE}`
 
     setIsDragging(true)
-  }, [dropData])
+  }, [dragImageRef, dropData])
 
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -240,7 +235,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
       isDragging
         ? "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms]"
         : "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-      !isDragging && isDragOver && "outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
+      !isDragging && isDragOver && "[transition:none] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
       isDropped && "hidden"
     ),
     draggable: true,
@@ -258,6 +253,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
   return {
     isDragging,
     isDragOver,
+    isDropped,
     props
   }
 }

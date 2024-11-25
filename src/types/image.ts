@@ -10,7 +10,7 @@ export type ImageUrl = {
   updatedAt: Date
   archivedAt: Date | null
 
-  folderPath: string | null
+  folderPath: string
   authorId: number
   lastEditedBy: number
 }

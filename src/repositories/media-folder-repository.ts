@@ -48,13 +48,31 @@ class MediaFolderRepository {
     return await prisma.mediaFolder.findMany()
   }
 
-
-  async create(name: string, parentPath: string | null) {
+  /**
+   * 
+   * 
+   * @param name 
+   * @param parentPath 
+   * @returns 
+   */
+  async create(name: string, parentPath: string) {
     return await prisma.mediaFolder.create({
       data: {
-        path: `${parentPath ? `${parentPath}/` : ''}${name}`,
+        path: `${parentPath}/${name}`,
         name: name,
-        ...(parentPath && {
+        ...(parentPath === '.' ? {
+          parent: {
+            connectOrCreate: {
+              where: {
+                path: parentPath
+              },
+              create: {
+                path: parentPath,
+                name: '.'
+              }
+            }
+          }
+        } : {
           parent: {
             connect: {
               path: parentPath
@@ -72,26 +90,22 @@ class MediaFolderRepository {
         path: path
       },
       data: {
-        path: `${values.parentPath ? `${values.parentPath}/` : ''}${values.name}`,
+        path: `${values.parentPath}/${values.name}`,
         name: values.name,
-        parent: values.parentPath
-          ? { connect: { path: values.parentPath } }
-          : { disconnect: true }
+        parent: { connect: { path: values.parentPath } }
       }
     })
   }
 
 
-  async move(path: string, name: string, parentPath: string | null) {
+  async move(path: string, name: string, parentPath: string) {
     return await prisma.mediaFolder.update({
       where: {
         path: path
       },
       data: {
-        path: `${parentPath ? `${parentPath}/` : ''}${name}`,
-        parent: parentPath
-          ? { connect: { path: parentPath } }
-          : { disconnect: true }
+        path: `${parentPath}/${name}`,
+        parent: { connect: { path: parentPath } }
       }
     })
   }

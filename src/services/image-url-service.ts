@@ -1,4 +1,6 @@
+import { prisma } from '@/lib/prisma'
 import { imageUrlRepository } from '@/repositories/image-url-repository'
+import { ImageUrl } from '@/types/image'
 import { imageUrlSchema, multipleImageUrlSchema } from '@/types/image-url-schema'
 import 'server-only'
 import { z } from 'zod'
@@ -8,8 +10,19 @@ class ImageUrlService {
   create(
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>
-  ) {
-    return imageUrlRepository.create(operatorId, values)
+  ): Promise<{ data?: ImageUrl, error?: { message: string } }> {
+    return prisma.$transaction(async (trx) => {
+      const url = await imageUrlRepository.findUniqueByUrl(values.url, trx)
+      if (url) {
+        return {
+          error: {
+            message: "URL already exists."
+          }
+        }
+      }
+
+      return { data: await imageUrlRepository.create(operatorId, values, trx) }
+    })
   }
 
 
@@ -25,20 +38,30 @@ class ImageUrlService {
     imageId: number,
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>
-  ) {
-    return imageUrlRepository.update(imageId, operatorId, values)
+  ): Promise<{ data?: ImageUrl, error?: { message: string } }> {
+    return prisma.$transaction(async (trx) => {
+      const url = await imageUrlRepository.findUniqueByUrl(values.url, trx)
+      if (url) {
+        return {
+          error: {
+            message: "URL already exists."
+          }
+        }
+      }
+      return { data: await imageUrlRepository.update(imageId, operatorId, values, trx) }
+    })
   }
 
   move(
     imageId: number,
     operatorId: number,
-    folderPath: string | null
+    folderPath: string
   ) {
     return imageUrlRepository.move(imageId, operatorId, folderPath)
   }
 
 
-  fetchByFolder(path: string | null) {
+  fetchByFolder(path: string) {
     return imageUrlRepository.findByPath(path)
   }
 

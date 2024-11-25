@@ -24,7 +24,7 @@ export function NewImagePickerGrid({ urls }: Props) {
   return (
     <GridColumn grid={4} gap={0.5} className="rounded-lg overflow-hidden mb-24">
       {sortedUrls.map((url) => (
-        <ImageItem key={url} url={url} inserted={imageUrls.includes(url)} />
+        !imageUrls.includes(url) && <ImageItem key={url} url={url} />
       ))}
     </GridColumn>
   )

@@ -26,9 +26,11 @@ export async function NewImageDialog() {
           </Button>
         </DialogTrigger>
 
-        <DialogContent xHidden className="flex gap-6 max-w-3xl h-[35rem] sm:rounded-3xl lg:rounded-3xl">
+        <DialogContent xHidden className="flex gap-6 max-w-3xl h-[38rem] sm:rounded-3xl lg:rounded-3xl">
+          {/* 左側のやつ */}
           <NewImagePicker />
 
+          {/* 右側のやつ */}
           <NewImageFormTabsContainer>
             <TabsList className="bg-transparent sm:w-fit gap-6 px-0 sm:px-0 lg:px-0 [&>button]:text-lg [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-12">
               <TabsTrigger value="single" className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[0_2px_0_0_hsl(var(--foreground))]">
@@ -39,7 +41,7 @@ export async function NewImageDialog() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="single">
+            <TabsContent value="single" className="flex-grow">
               <DialogHeader>
                 <DialogTitle hidden>
                   {t('gallery.imageUrl.title')}
@@ -51,7 +53,7 @@ export async function NewImageDialog() {
               <NewSingleImage />
             </TabsContent>
 
-            <TabsContent value="multiple">
+            <TabsContent value="multiple" className="flex-grow">
               <DialogTitle hidden>
                 {t('gallery.imageUrl.title')}
               </DialogTitle>

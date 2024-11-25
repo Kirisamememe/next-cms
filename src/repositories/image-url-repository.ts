@@ -1,12 +1,12 @@
 import 'server-only'
-import { prisma } from '@/lib/prisma'
+import { DB, prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { imageUrlSchema, multipleImageUrlSchema } from '@/types/image-url-schema'
 import { createId } from '@paralleldrive/cuid2'
 
 class ImageUrlRepository {
 
-  async findByPath(path: string | null) {
+  async findByPath(path: string) {
     return await prisma.imageUrl.findMany({
       where: {
         folderPath: path
@@ -19,8 +19,17 @@ class ImageUrlRepository {
   }
 
 
-  async findUnique(imageId: number) {
-    return await prisma.imageUrl.findUnique({
+  async findUniqueByUrl(url: string, db: DB = prisma) {
+    return await db.imageUrl.findUnique({
+      where: {
+        url: url
+      }
+    })
+  }
+
+
+  async findUnique(imageId: number, db: DB = prisma) {
+    return await db.imageUrl.findUnique({
       where: {
         id: imageId
       }
@@ -39,9 +48,10 @@ class ImageUrlRepository {
 
   async create(
     operatorId: number,
-    values: z.infer<typeof imageUrlSchema>
+    values: z.infer<typeof imageUrlSchema>,
+    db: DB = prisma
   ) {
-    return await prisma.imageUrl.create({
+    return await db.imageUrl.create({
       data: {
         name: values.name || createId(),
         url: values.url,
@@ -52,7 +62,19 @@ class ImageUrlRepository {
         lastEdited: {
           connect: { id: operatorId }
         },
-        ...(values.folderPath && {
+        ...(values.folderPath === '.' ? {
+          folder: {
+            connectOrCreate: {
+              where: {
+                path: values.folderPath
+              },
+              create: {
+                path: values.folderPath,
+                name: '.'
+              }
+            }
+          }
+        } : {
           folder: {
             connect: { path: values.folderPath }
           }
@@ -84,9 +106,10 @@ class ImageUrlRepository {
   async update(
     imageId: number,
     operatorId: number,
-    values: z.infer<typeof imageUrlSchema>
+    values: z.infer<typeof imageUrlSchema>,
+    db: DB = prisma
   ) {
-    return await prisma.imageUrl.update({
+    return await db.imageUrl.update({
       where: {
         id: imageId
       },
@@ -100,11 +123,7 @@ class ImageUrlRepository {
         lastEdited: {
           connect: { id: operatorId }
         },
-        ...(values.folderPath !== undefined && {
-          folder: values.folderPath
-            ? { connect: { path: values.folderPath } }
-            : { disconnect: true }
-        })
+        folder: { connect: { path: values.folderPath } }
       }
     })
   }
@@ -113,16 +132,14 @@ class ImageUrlRepository {
   async move(
     imageId: number,
     operatorId: number,
-    folderPath: string | null
+    folderPath: string
   ) {
     return await prisma.imageUrl.update({
       where: {
         id: imageId
       },
       data: {
-        folder: folderPath
-          ? { connect: { path: folderPath } }
-          : { disconnect: true },
+        folder: { connect: { path: folderPath } },
         lastEdited: {
           connect: { id: operatorId }
         },

@@ -9,7 +9,7 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { folders } = await params
-  const currentPath = folders ? folders.join('/') : null
+  const currentPath = folders ? `./${folders.join('/')}` : '.'
 
   return (
     <Flexbox gap={6} className="appear h-full">

@@ -6,10 +6,10 @@ import { NewFolder } from "./folder/new-folder"
 import { FolderItem } from "./folder-item"
 
 type Props = {
-  currentPath?: string | null
+  currentPath?: string
 }
 
-export async function GalleryGrid({ currentPath = null }: Props) {
+export async function GalleryGrid({ currentPath = '.' }: Props) {
   const decodedPath = currentPath ? decodeURIComponent(currentPath) : currentPath
   const parentPath = decodedPath && decodedPath.split('/').slice(0, -1)?.join('/')
   const resources = await imageUrlService.fetchByFolder(decodedPath)
@@ -23,12 +23,14 @@ export async function GalleryGrid({ currentPath = null }: Props) {
   return (
     <GridColumn
       gap={0.5}
-      className="gap-y-0.5 grid-cols-[repeat(auto-fill,minmax(12rem,1fr))] relative transition-transform"
+      className="gap-y-0.5 grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] relative transition-transform"
     >
       <NewFolder />
-      {decodedPath && (
-        <FolderItem href={`/admin/gallery${parentPath ? `/${parentPath}` : ''}`} name={'../'} path={parentPath || ''} isParent />
+
+      {decodedPath !== '.' && (
+        <FolderItem href={`/admin/gallery${parentPath === '.' ? '' : `/${parentPath}`}`} name={'../'} path={parentPath || ''} isParent />
       )}
+
       {folders.map((folder) => (
         <FolderItem key={folder.path} href={`/admin/gallery/${folder.path}`} name={folder.name} path={folder.path} />
       ))}

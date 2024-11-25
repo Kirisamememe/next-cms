@@ -1,8 +1,7 @@
 'use client'
 
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useActionState, useState } from "react"
-import { usePathname } from "@/i18n/routing"
 import { FolderNameForm } from "./folder-name-form"
 import { editFolderName } from "../../_actions/update"
 import { PenLine } from "lucide-react"
@@ -14,20 +13,21 @@ type Props = {
 }
 
 export function EditFolderName({ path, name }: Props) {
-  const router = useRouter()
   const params = useParams<{ folders: string[] | undefined }>()
-  const pathname = usePathname()
 
   const [isEditing, setIsEditing] = useState(false)
 
   const [_, action, pending] = useActionState(async (_: any, payload: FormData) => {
     const folderName = payload.get('name')?.toString()
-    if (!folderName) {
+    if (!folderName) return
+    if (folderName.length > 64) {
+      //バリデーション
       return
     }
-    const parentPath = params.folders?.length ? decodeURIComponent(params.folders.join('/')) : null
-    await editFolderName(path, folderName, parentPath)
-      .then(() => router.push(pathname))
+    const parentPath = params.folders?.length ? decodeURIComponent(params.folders.join('/')) : '.'
+    await editFolderName(path, folderName, parentPath).then(() => {
+      setIsEditing(false)
+    })
   }, undefined)
 
 
@@ -38,9 +38,10 @@ export function EditFolderName({ path, name }: Props) {
   return (
     <>
       {isEditing ?
-        <form action={action} className={"group absolute inset-0 flex flex-col p-4 w-full aspect-square gap-2 justify-center bg-muted transition-all z-50"}>
-          <FolderNameForm pending={pending} name={name} setIsEditing={setIsEditing} />
-        </form> :
+        <div className="absolute inset-0 z-10">
+          <FolderNameForm action={action} pending={pending} name={name} setIsEditing={setIsEditing} />
+        </div>
+        :
         <Button
           variant={'secondary'} size={'icon'}
           onClick={handleEditName}

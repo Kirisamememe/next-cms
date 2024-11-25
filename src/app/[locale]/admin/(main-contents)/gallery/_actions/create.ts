@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
-export async function createFolder(folderName: string, parentPath: string | null) {
+export async function createFolder(folderName: string, parentPath: string) {
   await getSession()
   const res = await mediaFolderService.create({ name: folderName, parentPath })
   if (!res) {

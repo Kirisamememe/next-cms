@@ -7,6 +7,7 @@ import { useDraggableItem } from "../_hooks/use-draggable-item";
 import { useCallback } from "react";
 import { updateFolderPath } from "../_actions/update";
 import { EditFolderName } from "./folder/edit-folder-name";
+import { cn } from "@/lib/utils";
 
 
 type Props = {
@@ -49,16 +50,23 @@ export function FolderItem({ href, name, path, isParent = false }: Props) {
       {!isDragging &&
         <EditFolderName path={path} name={name} />
       }
+
       <div {...props}>
         <Link href={href} draggable={false} prefetch>
           <Button
             variant={'secondary'}
-            className={"flex-col w-full h-full rounded-none"}>
+            className={cn(
+              "flex-col w-full h-full rounded-none gap-1 [&>svg]:mt-4",
+              isDragging && "active:scale-100"
+            )}>
             {isDragOver ? <FolderOpen size={64} /> : <Folder size={64} />}
-            {name}
+            <span className="h-10 w-full text-center whitespace-pre-wrap line-clamp-2">
+              {name}
+            </span>
           </Button>
         </Link>
       </div>
+
     </div>
   )
 }

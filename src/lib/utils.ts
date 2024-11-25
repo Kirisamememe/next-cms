@@ -62,7 +62,7 @@ export const removeNull = <T extends Record<string, any>>(obj: T): Partial<T> =>
 
 
 
-export const buildFolderTree = (folders: MediaFolder[], parentPath: string | null = null): MediaFolder[] => {
+export const buildFolderTree = (folders: MediaFolder[], parentPath: string = '.'): MediaFolder[] => {
   return folders
     .filter(folder => folder.parentPath === parentPath)
     .map(folder => ({

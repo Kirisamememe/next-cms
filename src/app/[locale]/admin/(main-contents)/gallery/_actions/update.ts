@@ -13,7 +13,7 @@ export async function revalidateGallery() {
 }
 
 
-export async function updateImageUrlFolder(imageId: number, folderPath: string | null) {
+export async function updateImageUrlFolder(imageId: number, folderPath: string) {
   const { operatorId } = await getSession()
   const res = await imageUrlService.move(imageId, operatorId, folderPath)
   if (!res) {
@@ -46,7 +46,7 @@ export async function updateImageUrl(imageId: number, values: z.infer<typeof ima
 }
 
 
-export async function editFolderName(path: string, folderName: string, parentPath: string | null) {
+export async function editFolderName(path: string, folderName: string, parentPath: string) {
   await getSession()
   const res = await mediaFolderService.update(path, { name: folderName, parentPath })
   if (!res) {
