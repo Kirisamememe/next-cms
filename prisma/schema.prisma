@@ -158,7 +158,7 @@ model MediaFolder {
   archivedAt DateTime? @map("archived_at")
 
   parentPath String?      @map("parent_path")
-  parent     MediaFolder? @relation("FolderToFolder", fields: [parentPath], references: [path])
+  parent     MediaFolder? @relation("FolderToFolder", fields: [parentPath], references: [path], onUpdate: Cascade)
 
   children MediaFolder[] @relation("FolderToFolder")
   images   ImageUrl[]
@@ -170,14 +170,14 @@ model MediaFolder {
 model ImageUrl {
   id   Int    @id @default(autoincrement())
   name String
-  url  String
+  url  String @unique
 
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   archivedAt DateTime? @map("archived_at")
 
-  folderPath String?      @map("folder_path")
-  folder     MediaFolder? @relation(fields: [folderPath], references: [path], onUpdate: Cascade)
+  folderPath String      @default(".") @map("folder_path")
+  folder     MediaFolder @relation(fields: [folderPath], references: [path], onUpdate: Cascade)
 
   authorId Int  @map("author_id")
   author   User @relation("ImageUploader", fields: [authorId], references: [id])
@@ -185,7 +185,6 @@ model ImageUrl {
   lastEditedBy Int  @map("last_edited_by")
   lastEdited   User @relation("ImageEditor", fields: [lastEditedBy], references: [id])
 
-  @@unique([name, folderPath])
   @@map("image_url")
 }
 
