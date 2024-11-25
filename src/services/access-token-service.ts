@@ -5,7 +5,7 @@ import { accessTokenRepository } from '@/repositories/access-token-repository'
 class AccessTokenService {
 
   private generateToken(): string {
-    return crypto.randomBytes(32).toString('hex')
+    return crypto.randomBytes(32).toString('base64url')
   }
 
   async isTokenAvailable(token: string) {
