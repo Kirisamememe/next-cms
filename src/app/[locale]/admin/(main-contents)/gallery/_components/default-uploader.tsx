@@ -8,11 +8,26 @@ import { Input } from "@/components/ui/input"
 import { FlexColumn } from "@/components/ui/flexbox"
 import { LabelText } from "@/components/ui/typography"
 import { useTranslations } from "next-intl"
+import { useUploadImage } from "../_hooks/use-upload-image"
+import { createImageUrl } from "../_actions/create"
+import { useParams } from "next/navigation"
 
 export function DefaultUploader() {
   const t = useTranslations()
 
   const { filesDragging, files, setFiles } = useGalleryContext()
+  const { uploadImage } = useUploadImage({ setFiles })
+
+  const { folders } = useParams<{ folders?: string[] }>()
+  const pathArr = (folders && folders.length) ? ['.', ...folders] : ['.']
+  const folderPath = decodeURIComponent(pathArr.join('/'))
+
+
+  const clearSelection = useCallback(() => {
+    files.forEach((file) => URL.revokeObjectURL(file.url))
+    setFiles([])
+  }, [files, setFiles])
+
 
   /**
    * 画像マウント時の操作
@@ -32,7 +47,7 @@ export function DefaultUploader() {
           url,
           file: acceptedFile,
           uploadingState: {
-            progress: 0,
+            progress: 1,
             ...(isOversize && { error: { message: 'Image size must be less than 10MB' } })
           },
           abortController
@@ -43,11 +58,25 @@ export function DefaultUploader() {
         return
       }
 
+      const res = await uploadImage(acceptedFile, url, abortController)
+      if (!res) {
+        return {
+          error: {
+            message: 'Failed'
+          }
+        }
+      }
 
+      await createImageUrl({ name: res.asset_id, url: res.secure_url, folderPath })
+        .then(() => {
+          setFiles((fs) => fs.filter((f) => f.url !== url))
+        })
 
-    }))
+    })).finally(() => {
+      clearSelection()
+    })
 
-  }, [files, setFiles])
+  }, [clearSelection, files, folderPath, setFiles, uploadImage])
 
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -57,12 +86,6 @@ export function DefaultUploader() {
     },
     multiple: true
   })
-
-
-  // const clearSelection = () => {
-  //   files.forEach((file) => URL.revokeObjectURL(file.url))
-  //   setFiles([])
-  // }
 
 
   useEffect(() => {
