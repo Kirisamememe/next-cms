@@ -26,6 +26,9 @@ type GalleryContextType = {
   files: ImageFile[]
   setFiles: React.Dispatch<SetStateAction<ImageFile[]>>
 
+  gridSize: number
+  setGridSize: React.Dispatch<SetStateAction<number>>
+
   dragImageRef: RefObject<HTMLImageElement | null>
 }
 
@@ -41,6 +44,7 @@ export function GalleryProvider({ children, folders }: Props) {
   const [filesDragging, setFilesDragging] = useState(false)
   const [files, setFiles] = useState<ImageFile[]>([])
   const [creatingNewFolder, setCreatingNewFolder] = useState(false)
+  const [gridSize, setGridSize] = useState(12)
   const dragImageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
@@ -88,6 +92,8 @@ export function GalleryProvider({ children, folders }: Props) {
         setCreatingNewFolder,
         files,
         setFiles,
+        gridSize,
+        setGridSize,
         dragImageRef
       }}>
       <div onDragOver={e => e.preventDefault()} className="w-full h-full">

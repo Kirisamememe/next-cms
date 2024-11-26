@@ -8,6 +8,7 @@ import { useCallback } from "react";
 import { updateFolderPath } from "../_actions/update";
 import { EditFolderName } from "./folder/edit-folder-name";
 import { cn } from "@/lib/utils";
+import { useGalleryContext } from "./gallery-provider";
 
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 }
 
 export function FolderItem({ href, name, path, isParent = false }: Props) {
+
+  const { gridSize } = useGalleryContext()
 
   const onDrop = useCallback(async (targetPath: string) => {
     return await updateFolderPath(path, name, targetPath)
@@ -56,11 +59,14 @@ export function FolderItem({ href, name, path, isParent = false }: Props) {
           <Button
             variant={'secondary'}
             className={cn(
-              "flex-col w-full h-full rounded-none gap-1 [&>svg]:mt-4",
+              "flex-col w-full h-full rounded-none gap-1 [&>svg]:mt-4 unselectable",
               isDragging && "active:scale-100"
             )}>
             {isDragOver ? <FolderOpen size={64} /> : <Folder size={64} />}
-            <span className="h-10 w-full text-center whitespace-pre-wrap line-clamp-2">
+            <span className={cn(
+              "h-10 w-full text-center whitespace-pre-wrap line-clamp-2 unselectable",
+              gridSize < 10 && "text-xs"
+            )}>
               {name}
             </span>
           </Button>

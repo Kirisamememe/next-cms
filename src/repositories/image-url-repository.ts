@@ -14,7 +14,18 @@ class ImageUrlRepository {
       orderBy: [
         { updatedAt: "desc" },
         { url: "asc" }
-      ]
+      ],
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            nickname: true,
+            image: true,
+            role: true
+          }
+        }
+      }
     })
   }
 
