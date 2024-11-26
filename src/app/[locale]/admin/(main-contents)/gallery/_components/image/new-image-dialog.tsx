@@ -20,7 +20,7 @@ export async function NewImageDialog() {
       <Dialog>
 
         <DialogTrigger asChild>
-          <Button variant={'outline'} className="">
+          <Button variant={'outline'} className="unselectable select-none">
             <ImagePlus size={16} />
             {t('gallery.imageUrl.btn')}
           </Button>

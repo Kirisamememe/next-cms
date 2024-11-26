@@ -48,6 +48,7 @@ export function SingleImageForm({ form, folderTree }: Props) {
           </FormItem>
         )}
       />
+
       <FormField
         control={form.control}
         name="name"
@@ -66,6 +67,7 @@ export function SingleImageForm({ form, folderTree }: Props) {
           </FormItem>
         )}
       />
+
       <FormField
         control={form.control}
         name="folderPath"

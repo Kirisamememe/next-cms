@@ -7,16 +7,19 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useActionState, useRef, useState } from "react"
-import { useTranslations } from "next-intl"
-import { FlexRow } from "@/components/ui/flexbox"
+import { useLocale, useTranslations } from "next-intl"
+import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { buildFolderTree, cn } from "@/lib/utils"
 import { SingleImageForm } from "./image/form/single-image-form"
 import { useGalleryContext } from "./gallery-provider"
 import { ImageUrl } from "@/types/image"
 import { updateImageUrl } from "../_actions/update"
-import { AlertCircle, PenLine } from "lucide-react"
+import { AlertCircle, PenLine, X } from "lucide-react"
 import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Heading, LabelText } from "@/components/ui/typography"
+import { format } from "date-fns"
+import { getLocaleForFns } from "@/i18n/get-locale"
 
 
 type Props = {
@@ -27,6 +30,7 @@ export function EditSingleImage({ imageUrl }: Props) {
   const t = useTranslations()
   const { folders } = useGalleryContext()
   const folderTree = buildFolderTree(folders)
+  const locale = getLocaleForFns(useLocale())
 
   const [open, setOpen] = useState(false)
   const [error, setError] = useState('')
@@ -69,20 +73,36 @@ export function EditSingleImage({ imageUrl }: Props) {
   }
 
   return (
-    <Popover open={open} onOpenChange={onOpenChange} modal>
+    <Popover open={open} onOpenChange={onOpenChange} >
+
       <PopoverTrigger asChild>
         <Button variant={"secondary"} size={"icon"}
           className={cn(
-            "group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none absolute top-2 right-2 rounded-full bg-background/50 size-8",
-            open && "opacity-100"
+            "group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none absolute top-2 right-2 rounded-full bg-background/70 size-8 hover:bg-foreground hover:text-background hover:shadow-xl",
+            open && "opacity-100 "
           )}>
-          <PenLine size={16} />
+          {open ? <X size={16} /> : <PenLine size={16} />}
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent>
+      <PopoverContent className="w-fit">
+        <FlexColumn gap={1} className="mb-4">
+          <Heading>
+            {t('gallery.imageUrl.edit.title', { id: imageUrl.id })}
+          </Heading>
+          <LabelText>
+            {t('gallery.imageUrl.edit.createdAt', { datetime: format(imageUrl.createdAt, 'PPP p', { locale }) })}
+          </LabelText>
+          <LabelText>
+            {t('gallery.imageUrl.edit.updatedAt', { datetime: format(imageUrl.createdAt, 'PPP p', { locale }) })}
+          </LabelText>
+          <LabelText>
+            {t('gallery.imageUrl.edit.author', { author: imageUrl.author?.nickname || imageUrl.author?.name })}
+          </LabelText>
+        </FlexColumn>
+
         <Form {...form}>
-          <form action={action} className="flex flex-col gap-5">
+          <form action={action} className="flex flex-col gap-4 min-w-80">
             <SingleImageForm form={form} folderTree={folderTree} />
 
             {error && (
@@ -94,7 +114,7 @@ export function EditSingleImage({ imageUrl }: Props) {
               </Alert>
             )}
 
-            <FlexRow gap={3} className="ml-auto mt-3">
+            <FlexRow gap={3} className="ml-auto mt-2">
               <PopoverClose asChild>
                 <Button type="button" ref={closeBtnRef} variant={'outline'}>
                   {t('common.close')}

@@ -7,6 +7,7 @@ import { Check, X, Folder } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { SetStateAction } from "react"
+import { useGalleryContext } from "../gallery-provider"
 
 type Props = {
   pending: boolean
@@ -18,6 +19,7 @@ type Props = {
 export function FolderNameForm({ pending, name, setIsEditing, action }: Props) {
   const t = useTranslations()
   const router = useRouter()
+  const { gridSize } = useGalleryContext()
 
   const handleClick = () => {
     if (setIsEditing) {
@@ -31,7 +33,7 @@ export function FolderNameForm({ pending, name, setIsEditing, action }: Props) {
   return (
     <form action={action} className="flex flex-col p-4 w-full aspect-square gap-1 justify-center bg-muted transition-all">
       <div className="px-1 w-fit rounded-md">
-        <Folder size={48} />
+        <Folder size={gridSize < 10 ? 32 : gridSize < 14 ? 48 : 64} />
       </div>
       <Input name="name" defaultValue={name} placeholder={t('gallery.newFolder.form.namePlaceholder')} className="mt-auto h-8 text-xs font-medium" autoComplete={"off"} />
       <FlexRow gap={1}>

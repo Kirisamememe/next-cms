@@ -14,7 +14,7 @@ export async function ImagePreview({ id }: Props) {
   return (
     <Image
       src={data.url} quality={100}
-      width={1000} height={1000} alt="image"
+      width={1280} height={1280} alt="image"
       className="object-contain object-center w-fit h-fit max-w-screen max-h-screen z-[500]"
     />
   )
