@@ -1,12 +1,15 @@
 import { useBlobStorage } from "@/hooks/use-blob-storage"
-import { useCallback } from "react"
+import { Dispatch, SetStateAction, useCallback } from "react"
 import { revalidateGallery } from "../_actions/update"
 import { toast } from "@/hooks/use-toast"
-import { useNewImageContext } from "../_components/image/new-image-provider"
+import { ImageFile } from "../_components/image/new-image-provider"
 
-export const useUploadImage = () => {
+type Props = {
+  setFiles: Dispatch<SetStateAction<ImageFile[]>>
+}
+
+export const useUploadImage = ({ setFiles }: Props) => {
   const { uploadToCloudinary } = useBlobStorage()
-  const { setFiles } = useNewImageContext()
 
   const uploadImage = useCallback(async (
     file: File,

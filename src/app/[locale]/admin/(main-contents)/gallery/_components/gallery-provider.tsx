@@ -23,6 +23,9 @@ type GalleryContextType = {
   creatingNewFolder: boolean
   setCreatingNewFolder: React.Dispatch<SetStateAction<boolean>>
 
+  itemsDragging: boolean
+  setItemsDragging: React.Dispatch<SetStateAction<boolean>>
+
   files: ImageFile[]
   setFiles: React.Dispatch<SetStateAction<ImageFile[]>>
 
@@ -41,10 +44,11 @@ type Props = {
 
 export function GalleryProvider({ children, folders }: Props) {
   const [droppedData, setDroppedData] = useState<DroppedData[]>([])
+  const [itemsDragging, setItemsDragging] = useState(false)
   const [filesDragging, setFilesDragging] = useState(false)
   const [files, setFiles] = useState<ImageFile[]>([])
   const [creatingNewFolder, setCreatingNewFolder] = useState(false)
-  const [gridSize, setGridSize] = useState(12)
+  const [gridSize, setGridSize] = useState(3)
   const dragImageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
@@ -90,6 +94,8 @@ export function GalleryProvider({ children, folders }: Props) {
         setFilesDragging,
         creatingNewFolder,
         setCreatingNewFolder,
+        itemsDragging,
+        setItemsDragging,
         files,
         setFiles,
         gridSize,

@@ -6,7 +6,6 @@ import { toast } from "@/hooks/use-toast"
 
 type Props = {
   dropData: DropData
-  acceptable?: boolean
   onDrop?: (targetPath: string) => Promise<any>
 }
 
@@ -14,7 +13,7 @@ function isItself(state: DroppedData, current: DropData) {
   return state.transferredData.data === current.data && state.transferredData.type === current.type
 }
 
-export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props) {
+export function useDraggableItem({ dropData, onDrop }: Props) {
   const [isDragging, setIsDragging] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
   const [isDropped, setIsDropped] = useState(false)
@@ -22,7 +21,8 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
   const {
     droppedData,
     setDroppedData,
-    dragImageRef
+    dragImageRef,
+    setItemsDragging
   } = useGalleryContext()
 
   const dragOffset = useRef({ x: 0, y: 0 })
@@ -107,7 +107,8 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
     element.style.scale = `${SCALE}`
 
     setIsDragging(true)
-  }, [dragImageRef, dropData])
+    setItemsDragging(true)
+  }, [dragImageRef, dropData, setItemsDragging])
 
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -146,6 +147,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
      */
     if (!currentData) {
       setIsDragging(false)
+      setItemsDragging(false)
       element.style.scale = '1'
       element.style.translate = ''
 
@@ -168,6 +170,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
     element.style.scale = '0.1'
     element.style.zIndex = ''
     setIsDragging(false)
+    setItemsDragging(false)
     setIsDropped(true)
 
 
@@ -198,7 +201,7 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
       })
 
     return
-  }, [dropData, droppedData, onDrop, setDroppedData])
+  }, [dropData, droppedData, onDrop, setDroppedData, setItemsDragging])
 
 
   const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -228,32 +231,36 @@ export function useDraggableItem({ dropData, acceptable = false, onDrop }: Props
 
   }, [dropData, setDroppedData])
 
-
-  const props = useMemo(() => ({
+  const draggableItemProps = useMemo(() => ({
     className: cn(
       "group relative overflow-hidden aspect-square",
       isDragging
         ? "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms]"
         : "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-      !isDragging && isDragOver && "[transition:none] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
       isDropped && "hidden"
     ),
     draggable: true,
     onDragStart: handleDragStart,
     onDrag: handleDrag,
     onDragEnd: handleDragEnd,
-    ...(acceptable && {
-      onDragEnter: handleDragEnter,
-      onDragLeave: handleDragLeave,
-      onDrop: handleDrop
-    }),
-  }), [acceptable, handleDrag, handleDragEnd, handleDragEnter, handleDragLeave, handleDragStart, handleDrop, isDragOver, isDragging, isDropped])
+  }), [handleDrag, handleDragEnd, handleDragStart, isDragging, isDropped])
 
+  const dropAreaProps = useMemo(() => ({
+    className: cn(
+      "relative absolute inset-0 w-full h-full",
+      !isDragging && isDragOver && "[transition:none] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
+    ),
+    draggable: false,
+    onDragEnter: handleDragEnter,
+    onDragLeave: handleDragLeave,
+    onDrop: handleDrop
+  }), [handleDragEnter, handleDragLeave, handleDrop, isDragOver, isDragging])
 
   return {
     isDragging,
     isDragOver,
     isDropped,
-    props
+    draggableItemProps,
+    dropAreaProps
   }
 }

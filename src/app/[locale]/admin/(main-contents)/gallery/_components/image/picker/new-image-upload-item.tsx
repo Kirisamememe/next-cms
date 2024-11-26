@@ -25,7 +25,7 @@ type Props = {
 export function ImageForUpload({ file, setFiles }: Props) {
 
   const t = useTranslations()
-  const { uploadImage } = useUploadImage()
+  const { uploadImage } = useUploadImage({ setFiles })
 
   /**
    * オーバーサイズの画像を取り除くための関数

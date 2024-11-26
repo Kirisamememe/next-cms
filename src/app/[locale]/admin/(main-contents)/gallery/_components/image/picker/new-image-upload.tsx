@@ -20,7 +20,7 @@ export function NewImageUpload() {
 
   const { filesDragging } = useGalleryContext()
   const { files, setFiles } = useNewImageContext()
-  const { uploadImage } = useUploadImage()
+  const { uploadImage } = useUploadImage({ setFiles })
 
   /**
    * 画像マウント時の操作
