@@ -409,3 +409,8 @@ body {
     radial-gradient(var(--r) at right,var(--_l)) var(--_g);
   background: #774F38;
 }
+
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+}
