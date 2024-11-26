@@ -26,7 +26,7 @@ export function GalleryItem({ imageUrl }: Props) {
   return (
     <div {...draggableItemProps} >
 
-      <Link href={`/admin/gallery/preview/${imageUrl.id}`} scroll={false} draggable={false}>
+      <Link href={`/admin/gallery/preview/${imageUrl.id}`} scroll={false} draggable={false} prefetch={false}>
         <GalleryImageItem url={imageUrl.url} />
       </Link>
 
