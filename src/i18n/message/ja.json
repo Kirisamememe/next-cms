@@ -244,8 +244,10 @@
       "title": "新規画像URLを追加",
       "description": "BLOBストレージから新しい画像を追加します。",
       "edit": {
-        "title": "画像URL情報編集",
-        "description": "すでに使われている画像情報の編集は、既存のコンテンツに影響を与える恐れがあるので、慎重に編集してください。"
+        "title": "画像ID：{id}",
+        "createdAt": "作成日時：{datetime}",
+        "updatedAt": "更新日時：{datetime}",
+        "author": "作成者：{author}"
       },
       "form": {
         "singleUrl": "単体画像",

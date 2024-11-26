@@ -244,8 +244,10 @@
       "title": "Add a New Image URL",
       "description": "Add a new image from your blob storage.",
       "edit": {
-        "title": "Edit Image URL Information",
-        "description": "Please edit carefully as modifying existing image information may affect existing content."
+        "title": "Image ID: {id}",
+        "createdAt": "Created At {datetime}",
+        "updatedAt": "Updated At {datetime}",
+        "author": "Created by {author}"
       },
       "form": {
         "singleUrl": "Single",

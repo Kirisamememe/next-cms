@@ -244,8 +244,10 @@
       "title": "新增圖片URL",
       "description": "從Blob儲存體新增圖片。",
       "edit": {
-        "title": "編輯圖片URL資訊",
-        "description": "由於編輯已使用的圖片資訊可能會影響現有內容，請謹慎操作。"
+        "title": "圖片ID：{id}",
+        "createdAt": "建立於：{datetime}",
+        "updatedAt": "更新於：{datetime}",
+        "author": "建立者：{author}"
       },
       "form": {
         "singleUrl": "單圖模式",

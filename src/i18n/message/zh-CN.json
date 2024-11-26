@@ -244,8 +244,10 @@
       "title": "添加新图片URL",
       "description": "从Blob存储添加新图片。",
       "edit": {
-        "title": "编辑图片URL信息",
-        "description": "由于编辑已使用的图片信息可能会影响现有内容，请谨慎操作。"
+        "title": "图片ID：{id}",
+        "createdAt": "创建于：{datetime}",
+        "updatedAt": "更新于：{datetime}",
+        "author": "创建者：{author}"
       },
       "form": {
         "singleUrl": "单图模式",
