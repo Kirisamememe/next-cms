@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 import typography from '@tailwindcss/typography'
-import plugin from 'tailwindcss/plugin'
+// import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
 	darkMode: ["class"],
@@ -97,12 +97,12 @@ const config: Config = {
 		require("tailwindcss-animate"),
 		require('@tailwindcss/container-queries'),
 		typography,
-		plugin(function ({ addVariant }) {
-			addVariant('hover', ['@media(hover:hover){ &:hover }'])
-			addVariant('active', '&:active');
-			addVariant('group-hover', '@media(hover:hover){ .group:hover & }')
-			addVariant('HOVER', '&:hover');
-		}),
+		// plugin(function ({ addVariant }) {
+		// 	addVariant('hover', ['@media(hover:hover){ &:hover }'])
+		// 	addVariant('active', '&:active');
+		// 	addVariant('group-hover', '@media(hover:hover){ .group:hover & }')
+		// 	addVariant('HOVER', '&:hover');
+		// }),
 	],
 };
 export default config;
