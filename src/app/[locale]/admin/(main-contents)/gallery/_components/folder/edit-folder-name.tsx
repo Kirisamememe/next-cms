@@ -13,7 +13,7 @@ type Props = {
 }
 
 export function EditFolderName({ path, name }: Props) {
-  const params = useParams<{ folders: string[] | undefined }>()
+  const { folders } = useParams<{ folders?: string[] }>()
 
   const [isEditing, setIsEditing] = useState(false)
 
@@ -24,8 +24,10 @@ export function EditFolderName({ path, name }: Props) {
       //バリデーション
       return
     }
-    const parentPath = params.folders?.length ? decodeURIComponent(params.folders.join('/')) : '.'
-    await editFolderName(path, folderName, parentPath).then(() => {
+    const folderArr = (folders && folders.length) ? ['.', ...folders] : ['.']
+    const currentPath = decodeURIComponent(folderArr.join('/'))
+
+    await editFolderName(path, folderName, currentPath).then(() => {
       setIsEditing(false)
     })
   }, undefined)

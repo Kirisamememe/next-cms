@@ -78,7 +78,7 @@ export function EditSingleImage({ imageUrl }: Props) {
       <PopoverTrigger asChild>
         <Button variant={"secondary"} size={"icon"}
           className={cn(
-            "group-hover:opacity-100 group-hover:pointer-events-auto opacity-0 pointer-events-none absolute top-2 right-2 rounded-full bg-background/70 size-8 hover:bg-foreground hover:text-background hover:shadow-xl",
+            "group-hover:opacity-100 group-active:opacity-0 group-hover:pointer-events-auto opacity-0 pointer-events-none absolute top-2 right-2 rounded-full bg-background/70 size-8 hover:bg-foreground hover:text-background hover:shadow-xl",
             open && "opacity-100 "
           )}>
           {open ? <X size={16} /> : <PenLine size={16} />}

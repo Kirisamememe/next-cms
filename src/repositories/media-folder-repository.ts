@@ -105,7 +105,7 @@ class MediaFolderRepository {
       },
       data: {
         path: `${parentPath}/${name}`,
-        parent: { connect: { path: parentPath } }
+        parent: { connect: { path: parentPath } },
       }
     })
   }

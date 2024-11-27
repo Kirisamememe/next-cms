@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from "react"
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useMemo, useState } from "react"
 
 export type ImageFile = {
   url: string
@@ -46,19 +46,21 @@ export function NewImageProvider({ children, imageUrls }: Props) {
     }
   }, [])
 
+  const contextValue = useMemo(() => ({
+    selectedUrl,
+    setSelectedUrl,
+    selectedUrls,
+    setSelectedUrls,
+    isSingleMode,
+    setIsSingleMode,
+    files,
+    setFiles,
+    imageUrls
+  }), [selectedUrl, selectedUrls, isSingleMode, files, imageUrls])
+
   return (
     <NewImageContext.Provider
-      value={{
-        selectedUrl,
-        setSelectedUrl,
-        selectedUrls,
-        setSelectedUrls,
-        isSingleMode,
-        setIsSingleMode,
-        files,
-        setFiles,
-        imageUrls
-      }}>
+      value={contextValue}>
       {children}
     </NewImageContext.Provider>
   )

@@ -9,6 +9,7 @@ import { FlexColumn } from "@/components/ui/flexbox"
 import { EditSingleImage } from "./edit-single-image"
 import { Badge } from "@/components/ui/badge"
 import { GalleryImageItem } from "./image-item"
+import { cn } from "@/lib/utils"
 
 
 type Props = {
@@ -16,36 +17,44 @@ type Props = {
 }
 
 export function GalleryItem({ imageUrl }: Props) {
+  // console.log(`Rerendered: ${imageUrl.id}`)
 
   const onDrop = useCallback(async (targetPath: string) => {
     return await updateImageUrlFolder(imageUrl.id, targetPath)
   }, [imageUrl.id])
 
-  const { isDragging, draggableItemProps } = useDraggableItem({ dropData: { data: imageUrl.id.toString(), type: 'image' }, onDrop })
+  const { draggableHandlers, draggableClassNames } = useDraggableItem({
+    dropData: {
+      data: imageUrl.id.toString(),
+      type: 'image'
+    },
+    onDrop
+  })
 
   return (
-    <div {...draggableItemProps} >
+    <div {...draggableHandlers}
+      className={cn(
+        "group relative overflow-hidden aspect-square",
+        draggableClassNames
+      )}>
 
       <Link href={`/admin/gallery/preview/${imageUrl.id}`} scroll={false} draggable={false} prefetch={false}>
         <GalleryImageItem url={imageUrl.url} />
       </Link>
 
-      {!isDragging && (
-        <>
-          <EditSingleImage imageUrl={imageUrl} />
-          <FlexColumn
-            px={4} py={2}
-            className="absolute bottom-0 left-0 group-hover:flex hidden bg-gradient-to-t from-black/80 to-black/0 w-full h-16 text-sm font-semibold justify-end">
-            <Badge className="-ml-0.5 w-fit h-fit rounded-sm px-1 py-0 group-hover:flex hidden bg-black/50" variant={'secondary'}>
-              {imageUrl.id}
-            </Badge>
-            <span className="truncate h-fit">
-              {imageUrl.name}
-            </span>
-          </FlexColumn>
-        </>
-      )}
-
+      <>
+        <EditSingleImage imageUrl={imageUrl} />
+        <FlexColumn
+          px={4} py={2}
+          className="absolute bottom-0 left-0 group-hover:flex hidden group-active:hidden bg-gradient-to-t from-black/80 to-black/0 w-full h-16 text-sm font-semibold justify-end">
+          <Badge className="-ml-0.5 w-fit h-fit rounded-sm px-1 py-0 group-hover:flex hidden bg-black/50" variant={'secondary'}>
+            {imageUrl.id}
+          </Badge>
+          <span className="truncate h-fit">
+            {imageUrl.name}
+          </span>
+        </FlexColumn>
+      </>
     </div>
   )
 }

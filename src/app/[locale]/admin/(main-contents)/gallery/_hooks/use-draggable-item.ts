@@ -14,15 +14,12 @@ function isItself(state: DroppedData, current: DropData) {
 }
 
 export function useDraggableItem({ dropData, onDrop }: Props) {
-  const [isDragging, setIsDragging] = useState(false)
-  const [isDragOver, setIsDragOver] = useState(false)
   const [isDropped, setIsDropped] = useState(false)
 
   const {
     droppedData,
     setDroppedData,
     dragImageRef,
-    setItemsDragging
   } = useGalleryContext()
 
   const dragOffset = useRef({ x: 0, y: 0 })
@@ -106,9 +103,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
     element.style.transformOrigin = `${X}% ${Y}%`
     element.style.scale = `${SCALE}`
 
-    setIsDragging(true)
-    setItemsDragging(true)
-  }, [dragImageRef, dropData, setItemsDragging])
+  }, [dragImageRef, dropData])
 
 
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -146,8 +141,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
      * データを受け取れないエリアに落とした
      */
     if (!currentData) {
-      setIsDragging(false)
-      setItemsDragging(false)
+      // setIsDragging(false)
       element.style.scale = '1'
       element.style.translate = ''
 
@@ -169,8 +163,6 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
     element.style.opacity = '0'
     element.style.scale = '0.1'
     element.style.zIndex = ''
-    setIsDragging(false)
-    setItemsDragging(false)
     setIsDropped(true)
 
 
@@ -201,66 +193,24 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
       })
 
     return
-  }, [dropData, droppedData, onDrop, setDroppedData, setItemsDragging])
+  }, [dropData, droppedData, onDrop, setDroppedData])
 
+  const draggableClassNames = useMemo(() => (cn(
+    "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
+    "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:z-50 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
+    isDropped && "hidden"
+  )), [isDropped])
 
-  const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setIsDragOver(true)
-  }, [])
-
-
-  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setIsDragOver(false)
-  }, [])
-
-
-  /**
-   * 要素が落とされた際、受け取る側が、落とされたデータをステート管理に登録する
-   */
-  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setIsDragOver(false)
-
-    const data: DropData = JSON.parse(e.dataTransfer.getData('text/plain'))
-    setDroppedData((prev) => [...prev, {
-      targetPath: dropData.data,
-      transferredData: data
-    }])
-
-  }, [dropData, setDroppedData])
-
-  const draggableItemProps = useMemo(() => ({
-    className: cn(
-      "group relative overflow-hidden aspect-square",
-      isDragging
-        ? "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms]"
-        : "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-      isDropped && "hidden"
-    ),
+  const draggableHandlers = useMemo(() => ({
     draggable: true,
     onDragStart: handleDragStart,
     onDrag: handleDrag,
     onDragEnd: handleDragEnd,
-  }), [handleDrag, handleDragEnd, handleDragStart, isDragging, isDropped])
-
-  const dropAreaProps = useMemo(() => ({
-    className: cn(
-      "relative absolute inset-0 w-full h-full",
-      !isDragging && isDragOver && "[transition:none] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
-    ),
-    draggable: false,
-    onDragEnter: handleDragEnter,
-    onDragLeave: handleDragLeave,
-    onDrop: handleDrop
-  }), [handleDragEnter, handleDragLeave, handleDrop, isDragOver, isDragging])
+  }), [handleDrag, handleDragEnd, handleDragStart])
 
   return {
-    isDragging,
-    isDragOver,
     isDropped,
-    draggableItemProps,
-    dropAreaProps
+    draggableClassNames,
+    draggableHandlers,
   }
 }

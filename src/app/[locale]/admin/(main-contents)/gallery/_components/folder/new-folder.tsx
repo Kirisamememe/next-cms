@@ -8,8 +8,9 @@ import { useGalleryContext } from "../gallery-provider"
 
 
 export function NewFolder() {
-  const params = useParams<{ folders: string[] | undefined }>()
   const { creatingNewFolder, setCreatingNewFolder } = useGalleryContext()
+  const { folders } = useParams<{ folders?: string[] }>()
+
 
   const [_, action, pending] = useActionState(async (_: any, payload: FormData) => {
     const folderName = payload.get('name')?.toString()
@@ -18,8 +19,11 @@ export function NewFolder() {
       //バリデーション
       return
     }
-    const parentPath = params.folders?.length ? decodeURIComponent(params.folders.join('/')) : '.'
-    await createFolder(folderName, parentPath).then(() => {
+
+    const folderArr = (folders && folders.length) ? ['.', ...folders] : ['.']
+    const currentPath = decodeURIComponent(folderArr.join('/'))
+
+    await createFolder(folderName, currentPath).then(() => {
       setCreatingNewFolder(false)
     })
   }, undefined)

@@ -10,14 +10,21 @@ import { GridSlider } from "./grid-size-slider";
 import { useGalleryContext } from "./gallery-provider";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
+import Cookies from "js-cookie";
 
-const GallerySettingBtn = React.forwardRef<
+export const GRID_COOKIE_NAME = 'GRID_SIZE'
+const GRID_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
+
+const GalleryGridSettingBtn = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & React.ComponentPropsWithoutRef<typeof Button>
 >(({ className, ...props }, ref) => {
+  const t = useTranslations()
   const { gridSize, setGridSize } = useGalleryContext()
 
   const onValueCommit = (value: number[]) => {
+    Cookies.set(GRID_COOKIE_NAME, value[0].toString(), { expires: GRID_COOKIE_MAX_AGE })
     setGridSize(value[0])
   }
 
@@ -30,7 +37,7 @@ const GallerySettingBtn = React.forwardRef<
       </PopoverTrigger>
       <PopoverContent align="end" className="w-80 h-24">
         <Heading weight={600}>
-          グリッドサイズ
+          {t('gallery.setting.gridSize')}
         </Heading>
         <FlexColumn>
           <GridSlider onValueCommit={onValueCommit} height={1.5} size={4} className="h-10" defaultValue={[gridSize]} min={1} max={4} step={1} />
@@ -45,6 +52,6 @@ const GallerySettingBtn = React.forwardRef<
     </Popover>
   )
 })
-GallerySettingBtn.displayName = 'GallerySettingBtn'
+GalleryGridSettingBtn.displayName = 'GallerySettingBtn'
 
-export { GallerySettingBtn }
+export { GalleryGridSettingBtn }
