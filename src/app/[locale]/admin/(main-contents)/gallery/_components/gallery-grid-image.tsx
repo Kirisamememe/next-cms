@@ -38,7 +38,7 @@ export function GalleryItem({ imageUrl }: Props) {
       )}>
 
       <Link href={`/admin/gallery/preview/${imageUrl.id}`} scroll={false} draggable={false} prefetch={false}>
-        <GalleryImageItem url={imageUrl.url} />
+        <GalleryImageItem url={imageUrl.url.replace('/upload/', '/upload/ar_1.0,c_lfill,h_768/')} />
       </Link>
 
       <>

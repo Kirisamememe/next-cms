@@ -44,7 +44,7 @@ export function ImageItem({ url }: Props) {
           'outline-pulse'
         )}>
         <Image
-          src={url} quality={40} placeholder='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+          src={url.replace('/upload/', '/upload/ar_1.0,c_lfill,h_256/')} quality={80} placeholder='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
           width={100} height={100} alt="image" loading='lazy'
           className="object-cover object-center w-full h-full transition-transform duration-300 pointer-events-none" />
       </AspectRatio>
