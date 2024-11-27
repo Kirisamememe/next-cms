@@ -20,7 +20,6 @@ type Props = {
 }
 
 export function FolderItem({ href, name, path }: Props) {
-  // console.log(`Rerendered: ${path}`)
 
   const { gridSize } = useGalleryContext()
 

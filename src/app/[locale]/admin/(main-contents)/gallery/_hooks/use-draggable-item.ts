@@ -1,4 +1,4 @@
-import { animateElement, cn } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { DropData } from "@/types/drop-data"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { DroppedData, useGalleryContext } from "../_components/gallery-provider"
@@ -15,6 +15,7 @@ function isItself(state: DroppedData, current: DropData) {
 
 export function useDraggableItem({ dropData, onDrop }: Props) {
   const [isDropped, setIsDropped] = useState(false)
+  // const [isDragging, setIsDragging] = useState(false)
 
   const {
     droppedData,
@@ -68,7 +69,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
 
   const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-
+    // setIsDragging(true)
     e.dataTransfer.setData('text/plain', JSON.stringify(dropData))
 
     if (dragImageRef.current) {
@@ -120,7 +121,9 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
     element.style.translate = `${deltaX}px ${deltaY}px`
 
-    handleAutoScroll(e)
+    requestAnimationFrame(() => {
+      handleAutoScroll(e)
+    })
   }, [handleAutoScroll])
 
 
@@ -128,7 +131,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
    * 要素を落とした際、落とす側がステートを走査し、
    * 自分がトリガー可能な場所に落としたかどうかを確認する
    */
-  const handleDragEnd = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnd = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     // スクロールを停止
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current)
@@ -154,17 +157,18 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
     /**
      * データを受け取れるエリアに落とした
     */
-    await animateElement(element, [
+    const animation = element.animate([
       { scale: '0.5', transformOrigin: element.style.transformOrigin },
-      { scale: '0.1', opacity: '0', transformOrigin: `${mousePosition.current.x}% ${mousePosition.current.y}%` },
+      { scale: '0', opacity: '0', transformOrigin: `${mousePosition.current.x}% ${mousePosition.current.y}%` },
     ], {
       duration: 300,
       easing: 'ease-in-out',
+      fill: 'forwards'
     })
-    setIsDropped(true)
-    element.style.opacity = '0'
-    element.style.scale = '0.1'
-    element.style.zIndex = ''
+
+    animation.onfinish = () => {
+      setIsDropped(true)
+    }
 
     if (!onDrop) return
     onDrop(currentData.targetPath)
@@ -177,16 +181,21 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
         element.style.translate = ''
         element.style.transformOrigin = `50% 50%`
         setIsDropped(false)
-        animateElement(element, [
+        const animationReverse = element.animate([
           { scale: '0', opacity: '0' },
           { scale: '1', opacity: '1' }
         ], {
           duration: 200,
           easing: 'ease-in-out',
-        }).then(() => {
-          element.style.scale = '1'
-          element.style.opacity = '1'
+          fill: 'forwards'
         })
+        animationReverse.onfinish = () => {
+          element.style.opacity = '1'
+          element.style.scale = '1'
+          element.style.zIndex = ''
+          animation.cancel()
+          animationReverse.cancel()
+        }
       })
       .finally(() => {
         setDroppedData((prev) => prev.filter((data) => !isItself(data, dropData)))
@@ -197,7 +206,8 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
   const draggableClassNames = useMemo(() => (cn(
     "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-    "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:z-50 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
+    "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
+    // isDragging && "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
     isDropped && "hidden"
   )), [isDropped])
 

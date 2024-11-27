@@ -17,7 +17,6 @@ type Props = {
 }
 
 export function GalleryItem({ imageUrl }: Props) {
-  // console.log(`Rerendered: ${imageUrl.id}`)
 
   const onDrop = useCallback(async (targetPath: string) => {
     return await updateImageUrlFolder(imageUrl.id, targetPath)
@@ -55,6 +54,7 @@ export function GalleryItem({ imageUrl }: Props) {
           </span>
         </FlexColumn>
       </>
+
     </div>
   )
 }
