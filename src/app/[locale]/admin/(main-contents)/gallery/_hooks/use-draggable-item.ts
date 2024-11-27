@@ -15,7 +15,7 @@ function isItself(state: DroppedData, current: DropData) {
 
 export function useDraggableItem({ dropData, onDrop }: Props) {
   const [isDropped, setIsDropped] = useState(false)
-  // const [isDragging, setIsDragging] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
 
   const {
     droppedData,
@@ -69,7 +69,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
 
   const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    // setIsDragging(true)
+    setIsDragging(true)
     e.dataTransfer.setData('text/plain', JSON.stringify(dropData))
 
     if (dragImageRef.current) {
@@ -145,7 +145,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
      * データを受け取れないエリアに落とした
      */
     if (!currentData) {
-      // setIsDragging(false)
+      setIsDragging(false)
       element.style.scale = '1'
       element.style.translate = ''
 
@@ -168,6 +168,7 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
     animation.onfinish = () => {
       setIsDropped(true)
+      setIsDragging(false)
     }
 
     if (!onDrop) return
@@ -206,10 +207,10 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
   const draggableClassNames = useMemo(() => (cn(
     "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-    "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
-    // isDragging && "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
+    // "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
+    isDragging && "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms_50ms,border-radius_200ms]",
     isDropped && "hidden"
-  )), [isDropped])
+  )), [isDragging, isDropped])
 
   const draggableHandlers = useMemo(() => ({
     draggable: true,
