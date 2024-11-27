@@ -207,7 +207,6 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
   const draggableClassNames = useMemo(() => (cn(
     "[transition:translate_200ms,scale_200ms,opacity_200ms,outline_200ms]",
-    // "active:rounded-lg active:shadow-lg active:opacity-80 active:outline active:outline-8 active:-outline-offset-2 active:outline-white active:[transition:scale_200ms,opacity_200ms,outline_200ms_100ms,border-radius_200ms_100ms]",
     isDragging && "rounded-lg shadow-lg opacity-80 outline outline-8 -outline-offset-2 outline-white [transition:scale_200ms,opacity_200ms,outline_200ms_50ms,border-radius_200ms]",
     isDropped && "hidden"
   )), [isDragging, isDropped])
