@@ -239,6 +239,9 @@
         "nameValidation": "フォルダ名は32文字以内で入力してください"
       }
     },
+    "setting": {
+      "gridSize": "グリッドサイズ"
+    },
     "imageUrl": {
       "btn": "画像URLを追加",
       "title": "新規画像URLを追加",

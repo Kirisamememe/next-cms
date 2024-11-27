@@ -239,6 +239,9 @@
         "nameValidation": "文件夹名称不能超过32个字符"
       }
     },
+    "setting": {
+      "gridSize": "网格大小"
+    },
     "imageUrl": {
       "btn": "添加图片URL",
       "title": "添加新图片URL",

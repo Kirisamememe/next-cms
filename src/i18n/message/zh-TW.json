@@ -239,6 +239,9 @@
         "nameValidation": "資料夾名稱不能超過32個字元"
       }
     },
+    "setting": {
+      "gridSize": "網格大小"
+    },
     "imageUrl": {
       "btn": "新增圖片URL",
       "title": "新增圖片URL",

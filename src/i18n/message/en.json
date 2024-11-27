@@ -239,6 +239,9 @@
         "nameValidation": "Folder name must be less than 32 characters"
       }
     },
+    "setting": {
+      "gridSize": "Grid Size"
+    },
     "imageUrl": {
       "btn": "New Image URL",
       "title": "Add a New Image URL",
