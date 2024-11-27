@@ -161,11 +161,10 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
       duration: 300,
       easing: 'ease-in-out',
     })
+    setIsDropped(true)
     element.style.opacity = '0'
     element.style.scale = '0.1'
     element.style.zIndex = ''
-    setIsDropped(true)
-
 
     if (!onDrop) return
     onDrop(currentData.targetPath)
