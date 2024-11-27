@@ -21,11 +21,12 @@ export async function GalleryGrid({ currentPath = '.' }: Props) {
 
   return (
     <GalleryGridWrapper>
-      <NewFolder />
 
       {decodedPath !== '.' && (
         <ParentFolderItem href={`/admin/gallery${parentPath === '.' ? '' : `/${parentPath}`}`} name={'../'} path={parentPath || ''} />
       )}
+
+      <NewFolder />
 
       {folders.map((folder) => (
         <FolderItem key={folder.path} href={`/admin/gallery/${folder.path}`} name={folder.name} path={folder.path} />
