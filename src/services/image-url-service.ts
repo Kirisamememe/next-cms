@@ -41,7 +41,7 @@ class ImageUrlService {
   ): Promise<{ data?: ImageUrl, error?: { message: string } }> {
     return prisma.$transaction(async (trx) => {
       const url = await imageUrlRepository.findUniqueByUrl(values.url, trx)
-      if (url) {
+      if (url && url.id !== imageId) {
         return {
           error: {
             message: "URL already exists."

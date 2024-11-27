@@ -68,8 +68,6 @@ export function useDraggableItem({ dropData, onDrop }: Props) {
 
 
   const handleDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    const isTouch = window.matchMedia('(hover: none)').matches
-    if (isTouch) return
 
     e.dataTransfer.setData('text/plain', JSON.stringify(dropData))
 
