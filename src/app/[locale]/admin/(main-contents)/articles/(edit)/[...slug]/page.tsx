@@ -3,7 +3,7 @@ import { idSchema } from "@/types";
 import { NewArticle } from "../../_components/new-article";
 import { EditArticle } from "../../_components/edit-article";
 import { articleService } from "@/di/services";
-// import { getArticleService } from "@/di/hook";
+
 
 
 type Props = {

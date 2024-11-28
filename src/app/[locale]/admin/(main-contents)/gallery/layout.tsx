@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 import { GalleryProvider } from "./_components/gallery-provider"
 import { DefaultUploader } from "./_components/default-uploader"
 import { cookies } from "next/headers"
-// import { getMediaFolderService } from "@/di/hook"
+
 import { mediaFolderService } from "@/di/services"
 
 type Props = {

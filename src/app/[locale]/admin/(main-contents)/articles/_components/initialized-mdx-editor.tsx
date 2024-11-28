@@ -1,6 +1,6 @@
 'use client'
 
-// import '@mdxeditor/editor/style.css';
+
 import type { ForwardedRef } from 'react'
 import React from "react";
 import {
@@ -81,52 +81,54 @@ const allPlugins = (diffMarkdown: string) => [
   imagePlugin({ imageUploadHandler: async () => '/sample-image.png' }),
   tablePlugin(),
   thematicBreakPlugin(),
-  codeBlockPlugin({ defaultCodeBlockLanguage: 'txt',}),
+  codeBlockPlugin({ defaultCodeBlockLanguage: 'txt', }),
   sandpackPlugin({ sandpackConfig: reactSandpackConfig }),
-  codeMirrorPlugin({ codeBlockLanguages: { 
-    '': '',
-    txt: 'text',
-    terminal: 'Terminal',
-    js: 'JavaScript',
-    ts: 'TypeScript',
-    jsx: 'JSX',
-    tsx: 'TSX',
-    html: 'HTML',
-    css: 'CSS',
-    scss: 'SCSS',
-    python: 'Python',
-    java: 'Java',
-    kotlin: 'Kotlin',
-    swift: 'Swift',
-    c: 'C',
-    cpp: 'C++',
-    csharp: 'C#',
-    go: 'Go',
-    rust: 'Rust',
-    php: 'PHP',
-    ruby: 'Ruby',
-    scala: 'Scala',
-    haskell: 'Haskell',
-    perl: 'Perl',
-    sql: 'SQL',
-    shell: 'Shell',
-    powershell: 'PowerShell',
-    dart: 'Dart',
-    groovy: 'Groovy',
-    julia: 'Julia',
-    lisp: 'Lisp',
-    matlab: 'MATLAB',
-    objectivec: 'Objective-C',
-    pascal: 'Pascal',
-    vb: 'Visual Basic',
-    xml: 'XML',
-    yaml: 'YAML',
-    json: 'JSON',
-    markdown: 'Markdown',
-    latex: 'LaTeX',
-    graphql: 'GraphQL',
-    cobol: 'COBOL',
-  }}),
+  codeMirrorPlugin({
+    codeBlockLanguages: {
+      '': '',
+      txt: 'text',
+      terminal: 'Terminal',
+      js: 'JavaScript',
+      ts: 'TypeScript',
+      jsx: 'JSX',
+      tsx: 'TSX',
+      html: 'HTML',
+      css: 'CSS',
+      scss: 'SCSS',
+      python: 'Python',
+      java: 'Java',
+      kotlin: 'Kotlin',
+      swift: 'Swift',
+      c: 'C',
+      cpp: 'C++',
+      csharp: 'C#',
+      go: 'Go',
+      rust: 'Rust',
+      php: 'PHP',
+      ruby: 'Ruby',
+      scala: 'Scala',
+      haskell: 'Haskell',
+      perl: 'Perl',
+      sql: 'SQL',
+      shell: 'Shell',
+      powershell: 'PowerShell',
+      dart: 'Dart',
+      groovy: 'Groovy',
+      julia: 'Julia',
+      lisp: 'Lisp',
+      matlab: 'MATLAB',
+      objectivec: 'Objective-C',
+      pascal: 'Pascal',
+      vb: 'Visual Basic',
+      xml: 'XML',
+      yaml: 'YAML',
+      json: 'JSON',
+      markdown: 'Markdown',
+      latex: 'LaTeX',
+      graphql: 'GraphQL',
+      cobol: 'COBOL',
+    }
+  }),
   diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown }),
   directivesPlugin({ directiveDescriptors: [AdmonitionDirectiveDescriptor] }),
   markdownShortcutPlugin(),
@@ -152,7 +154,7 @@ export default function InitializedMDXEditor({
       contentEditableClassName="prose dark:prose-invert max-w-full font-sans prose-li:aria-[checked=false]:pl-6"
       plugins={allPlugins(markdown)}
       toMarkdownOptions={{
-        
+
       }}
     />
   )
@@ -202,7 +204,7 @@ function ToolBar() {
         />
       </DiffSourceToggleWrapper>
     </div>
-    
+
   )
 }
 

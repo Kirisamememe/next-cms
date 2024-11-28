@@ -4,7 +4,7 @@ import { FolderItem } from "./gallery-grid-folder"
 import { GalleryGridWrapper } from "./gallery-grid-wrapper"
 import { ImageUploading } from "./gallery-grid-uploading-images"
 import { ParentFolderItem } from "./gallery-grid-parent-folder"
-// import { getImageUrlService, getMediaFolderService } from "@/di/hook"
+
 import { imageUrlService, mediaFolderService } from "@/di/services"
 
 type Props = {

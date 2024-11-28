@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { articleService } from "@/di/services";
 import { accessTokenService } from "@/services/access-token-service";
 import { apiService } from "@/services/api-service";
-// import { Container } from "inversify";
-// import { getArticleService } from "@/di/hook";
-// import { TYPES } from "@/di/types";
-// import { IArticleService } from "@/services";
+
+
+
+
 
 export const dynamic = 'force-dynamic'
 
