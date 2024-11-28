@@ -252,6 +252,10 @@
         "updatedAt": "更新于：{datetime}",
         "author": "创建者：{author}"
       },
+      "delete": {
+        "title": "删除图片链接",
+        "description": "确定要删除这个图片链接吗？"
+      },
       "form": {
         "singleUrl": "单图模式",
         "multipleUrls": "多图模式",

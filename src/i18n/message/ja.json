@@ -252,6 +252,10 @@
         "updatedAt": "更新日時：{datetime}",
         "author": "作成者：{author}"
       },
+      "delete": {
+        "title": "画像URLを削除",
+        "description": "この画像URLを削除してもよろしいですか？"
+      },
       "form": {
         "singleUrl": "単体画像",
         "multipleUrls": "複数画像",

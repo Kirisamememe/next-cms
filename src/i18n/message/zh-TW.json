@@ -252,6 +252,10 @@
         "updatedAt": "更新於：{datetime}",
         "author": "建立者：{author}"
       },
+      "delete": {
+        "title": "刪除圖片連結？",
+        "description": "確定要刪除這個圖片連結嗎？"
+      },
       "form": {
         "singleUrl": "單圖模式",
         "multipleUrls": "多圖模式",
