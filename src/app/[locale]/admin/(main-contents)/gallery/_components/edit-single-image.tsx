@@ -20,6 +20,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Heading, LabelText } from "@/components/ui/typography"
 import { format } from "date-fns"
 import { getLocaleForFns } from "@/i18n/get-locale"
+import { DeleteImageBtn } from "./delete-image"
 
 
 type Props = {
@@ -114,9 +115,10 @@ export function EditSingleImage({ imageUrl }: Props) {
               </Alert>
             )}
 
-            <FlexRow gap={3} className="ml-auto mt-2">
+            <FlexRow gap={3} className="mt-2">
+              <DeleteImageBtn imageId={imageUrl.id} />
               <PopoverClose asChild>
-                <Button type="button" ref={closeBtnRef} variant={'outline'}>
+                <Button type="button" ref={closeBtnRef} variant={'outline'} className="ml-auto">
                   {t('common.close')}
                 </Button>
               </PopoverClose>

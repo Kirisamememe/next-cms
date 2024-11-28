@@ -34,7 +34,7 @@ export function DeleteImageBtn({ imageId }: Props) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant={"secondary"} size={"icon"}
-          className="rounded-full bg-background/50 hover:bg-destructive hover:text-destructive-foreground">
+          className="bg-background/50 hover:bg-destructive hover:text-destructive-foreground">
           {pending ?
             <div className="circle-spin-2" /> :
             <Trash2 size={20} />}
@@ -43,10 +43,10 @@ export function DeleteImageBtn({ imageId }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {t('restfulApi.token.deleteAlert.title')}
+            {t('gallery.imageUrl.delete.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('restfulApi.token.deleteAlert.description')}
+            {t('gallery.imageUrl.delete.description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
