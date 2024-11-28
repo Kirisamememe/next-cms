@@ -1,9 +1,9 @@
-import { Editor } from "@/types/editor-schema";
+import { EditorConcise } from "@/types";
 import { EditorCard } from "./editor-card";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n";
 
 type Props = {
-  editor: Editor
+  editor: EditorConcise
 }
 
 export function EditorCardWithLink({ editor }: Props) {

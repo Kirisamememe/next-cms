@@ -1,10 +1,10 @@
 'use client'
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n";
 
 type Props = {
   url: string

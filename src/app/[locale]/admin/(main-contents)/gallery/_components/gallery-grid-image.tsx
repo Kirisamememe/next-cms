@@ -1,7 +1,7 @@
 'use client'
 
-import { Link } from "@/i18n/routing"
-import { ImageUrl } from "@/types/image"
+import { Link } from "@/i18n"
+import { ImageUrl } from "@/types"
 import { useDraggableItem } from "../_hooks/use-draggable-item"
 import { useCallback } from "react"
 import { updateImageUrlFolder } from "../_actions/update"
@@ -9,7 +9,7 @@ import { FlexColumn } from "@/components/ui/flexbox"
 import { EditSingleImage } from "./edit-single-image"
 import { Badge } from "@/components/ui/badge"
 import { GalleryImageItem } from "./image-item"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib"
 
 
 type Props = {

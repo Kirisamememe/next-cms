@@ -1,6 +1,6 @@
 import { AuthenticateEditorList } from "./_components/authenticate-editors";
 import { UnauthenticatedEditorList } from "./_components/unauthenticated-editors";
-import { getSession } from "@/lib/getSession";
+import { getSession } from "@/lib-server-only";
 
 export default async function EditorsPageLayout({
   children,

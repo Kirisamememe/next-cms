@@ -1,7 +1,7 @@
 'use client'
 
 import { useToast } from "@/hooks/use-toast"
-import { articleSubmitFormSchema } from "@/types/article-schema"
+import { articleSubmitFormSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
 import React from "react"

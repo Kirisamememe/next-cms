@@ -1,13 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { CalendarIcon, CalendarCheck } from "lucide-react"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { PublicationDatetimeForm } from "./publication-datetime-form"
 import { useForm } from "react-hook-form"
-import { articlePublicationForm } from "@/types/article-schema"
+import { articlePublicationForm } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useState, useTransition } from "react"

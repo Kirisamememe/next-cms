@@ -1,11 +1,11 @@
 import { Flexbox } from "@/components/ui/flexbox"
-import { prisma } from "@/lib/prisma"
-import { editProfileFormSchema, Editor } from "@/types/editor-schema"
+import { editProfileFormSchema, EditorConcise } from "@/types"
 import { redirect } from "next/navigation"
 import { EditProfileForm } from "./edit-profile-form"
+import { userService } from "@/di/services"
 
 type Props = {
-  editor: Editor,
+  editor: EditorConcise,
 }
 
 export async function EditProfile({ editor }: Props) {
@@ -22,14 +22,9 @@ export async function EditProfile({ editor }: Props) {
       redirect(`/admin/editors/${editor.id}?formError=${errorMsg}`,)
     }
 
-    const res = await prisma.user.update({
-      where: {
-        id: editor.id
-      },
-      data: {
-        nickname: parse.data.nickname,
-        image: parse.data.image
-      }
+    const res = await userService.update(editor.email, {
+      nickname: parse.data.nickname,
+      image: parse.data.image
     })
 
     if (!res.id) {

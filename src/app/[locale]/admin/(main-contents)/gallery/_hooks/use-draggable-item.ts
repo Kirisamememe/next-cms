@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import { DropData } from "@/types/drop-data"
+import { cn } from "@/lib"
+import { DropData } from "@/types"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { DroppedData, useGalleryContext } from "../_components/gallery-provider"
 import { toast } from "@/hooks/use-toast"

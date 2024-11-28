@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import { idSchema } from "@/types/id-schema";
+import { idSchema } from "@/types";
 import { NewArticle } from "../../_components/new-article";
 import { EditArticle } from "../../_components/edit-article";
-import { articleService } from "@/services/article-service";
+import { articleService } from "@/di/services";
+// import { getArticleService } from "@/di/hook";
 
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
 }
 
 export default async function EditArticlePage({ params }: Props) {
+  // const articleService = getArticleService()
+
   const { slug } = await params
   if (slug[0] !== 'edit' || slug.length > 2) {
     notFound()
@@ -30,9 +33,8 @@ export default async function EditArticlePage({ params }: Props) {
 
   const id = parseId.data
   const { data, noData } = await articleService.getById(id)
-  if (noData) {
-    notFound()
-  }
+
+  if (noData || !data) notFound()
 
   return (
     <EditArticle article={data} />

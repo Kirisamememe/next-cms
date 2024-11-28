@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { X, CircleAlert, RefreshCcw } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction, useCallback } from "react"
-import { byteToMB, checkOversize, cn } from "@/lib/utils"
+import { byteToMB, checkOversize, cn } from "@/lib"
 import Image from "next/image"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import {

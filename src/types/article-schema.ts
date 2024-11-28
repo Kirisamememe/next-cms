@@ -37,6 +37,18 @@ export type ArticleAtom = {
 }
 
 
+export type ArticleForClient = Article & {
+  atom: ArticleAtom
+  author: EditorConcise
+  lastEdited: EditorConcise
+}
+
+export type ArticleWithAtoms = Article & {
+  atoms: ArticleAtom[]
+  author: EditorConcise
+  lastEdited: EditorConcise
+}
+
 export type Article = {
   id: number
   slug: string
@@ -49,10 +61,8 @@ export type Article = {
   publishedAt: Date | null
   archivedAt: Date | null
 
-  author: EditorConcise
-  lastEdited: EditorConcise
-
-  atom: ArticleAtom
+  author?: EditorConcise
+  lastEdited?: EditorConcise
 }
 
 

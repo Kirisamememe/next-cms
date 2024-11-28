@@ -4,8 +4,8 @@ import * as React from "react"
 import { usePathname } from "next/navigation"
 import { FlexRow } from "@/components/ui/flexbox"
 import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
+import { Link } from "@/i18n"
+import { cn } from "@/lib"
 
 type RootProps = {
   children: React.ReactNode

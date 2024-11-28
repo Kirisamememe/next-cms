@@ -1,10 +1,9 @@
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Separator } from "@/components/ui/separator"
 import { Heading, Paragraph } from "@/components/ui/typography"
-import { getLocaleForFns } from "@/i18n/get-locale"
-import { Link } from "@/i18n/routing"
-import { cn, extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib/utils"
-import { Article } from "@/types/article-schema"
+import { getLocaleForFns, Link } from "@/i18n"
+import { cn, extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib"
+import { ArticleForClient } from "@/types"
 import { formatDistanceToNow } from 'date-fns'
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -15,7 +14,7 @@ import { ArchiveAlertDialog } from "./archive-dialog"
 import { useSession } from "next-auth/react"
 
 type Props = {
-  article: Article
+  article: ArticleForClient
 }
 
 export function ArticleCard({ article }: Props) {

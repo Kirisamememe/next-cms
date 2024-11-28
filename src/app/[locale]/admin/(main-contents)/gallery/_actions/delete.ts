@@ -1,8 +1,8 @@
 'use server'
 
-import { getSession } from "@/lib/getSession"
-import { imageUrlService } from "@/services/image-url-service"
-import { mediaFolderService } from "@/services/media-folder-service"
+import { imageUrlService, mediaFolderService } from "@/di/services"
+// import { getImageUrlService, getMediaFolderService } from "@/di/hook"
+import { getSession } from "@/lib-server-only"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 

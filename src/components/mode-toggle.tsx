@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib"
 import { useTranslations } from "next-intl"
 
 export function ModeToggle() {

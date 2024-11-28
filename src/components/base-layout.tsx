@@ -2,7 +2,7 @@ import "@/app/globals.css";
 import { NextIntlClientProvider } from 'next-intl';
 import React, { ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
-import { Locale } from "@/i18n/config";
+import { Locale } from "@/i18n";
 import { Toaster } from "@/components/ui/toaster"
 import { getMessages } from 'next-intl/server';
 import ResultToaster from '@/components/result-toaster';

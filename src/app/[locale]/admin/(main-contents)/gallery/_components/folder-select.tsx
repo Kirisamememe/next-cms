@@ -1,8 +1,8 @@
 import React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, Folder } from "lucide-react"
-import { cn } from "@/lib/utils";
-import { MediaFolder } from "@/types/media-folder-schema";
+import { cn } from "@/lib";
+import { MediaFolder } from "@/types";
 import { Separator } from "@/components/ui/separator";
 
 const FolderSelectItem = React.forwardRef<

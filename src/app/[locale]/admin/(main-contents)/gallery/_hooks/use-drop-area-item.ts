@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import { DropData } from "@/types/drop-data"
+import { cn } from "@/lib"
+import { DropData } from "@/types"
 import { useCallback, useMemo, useState } from "react"
 import { useGalleryContext } from "../_components/gallery-provider"
 

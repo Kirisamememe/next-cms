@@ -1,7 +1,17 @@
 import 'server-only'
-import { DB, prisma } from '@/lib/prisma'
+import { DB, prisma } from '@/prisma'
+import { AllowedEmail } from '@/types/editor-schema'
+import { injectable } from 'inversify'
 
-class AllowedEmailRepository {
+export interface IAllowedEmailRepository {
+  findMany(): Promise<AllowedEmail[]>
+  add(email: string, db: DB): Promise<AllowedEmail | null>
+  update(email: string, userId: number, db: DB): Promise<AllowedEmail | null>
+}
+
+
+@injectable()
+export class AllowedEmailRepository implements IAllowedEmailRepository {
 
   async findMany() {
     return await prisma.allowedEmail.findMany()
@@ -31,5 +41,3 @@ class AllowedEmailRepository {
   }
 
 }
-
-export const allowedEmailRepository = new AllowedEmailRepository()

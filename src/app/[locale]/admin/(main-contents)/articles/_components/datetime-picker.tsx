@@ -1,8 +1,8 @@
+import { combineDateAndTime, getTimeString } from "@/lib";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { FlexColumn } from "@/components/ui/flexbox";
 import { Input } from "@/components/ui/input";
-import { combineDateAndTime, getTimeString } from "@/lib/utils";
 import { format } from "date-fns/format";
 import { UndoDot, X } from "lucide-react";
 

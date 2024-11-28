@@ -1,5 +1,5 @@
-import { getLocaleForFns } from "@/i18n/get-locale"
-import { Api } from "@/types/api-schema"
+import { getLocaleForFns } from "@/i18n"
+import { Api } from "@/types"
 import { formatDistanceToNow } from "date-fns"
 import { format } from "date-fns/format"
 import { Power, CalendarIcon, GitForkIcon, GlobeIcon, RefreshCwIcon } from 'lucide-react'

@@ -1,8 +1,29 @@
 import 'server-only'
-import { DB, prisma } from '@/lib/prisma'
-import { Role } from '@/types/editor-schema'
+import { DB, prisma } from '@/prisma'
+import { injectable } from 'inversify'
+import { EditorConcise, Role } from '@/types/editor-schema'
 
-class UserRepository {
+
+export interface IUserRepository {
+  findById(id: number): Promise<EditorConcise | null>
+  findByEmail(email: string, db?: DB): Promise<EditorConcise | null>
+  findManyOrderById(sort?: 'asc' | 'desc'): Promise<EditorConcise[]>
+  updateByEmail(
+    email: string,
+    values: {
+      role?: Role
+      nickname?: string
+      image?: string
+    },
+    db?: DB
+  ): Promise<EditorConcise>
+  userExist(): Promise<boolean>
+  noSuperAdmin(): Promise<boolean>
+  setSuperAdmin(email: string): Promise<EditorConcise>
+}
+
+@injectable()
+export class UserRepository implements IUserRepository {
 
   /**
    * 
@@ -13,6 +34,14 @@ class UserRepository {
     return await prisma.user.findUnique({
       where: {
         id: id
+      },
+      select: {
+        id: true,
+        role: true,
+        nickname: true,
+        image: true,
+        name: true,
+        email: true
       }
     })
   }
@@ -33,7 +62,9 @@ class UserRepository {
         id: true,
         role: true,
         nickname: true,
-        image: true
+        image: true,
+        name: true,
+        email: true
       }
     })
   }
@@ -48,6 +79,14 @@ class UserRepository {
     return await prisma.user.findMany({
       orderBy: {
         id: sort
+      },
+      select: {
+        id: true,
+        role: true,
+        nickname: true,
+        image: true,
+        name: true,
+        email: true
       }
     })
   }
@@ -77,9 +116,18 @@ class UserRepository {
         role: values.role,
         nickname: values.nickname,
         image: values.image
+      },
+      select: {
+        id: true,
+        role: true,
+        nickname: true,
+        image: true,
+        name: true,
+        email: true
       }
     })
   }
+
 
 
   /**
@@ -87,8 +135,8 @@ class UserRepository {
    * @returns 
    */
   async userExist() {
-    const users = await prisma.user.findMany()
-    return users.length > 0
+    const usersCount = await prisma.user.count()
+    return usersCount > 0
   }
 
 
@@ -123,10 +171,16 @@ class UserRepository {
             email: email
           }
         }
+      },
+      select: {
+        id: true,
+        role: true,
+        nickname: true,
+        image: true,
+        name: true,
+        email: true
       }
     })
   }
 
 }
-
-export const userRepository = new UserRepository()

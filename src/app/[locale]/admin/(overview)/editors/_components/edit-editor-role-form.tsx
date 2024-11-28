@@ -5,12 +5,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Role, roles } from "@/types/editor-schema"
+import { Role, roles } from "@/types"
 import { Separator } from "@/components/ui/separator"
 import { Submit } from "@/components/ui/submit-button"
 import { useTranslations } from "next-intl"
 import { FormHeader } from "./form-header"
-import { isPermissible } from "@/lib/roleUtils"
+import { isPermissible } from "@/lib-server-only"
 
 type Props = {
   email: string

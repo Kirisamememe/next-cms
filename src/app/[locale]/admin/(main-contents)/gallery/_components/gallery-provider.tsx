@@ -2,8 +2,7 @@
 
 import { createContext, ReactNode, RefObject, SetStateAction, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { ImageFile } from "./image/new-image-provider"
-import { DropData } from "@/types/drop-data"
-import { MediaFolder } from "@/types/media-folder-schema"
+import { DropData, MediaFolder } from "@/types"
 import Cookies from "js-cookie";
 import { GRID_COOKIE_NAME } from "./gallery-grid-setting-btn"
 import React from "react"

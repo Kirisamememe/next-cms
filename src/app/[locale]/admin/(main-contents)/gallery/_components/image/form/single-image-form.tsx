@@ -7,7 +7,7 @@ import { UseFormReturn } from "react-hook-form"
 import { FolderSelect } from "../../folder-select"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { MediaFolder } from "@/types/media-folder-schema"
+import { MediaFolder } from "@/types"
 
 
 type Props = {

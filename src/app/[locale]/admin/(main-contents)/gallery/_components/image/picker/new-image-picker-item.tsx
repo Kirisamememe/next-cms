@@ -1,7 +1,7 @@
 'use client'
 
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib"
 import Image from "next/image"
 import { useNewImageContext } from "../new-image-provider"
 

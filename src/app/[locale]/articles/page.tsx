@@ -1,7 +1,8 @@
 
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
   return (
-    <></>
+    <>
+    </>
   )
 }

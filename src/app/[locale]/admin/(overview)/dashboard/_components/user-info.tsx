@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { Heading } from "@/components/ui/typography";
-import { Role } from "@/types/editor-schema";
+import { Role } from "@/types";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 

@@ -1,5 +1,5 @@
 import 'server-only';
-import { adminRole, LEVEL_1, Role, roleLevel } from "@/types/editor-schema";
+import { adminRole, LEVEL_1, Role, roleLevel } from "@/types";
 
 export function isAdminGroup(role: Role) {
   return adminRole.includes(role)

@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Flexbox, FlexRow } from "@/components/ui/flexbox";
 import { GridColumn } from "@/components/ui/grid";
 import { Heading } from "@/components/ui/typography";
-import { Link } from "@/i18n/routing";
-import { prisma } from "@/lib/prisma";
-import { adminRole, Role } from "@/types/editor-schema";
+import { Link } from "@/i18n";
+import { prisma } from "@/prisma";
+import { adminRole, Role } from "@/types";
 import { getTranslations } from "next-intl/server";
 
 type Props = {

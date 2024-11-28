@@ -1,10 +1,26 @@
 import 'server-only'
-import { DB, prisma } from '@/lib/prisma'
+import { DB, prisma } from '@/prisma'
+import { injectable } from 'inversify'
 import { z } from 'zod'
 import { imageUrlSchema, multipleImageUrlSchema } from '@/types/image-url-schema'
 import { createId } from '@paralleldrive/cuid2'
+import { ImageUrl } from '@/types/image'
 
-class ImageUrlRepository {
+export interface IImageUrlRepository {
+  findByPath(path: string): Promise<ImageUrl[]>
+  findUniqueByUrl(url: string, db?: DB): Promise<ImageUrl | null>
+  findUnique(imageId: number, db?: DB): Promise<ImageUrl | null>
+  findAllUrls(): Promise<{ url: string }[]>
+  create(operatorId: number, values: z.infer<typeof imageUrlSchema>, db?: DB): Promise<ImageUrl>
+  createMany(operatorId: number, values: z.infer<typeof multipleImageUrlSchema>): Promise<{ count: number }>
+  update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>, db?: DB): Promise<ImageUrl>
+  move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl>
+  delete(imageId: number): Promise<ImageUrl>
+}
+
+
+@injectable()
+export class ImageUrlRepository implements IImageUrlRepository {
 
   async findByPath(path: string) {
     return await prisma.imageUrl.findMany({
@@ -168,5 +184,3 @@ class ImageUrlRepository {
   }
 
 }
-
-export const imageUrlRepository = new ImageUrlRepository()

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
-import { cn } from "@/lib/utils";
+import { Link } from "@/i18n";
+import { cn } from "@/lib";
 import { SquarePen } from "lucide-react";
 import { useTranslations } from "next-intl";
 

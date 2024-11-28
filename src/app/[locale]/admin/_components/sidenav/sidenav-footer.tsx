@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChevronsUpDown, LogOut, CircleUser, Cog } from "lucide-react"
 import { getTranslations } from "next-intl/server"
-import { Link } from "@/i18n/routing"
+import { Link } from "@/i18n"
 
 
 export async function SideNavFooterContainer() {

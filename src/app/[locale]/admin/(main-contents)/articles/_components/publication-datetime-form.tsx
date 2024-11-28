@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { z } from "zod"
-import { articlePublicationForm } from "@/types/article-schema"
+import { articlePublicationForm } from "@/types"
 import { DateTimePicker } from "./datetime-picker"
 
 

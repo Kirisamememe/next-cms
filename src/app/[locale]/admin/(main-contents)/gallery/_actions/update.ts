@@ -1,9 +1,9 @@
 'use server'
 
-import { getSession } from "@/lib/getSession"
-import { imageUrlService } from "@/services/image-url-service"
-import { mediaFolderService } from "@/services/media-folder-service"
-import { imageUrlSchema } from "@/types/image-url-schema"
+import { imageUrlService, mediaFolderService } from "@/di/services"
+// import { getImageUrlService, getMediaFolderService } from "@/di/hook"
+import { getSession } from "@/lib-server-only"
+import { imageUrlSchema } from "@/types"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -11,6 +11,9 @@ import { z } from "zod"
 export async function revalidateGallery() {
   revalidatePath('/admin/gallery')
 }
+
+
+// ImageUrl ===================================================================
 
 
 export async function updateImageUrlFolder(imageId: number, folderPath: string) {
@@ -22,14 +25,6 @@ export async function updateImageUrlFolder(imageId: number, folderPath: string) 
   revalidatePath('/admin/gallery')
 }
 
-export async function updateFolderPath(path: string, name: string, parentPath: string) {
-  await getSession()
-  const res = await mediaFolderService.move(path, name, parentPath)
-  if (!res) {
-    redirect('/admin/gallery?formError=common.form.databaseError')
-  }
-  revalidatePath('/admin/gallery')
-}
 
 export async function updateImageUrl(imageId: number, values: z.infer<typeof imageUrlSchema>) {
   const { operatorId } = await getSession()
@@ -45,6 +40,21 @@ export async function updateImageUrl(imageId: number, values: z.infer<typeof ima
   return res
 }
 
+
+
+
+
+// MediaFolder ===================================================================
+
+
+export async function updateFolderPath(path: string, name: string, parentPath: string) {
+  await getSession()
+  const res = await mediaFolderService.move(path, name, parentPath)
+  if (!res) {
+    redirect('/admin/gallery?formError=common.form.databaseError')
+  }
+  revalidatePath('/admin/gallery')
+}
 
 export async function editFolderName(path: string, folderName: string, parentPath: string) {
   await getSession()

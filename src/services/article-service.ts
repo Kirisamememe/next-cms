@@ -1,11 +1,37 @@
 import 'server-only'
-import { articleRepository } from '@/repositories/article-repository'
-import { articlePublicationForm, articleSubmitFormSchema, filter } from '@/types/article-schema'
+import { inject, injectable } from 'inversify'
+import { ArticleForClient, articlePublicationForm, articleSubmitFormSchema, filter } from '@/types/article-schema'
+import { TYPES } from '@/di/types'
+import type { IArticleAtomsRepository, IArticleRepository } from '@/repositories'
 import { z } from 'zod'
-import { prisma } from '@/lib/prisma'
-import { articleAtomsRepository } from '@/repositories/article-atoms-repository'
+import { prisma } from '@/prisma'
 
-class ArticleService {
+
+export interface IArticleService {
+  getById(id: number, publishedOnly?: boolean): Promise<{ data: ArticleForClient, noData: undefined } | { data: undefined, noData: string }>
+  getMany(filter?: filter): Promise<ArticleForClient[]>
+  createWithAtom(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
+  updateArticleCreateAtom(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
+  updateArticle(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
+  updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof articlePublicationForm>): Promise<any>
+  updateArchivedAt(articleId: number, operatorId: number): Promise<any>
+  restore(articleId: number, operatorId: number): Promise<any>
+}
+
+
+@injectable()
+export class ArticleService implements IArticleService {
+  private _articleRepository: IArticleRepository
+  private _articleAtomsRepository: IArticleAtomsRepository
+
+  constructor(
+    @inject(TYPES.ArticleRepository) private articleRepository: IArticleRepository,
+    @inject(TYPES.ArticleAtomsRepository) private articleAtomsRepository: IArticleAtomsRepository
+  ) {
+    this._articleRepository = articleRepository
+    this._articleAtomsRepository = articleAtomsRepository
+  }
+
 
   /**
    * 
@@ -13,7 +39,7 @@ class ArticleService {
    * @returns 
    */
   async getById(id: number, publishedOnly: boolean = false) {
-    const article = await articleRepository.findById(id, publishedOnly)
+    const article = await this._articleRepository.findById(id, publishedOnly)
     if (!article || !article?.atoms.length) {
       return {
         noData: 'Not Found' as const
@@ -36,7 +62,7 @@ class ArticleService {
    * @returns 
    */
   async getMany(filter?: filter) {
-    const articles = await articleRepository.findManyOrderByUpdatedAt(filter)
+    const articles = await this._articleRepository.findManyOrderByUpdatedAt(filter)
 
     return articles.map((article) => ({
       ...article,
@@ -57,8 +83,8 @@ class ArticleService {
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
     return prisma.$transaction(async (trx) => {
-      const article = await articleRepository.create(operatorId, values, trx)
-      return await articleAtomsRepository.create(article.id, operatorId, values, trx)
+      const article = await this._articleRepository.create(operatorId, values, trx)
+      return await this._articleAtomsRepository.create(article.id, operatorId, values, trx)
     })
   }
 
@@ -76,8 +102,8 @@ class ArticleService {
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
     return prisma.$transaction(async (trx) => {
-      await articleAtomsRepository.create(articleId, operatorId, values, trx)
-      return await articleRepository.update(articleId, operatorId, values, trx)
+      await this._articleAtomsRepository.create(articleId, operatorId, values, trx)
+      return await this._articleRepository.update(articleId, operatorId, values, trx)
     })
   }
 
@@ -94,7 +120,7 @@ class ArticleService {
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
-    return articleRepository.update(articleId, operatorId, values)
+    return this._articleRepository.update(articleId, operatorId, values)
   }
 
   /**
@@ -109,7 +135,7 @@ class ArticleService {
     operatorId: number,
     values: z.infer<typeof articlePublicationForm>,
   ) {
-    return articleRepository.updateDate(articleId, operatorId, values)
+    return this._articleRepository.updateDate(articleId, operatorId, values)
   }
 
 
@@ -123,7 +149,7 @@ class ArticleService {
     articleId: number,
     operatorId: number,
   ) {
-    return articleRepository.updateDate(articleId, operatorId, { archivedAt: new Date() })
+    return this._articleRepository.updateDate(articleId, operatorId, { archivedAt: new Date() })
   }
 
 
@@ -137,8 +163,6 @@ class ArticleService {
     articleId: number,
     operatorId: number,
   ) {
-    return articleRepository.updateDate(articleId, operatorId, { archivedAt: null })
+    return this._articleRepository.updateDate(articleId, operatorId, { archivedAt: null })
   }
 }
-
-export const articleService = new ArticleService()

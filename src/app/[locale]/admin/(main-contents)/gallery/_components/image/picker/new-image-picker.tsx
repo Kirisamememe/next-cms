@@ -1,5 +1,5 @@
 import { Flexbox, FlexColumn } from "@/components/ui/flexbox"
-import { cloudinaryClient } from "@/lib/cloudinary"
+import { cloudinaryClient } from "@/lib-server-only"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { NewImagePickerSelectAll } from "./new-image-picker-select-all"
 import { NewImageUpload } from "./new-image-upload"

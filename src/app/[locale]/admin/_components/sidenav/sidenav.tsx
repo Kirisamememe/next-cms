@@ -15,7 +15,7 @@ import { LogoText } from "./logo-text";
 import { NavLink } from "./nav-link"
 import { useTranslations } from "next-intl";
 import { customContents, navMain, overview, restful } from "./nav-content";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n";
 
 export function SideNav() {
   const t = useTranslations('sidebar');

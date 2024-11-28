@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { hashSync, genSaltSync } from 'bcrypt-ts';
-import { MediaFolder } from "@/types/media-folder-schema";
+import { MediaFolder } from "@/types";
 
 
 export function cn(...inputs: ClassValue[]) {

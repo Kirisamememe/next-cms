@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 
@@ -65,9 +65,9 @@ const flexboxVariants = cva(
 
 const Flexbox = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof flexboxVariants> & 
-  { 
-    border?: boolean, 
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof flexboxVariants> &
+  {
+    border?: boolean,
     bg?: boolean,
     shadow?: boolean,
     trans?: boolean,
@@ -75,38 +75,38 @@ const Flexbox = React.forwardRef<
     centerY?: boolean,
     center?: boolean
   }
->(({ 
-  className, 
-  orientation = "vertical", 
-  radius, 
-  gap, 
-  p, 
-  px, 
-  py, 
-  border = false, 
-  bg = false, 
+>(({
+  className,
+  orientation = "vertical",
+  radius,
+  gap,
+  p,
+  px,
+  py,
+  border = false,
+  bg = false,
   shadow = false,
-  trans = false, 
+  trans = false,
   centerX = false,
   centerY = false,
   center = false,
-  ...props 
+  ...props
 }, ref) => (
   <div
     ref={ref}
-      className={cn(
-        flexboxVariants({ orientation, radius, gap, p, px, py }),
-        border && "border",
-        bg && "bg-card",
-        shadow && "shadow-sm dark:shadow-none",
-        trans && "transition-all",
-        centerX && orientation === "horizontal" && "justify-center",
-        centerY && orientation === "horizontal" && "items-center",
-        centerX && orientation === "vertical" && "items-center",
-        centerY && orientation === "vertical" && "justify-center",
-        center && "justify-center items-center",
-        className
-      )}
+    className={cn(
+      flexboxVariants({ orientation, radius, gap, p, px, py }),
+      border && "border",
+      bg && "bg-card",
+      shadow && "shadow-sm dark:shadow-none",
+      trans && "transition-all",
+      centerX && orientation === "horizontal" && "justify-center",
+      centerY && orientation === "horizontal" && "items-center",
+      centerX && orientation === "vertical" && "items-center",
+      centerY && orientation === "vertical" && "justify-center",
+      center && "justify-center items-center",
+      className
+    )}
     {...props}
   />
 ))

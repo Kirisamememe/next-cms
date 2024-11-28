@@ -5,7 +5,7 @@ import { ApiSwitch } from "./api-switch";
 import { apiService } from "@/services/api-service";
 import { CreateMainContentApi } from "./create-api";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { getTranslations } from "next-intl/server";
 
 type Props = {

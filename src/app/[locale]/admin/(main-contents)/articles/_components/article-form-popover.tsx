@@ -5,13 +5,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib"
 import { FormControl } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { ControllerRenderProps } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
-import { getLocaleForFns } from "@/i18n/get-locale"
+import { getLocaleForFns } from "@/i18n"
 import { DateTimePicker } from "./datetime-picker"
 
 

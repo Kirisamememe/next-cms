@@ -1,6 +1,6 @@
-import { UserInfo } from "@/app/[locale]/admin/(overview)/dashboard/_components/user-info";
+import { UserInfo } from "./_components/user-info";
 import { Flexbox } from "@/components/ui/flexbox";
-import { getSession } from "@/lib/getSession";
+import { getSession } from "@/lib-server-only";
 import Dashboard from "./_components/dashboard-dummy";
 
 export default async function DashboardPage() {

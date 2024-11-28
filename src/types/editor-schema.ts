@@ -13,17 +13,32 @@ export type Editor = {
 
 export type EditorConcise = {
   id: number;
+  email: string;
   name: string | null;
   role: Role;
   image: string | null;
   nickname: string | null;
 }
 
-export const LEVEL_1 = 1
-export const LEVEL_2 = 2
-export const LEVEL_3 = 3
-export const LEVEL_4 = 4
-export const LEVEL_5 = 5
+export type AllowedEmail = {
+  id: number;
+  email: string
+  userId: number | null
+}
+
+const LEVEL_1 = 1 as const
+const LEVEL_2 = 2 as const
+const LEVEL_3 = 3 as const
+const LEVEL_4 = 4 as const
+const LEVEL_5 = 5 as const
+
+export {
+  LEVEL_1,
+  LEVEL_2,
+  LEVEL_3,
+  LEVEL_4,
+  LEVEL_5,
+}
 
 export const roleLevel = {
   "SUPER_ADMIN": LEVEL_1,

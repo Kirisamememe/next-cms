@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { buildFolderTree } from "@/lib/utils"
+import { buildFolderTree } from "@/lib"
 import { useTranslations } from "next-intl"
 import { useActionState, useRef } from "react"
 import { useParams } from "next/navigation"
-import { multipleImageUrlSchema } from "@/types/image-url-schema"
+import { multipleImageUrlSchema } from "@/types"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"

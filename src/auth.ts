@@ -1,12 +1,11 @@
+import { allowedEmailService, userService } from "./di/services"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/prisma"
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
 import { authConfig } from "./auth.config"
 import { Role } from "./types/editor-schema"
-import { userService } from "./services/user-service"
-import { allowedEmailService } from "./services/allowed-email-service"
 
 declare module "next-auth" {
   interface User {
@@ -42,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       const { data, noData } = await allowedEmailService.getAll()
 
-      if (noData) {
+      if (noData || !data?.length) {
         return true
       }
 
@@ -58,7 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // まず、allowed_emailがuserにリンク済みか確認
       // まだリンクしていない場合、リンクを開始
       if ((trigger === "signUp" || trigger === "signIn") && await userService.noSuperAdmin() && user.email) {
-        const { error } = userService.setSuperAdmin(user.email)
+        const { error } = await userService.setSuperAdmin(user.email)
         if (error) {
           console.error(error)
         }
@@ -66,7 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // 要検証！！
       if ((trigger === "signUp" || trigger === "signIn") && user.email) {
-        const { error } = userService.authenticateEmail(user.email)
+        const { error } = await userService.authenticateEmail(user.email)
         if (error) {
           console.error("Database error has occurred: setAsSuperAdmin")
         }

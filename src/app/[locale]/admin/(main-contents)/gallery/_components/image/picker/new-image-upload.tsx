@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect } from "react"
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input"
-import { checkOversize, cn } from "@/lib/utils"
+import { checkOversize, cn } from "@/lib"
 import { useGalleryContext } from "../../gallery-provider"
 import { LabelText } from "@/components/ui/typography"
 import { useUploadImage } from "../../../_hooks/use-upload-image"

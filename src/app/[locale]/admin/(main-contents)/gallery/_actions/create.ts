@@ -1,12 +1,13 @@
 'use server'
 
-import { getSession } from "@/lib/getSession"
-import { imageUrlService } from "@/services/image-url-service"
-import { mediaFolderService } from "@/services/media-folder-service"
-import { imageUrlSchema, multipleImageUrlSchema } from "@/types/image-url-schema"
+// import { getImageUrlService, getMediaFolderService } from "@/di/hook"
+import { imageUrlService, mediaFolderService } from "@/di/services"
+import { getSession } from "@/lib-server-only"
+import { imageUrlSchema, multipleImageUrlSchema } from "@/types"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
+
 
 export async function createFolder(folderName: string, parentPath: string) {
   await getSession()
@@ -17,6 +18,9 @@ export async function createFolder(folderName: string, parentPath: string) {
   revalidatePath(`/admin/gallery`)
   return res
 }
+
+
+
 
 export async function createImageUrl(values: z.infer<typeof imageUrlSchema>) {
   const { operatorId } = await getSession()

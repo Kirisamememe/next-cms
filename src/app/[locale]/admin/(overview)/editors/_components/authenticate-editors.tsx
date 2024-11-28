@@ -1,12 +1,12 @@
 import { Flexbox } from "@/components/ui/flexbox";
 import { Heading } from "@/components/ui/typography";
-import { prisma } from "@/lib/prisma";
+import { isAdminGroup, isPermissible, isSuperAdmin } from "@/lib-server-only";
 import { EditorCard } from "./editor-card";
 import { getTranslations } from "next-intl/server";
 import { GridColumn } from "@/components/ui/grid";
-import { Role } from "@/types/editor-schema";
-import { isAdminGroup, isPermissible, isSuperAdmin } from "@/lib/roleUtils";
+import { Role } from "@/types";
 import { EditorCardWithLink } from "./editor-card-link";
+import { userService } from "@/di/services";
 
 type Props = {
   operatorRole: Role
@@ -15,11 +15,7 @@ type Props = {
 
 export async function AuthenticateEditorList({ operatorRole, operatorId }: Props) {
   const t = await getTranslations('editor')
-  const editors = await prisma.user.findMany({
-    orderBy: {
-      id: 'asc'
-    }
-  })
+  const editors = await userService.getMany('asc')
 
 
   return (

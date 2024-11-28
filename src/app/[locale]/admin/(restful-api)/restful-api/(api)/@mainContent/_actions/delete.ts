@@ -1,6 +1,6 @@
 'use server'
 
-import { getSession } from "@/lib/getSession"
+import { getSession } from "@/lib-server-only"
 import { accessTokenService } from "@/services/access-token-service"
 import { revalidatePath } from "next/cache"
 

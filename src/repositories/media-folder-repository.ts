@@ -1,9 +1,23 @@
 import 'server-only'
-import { prisma } from '@/lib/prisma'
+import { injectable } from 'inversify'
+import { prisma } from '@/prisma'
 import { z } from 'zod'
-import { mediaFolderSchema } from '@/types/media-folder-schema'
+import { MediaFolder, mediaFolderSchema } from '@/types/media-folder-schema'
 
-class MediaFolderRepository {
+
+export interface IMediaFolderRepository {
+  findRootFolders(): Promise<MediaFolder[]>
+  findManyByParentPath(path: string): Promise<MediaFolder[]>
+  findUnique(path: string): Promise<(MediaFolder & { children: MediaFolder[] }) | null>
+  findMany(): Promise<MediaFolder[]>
+  create(name: string, parentPath: string): Promise<MediaFolder>
+  update(path: string, values: z.infer<typeof mediaFolderSchema>): Promise<MediaFolder>
+  move(path: string, name: string, parentPath: string): Promise<MediaFolder>
+  delete(path: string): Promise<MediaFolder>
+}
+
+@injectable()
+export class MediaFolderRepository implements IMediaFolderRepository {
 
   async findRootFolders() {
     return await prisma.mediaFolder.findMany({
@@ -121,6 +135,3 @@ class MediaFolderRepository {
 
 
 }
-
-
-export const mediaFolderRepository = new MediaFolderRepository()

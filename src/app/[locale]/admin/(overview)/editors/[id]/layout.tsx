@@ -1,5 +1,5 @@
 import { Flexbox } from "@/components/ui/flexbox";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n";
 
 export default async function EditorProfilePageLayout({
   children,

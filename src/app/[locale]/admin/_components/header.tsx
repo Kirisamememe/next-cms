@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Link, usePathname } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n";
 import React, { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 

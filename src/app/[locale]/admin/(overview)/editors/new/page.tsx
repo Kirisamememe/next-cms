@@ -1,5 +1,4 @@
-import { getSession } from "@/lib/getSession";
-import { isAdminGroup } from "@/lib/roleUtils";
+import { getSession, isAdminGroup } from "@/lib-server-only";
 import { notFound } from "next/navigation";
 import { NewEditor } from "./_components/new-editor";
 

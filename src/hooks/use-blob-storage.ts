@@ -1,6 +1,6 @@
 'use client'
 
-import { CloudinaryApiResponse, CloudinaryErrorResponse, CloudinaryResource } from "@/types/image";
+import { CloudinaryApiResponse, CloudinaryErrorResponse, CloudinaryResource } from "@/types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useCallback, useMemo } from "react";
 

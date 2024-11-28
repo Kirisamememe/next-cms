@@ -20,7 +20,7 @@ import { FolderSelect } from "../../folder-select"
 import { FlexColumn } from "@/components/ui/flexbox"
 import { Badge } from "@/components/ui/badge"
 import { LabelText } from "@/components/ui/typography"
-import { MediaFolder } from "@/types/media-folder-schema"
+import { MediaFolder } from "@/types"
 
 
 type Props = {

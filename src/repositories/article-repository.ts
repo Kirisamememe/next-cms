@@ -1,15 +1,26 @@
 import 'server-only'
-import { DB, prisma } from '@/lib/prisma'
-import { articleSubmitFormSchema, filter } from '@/types/article-schema'
-import { z } from 'zod'
+import { injectable } from 'inversify'
+import { DB, prisma } from '@/prisma'
 import { createId } from '@paralleldrive/cuid2'
+import { Article, ArticleWithAtoms, articleSubmitFormSchema, filter } from '@/types/article-schema'
+import { z } from 'zod'
+
+export interface IArticleRepository {
+  findById(id: number, publishedOnly: boolean): Promise<ArticleWithAtoms | null>
+  findManyOrderByUpdatedAt(filter?: filter): Promise<ArticleWithAtoms[]>
+  create(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
+  update(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
+  updateDate(articleId: number, operatorId: number, values: { publishedAt?: Date | null, archivedAt?: Date | null }, db?: DB): Promise<Article>
+}
 
 
-class ArticleRepository {
+@injectable()
+export class ArticleRepository implements IArticleRepository {
 
   private authorProperties = {
     select: {
       id: true,
+      email: true,
       name: true,
       nickname: true,
       role: true,
@@ -211,5 +222,3 @@ class ArticleRepository {
 
 
 }
-
-export const articleRepository = new ArticleRepository()

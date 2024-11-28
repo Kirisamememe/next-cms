@@ -3,10 +3,10 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { buttonVariants } from "@/components/ui/button"
 import { useParams } from "next/navigation"
-import { getLocaleForFns } from "@/i18n/get-locale";
+import { getLocaleForFns } from "@/i18n";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 

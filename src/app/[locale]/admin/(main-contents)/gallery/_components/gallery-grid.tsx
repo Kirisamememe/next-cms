@@ -1,11 +1,11 @@
 import { GalleryItem } from "./gallery-grid-image"
-import { imageUrlService } from "@/services/image-url-service"
-import { mediaFolderService } from "@/services/media-folder-service"
 import { NewFolder } from "./folder/new-folder"
 import { FolderItem } from "./gallery-grid-folder"
 import { GalleryGridWrapper } from "./gallery-grid-wrapper"
 import { ImageUploading } from "./gallery-grid-uploading-images"
 import { ParentFolderItem } from "./gallery-grid-parent-folder"
+// import { getImageUrlService, getMediaFolderService } from "@/di/hook"
+import { imageUrlService, mediaFolderService } from "@/di/services"
 
 type Props = {
   currentPath?: string

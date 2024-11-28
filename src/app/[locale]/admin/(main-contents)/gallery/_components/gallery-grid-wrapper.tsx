@@ -3,7 +3,7 @@
 import { GridColumn } from "@/components/ui/grid"
 import { ReactNode } from "react"
 import { useGalleryContext } from "./gallery-provider"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib"
 
 type Props = {
   children: ReactNode

@@ -1,9 +1,25 @@
 import 'server-only'
-import { prisma, DB } from '@/lib/prisma'
+import { injectable } from 'inversify'
+import { DB, prisma } from '@/prisma'
 import { z } from 'zod'
-import { articleSubmitFormSchema } from '@/types/article-schema'
+import { ArticleAtom, articleSubmitFormSchema } from '@/types/article-schema'
 
-class ArticleAtomsRepository {
+export interface IArticleAtomsRepository {
+  create(
+    articleId: number,
+    operatorId: number,
+    values: z.infer<typeof articleSubmitFormSchema>,
+    db?: DB
+  ): Promise<ArticleAtom>
+
+  updateSelectedAt(
+    atomId: number,
+    db?: DB
+  ): Promise<ArticleAtom>
+}
+
+@injectable()
+export class ArticleAtomsRepository implements IArticleAtomsRepository {
 
   /**
    * 
@@ -60,5 +76,3 @@ class ArticleAtomsRepository {
 
 
 }
-
-export const articleAtomsRepository = new ArticleAtomsRepository()

@@ -1,9 +1,47 @@
 import 'server-only'
-import { prisma } from '@/lib/prisma'
-import { allowedEmailRepository } from '@/repositories/allowed-email-repository'
-import { userRepository } from '@/repositories/user-repository'
+import { inject, injectable } from 'inversify'
+import type { IUserRepository, IAllowedEmailRepository } from '@/repositories'
+import { EditorConcise } from '@/types'
+import { AllowedEmail, Role } from '@/types/editor-schema'
+import { TYPES } from '@/di/types'
+import { prisma } from '@/prisma'
 
-class UserService {
+type ServiceResponse<T> = Promise<
+  | { data: T; error?: never }
+  | { data?: never; error: 'Not Found' | 'Database error has occurred: setSuperAdmin' | 'Database error has occurred: authenticateEmail' }
+>
+
+export interface IUserService {
+  getById(id: number): ServiceResponse<EditorConcise>
+  getByEmail(email: string): ServiceResponse<EditorConcise>
+  noSuperAdmin(): Promise<boolean>
+  setSuperAdmin(email: string): ServiceResponse<AllowedEmail>
+  authenticateEmail(email: string): ServiceResponse<AllowedEmail>
+  getMany(sort: 'asc' | 'desc'): Promise<EditorConcise[]>
+  update(email: string, values: {
+    role?: Role
+    nickname?: string
+    image?: string
+  }): Promise<EditorConcise>
+}
+
+
+@injectable()
+export class UserService implements IUserService {
+
+  private _userRepository: IUserRepository
+  private _allowedEmailRepository: IAllowedEmailRepository
+
+  constructor(
+    @inject(TYPES.UserRepository)
+    private userRepository: IUserRepository,
+
+    @inject(TYPES.AllowedEmailRepository)
+    private allowedEmailRepository: IAllowedEmailRepository
+  ) {
+    this._userRepository = userRepository
+    this._allowedEmailRepository = allowedEmailRepository
+  }
 
   /**
    * 
@@ -11,7 +49,7 @@ class UserService {
    * @returns 
    */
   async getById(id: number) {
-    const data = await userRepository.findById(id)
+    const data = await this._userRepository.findById(id)
     if (!data) {
       return {
         error: 'Not Found' as const
@@ -27,7 +65,7 @@ class UserService {
    * @returns 
    */
   async getByEmail(email: string) {
-    const data = await userRepository.findByEmail(email)
+    const data = await this._userRepository.findByEmail(email)
     if (!data) {
       return {
         error: 'Not Found' as const
@@ -37,12 +75,29 @@ class UserService {
   }
 
 
+  getMany(sort: 'asc' | 'desc' = 'asc') {
+    return this._userRepository.findManyOrderById(sort)
+  }
+
+
+  update(
+    email: string,
+    values: {
+      role?: Role
+      nickname?: string
+      image?: string
+    }
+  ) {
+    return this._userRepository.updateByEmail(email, values)
+  }
+
+
   /**
    * 
    * @returns 
    */
   async noSuperAdmin() {
-    return await userRepository.noSuperAdmin()
+    return await this._userRepository.noSuperAdmin()
   }
 
 
@@ -51,10 +106,10 @@ class UserService {
    * @param email 
    * @returns 
    */
-  setSuperAdmin(email: string) {
-    const data = prisma.$transaction(async (trx) => {
-      await userRepository.updateByEmail(email, { role: 'SUPER_ADMIN' }, trx)
-      return allowedEmailRepository.add(email, trx)
+  async setSuperAdmin(email: string) {
+    const data = await prisma.$transaction(async (trx) => {
+      await this._userRepository.updateByEmail(email, { role: 'SUPER_ADMIN' }, trx)
+      return this._allowedEmailRepository.add(email, trx)
     })
     if (!data) {
       return {
@@ -70,11 +125,13 @@ class UserService {
    * @param email 
    * @returns 
    */
-  authenticateEmail(email: string) {
-    const data = prisma.$transaction(async (trx) => {
-      const user = await userRepository.findByEmail(email, trx)
+  async authenticateEmail(email: string) {
+    console.log('authenticateEmailに入った')
+    const data = await prisma.$transaction(async (trx) => {
+      console.log('トランザクションが開始したに入った')
+      const user = await this._userRepository.findByEmail(email, trx)
       if (!user) return
-      return await allowedEmailRepository.update(email, user.id, trx)
+      return await this._allowedEmailRepository.update(email, user.id, trx)
     })
     if (!data) {
       return {
@@ -86,5 +143,3 @@ class UserService {
 
 
 }
-
-export const userService = new UserService()

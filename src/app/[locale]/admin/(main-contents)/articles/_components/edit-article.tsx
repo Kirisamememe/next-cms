@@ -1,7 +1,7 @@
 'use client'
 
 import { useToast } from "@/hooks/use-toast"
-import { articleSubmitFormSchema, Article } from "@/types/article-schema"
+import { articleSubmitFormSchema, ArticleForClient } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
 import { useRouter } from "next/navigation"
@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl"
 import { updateArticle, updateArticleCreateNewAtom } from "../_actions/update"
 
 type Props = {
-  article: Article
+  article: ArticleForClient
 }
 
 export function EditArticle({ article }: Props) {

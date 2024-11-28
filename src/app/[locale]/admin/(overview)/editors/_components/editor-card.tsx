@@ -1,11 +1,11 @@
-import { Editor } from "@/types/editor-schema"
+import { EditorConcise } from "@/types"
 import { FlexRow } from "@/components/ui/flexbox"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LabelText } from "@/components/ui/typography"
 import { useTranslations } from "next-intl"
 
 type Props = {
-  editor: Editor
+  editor: EditorConcise
 }
 
 export function EditorCard({ editor }: Props) {

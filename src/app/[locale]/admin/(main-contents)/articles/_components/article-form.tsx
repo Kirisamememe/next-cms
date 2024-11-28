@@ -8,12 +8,12 @@ import { Flexbox, FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
-import { Article, articleSubmitFormSchema } from "@/types/article-schema"
+import { ArticleForClient, articleSubmitFormSchema } from "@/types"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { DateTimePopover } from "@/app/[locale]/admin/(main-contents)/articles/_components/article-form-popover"
+import { DateTimePopover } from "./article-form-popover"
 import { LabelText } from "@/components/ui/typography"
 import { LastEdit } from "./article-card"
 import { useParams } from "next/navigation"
@@ -33,7 +33,7 @@ type Props = {
     publishedAt?: Date | null;
   }, any, undefined>
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
-  article?: Article
+  article?: ArticleForClient
   isPending: boolean
 }
 

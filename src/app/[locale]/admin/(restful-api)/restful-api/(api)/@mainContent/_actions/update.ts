@@ -1,6 +1,6 @@
 'use server'
 
-import { getSession } from "@/lib/getSession"
+import { getSession } from "@/lib-server-only"
 import { apiService } from "@/services/api-service"
 
 export async function toggleActive(apiId: number, state: boolean) {

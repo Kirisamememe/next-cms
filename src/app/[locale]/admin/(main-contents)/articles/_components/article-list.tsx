@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { ArticleCard } from "./article-card";
-import { Article } from "@/types/article-schema";
+import { ArticleForClient } from "@/types";
 import { Button } from "@/components/ui/button";
 import { ArrowDownNarrowWide, ArrowDownWideNarrow, Search } from 'lucide-react';
 import { GridColumn } from "@/components/ui/grid";
@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { NoArticleFound } from "./no-article-found";
 
 type Props = {
-  articles: Article[]
+  articles: ArticleForClient[]
 }
 
 export function ArticleList({ articles }: Props) {
@@ -24,7 +24,7 @@ export function ArticleList({ articles }: Props) {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
   }
 
-  const sort = useCallback((articles: Article[], order: 'asc' | 'desc') => {
+  const sort = useCallback((articles: ArticleForClient[], order: 'asc' | 'desc') => {
     return [...articles].sort((a, b) => {
       const dateA = new Date(a.updatedAt).getTime()
       const dateB = new Date(b.updatedAt).getTime()

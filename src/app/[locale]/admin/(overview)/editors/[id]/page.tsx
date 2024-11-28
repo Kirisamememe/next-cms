@@ -1,10 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 import { EditEditorRole } from "../_components/edit-editor-role";
-import { isAdminGroup, isPermissible } from "@/lib/roleUtils";
+import { isAdminGroup, isPermissible, getSession } from "@/lib-server-only";
 import { EditProfile } from "../_components/edit-profile";
-import { getSession } from "@/lib/getSession";
-import { idSchema } from "@/types/id-schema";
-import { userService } from "@/services/user-service";
+import { idSchema } from "@/types";
+import { userService } from "@/di/services";
+
 
 
 type Props = {

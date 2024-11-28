@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { PenLine } from "lucide-react"
-import { Link } from "@/i18n/routing"
+import { Link } from "@/i18n"
 
 type Props = {
   id: number

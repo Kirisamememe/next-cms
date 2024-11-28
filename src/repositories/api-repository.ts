@@ -1,5 +1,6 @@
 import 'server-only'
-import { prisma } from '@/lib/prisma'
+import "reflect-metadata";
+import { prisma } from '@/prisma'
 import { apiSchema, updateApiSchema } from '@/types/api-schema'
 import { z } from 'zod'
 

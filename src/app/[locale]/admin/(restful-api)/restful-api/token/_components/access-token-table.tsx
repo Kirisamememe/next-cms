@@ -3,7 +3,7 @@ import { AccessTokenCell } from "./access-token-cell"
 import { accessTokenService } from "@/services/access-token-service"
 import { format } from "date-fns/format"
 import { getLocale, getTranslations } from "next-intl/server"
-import { getLocaleForFns } from "@/i18n/get-locale"
+import { getLocaleForFns } from "@/i18n"
 import { DeleteAccessToken } from "./delete-token"
 
 export async function AccessTokenTable() {

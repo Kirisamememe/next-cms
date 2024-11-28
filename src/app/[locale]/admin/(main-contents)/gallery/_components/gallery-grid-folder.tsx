@@ -1,13 +1,13 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
+import { Link } from "@/i18n";
 import { Folder, FolderOpen } from "lucide-react";
 import { useDraggableItem } from "../_hooks/use-draggable-item";
 import { useCallback } from "react";
 import { updateFolderPath } from "../_actions/update";
 import { EditFolderName } from "./folder/edit-folder-name";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { useGalleryContext } from "./gallery-provider";
 import { FlexColumn } from "@/components/ui/flexbox";
 import { useDropAreaItem } from "../_hooks/use-drop-area-item";

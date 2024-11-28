@@ -1,6 +1,6 @@
 'use client'
 
-import { checkOversize, cn } from "@/lib/utils"
+import { checkOversize, cn } from "@/lib"
 import { useGalleryContext } from "./gallery-provider"
 import { useCallback, useEffect } from "react"
 import { useDropzone } from "react-dropzone"

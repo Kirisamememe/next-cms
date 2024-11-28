@@ -7,9 +7,9 @@ import { NewImagePicker } from "./picker/new-image-picker";
 import { NewImageProvider } from "./new-image-provider";
 import { DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { imageUrlService } from "@/services/image-url-service";
 import { NewSingleImage } from "./new-single-image";
 import { NewMultipleImages } from "./new-multiple-images";
+import { imageUrlService } from "@/di/services";
 
 export async function NewImageDialog() {
   const t = await getTranslations()

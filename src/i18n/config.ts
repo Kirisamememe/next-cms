@@ -2,7 +2,7 @@ export const i18n = {
   defaultLocale: "en",
   locales: {
     "en": "English",
-    "ja": "日本語", 
+    "ja": "日本語",
     "zh-CN": "简体中文",
     "zh-TW": "繁體中文",
   },

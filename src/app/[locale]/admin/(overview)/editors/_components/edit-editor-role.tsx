@@ -1,11 +1,11 @@
 import { Flexbox } from "@/components/ui/flexbox"
-import { prisma } from "@/lib/prisma"
-import { Editor, editRoleFormSchema, Role } from "@/types/editor-schema"
+import { EditorConcise, editRoleFormSchema, Role } from "@/types"
 import { redirect } from "next/navigation"
 import { EditEditorRoleForm } from "./edit-editor-role-form"
+import { userService } from "@/di/services"
 
 type Props = {
-  editor: Editor,
+  editor: EditorConcise,
   operatorRole: Role
 }
 
@@ -22,13 +22,8 @@ export async function EditEditorRole({ editor, operatorRole }: Props) {
       redirect(`/admin/editors/${editor.id}?formError=${errorMsg}`,)
     }
 
-    const res = await prisma.user.update({
-      where: {
-        id: editor.id
-      },
-      data: {
-        role: parse.data.role
-      }
+    const res = await userService.update(editor.email, {
+      role: parse.data.role
     })
 
     if (!res.id) {

@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import React from "react";
-import { Locale } from "@/i18n/config";
+import type { Metadata } from "next";
+import { Locale } from "@/i18n";
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import BaseLayout from '@/components/base-layout';
