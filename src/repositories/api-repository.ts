@@ -1,10 +1,26 @@
 import 'server-only'
-import "reflect-metadata";
+import { injectable } from 'inversify'
 import { prisma } from '@/prisma'
-import { apiSchema, updateApiSchema } from '@/types/api-schema'
+import { Api, apiSchema, updateApiSchema } from '@/types'
 import { z } from 'zod'
 
-class ApiRepository {
+
+export interface IApiRepository {
+  findByName(name: string): Promise<Api | null>
+  findMany(): Promise<Api[]>
+  create(
+    operatorId: number,
+    values: z.infer<typeof apiSchema>
+  ): Promise<Api | null>
+  update(
+    apiId: number,
+    operatorId: number,
+    values: z.infer<typeof updateApiSchema>
+  ): Promise<Api | null>
+}
+
+@injectable()
+export class ApiRepository implements IApiRepository {
 
   /**
    * 
@@ -25,15 +41,6 @@ class ApiRepository {
 
   async findMany() {
     return await prisma.api.findMany()
-  }
-
-  async findManyForCache() {
-    return await prisma.api.findMany({
-      select: {
-        path: true,
-        activatedAt: true,
-      }
-    })
   }
 
 
@@ -95,5 +102,3 @@ class ApiRepository {
     })
   }
 }
-
-export const apiRepository = new ApiRepository()

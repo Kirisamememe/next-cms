@@ -18,3 +18,9 @@ export type { IUserRepository } from './user-repository'
 
 export { AllowedEmailRepository } from './allowed-email-repository'
 export type { IAllowedEmailRepository } from './allowed-email-repository'
+
+export { AccessTokenRepository } from './access-token-repository'
+export type { IAccessTokenRepository } from './access-token-repository'
+
+export { ApiRepository } from './api-repository'
+export type { IApiRepository } from './api-repository'

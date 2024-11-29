@@ -2,27 +2,24 @@ import 'server-only'
 import { inject, injectable } from 'inversify'
 import type { IUserRepository, IAllowedEmailRepository } from '@/repositories'
 import { EditorConcise } from '@/types'
-import { AllowedEmail, Role } from '@/types/editor-schema'
+import { AllowedEmail, Role } from '@/types'
 import { TYPES } from '@/di/types'
 import { prisma } from '@/prisma'
+import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
-type ServiceResponse<T> = Promise<
-  | { data: T; error?: never }
-  | { data?: never; error: 'Not Found' | 'Database error has occurred: setSuperAdmin' | 'Database error has occurred: authenticateEmail' }
->
 
 export interface IUserService {
-  getById(id: number): ServiceResponse<EditorConcise>
-  getByEmail(email: string): ServiceResponse<EditorConcise>
-  noSuperAdmin(): Promise<boolean>
-  setSuperAdmin(email: string): ServiceResponse<AllowedEmail>
-  authenticateEmail(email: string): ServiceResponse<AllowedEmail>
+  getById(id: number): Promise<EditorConcise | null>
+  getByEmail(email: string): Promise<EditorConcise | null>
+  authenticateEmail(email: string): Promise<AllowedEmail | null>
   getMany(sort: 'asc' | 'desc'): Promise<EditorConcise[]>
   update(email: string, values: {
     role?: Role
     nickname?: string
     image?: string
-  }): Promise<EditorConcise>
+  }): Promise<EditorConcise | null>
+  noSuperAdmin(): Promise<boolean>
+  setSuperAdmin(email: string): Promise<AllowedEmail | null>
 }
 
 
@@ -49,13 +46,8 @@ export class UserService implements IUserService {
    * @returns 
    */
   async getById(id: number) {
-    const data = await this._userRepository.findById(id)
-    if (!data) {
-      return {
-        error: 'Not Found' as const
-      }
-    }
-    return { data }
+    return await this._userRepository.findById(id)
+      .catch(dbExceptionHandler)
   }
 
 
@@ -65,13 +57,8 @@ export class UserService implements IUserService {
    * @returns 
    */
   async getByEmail(email: string) {
-    const data = await this._userRepository.findByEmail(email)
-    if (!data) {
-      return {
-        error: 'Not Found' as const
-      }
-    }
-    return { data }
+    return await this._userRepository.findByEmail(email)
+      .catch(dbExceptionHandler)
   }
 
 
@@ -80,7 +67,7 @@ export class UserService implements IUserService {
   }
 
 
-  update(
+  async update(
     email: string,
     values: {
       role?: Role
@@ -88,7 +75,8 @@ export class UserService implements IUserService {
       image?: string
     }
   ) {
-    return this._userRepository.updateByEmail(email, values)
+    return await this._userRepository.updateByEmail(email, values)
+      .catch(dbExceptionHandler)
   }
 
 
@@ -107,16 +95,13 @@ export class UserService implements IUserService {
    * @returns 
    */
   async setSuperAdmin(email: string) {
-    const data = await prisma.$transaction(async (trx) => {
-      await this._userRepository.updateByEmail(email, { role: 'SUPER_ADMIN' }, trx)
-      return this._allowedEmailRepository.add(email, trx)
-    })
-    if (!data) {
-      return {
-        error: 'Database error has occurred: setSuperAdmin' as const
+    return await prisma.$transaction(async (trx) => {
+      const res = await this._userRepository.updateByEmail(email, { role: 'SUPER_ADMIN' }, trx)
+      if (!res) {
+        return Promise.reject("Database Error")
       }
-    }
-    return { data }
+      return this._allowedEmailRepository.add(email, trx)
+    }).catch(dbExceptionHandler)
   }
 
 
@@ -126,19 +111,14 @@ export class UserService implements IUserService {
    * @returns 
    */
   async authenticateEmail(email: string) {
-    console.log('authenticateEmailに入った')
-    const data = await prisma.$transaction(async (trx) => {
+    return await prisma.$transaction(async (trx) => {
       console.log('トランザクションが開始したに入った')
       const user = await this._userRepository.findByEmail(email, trx)
-      if (!user) return
-      return await this._allowedEmailRepository.update(email, user.id, trx)
-    })
-    if (!data) {
-      return {
-        error: 'Database error has occurred: authenticateEmail' as const
+      if (!user) {
+        return Promise.reject("Database Error")
       }
-    }
-    return { data }
+      return await this._allowedEmailRepository.update(email, user.id, trx)
+    }).catch(dbExceptionHandler)
   }
 
 

@@ -2,11 +2,11 @@ import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { Heading } from "@/components/ui/typography";
 import { ApiDetails } from "./api-detail";
 import { ApiSwitch } from "./api-switch";
-import { apiService } from "@/services/api-service";
 import { CreateMainContentApi } from "./create-api";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib";
 import { getTranslations } from "next-intl/server";
+import { apiService } from "@/di/services";
 
 type Props = {
   name: string
@@ -14,9 +14,9 @@ type Props = {
 
 export async function MainContentApiCard({ name }: Props) {
   const t = await getTranslations()
-  const { data, noData } = await apiService.getByName(name)
+  const data = await apiService.getByName(name)
 
-  if (noData) {
+  if (!data) {
     return (
       <FlexColumn gap={4} p={4} radius={'md'} className="bg-muted/30 justify-between">
         <FlexRow className="justify-between">

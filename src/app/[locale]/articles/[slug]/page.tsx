@@ -13,9 +13,9 @@ type Props = {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params
-  const { data, noData } = await articleService.getById(Number(slug))
+  const data = await articleService.getById(Number(slug))
 
-  if (noData || !data) notFound()
+  if (!data) notFound()
 
   return (
     <Markdown className={"prose dark:prose-invert"}>

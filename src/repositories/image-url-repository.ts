@@ -2,9 +2,9 @@ import 'server-only'
 import { DB, prisma } from '@/prisma'
 import { injectable } from 'inversify'
 import { z } from 'zod'
-import { imageUrlSchema, multipleImageUrlSchema } from '@/types/image-url-schema'
+import { imageUrlSchema, multipleImageUrlSchema } from '@/types'
 import { createId } from '@paralleldrive/cuid2'
-import { ImageUrl } from '@/types/image'
+import { ImageUrl } from '@/types'
 
 export interface IImageUrlRepository {
   findByPath(path: string): Promise<ImageUrl[]>
@@ -38,7 +38,8 @@ export class ImageUrlRepository implements IImageUrlRepository {
             name: true,
             nickname: true,
             image: true,
-            role: true
+            role: true,
+            email: true
           }
         }
       }

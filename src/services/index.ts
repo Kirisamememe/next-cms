@@ -15,3 +15,9 @@ export type { IUserService } from './user-service'
 
 export { AllowedEmailService } from './allowed-email-service'
 export type { IAllowedEmailService } from './allowed-email-service'
+
+export { AccessTokenService } from './access-token-service'
+export type { IAccessTokenService } from './access-token-service'
+
+export { ApiService } from './api-service'
+export type { IApiService } from './api-service'

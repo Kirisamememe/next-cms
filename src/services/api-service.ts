@@ -1,41 +1,39 @@
 import 'server-only'
-import { apiRepository } from "@/repositories/api-repository"
-import { apiSchema } from '@/types/api-schema'
+import { inject, injectable } from 'inversify'
+import type { IApiRepository } from "@/repositories/api-repository"
+import { Api, apiSchema } from '@/types'
 import { z } from 'zod'
-import { revalidatePath } from 'next/cache'
+import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
+import { TYPES } from '@/di/types'
 
-class ApiService {
+
+export interface IApiService {
+  getByName(name: string): Promise<Api | null>
+  toggleActive(apiId: number, operatorId: number, state: boolean): Promise<Api | null>
+  createMainApi(operatorId: number, values: z.infer<typeof apiSchema>): Promise<Api | null>
+}
+
+
+@injectable()
+export class ApiService implements IApiService {
+
+  private _apiRepository: IApiRepository
+
+  constructor(
+    @inject(TYPES.ApiRepository)
+    private apiRepository: IApiRepository
+  ) {
+    this._apiRepository = apiRepository
+  }
+
 
   async getByName(name: string) {
-    const data = await apiRepository.findByName(name)
-    if (!data) {
-      return {
-        noData: 'Api not found' as const
-      }
-    }
-    return { data }
+    return await this._apiRepository.findByName(name).catch(dbExceptionHandler)
   }
+
 
   async toggleActive(apiId: number, operatorId: number, state: boolean) {
-    const data = await apiRepository.update(apiId, operatorId, { activatedAt: state ? new Date() : null })
-    if (!data) {
-      return {
-        error: 'Api not found' as const
-      }
-    }
-    revalidatePath('/admin/restful-api')
-    return { data }
-  }
-
-
-  async getManyForCache() {
-    const data = await apiRepository.findManyForCache()
-    if (!data.length) {
-      return {
-        noData: 'Api not found' as const
-      }
-    }
-    return { data }
+    return await this._apiRepository.update(apiId, operatorId, { activatedAt: state ? new Date() : null }).catch(dbExceptionHandler)
   }
 
 
@@ -43,14 +41,6 @@ class ApiService {
     operatorId: number,
     values: z.infer<typeof apiSchema>
   ) {
-    const data = await apiRepository.create(operatorId, values)
-    if (!data) {
-      return {
-        noData: 'Error' as const
-      }
-    }
-    return { data }
+    return await this._apiRepository.create(operatorId, values).catch(dbExceptionHandler)
   }
 }
-
-export const apiService = new ApiService()

@@ -26,7 +26,7 @@ export async function EditEditorRole({ editor, operatorRole }: Props) {
       role: parse.data.role
     })
 
-    if (!res.id) {
+    if (!res) {
       redirect(`/admin/editors/${editor.id}?formError=failed`,)
     }
 

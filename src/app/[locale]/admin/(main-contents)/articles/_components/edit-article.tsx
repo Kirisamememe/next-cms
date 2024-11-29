@@ -60,7 +60,7 @@ export function EditArticle({ article }: Props) {
         res = await updateArticle(article.id, values)
       }
 
-      if (!res.id) {
+      if (!res) {
         toast({
           title: t('common.form.databaseError'),
           variant: "destructive"

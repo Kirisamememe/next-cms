@@ -1,7 +1,7 @@
 'use server'
 
+import { apiService } from "@/di/services"
 import { getSession } from "@/lib-server-only"
-import { apiService } from "@/services/api-service"
 import { revalidatePath } from "next/cache"
 
 export async function createMainContentApi(name: string) {

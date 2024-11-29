@@ -1,17 +1,17 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { AccessTokenCell } from "./access-token-cell"
-import { accessTokenService } from "@/services/access-token-service"
 import { format } from "date-fns/format"
 import { getLocale, getTranslations } from "next-intl/server"
 import { getLocaleForFns } from "@/i18n"
 import { DeleteAccessToken } from "./delete-token"
+import { accessTokenService } from "@/di/services"
 
 export async function AccessTokenTable() {
-  const { data, noData } = await accessTokenService.getManyWithAuthor()
+  const data = await accessTokenService.getManyWithAuthor()
   const locale = await getLocale()
   const t = await getTranslations()
 
-  if (noData) {
+  if (!data) {
     return null
   }
 

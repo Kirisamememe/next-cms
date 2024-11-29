@@ -44,12 +44,13 @@ export function NewArticle() {
     startTransition(async () => {
       const res = await createArticle(values)
 
-      if (!res.id) {
+      if (!res) {
         toast({
           title: t('common.form.databaseError'),
           variant: "destructive"
         })
         console.error("失敗した")
+        return
       }
 
       toast({

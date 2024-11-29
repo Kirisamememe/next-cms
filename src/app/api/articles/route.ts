@@ -1,21 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { articleService } from "@/di/services";
-import { accessTokenService } from "@/services/access-token-service";
-import { apiService } from "@/services/api-service";
-
-
-
+import { accessTokenService, apiService, articleService } from "@/di/services";
 
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
-  const { data, noData } = await apiService.getByName('article')
-  if (noData) {
+  const data = await apiService.getByName('article')
+  if (!data || !data.activatedAt) {
     return NextResponse.json({ error: 'Not Found' }, { status: 404 })
-  }
-  if (!data.activatedAt) {
-    return NextResponse.json({ error: 'Bad Request' }, { status: 400 })
   }
 
   const authHeader = req.headers.get('authorization')
@@ -29,18 +21,17 @@ export async function GET(req: NextRequest) {
   }
 
   const searchParams = req.nextUrl.searchParams
-  // const articleService = getArticleService()
 
   const id = searchParams.get('id')
   if (id) {
-    const { data, noData } = await articleService.getById(Number(id), true)
-    if (noData) {
-      return NextResponse.json({ error: noData })
+    const data = await articleService.getById(Number(id), true)
+    if (!data) {
+      return NextResponse.json({ error: 'Not Found' }, { status: 404 })
     }
     return NextResponse.json({ data })
   }
 
-  const articles = await articleService.getMany('publish')
+  const articles = await articleService.getManyPublished()
 
   const search = searchParams.get('search')
   if (search) {

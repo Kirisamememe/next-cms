@@ -11,8 +11,8 @@ import {
   IMediaFolderRepository,
   IUserRepository,
   IAllowedEmailRepository,
-  // IAccessTokenRepository,
-  // IApiRepository,
+  IAccessTokenRepository,
+  IApiRepository,
 } from '@/repositories'
 
 // Repository Implementations
@@ -23,8 +23,8 @@ import {
   MediaFolderRepository,
   UserRepository,
   AllowedEmailRepository,
-  // AccessTokenRepository,
-  // ApiRepository,
+  AccessTokenRepository,
+  ApiRepository,
 } from '@/repositories'
 
 // Service Interfaces
@@ -34,8 +34,8 @@ import {
   IMediaFolderService,
   IUserService,
   IAllowedEmailService,
-  // IAccessTokenService,
-  // IApiService,
+  IAccessTokenService,
+  IApiService,
 } from '@/services'
 
 
@@ -46,8 +46,8 @@ import {
   MediaFolderService,
   UserService,
   AllowedEmailService,
-  // AccessTokenService,
-  // ApiService,
+  AccessTokenService,
+  ApiService,
 } from '@/services'
 
 
@@ -60,8 +60,8 @@ container.bind<IImageUrlRepository>(TYPES.ImageUrlRepository).to(ImageUrlReposit
 container.bind<IMediaFolderRepository>(TYPES.MediaFolderRepository).to(MediaFolderRepository)
 container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository)
 container.bind<IAllowedEmailRepository>(TYPES.AllowedEmailRepository).to(AllowedEmailRepository)
-// container.bind<IAccessTokenRepository>(TYPES.AccessTokenRepository).to(AccessTokenRepository)
-// container.bind<IApiRepository>(TYPES.ApiRepository).to(ApiRepository)
+container.bind<IAccessTokenRepository>(TYPES.AccessTokenRepository).to(AccessTokenRepository)
+container.bind<IApiRepository>(TYPES.ApiRepository).to(ApiRepository)
 
 // Services
 container.bind<IArticleService>(TYPES.ArticleService).to(ArticleService)
@@ -69,8 +69,8 @@ container.bind<IImageUrlService>(TYPES.ImageUrlService).to(ImageUrlService)
 container.bind<IMediaFolderService>(TYPES.MediaFolderService).to(MediaFolderService)
 container.bind<IUserService>(TYPES.UserService).to(UserService)
 container.bind<IAllowedEmailService>(TYPES.AllowedEmailService).to(AllowedEmailService)
-// container.bind<IAccessTokenService>(TYPES.AccessTokenService).to(AccessTokenService)
-// container.bind<IApiService>(TYPES.ApiService).to(ApiService)
+container.bind<IAccessTokenService>(TYPES.AccessTokenService).to(AccessTokenService)
+container.bind<IApiService>(TYPES.ApiService).to(ApiService)
 
 
 

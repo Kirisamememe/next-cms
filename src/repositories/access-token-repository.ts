@@ -1,7 +1,24 @@
 import 'server-only'
+import { injectable } from 'inversify'
 import { prisma } from '@/prisma'
+import { AccessToken, EditorConcise } from '@/types'
 
-class AccessTokenRepository {
+
+export interface IAccessTokenRepository {
+  create(
+    operatorId: number,
+    token: string,
+    name: string,
+    expiresAt: Date
+  ): Promise<AccessToken>
+  update(token: string, name: string): Promise<AccessToken>
+  findUnique(token: string): Promise<AccessToken | null>
+  findManyWithAuthor(): Promise<(AccessToken & { author: EditorConcise })[]>
+  delete(token: string): Promise<AccessToken>
+}
+
+@injectable()
+export class AccessTokenRepository implements IAccessTokenRepository {
 
   /**
    * 
@@ -51,14 +68,19 @@ class AccessTokenRepository {
   }
 
 
-  async findMany() {
-    return prisma.accessToken.findMany()
-  }
-
   async findManyWithAuthor() {
     return prisma.accessToken.findMany({
       include: {
-        author: true
+        author: {
+          select: {
+            id: true,
+            role: true,
+            nickname: true,
+            image: true,
+            name: true,
+            email: true
+          }
+        }
       }
     })
   }
@@ -73,5 +95,3 @@ class AccessTokenRepository {
   }
 
 }
-
-export const accessTokenRepository = new AccessTokenRepository()

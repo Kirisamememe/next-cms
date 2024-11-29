@@ -2,7 +2,7 @@ import 'server-only'
 import { injectable } from 'inversify'
 import { DB, prisma } from '@/prisma'
 import { z } from 'zod'
-import { ArticleAtom, articleSubmitFormSchema } from '@/types/article-schema'
+import { ArticleAtom, articleSubmitFormSchema } from '@/types'
 
 export interface IArticleAtomsRepository {
   create(

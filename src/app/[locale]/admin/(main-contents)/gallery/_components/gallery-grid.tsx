@@ -11,6 +11,7 @@ type Props = {
   currentPath?: string
 }
 
+// TODO imageUrlsが空の場合の画面
 
 export async function GalleryGrid({ currentPath = '.' }: Props) {
   const decodedPath = currentPath ? decodeURIComponent(currentPath) : currentPath
@@ -34,7 +35,7 @@ export async function GalleryGrid({ currentPath = '.' }: Props) {
 
       <ImageUploading />
 
-      {imageUrls.map((imageUrl) => (
+      {imageUrls?.length && imageUrls.map((imageUrl) => (
         <GalleryItem key={`${imageUrl.id}_${imageUrl.url}`} imageUrl={imageUrl} />
       ))}
 

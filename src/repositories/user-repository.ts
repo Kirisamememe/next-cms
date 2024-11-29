@@ -1,7 +1,7 @@
 import 'server-only'
 import { DB, prisma } from '@/prisma'
 import { injectable } from 'inversify'
-import { EditorConcise, Role } from '@/types/editor-schema'
+import { EditorConcise, Role } from '@/types'
 
 
 export interface IUserRepository {

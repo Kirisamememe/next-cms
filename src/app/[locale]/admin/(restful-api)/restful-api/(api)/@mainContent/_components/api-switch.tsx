@@ -13,9 +13,8 @@ export function ApiSwitch({ isActive, apiId }: Props) {
   const [state, formAction] = useActionState(async () => {
     addOptimistic(!state)
 
-    const { data, error } = await toggleActive(apiId, !state)
-    if (error) {
-      console.log(error)
+    const data = await toggleActive(apiId, !state)
+    if (!data) {
       return false
     }
     return !!data.activatedAt

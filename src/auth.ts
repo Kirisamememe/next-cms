@@ -5,7 +5,7 @@ import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
 import { authConfig } from "./auth.config"
-import { Role } from "./types/editor-schema"
+import { Role } from "./types/schema-editor"
 
 declare module "next-auth" {
   interface User {
@@ -39,9 +39,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false
       }
 
-      const { data, noData } = await allowedEmailService.getAll()
+      const data = await allowedEmailService.getAll()
 
-      if (noData || !data?.length) {
+      if (!data?.length) {
         return true
       }
 
@@ -57,18 +57,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // まず、allowed_emailがuserにリンク済みか確認
       // まだリンクしていない場合、リンクを開始
       if ((trigger === "signUp" || trigger === "signIn") && await userService.noSuperAdmin() && user.email) {
-        const { error } = await userService.setSuperAdmin(user.email)
-        if (error) {
-          console.error(error)
-        }
+        await userService.setSuperAdmin(user.email)
       }
 
       // 要検証！！
       if ((trigger === "signUp" || trigger === "signIn") && user.email) {
-        const { error } = await userService.authenticateEmail(user.email)
-        if (error) {
-          console.error("Database error has occurred: setAsSuperAdmin")
-        }
+        await userService.authenticateEmail(user.email)
       }
 
       if (user) {
@@ -88,8 +82,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }
-      const { data, error } = await userService.getByEmail(token.email)
-      if (error) {
+      const data = await userService.getByEmail(token.email)
+      if (!data) {
         console.error('common.form.permission')
         return { ...session, user: { role: "BLOCKED" } }
       }

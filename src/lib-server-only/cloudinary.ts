@@ -1,6 +1,6 @@
 import 'server-only'
 import { v2 as cloudinary, ImageFormat } from 'cloudinary';
-import { CloudinaryApiResponse, CloudinaryResponse } from '@/types/image';
+import { CloudinaryApiResponse, CloudinaryResponse } from '@/types';
 
 class Cloudinary {
 

@@ -31,9 +31,9 @@ export default async function SpecificEditorPage({ params }: Props) {
   }
 
   // ターゲットユーザーの存在を確認
-  const { data, error } = await userService.getById(targetId)
+  const data = await userService.getById(targetId)
   // ターゲットユーザーが存在しない
-  if (error) {
+  if (!data) {
     notFound()
   }
 

@@ -1,21 +1,22 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
 import type { IImageUrlRepository } from '@/repositories'
-import { ImageUrl } from '@/types/image'
-import { imageUrlSchema, multipleImageUrlSchema } from '@/types/image-url-schema'
+import { ImageUrl } from '@/types'
+import { imageUrlSchema, multipleImageUrlSchema } from '@/types'
 import { z } from 'zod'
 import { TYPES } from '@/di/types'
 import { prisma } from '@/prisma'
+import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 export interface IImageUrlService {
-  create(operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } }>
-  createMany(operatorId: number, values: z.infer<typeof multipleImageUrlSchema>): Promise<{ count: number }>
-  update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } }>
-  move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl>
+  create(operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } } | null>
+  createMany(operatorId: number, values: z.infer<typeof multipleImageUrlSchema>): Promise<{ count: number } | null>
+  update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } } | null>
+  move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl | null>
   fetchByFolder(path: string): Promise<ImageUrl[]>
   fetchAllUrls(): Promise<string[]>
-  fetchById(imageId: number): Promise<{ data: ImageUrl, noData?: undefined } | { noData: 'Not Found', data?: undefined; }>
-  delete(id: number): Promise<ImageUrl>
+  fetchById(imageId: number): Promise<ImageUrl | null>
+  delete(id: number): Promise<ImageUrl | null>
 }
 
 
@@ -32,11 +33,11 @@ export class ImageUrlService implements IImageUrlService {
   }
 
 
-  create(
+  async create(
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>
-  ): Promise<{ data?: ImageUrl, error?: { message: string } }> {
-    return prisma.$transaction(async (trx) => {
+  ) {
+    return await prisma.$transaction(async (trx) => {
       const url = await this._imageUrlRepository.findUniqueByUrl(values.url, trx)
       if (url) {
         return {
@@ -47,24 +48,25 @@ export class ImageUrlService implements IImageUrlService {
       }
 
       return { data: await this._imageUrlRepository.create(operatorId, values, trx) }
-    })
+    }).catch(dbExceptionHandler)
   }
 
 
-  createMany(
+  async createMany(
     operatorId: number,
     values: z.infer<typeof multipleImageUrlSchema>
   ) {
-    return this._imageUrlRepository.createMany(operatorId, values)
+    return await this._imageUrlRepository.createMany(operatorId, values)
+      .catch(dbExceptionHandler)
   }
 
 
-  update(
+  async update(
     imageId: number,
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>
-  ): Promise<{ data?: ImageUrl, error?: { message: string } }> {
-    return prisma.$transaction(async (trx) => {
+  ) {
+    return await prisma.$transaction(async (trx) => {
       const url = await this._imageUrlRepository.findUniqueByUrl(values.url, trx)
       if (url && url.id !== imageId) {
         return {
@@ -74,40 +76,42 @@ export class ImageUrlService implements IImageUrlService {
         }
       }
       return { data: await this._imageUrlRepository.update(imageId, operatorId, values, trx) }
-    })
+    }).catch(dbExceptionHandler)
   }
 
-  move(
+  async move(
     imageId: number,
     operatorId: number,
     folderPath: string
   ) {
-    return this._imageUrlRepository.move(imageId, operatorId, folderPath)
+    return await this._imageUrlRepository.move(imageId, operatorId, folderPath)
+      .catch(dbExceptionHandler)
   }
 
 
-  fetchByFolder(path: string) {
-    return this._imageUrlRepository.findByPath(path)
+  async fetchByFolder(path: string) {
+    const res = await this._imageUrlRepository.findByPath(path).catch(dbExceptionHandler)
+    if (!res) {
+      return []
+    }
+    return res
   }
 
 
   async fetchAllUrls() {
-    const res = await this._imageUrlRepository.findAllUrls()
+    const res = await this._imageUrlRepository.findAllUrls().catch(dbExceptionHandler)
+    if (!res) {
+      return []
+    }
     return res.map((url) => url.url)
   }
 
   async fetchById(imageId: number) {
-    const data = await this._imageUrlRepository.findUnique(imageId)
-    if (!data) {
-      return {
-        noData: 'Not Found' as const
-      }
-    }
-    return { data }
+    return await this._imageUrlRepository.findUnique(imageId).catch(dbExceptionHandler)
   }
 
-  delete(id: number) {
-    return this._imageUrlRepository.delete(id)
+  async delete(id: number) {
+    return await this._imageUrlRepository.delete(id).catch(dbExceptionHandler)
   }
 
 }

@@ -2,11 +2,12 @@ import 'server-only'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@/di/types'
 import type { IAllowedEmailRepository } from '@/repositories'
-import { AllowedEmail } from '@/types/editor-schema'
+import { AllowedEmail } from '@/types'
+import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 
 export interface IAllowedEmailService {
-  getAll(): Promise<{ data: AllowedEmail[], noData: undefined } | { data: undefined, noData: string }>
+  getAll(): Promise<AllowedEmail[]>
 }
 
 @injectable()
@@ -26,13 +27,11 @@ export class AllowedEmailService implements IAllowedEmailService {
    * @returns 
    */
   async getAll() {
-    const data = await this._allowedEmailRepository.findMany()
-    if (!data.length) {
-      return {
-        noData: 'Not Found' as const
-      }
+    const data = await this._allowedEmailRepository.findMany().catch(dbExceptionHandler)
+    if (!data) {
+      return []
     }
-    return { data }
+    return data
   }
 
 }

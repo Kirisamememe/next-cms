@@ -2,7 +2,7 @@ import 'server-only'
 import { injectable } from 'inversify'
 import { prisma } from '@/prisma'
 import { z } from 'zod'
-import { MediaFolder, mediaFolderSchema } from '@/types/media-folder-schema'
+import { MediaFolder, mediaFolderSchema } from '@/types'
 
 
 export interface IMediaFolderRepository {

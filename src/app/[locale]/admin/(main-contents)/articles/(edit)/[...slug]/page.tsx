@@ -13,8 +13,6 @@ type Props = {
 }
 
 export default async function EditArticlePage({ params }: Props) {
-  // const articleService = getArticleService()
-
   const { slug } = await params
   if (slug[0] !== 'edit' || slug.length > 2) {
     notFound()
@@ -32,9 +30,9 @@ export default async function EditArticlePage({ params }: Props) {
   }
 
   const id = parseId.data
-  const { data, noData } = await articleService.getById(id)
+  const data = await articleService.getById(id)
 
-  if (noData || !data) notFound()
+  if (!data) notFound()
 
   return (
     <EditArticle article={data} />

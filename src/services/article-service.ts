@@ -1,21 +1,25 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
-import { ArticleForClient, articlePublicationForm, articleSubmitFormSchema, filter } from '@/types/article-schema'
+import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, articlePublicationForm, ArticlePublishedForClient, articleSubmitFormSchema, FindManyOptions } from '@/types'
 import { TYPES } from '@/di/types'
 import type { IArticleAtomsRepository, IArticleRepository } from '@/repositories'
 import { z } from 'zod'
 import { prisma } from '@/prisma'
+import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 
 export interface IArticleService {
-  getById(id: number, publishedOnly?: boolean): Promise<{ data: ArticleForClient, noData: undefined } | { data: undefined, noData: string }>
-  getMany(filter?: filter): Promise<ArticleForClient[]>
-  createWithAtom(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
-  updateArticleCreateAtom(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
-  updateArticle(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<any>
-  updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof articlePublicationForm>): Promise<any>
-  updateArchivedAt(articleId: number, operatorId: number): Promise<any>
-  restore(articleId: number, operatorId: number): Promise<any>
+  getById(id: number, publishedOnly?: boolean): Promise<ArticleForClient | null>
+  getMany(options?: FindManyOptions): Promise<ArticleForClient[]>
+  getManyDraft(options?: FindManyOptions): Promise<ArticleDraftForClient[]>
+  getManyPublished(options?: FindManyOptions): Promise<ArticlePublishedForClient[]>
+  getManyArchived(options?: FindManyOptions): Promise<ArticleArchivedForClient[]>
+  createWithAtom(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<ArticleAtom | null>
+  updateArticleCreateAtom(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
+  updateArticle(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
+  updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof articlePublicationForm>): Promise<Article | null>
+  updateArchivedAt(articleId: number, operatorId: number): Promise<Article | null>
+  restore(articleId: number, operatorId: number): Promise<Article | null>
 }
 
 
@@ -39,20 +43,69 @@ export class ArticleService implements IArticleService {
    * @returns 
    */
   async getById(id: number, publishedOnly: boolean = false) {
-    const article = await this._articleRepository.findById(id, publishedOnly)
+    const article = await this._articleRepository.findById(id, publishedOnly).catch(dbExceptionHandler)
     if (!article || !article?.atoms.length) {
-      return {
-        noData: 'Not Found' as const
-      }
+      return null
     }
 
     return {
-      data: {
-        ...article,
-        atom: article?.atoms[0],
-        atoms: undefined
-      }
+      ...article,
+      atom: article?.atoms[0],
+      atoms: undefined
     }
+  }
+
+
+
+  async getManyDraft(options?: FindManyOptions) {
+    const data = await this._articleRepository.findMany('draft', options)
+      .then((res) => res.map((article) => ({
+        ...article,
+        atom: article.atoms[0],
+        atoms: undefined,
+        archivedAt: article.archivedAt as null
+      })))
+      .catch(dbExceptionHandler)
+
+    if (!data) {
+      return []
+    }
+    return data
+  }
+
+
+  async getManyPublished(options?: FindManyOptions) {
+    const data = await this._articleRepository.findMany('publish', options)
+      .then((res) => res.map((article) => ({
+        ...article,
+        atom: article.atoms[0],
+        atoms: undefined,
+        publishedAt: article.publishedAt as Date,
+        archivedAt: article.archivedAt as null
+      })))
+      .catch(dbExceptionHandler)
+
+    if (!data) {
+      return []
+    }
+    return data
+  }
+
+
+  async getManyArchived(options?: FindManyOptions) {
+    const data = await this._articleRepository.findMany('archive', options)
+      .then((res) => res.map((article) => ({
+        ...article,
+        atom: article.atoms[0],
+        atoms: undefined,
+        archivedAt: article.archivedAt as Date
+      })))
+      .catch(dbExceptionHandler)
+
+    if (!data) {
+      return []
+    }
+    return data
   }
 
 
@@ -61,15 +114,22 @@ export class ArticleService implements IArticleService {
    * @param filter 
    * @returns 
    */
-  async getMany(filter?: filter) {
-    const articles = await this._articleRepository.findManyOrderByUpdatedAt(filter)
+  async getMany(options?: FindManyOptions) {
+    const data = await this._articleRepository.findMany('all', options)
+      .then((res) => res.map((article) => ({
+        ...article,
+        atom: article.atoms[0],
+        atoms: undefined
+      })))
+      .catch(dbExceptionHandler)
 
-    return articles.map((article) => ({
-      ...article,
-      atom: article.atoms[0],
-      atoms: undefined
-    }))
+    if (!data) {
+      return []
+    }
+    return data
   }
+
+
 
 
   /**
@@ -78,14 +138,14 @@ export class ArticleService implements IArticleService {
    * @param values 
    * @returns 
    */
-  createWithAtom(
+  async createWithAtom(
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
-    return prisma.$transaction(async (trx) => {
+    return await prisma.$transaction(async (trx) => {
       const article = await this._articleRepository.create(operatorId, values, trx)
       return await this._articleAtomsRepository.create(article.id, operatorId, values, trx)
-    })
+    }).catch(dbExceptionHandler)
   }
 
 
@@ -96,15 +156,15 @@ export class ArticleService implements IArticleService {
    * @param values 
    * @returns 
    */
-  updateArticleCreateAtom(
+  async updateArticleCreateAtom(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
-    return prisma.$transaction(async (trx) => {
+    return await prisma.$transaction(async (trx) => {
       await this._articleAtomsRepository.create(articleId, operatorId, values, trx)
       return await this._articleRepository.update(articleId, operatorId, values, trx)
-    })
+    }).catch(dbExceptionHandler)
   }
 
 
@@ -115,12 +175,13 @@ export class ArticleService implements IArticleService {
    * @param values 
    * @returns 
    */
-  updateArticle(
+  async updateArticle(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
   ) {
-    return this._articleRepository.update(articleId, operatorId, values)
+    return await this._articleRepository.update(articleId, operatorId, values)
+      .catch(dbExceptionHandler)
   }
 
   /**
@@ -130,12 +191,13 @@ export class ArticleService implements IArticleService {
    * @param values 
    * @returns 
    */
-  updatePublishAt(
+  async updatePublishAt(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articlePublicationForm>,
   ) {
-    return this._articleRepository.updateDate(articleId, operatorId, values)
+    return await this._articleRepository.updateDate(articleId, operatorId, values)
+      .catch(dbExceptionHandler)
   }
 
 
@@ -145,11 +207,12 @@ export class ArticleService implements IArticleService {
    * @param operatorId 
    * @returns 
    */
-  updateArchivedAt(
+  async updateArchivedAt(
     articleId: number,
     operatorId: number,
   ) {
-    return this._articleRepository.updateDate(articleId, operatorId, { archivedAt: new Date() })
+    return await this._articleRepository.updateDate(articleId, operatorId, { archivedAt: new Date() })
+      .catch(dbExceptionHandler)
   }
 
 
@@ -159,10 +222,11 @@ export class ArticleService implements IArticleService {
    * @param operatorId 
    * @returns 
    */
-  restore(
+  async restore(
     articleId: number,
     operatorId: number,
   ) {
-    return this._articleRepository.updateDate(articleId, operatorId, { archivedAt: null })
+    return await this._articleRepository.updateDate(articleId, operatorId, { archivedAt: null })
+      .catch(dbExceptionHandler)
   }
 }

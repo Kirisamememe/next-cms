@@ -1,6 +1,6 @@
 import 'server-only'
 import { DB, prisma } from '@/prisma'
-import { AllowedEmail } from '@/types/editor-schema'
+import { AllowedEmail } from '@/types'
 import { injectable } from 'inversify'
 
 export interface IAllowedEmailRepository {

@@ -27,7 +27,7 @@ export async function EditProfile({ editor }: Props) {
       image: parse.data.image
     })
 
-    if (!res.id) {
+    if (!res) {
       redirect(`/admin/editors/${editor.id}?formError=failed`,)
     }
 
