@@ -35,7 +35,7 @@ export async function GalleryGrid({ currentPath = '.' }: Props) {
 
       <ImageUploading />
 
-      {imageUrls?.length && imageUrls.map((imageUrl) => (
+      {!!imageUrls?.length && imageUrls.map((imageUrl) => (
         <GalleryItem key={`${imageUrl.id}_${imageUrl.url}`} imageUrl={imageUrl} />
       ))}
 

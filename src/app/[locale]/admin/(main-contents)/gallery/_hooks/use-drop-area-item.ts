@@ -43,7 +43,7 @@ export function useDropAreaItem({ areaData }: Props) {
   }, [areaData, setDroppedData])
 
   const dropAreaClassNames = useMemo(() => (cn(
-    isDragOver && "[transition:none] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
+    isDragOver && "[transition:scale_200ms,opacity_200ms] outline outline-blue-600 outline-4 -outline-offset-4 rounded-md",
   )), [isDragOver])
 
   const dropAreaHandlers = useMemo(() => ({
