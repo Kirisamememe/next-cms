@@ -34,7 +34,10 @@
     },
     "editors": {
       "1": "Editors Management",
-      "2": "Edit Profile"
+      "2": {
+        "id": "Edit Profile",
+        "new": "New Editor"
+      }
     },
     "preference": {
       "1": "Preferences"

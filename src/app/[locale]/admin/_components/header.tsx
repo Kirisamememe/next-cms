@@ -22,6 +22,7 @@ export function Header() {
   if (pathname.split('/')[2] === 'gallery') {
     return (
       <HeaderContainer>
+        {/* リストの数は制限なし */}
         {pathname.split('/').slice(1).map((segment, index, arr) => {
           if (index === 0) return null
 
@@ -36,7 +37,7 @@ export function Header() {
 
           const href = '/' + arr.slice(0, index + 1).join('/')
 
-          // リストが二つ以上、現在の要素が1番目
+          // 現在の要素が1番目
           if (index === 1) {
             return (
               <BreadcrumbItem key={segment} className="text-base font-semibold hover:text-foreground">
@@ -91,6 +92,7 @@ export function Header() {
 
   return (
     <HeaderContainer>
+      {/* リストは2つまで */}
       {pathname.split('/').slice(1, 4).map((segment, index, arr) => {
         if (index === 0) return null
 
@@ -116,11 +118,12 @@ export function Header() {
           )
         }
 
+        // リストが二つ以上、現在の要素が2番目
         return (
           <React.Fragment key={segment}>
             <BreadcrumbSeparator />
             <BreadcrumbPage className="text-base font-semibold">
-              {t(`${arr[1]}.2${segment.match(/^[0-9]+$/) ? '' : `.${segment}`}`)}
+              {t(`${arr[1]}.2${segment.match(/^[0-9]+$/) ? '.id' : `.${segment}`}`)}
             </BreadcrumbPage>
           </React.Fragment>
         )
