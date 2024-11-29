@@ -18,14 +18,15 @@ export interface IArticleRepository {
 @injectable()
 export class ArticleRepository implements IArticleRepository {
 
-  private orderBy = (
-    column: string,
-    options?: {
+  private orderBy(
+    options: {
+      column: string,
       order?: 'desc' | 'asc',
       nullable?: boolean
     }
-  ) => {
+  ) {
     const {
+      column,
       order = 'desc',
       nullable = false
     } = options || {}
@@ -38,35 +39,44 @@ export class ArticleRepository implements IArticleRepository {
   }
 
 
-
-  private noFilter = {
-    where: {
-      archivedAt: null
+  private getFilter(filter: Filter) {
+    if (filter === 'all') {
+      return {
+        where: {
+          archivedAt: null
+        }
+      }
     }
-  }
 
-  private draftFilter = {
-    where: {
-      OR: [
-        { publishedAt: null },
-        { publishedAt: { gt: new Date() } }
-      ],
-      archivedAt: null
+    if (filter === 'draft') {
+      return {
+        where: {
+          OR: [
+            { publishedAt: null },
+            { publishedAt: { gt: new Date() } }
+          ],
+          archivedAt: null
+        }
+      }
     }
-  }
 
-  private publishFilter = {
-    where: {
-      publishedAt: {
-        lt: new Date()
-      },
-      archivedAt: null
+    if (filter === 'publish') {
+      return {
+        where: {
+          publishedAt: {
+            lt: new Date()
+          },
+          archivedAt: null
+        }
+      }
     }
-  }
 
-  private archivedFilter = {
-    where: {
-      archivedAt: { not: null }
+    if (filter === 'archive') {
+      return {
+        where: {
+          archivedAt: { not: null }
+        }
+      }
     }
   }
 
@@ -86,8 +96,8 @@ export class ArticleRepository implements IArticleRepository {
       author: this.authorProperties
     },
     orderBy: [
-      this.orderBy('selectedAt', { nullable: true }),
-      this.orderBy('createdAt')
+      this.orderBy({ column: 'selectedAt', nullable: true }),
+      this.orderBy({ column: 'createdAt' })
     ],
     take: 1
   }
@@ -105,22 +115,21 @@ export class ArticleRepository implements IArticleRepository {
     options?: FindManyOptions,
   ) {
     const {
-      orderBy = ['updatedAt', 'createdAt'],
-      order = 'desc',
+      orderBy = [
+        { column: 'updatedAt', nullable: false, order: 'desc', },
+        { column: 'createdAt', nullable: false, order: 'desc', }
+      ],
       take,
     } = options || {}
 
     return prisma.article.findMany({
-      ...(filter === 'all' && this.noFilter),
-      ...(filter === 'draft' && this.draftFilter),
-      ...(filter === 'publish' && this.publishFilter),
-      ...(filter === 'archive' && this.archivedFilter),
+      ...this.getFilter(filter),
       include: {
         atoms: this.atomsProperties,
         author: this.authorProperties,
         lastEdited: this.authorProperties
       },
-      orderBy: [...orderBy.map((o) => this.orderBy(o, { order }))],
+      orderBy: [...orderBy.map((o) => this.orderBy(o))],
       ...(take && {
         take: take
       })
@@ -172,12 +181,9 @@ export class ArticleRepository implements IArticleRepository {
    * 2、publishedAtが全部nullの場合、created_atが最新である
    * @returns 
    */
-  findManyOrderByUpdatedAt(filter?: Filter) {
+  findManyOrderByUpdatedAt(filter: Filter = 'all') {
     return prisma.article.findMany({
-      ...(!filter && this.noFilter),
-      ...(filter === 'draft' && this.draftFilter),
-      ...(filter === 'publish' && this.publishFilter),
-      ...(filter === 'archive' && this.archivedFilter),
+      ...this.getFilter(filter),
       include: {
         atoms: this.atomsProperties,
         author: this.authorProperties,
@@ -191,7 +197,7 @@ export class ArticleRepository implements IArticleRepository {
 
 
 
-  async create(
+  create(
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
     db: DB = prisma
@@ -225,7 +231,7 @@ export class ArticleRepository implements IArticleRepository {
    * @param db 
    * @returns 
    */
-  async update(
+  update(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
@@ -260,7 +266,7 @@ export class ArticleRepository implements IArticleRepository {
    * @param db 
    * @returns 
    */
-  async updateDate(
+  updateDate(
     articleId: number,
     operatorId: number,
     values: {
@@ -269,7 +275,7 @@ export class ArticleRepository implements IArticleRepository {
     },
     db: DB = prisma
   ) {
-    return await db.article.update({
+    return db.article.update({
       where: {
         id: articleId
       },
