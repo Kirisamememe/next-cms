@@ -78,11 +78,6 @@ export const normalGroup = [
 export const normalRole: Role[] = [...normalGroup] as Role[]
 
 
-export const editorProfileFormSuperAdmin = z.object({
-  nickname: z.string().max(12, "editor.profile.nicknameValidationMax"),
-  role: z.enum(roles, { message: "role.error" }).optional()
-})
-
 export const editRoleFormSchema = z.object({
   role: z.enum(roles, { message: "role.error" })
 })

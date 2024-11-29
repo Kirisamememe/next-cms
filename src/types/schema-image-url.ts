@@ -1,5 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
+import { EditorConcise } from "./schema-editor";
 
 export const imageUrlSchema = z.object({
   name: z.string().max(32, '32文字以下で入力してください').default(createId()),
@@ -16,12 +17,7 @@ export const multipleImageUrlSchema = z.object({
 
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
-// const MAX_IMAGE_SIZE = Number(process.env.MAX_IMAGE_SIZE);
-// const MB_TO_BYTE = 1024 * 1024
 
-// const validateImageSize = (file: File) => {
-//   return file.size <= MAX_IMAGE_SIZE * MB_TO_BYTE;
-// }
 
 const validateImageType = (files: File[]) => {
   return !files.some((file) => !IMAGE_TYPES.includes(file.type));
@@ -32,3 +28,22 @@ export const imageFilesSchema = z.object({
   images: z.custom<File[]>()
     .refine(validateImageType, { message: '' })
 })
+
+
+
+
+export type ImageUrl = {
+  id: number
+  name: string
+  url: string
+
+  createdAt: Date
+  updatedAt: Date
+  archivedAt: Date | null
+
+  folderPath: string
+  authorId: number
+  lastEditedBy: number
+
+  author?: EditorConcise
+}

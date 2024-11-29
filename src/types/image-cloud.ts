@@ -1,30 +1,4 @@
 import { ImageFormat } from "cloudinary"
-import { Role } from "./editor-schema"
-
-
-export type ImageUrl = {
-  id: number
-  name: string
-  url: string
-
-  createdAt: Date
-  updatedAt: Date
-  archivedAt: Date | null
-
-  folderPath: string
-  authorId: number
-  lastEditedBy: number
-
-  author?: Author
-}
-
-export type Author = {
-  id: number
-  name: string | null
-  nickname: string | null
-  image: string | null
-  role: Role
-}
 
 export type CloudinaryResponse = {
   resources: CloudinaryResource[]

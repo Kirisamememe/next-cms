@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EditorConcise } from "./editor-schema";
+import { EditorConcise } from "./schema-editor";
 import { createId } from '@paralleldrive/cuid2';
 
 
@@ -37,17 +37,7 @@ export type ArticleAtom = {
 }
 
 
-export type ArticleForClient = Article & {
-  atom: ArticleAtom
-  author: EditorConcise
-  lastEdited: EditorConcise
-}
 
-export type ArticleWithAtoms = Article & {
-  atoms: ArticleAtom[]
-  author: EditorConcise
-  lastEdited: EditorConcise
-}
 
 export type Article = {
   id: number
@@ -58,14 +48,42 @@ export type Article = {
 
   createdAt: Date
   updatedAt: Date
+
   publishedAt: Date | null
   archivedAt: Date | null
-
-  author?: EditorConcise
-  lastEdited?: EditorConcise
 }
 
+export type ArticleWithAllFields = Article & {
+  author: EditorConcise
+  lastEdited: EditorConcise
+  atoms: ArticleAtom[]
+}
 
-export type filter = 'draft' | 'publish' | 'archive'
+export type ArticleForClient = Omit<ArticleWithAllFields, 'atoms'> & {
+  atom: ArticleAtom
+}
+
+export type ArticleDraftForClient = Omit<ArticleForClient, 'publishedAt' | 'archivedAt'> & {
+  publishedAt: Date | null;
+  archivedAt: null;
+}
+
+export type ArticlePublishedForClient = Omit<ArticleForClient, 'publishedAt' | 'archivedAt'> & {
+  publishedAt: Date;
+  archivedAt: null;
+}
+
+export type ArticleArchivedForClient = Omit<ArticleForClient, 'publishedAt' | 'archivedAt'> & {
+  publishedAt: Date | null;
+  archivedAt: Date;
+}
+
+export type Filter = 'all' | 'draft' | 'publish' | 'archive'
+
+export type FindManyOptions = {
+  orderBy?: string[],
+  order?: 'desc' | 'asc',
+  take?: number,
+}
 
 

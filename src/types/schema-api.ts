@@ -17,6 +17,7 @@ export const updateApiSchema = z.object({
 })
 
 
+
 export type Api = {
   id: number
   name: string
