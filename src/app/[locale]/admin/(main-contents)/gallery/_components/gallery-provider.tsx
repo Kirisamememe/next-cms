@@ -62,30 +62,41 @@ export function GalleryProvider({ children, folders, GRID_SIZE_SERVER }: Props) 
     img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
     dragImageRef.current = img
 
+    let dragCounter = 0
+
     const handleDragEnter = (e: DragEvent) => {
       e.preventDefault()
       if (!e.dataTransfer?.types.includes('Files')) {
         return
       }
-      setFilesDragging(true)
+      dragCounter++
+      if (dragCounter === 1) {
+        setFilesDragging(true)
+      }
     }
 
     const handleDragLeave = (e: DragEvent) => {
       e.preventDefault()
-      // relatedTargetがnullまたはbody/htmlの場合は、ブラウザーの範囲外にドラッグされたとみなす
-      if (!e.relatedTarget || ['HTML', 'BODY'].includes((e.relatedTarget as Element).tagName)) {
+
+      dragCounter--
+      if (dragCounter === 0) {
         setFilesDragging(false)
       }
     }
 
+    const handleDrop = () => {
+      dragCounter = 0
+      setFilesDragging(false)
+    }
+
     document.addEventListener('dragenter', handleDragEnter)
     document.addEventListener('dragleave', handleDragLeave)
-    document.addEventListener('drop', () => setFilesDragging(false))
+    document.addEventListener('drop', handleDrop)
 
     return () => {
       document.removeEventListener('dragenter', handleDragEnter)
       document.removeEventListener('dragleave', handleDragLeave)
-      document.removeEventListener('drop', () => setFilesDragging(false))
+      document.removeEventListener('drop', handleDrop)
     }
   }, [])
 
@@ -107,7 +118,10 @@ export function GalleryProvider({ children, folders, GRID_SIZE_SERVER }: Props) 
   return (
     <GalleryContext.Provider
       value={contextValue}>
-      <div onDragOver={e => e.preventDefault()} className="w-full h-full">
+      <div
+        onDragOver={e => e.preventDefault()}
+        className="w-full h-full"
+      >
         {children}
       </div>
     </GalleryContext.Provider>
