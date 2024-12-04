@@ -23,10 +23,13 @@ model User {
 
   allowed_email AllowedEmail?
 
-  articles       Article[]     @relation("ArticleAuthor")
-  editedArticles Article[]     @relation("ArticleEditor")
-  articleAtom    ArticleAtom[]
-  contents       Content[]
+  jsonAtoms       JsonAtom[]
+  jsonContents    JsonContent[]    @relation("Author")
+  editedJsonContents JsonContent[]    @relation("LastEditor")
+  articles        Article[]     @relation("ArticleAuthor")
+  editedArticles  Article[]     @relation("ArticleEditor")
+  articleAtom     ArticleAtom[]
+
   sessions       Session[]
   accounts       Account[]
   apis           Api[]         @relation("ApiAuthor")
@@ -87,20 +90,46 @@ model VerificationToken {
   @@map("verification_token")
 }
 
-model Homepage {
-  id           Int       @id @default(autoincrement())
-  slug         String    @unique
-  heading      String
-  introduction String?
-  biography    String?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  archived_at  DateTime?
-  published_at DateTime?
-  locale       Locale
-  contents     Content[]
+model JsonContent {
+  id Int @id @default(autoincrement())
+  title       String?
+  description String?
 
-  @@map("homepage")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  publishedAt DateTime? @map("published_at")
+  archivedAt  DateTime? @map("archived_at")
+
+  authorId     Int  @map("author_id")
+  author       User @relation("Author", fields: [authorId], references: [id])
+  lastEditorId Int  @map("last_editor_id")
+  lastEditor   User @relation("LastEditor", fields: [lastEditorId], references: [id])
+
+
+  categoryId Int? @map("category_id")
+  category   JsonContentCategory? @relation(fields: [categoryId], references: [id])
+
+  jsonAtoms JsonAtom[]
+  tags      JsonContentTagJunction[]
+
+  @@map("json_content")
+}
+
+model JsonAtom {
+  id      Int  @id @default(autoincrement())
+  content Json
+
+  version Int @default(1000)
+
+  createdAt  DateTime  @default(now()) @map("created_at")
+  selectedAt DateTime? @default(now()) @map("selected_at")
+
+  authorId   Int      @map("author_id")
+  author     User     @relation(fields: [authorId], references: [id])
+  jsonContentId Int      @map("json_content_id")
+  jsonContent   JsonContent @relation(fields: [jsonContentId], references: [id])
+
+  @@map("json_atom")
 }
 
 model ArticleAtom {
@@ -141,7 +170,7 @@ model Article {
   categoryId   Int?      @map("category_id")
   author       User      @relation("ArticleAuthor", fields: [authorId], references: [id])
   lastEdited   User      @relation("ArticleEditor", fields: [lastEditedBy], references: [id])
-  category     Category? @relation(fields: [categoryId], references: [id])
+  category     ArticleCategory? @relation(fields: [categoryId], references: [id])
 
   atoms ArticleAtom[]
   tags  ArticleTagJunction[]
@@ -188,181 +217,56 @@ model ImageUrl {
   @@map("image_url")
 }
 
-model TextValue {
-  id           Int      @id @default(autoincrement())
-  value        String
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
 
-  @@index([fieldId])
-  @@map("text_value")
-}
-
-model NumberValue {
-  id           Int      @id @default(autoincrement())
-  value        Float
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
-
-  @@index([fieldId])
-  @@map("number_value")
-}
-
-model UrlValue {
-  id           Int      @id @default(autoincrement())
-  value        String
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
-
-  @@index([fieldId])
-  @@map("url_value")
-}
-
-model DateValue {
-  id           Int      @id @default(autoincrement())
-  value        DateTime @db.Date
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
-
-  @@index([fieldId])
-  @@map("date_value")
-}
-
-model DateTimeValue {
-  id           Int      @id @default(autoincrement())
-  value        DateTime
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
-
-  @@index([fieldId])
-  @@map("datetime_value")
-}
-
-model BooleanValue {
-  id           Int      @id @default(autoincrement())
-  value        Boolean
-  createdAt    DateTime @default(now()) @map("created_at")
-  is_published Boolean  @default(true)
-  fieldId      Int      @map("field_id")
-  field        Field    @relation(fields: [fieldId], references: [id])
-
-  @@index([fieldId])
-  @@map("boolean_value")
-}
-
-model Category {
+model ArticleCategory {
   id       Int       @id @default(autoincrement())
   name     String
+  
   articles Article[]
-  contents Content[]
 
-  @@map("category")
+  @@map("article_category")
+}
+
+model JsonContentCategory {
+  id Int @id @default(autoincrement())
+  name String
+
+  jsonContents JsonContent[]
+
+  @@map("json_content_category")
 }
 
 model Tag {
   id       Int                  @id @default(autoincrement())
   name     String
+
   articles ArticleTagJunction[]
-  contents ContentTagJunction[]
+  jsonContents JsonContentTagJunction[]
 
   @@index([name])
   @@map("tag")
 }
 
 model ArticleTagJunction {
-  article_id Int
-  tag_id     Int
-  article    Article @relation(fields: [article_id], references: [id])
-  tag        Tag     @relation(fields: [tag_id], references: [id])
+  articleId Int @map("article_id")
+  tagId     Int @map("tag_id")
+  article   Article @relation(fields: [articleId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id])
 
-  @@id([article_id, tag_id])
+  @@id([articleId, tagId])
   @@map("article_tag_junction")
 }
 
-model ContentTagJunction {
-  content_id Int
-  tag_id     Int
-  content    Content @relation(fields: [content_id], references: [id])
-  tag        Tag     @relation(fields: [tag_id], references: [id])
+model JsonContentTagJunction {
+  jsonContentId Int @map("json_content_id")
+  tagId          Int @map("tag_id")
+  jsonContent    JsonContent @relation(fields: [jsonContentId], references: [id])
+  tag             Tag         @relation(fields: [tagId], references: [id])
 
-  @@id([content_id, tag_id])
-  @@map("content_tag_junction")
+  @@id([jsonContentId, tagId])
+  @@map("json_content_tag_junction")
 }
 
-model Field {
-  id             Int             @id @default(autoincrement())
-  field_type_id  Int?
-  content_id     Int
-  boolean_value  BooleanValue[]
-  date_value     DateValue[]
-  datetime_value DateTimeValue[]
-  content        Content         @relation(fields: [content_id], references: [id])
-  field_type     FieldType?      @relation(fields: [field_type_id], references: [id])
-  number_value   NumberValue[]
-  text_value     TextValue[]
-  url_value      UrlValue[]
-
-  @@index([field_type_id])
-  @@map("field")
-}
-
-model FieldType {
-  id         Int       @id @default(autoincrement())
-  field_name String
-  required   Boolean
-  value_type ValueType
-
-  collection_id Int
-  collection    Collection @relation(fields: [collection_id], references: [id])
-
-  fields Field[]
-
-  @@index([collection_id])
-  @@map("field_type")
-}
-
-model Content {
-  id              Int     @id @default(autoincrement())
-  slug            String  @unique
-  name            String?
-  description     String?
-  permissionLevel Int     @default(3) @map("permission_level")
-
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  publishedAt DateTime? @map("published_at")
-  archivedAt  DateTime? @map("archived_at")
-
-  authorId Int  @map("author_id")
-  author   User @relation(fields: [authorId], references: [id])
-
-  categoryId Int?      @map("category_id")
-  category   Category? @relation(fields: [categoryId], references: [id])
-
-  collectionId Int?        @map("collection_id")
-  collection   Collection? @relation(fields: [collectionId], references: [id])
-
-  homepageId Int?      @map("homepage_id")
-  homepage   Homepage? @relation(fields: [homepageId], references: [id])
-
-  apiId Int? @map("api_id")
-  api   Api? @relation(fields: [apiId], references: [id])
-
-  tags   ContentTagJunction[]
-  fields Field[]
-
-  @@map("content")
-}
 
 model Collection {
   id   Int    @id @default(autoincrement())
@@ -371,8 +275,6 @@ model Collection {
   apiId Int? @map("api_id")
   api   Api? @relation(fields: [apiId], references: [id])
 
-  contents      Content[]
-  contentSchema FieldType[]
 
   @@map("collection")
 }
@@ -395,7 +297,6 @@ model Api {
   lastEditorId Int
   lastEditor   User @relation("ApiEditor", fields: [lastEditorId], references: [id])
 
-  contents    Content[]
   collections Collection[]
 
   @@map("api")
