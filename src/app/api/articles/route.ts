@@ -7,15 +7,17 @@ export const dynamic = 'force-dynamic'
 export async function GET(req: NextRequest) {
   const data = await apiService.getByName('article')
   if (!data || !data.activatedAt) {
-    return NextResponse.json({ error: 'Not Found' }, { status: 404 })
+    return
   }
+
+  const response = NextResponse.json(data)
+  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+  response.headers.set('Access-Control-Allow-Methods', 'GET')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 
   const authHeader = req.headers.get('authorization')
   const token = authHeader?.replace('Bearer ', '')
-  if (!token) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+  if (!token) return
   if (!await accessTokenService.isTokenAvailable(token)) {
     return NextResponse.json({ error: 'Token is expired or invalid' }, { status: 401 })
   }
@@ -40,6 +42,12 @@ export async function GET(req: NextRequest) {
   }
 
   return NextResponse.json({ articles })
-
-  // return NextResponse.json({ req })
 }
+
+// export async function OPTIONS() {
+//   const response = new NextResponse(null, { status: 204 })
+//   response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+//   response.headers.set('Access-Control-Allow-Methods', 'GET')
+//   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+//   return response
+// }

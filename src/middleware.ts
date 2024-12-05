@@ -7,6 +7,13 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
+const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1']
+ 
+const corsOptions = {
+  'Access-Control-Allow-Methods': 'GET',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
 export const publicPages = [
   '/docs',
   '/articles',
@@ -63,13 +70,34 @@ export default function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith('/api')) {
-    const authHeader = req.headers.get('authorization')
+    const origin = req.headers.get('origin') ?? ''
+    console.log(`origin: ${origin}`)
+    const isAllowedOrigin = allowedOrigins.includes(origin)
 
+    const isPreflight = req.method === 'OPTIONS'
+    if (isPreflight) {
+      const preflightHeaders = {
+        ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
+        ...corsOptions,
+      }
+      return NextResponse.json({}, { headers: preflightHeaders })
+    }
+    
+    const authHeader = req.headers.get('authorization')
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const response = NextResponse.next()
+    if (isAllowedOrigin) {
+      response.headers.set('Access-Control-Allow-Origin', origin)
+    }
 
-    return
+    Object.entries(corsOptions).forEach(([key, value]) => {
+      response.headers.set(key, value)
+    })
+    return response
   }
 
   const publicPathnameRegex = RegExp(
