@@ -32,6 +32,9 @@
     "dashboard": {
       "1": "ダッシュボード"
     },
+    "build-in-pages": {
+      "1": "ビルドインページ"
+    },
     "editors": {
       "1": "編集者管理",
       "2": {
@@ -45,42 +48,43 @@
     "docs": {
       "1": "ドキュメント"
     },
-    "homepage": {
-      "1": "ホームページ"
-    },
     "articles": {
-      "1": "ブログ記事",
+      "1": "文章",
       "2": {
-        "edit": "記事編集",
+        "edit": "編集",
         "draft": "下書き",
         "published": "公開中",
         "archive": "アーカイブ"
       }
     },
-    "portfolio": {
-      "1": "ポートフォリオ"
+    "json-content": {
+      "1": "JSONコンテンツ",
+      "2": {
+        "edit": "編集",
+        "new": "新規作成"
+      }
     },
     "gallery": {
       "1": "ギャラリー",
       "2": "画像プレビュー"
     },
-    "biography": {
-      "1": "バイオグラフィー"
+    "media-collection": {
+      "1": "メディアコレクション"
     },
-    "single-contents": {
-      "1": "単体コンテンツ"
+    "custom-contents": {
+      "1": "カスタムコンテンツ"
     },
-    "collections": {
-      "1": "コレクション"
-    },
-    "pages": {
-      "1": "ページ"
+    "contents-group": {
+      "1": "コンテンツグループ"
     },
     "restful-api": {
       "1": "RESTful API",
       "2": {
         "token": "アクセストークン"
       }
+    },
+    "graphQL": {
+      "1": "GraphQL"
     },
     "log": {
       "1": "ログ集計"
@@ -90,30 +94,27 @@
     }
   },
   "sidebar": {
-    "overview": {
-      "name": "共通",
+    "system": {
+      "name": "システム",
       "dashboard": "ダッシュボード",
+      "buildInPages": "ビルドインページ",
       "editors": "編集者管理",
       "preference": "環境設定",
       "docs": "ドキュメント"
     },
-    "mainContents": {
-      "name": "主要コンテンツ",
-      "homepage": "ホームページ",
-      "articles": "ブログ記事",
-      "portfolio": "ポートフォリオ",
+    "contents": {
+      "name": "コンテンツ",
+      "article": "文章",
+      "jsonContent": "JSONコンテンツ",
       "gallery": "ギャラリー",
-      "biography": "バイオグラフィー"
+      "mediaCollection": "メディアコレクション",
+      "relationalContent": "カスタムコンテンツ",
+      "contentsGroup": "コンテンツグループ"
     },
-    "customContents": {
-      "name": "カスタムコンテンツ",
-      "singleContents": "単体コンテンツ",
-      "collections": "コレクション",
-      "pages": "ページ"
-    },
-    "restful": {
-      "name": "RESTful API",
+    "api": {
+      "name": "API",
       "restfulApi": "RESTful API",
+      "graphQL": "GraphQL",
       "log": "ログ集計",
       "apiTest": "テスト"
     },

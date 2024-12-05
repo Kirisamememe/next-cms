@@ -32,6 +32,9 @@
     "dashboard": {
       "1": "Dashboard"
     },
+    "build-in-pages": {
+      "1": "Build In Pages"
+    },
     "editors": {
       "1": "Editors Management",
       "2": {
@@ -45,9 +48,6 @@
     "docs": {
       "1": "Documentation"
     },
-    "homepage": {
-      "1": "Homepage"
-    },
     "articles": {
       "1": "Articles",
       "2": {
@@ -57,30 +57,34 @@
         "archive": "Archive"
       }
     },
-    "portfolio": {
-      "1": "Portfolio"
+    "json-content": {
+      "1": "JSON Content",
+      "2": {
+        "edit": "Edit JSON Content",
+        "new": "New JSON Content"
+      }
     },
     "gallery": {
       "1": "Gallery",
       "2": "Image Preview"
     },
-    "biography": {
-      "1": "About Me"
+    "media-collection": {
+      "1": "Media Collection"
     },
-    "single-contents": {
+    "custom-contents": {
       "1": "Single Content"
     },
-    "collections": {
-      "1": "Collections"
-    },
-    "pages": {
-      "1": "Pages"
+    "contents-group": {
+      "1": "Contents Group"
     },
     "restful-api": {
       "1": "RESTful API",
       "2": {
         "token": "Access Token"
       }
+    },
+    "graphQL": {
+      "1": "GraphQL"
     },
     "log": {
       "1": "Log Analytics"
@@ -90,30 +94,27 @@
     }
   },
   "sidebar": {
-    "overview": {
-      "name": "Overview",
+    "system": {
+      "name": "System",
       "dashboard": "Dashboard",
+      "buildInPages": "Build In Pages",
       "editors": "Editor Management",
       "preference": "Preferences",
       "docs": "Documentation"
     },
-    "mainContents": {
-      "name": "Main Contents",
-      "homepage": "Homepage",
-      "articles": "Blog Articles",
-      "portfolio": "Portfolio",
+    "contents": {
+      "name": "Contents",
+      "article": "Article",
+      "jsonContent": "JSON Content",
       "gallery": "Gallery",
-      "biography": "Biography"
+      "mediaCollection": "Media Collection",
+      "relationalContent": "Relational Content",
+      "contentsGroup": "Contents Group"
     },
-    "customContents": {
-      "name": "Custom Contents",
-      "singleContents": "Single Contents",
-      "collections": "Collections",
-      "pages": "Pages"
-    },
-    "restful": {
-      "name": "RESTful API",
+    "api": {
+      "name": "API",
       "restfulApi": "RESTful API",
+      "graphQL": "GraphQL",
       "log": "Log Analytics",
       "apiTest": "Test"
     },

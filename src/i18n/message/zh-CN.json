@@ -32,6 +32,9 @@
     "dashboard": {
       "1": "仪表盘"
     },
+    "build-in-pages": {
+      "1": "内建网页"
+    },
     "editors": {
       "1": "编辑者管理",
       "2": {
@@ -45,9 +48,6 @@
     "docs": {
       "1": "文档"
     },
-    "homepage": {
-      "1": "主页"
-    },
     "articles": {
       "1": "文章",
       "2": {
@@ -57,24 +57,25 @@
         "archive": "已归档"
       }
     },
-    "portfolio": {
-      "1": "作品集"
+    "json-content": {
+      "1": "JSON对象",
+      "2": {
+        "edit": "编辑JSON对象",
+        "new": "新增JSON对象"
+      }
     },
     "gallery": {
       "1": "图库",
       "2": "图片预览"
     },
-    "biography": {
-      "1": "关于我"
+    "media-collection": {
+      "1": "媒体集合"
     },
-    "single-contents": {
-      "1": "单页内容"
+    "custom-contents": {
+      "1": "自定义内容"
     },
-    "collections": {
-      "1": "合集"
-    },
-    "pages": {
-      "1": "页面"
+    "contents-group": {
+      "1": "内容组"
     },
     "restful-api": {
       "1": "RESTful API",
@@ -90,30 +91,27 @@
     }
   },
   "sidebar": {
-    "overview": {
+    "system": {
       "name": "通用",
       "dashboard": "仪表盘",
+      "buildInPages": "内建网页",
       "editors": "编辑者管理",
       "preference": "偏好设置",
       "docs": "文档"
     },
-    "mainContents": {
+    "contents": {
       "name": "主要内容",
-      "homepage": "主页",
-      "articles": "博客文章",
-      "portfolio": "作品集",
+      "article": "文章",
+      "jsonContent": "JSON对象",
       "gallery": "图库",
-      "biography": "关于我"
+      "mediaCollection": "媒体集",
+      "relationalContent": "自定义内容",
+      "contentsGroup": "内容组"
     },
-    "customContents": {
-      "name": "自定义内容",
-      "singleContents": "单一内容",
-      "collections": "集合",
-      "pages": "页面"
-    },
-    "restful": {
+    "api": {
       "name": "RESTful API",
       "restfulApi": "RESTful API",
+      "graphQL": "GraphQL",
       "log": "日志分析",
       "apiTest": "测试"
     },

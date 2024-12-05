@@ -32,6 +32,9 @@
     "dashboard": {
       "1": "儀表板"
     },
+    "build-in-pages": {
+      "1": "內建網頁"
+    },
     "editors": {
       "1": "編輯者管理",
       "2": {
@@ -57,24 +60,25 @@
         "archive": "已封存"
       }
     },
-    "portfolio": {
-      "1": "作品集"
+    "json-content": {
+      "1": "JSON對象",
+      "2": {
+        "edit": "編輯JSON對象",
+        "new": "新增JSON對象"
+      }
     },
     "gallery": {
       "1": "圖庫",
       "2": "圖像預覽"
     },
-    "biography": {
-      "1": "關於我"
+    "media-collection": {
+      "1": "媒體集"
     },
-    "single-contents": {
-      "1": "單頁內容"
+    "custom-contents": {
+      "1": "自定義內容"
     },
-    "collections": {
-      "1": "合集"
-    },
-    "pages": {
-      "1": "頁面"
+    "contents-group": {
+      "1": "內容組"
     },
     "restful-api": {
       "1": "RESTful API",
@@ -90,30 +94,27 @@
     }
   },
   "sidebar": {
-    "overview": {
-      "name": "通用",
+    "system": {
+      "name": "系統",
       "dashboard": "儀表板",
+      "buildInPages": "內建網頁",
       "editors": "編輯者管理",
       "preference": "偏好設定",
       "docs": "文檔"
     },
-    "mainContents": {
+    "contents": {
       "name": "主要內容",
-      "homepage": "首頁",
-      "articles": "部落格文章",
-      "portfolio": "作品集",
+      "article": "文章",
+      "jsonContent": "JSON對象",
       "gallery": "圖庫",
-      "biography": "關於我"
+      "mediaCollection": "媒體集",
+      "relationalContent": "自定義內容",
+      "contentsGroup": "內容組"
     },
-    "customContents": {
-      "name": "自定義內容",
-      "singleContents": "單一內容",
-      "collections": "集合",
-      "pages": "頁面"
-    },
-    "restful": {
+    "api": {
       "name": "RESTful API",
       "restfulApi": "RESTful API",
+      "graphQL": "GraphQL",
       "log": "日誌分析",
       "apiTest": "測試"
     },
