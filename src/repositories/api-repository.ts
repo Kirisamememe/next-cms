@@ -32,7 +32,6 @@ export class ApiRepository implements IApiRepository {
         name: name
       },
       include: {
-        contents: true,
         collections: true
       }
     })

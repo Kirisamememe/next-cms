@@ -14,7 +14,7 @@ import { Logo } from "./logo";
 import { LogoText } from "./logo-text";
 import { NavLink } from "./nav-link"
 import { useTranslations } from "next-intl";
-import { customContents, navMain, overview, restful } from "./nav-content";
+import { contents, system, api } from "./nav-content";
 import { Link } from "@/i18n";
 
 export function SideNav() {
@@ -35,14 +35,14 @@ export function SideNav() {
 
         <SidebarGroup className="">
           <SidebarGroupLabel>
-            {t(`overview.name`)}
+            {t(`system.name`)}
           </SidebarGroupLabel>
           <SidebarMenu>
-            {overview.map((item, index) => (
+            {system.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={t(`overview.${item.title}`)}>
+                <NavLink url={item.url} title={t(`system.${item.title}`)}>
                   {item.icon && <item.icon />}
-                  <span>{t(`overview.${item.title}`)}</span>
+                  <span>{t(`system.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -51,30 +51,14 @@ export function SideNav() {
 
         <SidebarGroup>
           <SidebarGroupLabel>
-            {t(`mainContents.name`)}
+            {t(`contents.name`)}
           </SidebarGroupLabel>
           <SidebarMenu>
-            {navMain.map((item, index) => (
+            {contents.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={t(`mainContents.${item.title}`)}>
+                <NavLink url={item.url} title={t(`contents.${item.title}`)}>
                   {item.icon && <item.icon />}
-                  <span>{t(`mainContents.${item.title}`)}</span>
-                </NavLink>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>
-            {t(`customContents.name`)}
-          </SidebarGroupLabel>
-          <SidebarMenu>
-            {customContents.map((item, index) => (
-              <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={t(`customContents.${item.title}`)}>
-                  {item.icon && <item.icon />}
-                  <span>{t(`customContents.${item.title}`)}</span>
+                  <span>{t(`contents.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}
@@ -83,14 +67,14 @@ export function SideNav() {
 
         <SidebarGroup className="">
           <SidebarGroupLabel>
-            {t(`restful.name`)}
+            {t(`api.name`)}
           </SidebarGroupLabel>
           <SidebarMenu>
-            {restful.map((item, index) => (
+            {api.map((item, index) => (
               <SidebarMenuItem key={index}>
-                <NavLink url={item.url} title={t(`restful.${item.title}`)}>
+                <NavLink url={item.url} title={t(`api.${item.title}`)}>
                   {item.icon && <item.icon />}
-                  <span>{t(`restful.${item.title}`)}</span>
+                  <span>{t(`api.${item.title}`)}</span>
                 </NavLink>
               </SidebarMenuItem>
             ))}

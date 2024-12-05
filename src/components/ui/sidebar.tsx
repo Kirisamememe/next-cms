@@ -569,7 +569,7 @@ const SidebarMenuButton = React.forwardRef<
       />
     )
 
-    if (!tooltip) {
+    if (!tooltip || state === 'expanded') {
       return button
     }
 

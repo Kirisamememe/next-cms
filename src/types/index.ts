@@ -79,3 +79,6 @@ export { mediaFolderSchema } from './schema-media-folder'
 
 // Response
 export type { ServiceResponse } from './response-dto'
+
+// Json
+export type { JsonNodeData, ValueType } from './schema-json-content'

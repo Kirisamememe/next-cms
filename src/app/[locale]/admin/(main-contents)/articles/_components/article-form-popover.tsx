@@ -12,7 +12,7 @@ import { ControllerRenderProps } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { getLocaleForFns } from "@/i18n"
-import { DateTimePicker } from "./datetime-picker"
+import { DateTimePicker } from "../../../../../../components/datetime-picker"
 
 
 type Props = {

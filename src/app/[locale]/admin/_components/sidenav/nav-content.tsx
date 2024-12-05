@@ -1,22 +1,16 @@
-import { LayoutTemplate, LibraryBig, FileText, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, House, Images, BookCopy, BookOpenText, FileUser } from "lucide-react";
+import { LayoutTemplate, LibraryBig, CircleGauge, PieChart, Settings2, Server, Users, Newspaper, FileJson, Images, BookImage, BookOpenText, Hexagon } from "lucide-react";
 
-export const navMain = [
+export const contents = [
   {
-    title: "homepage",
-    url: "/admin/homepage",
-    icon: House,
-    items: [],
-  },
-  {
-    title: "articles",
+    title: "article",
     url: "/admin/articles",
     icon: Newspaper,
     items: [],
   },
   {
-    title: "portfolio",
-    url: "/admin/portfolio",
-    icon: BookCopy,
+    title: "jsonContent",
+    url: "/admin/json-content",
+    icon: FileJson,
     items: [],
   },
   {
@@ -26,39 +20,29 @@ export const navMain = [
     items: [],
   },
   {
-    title: "biography",
-    url: "/admin/biography",
-    icon: FileUser,
-    items: [],
-  },
-]
-
-export const customContents = [
-  {
-    title: "singleContents",
-    url: "/admin/single-contents",
-    icon: FileText,
+    title: "mediaCollection",
+    url: "/admin/media-collection",
+    icon: BookImage,
     items: [],
   },
   {
-    title: "collections",
-    url: "/admin/collections",
+    title: "contentsGroup",
+    url: "/admin/contents-group",
     icon: LibraryBig,
     items: [],
   },
-  {
-    title: "pages",
-    url: "/admin/pages",
-    icon: LayoutTemplate,
-    items: [],
-  }
 ]
 
-export const restful = [
+export const api = [
   {
     title: "restfulApi",
     url: "/admin/restful-api",
     icon: Server,
+  },
+  {
+    title: "graphQL",
+    url: "/admin/graphQL",
+    icon: Hexagon,
   },
   {
     title: "log",
@@ -67,12 +51,16 @@ export const restful = [
   },
 ]
 
-export const overview = [
+export const system = [
   {
     title: "dashboard",
     url: "/admin/dashboard",
     icon: CircleGauge,
-    isActive: true,
+  },
+  {
+    title: "buildInPages",
+    url: "/admin/build-in-pages",
+    icon: LayoutTemplate,
   },
   {
     title: "editors",
