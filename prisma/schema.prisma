@@ -23,12 +23,12 @@ model User {
 
   allowed_email AllowedEmail?
 
-  jsonAtoms       JsonAtom[]
-  jsonContents    JsonContent[]    @relation("Author")
-  editedJsonContents JsonContent[]    @relation("LastEditor")
-  articles        Article[]     @relation("ArticleAuthor")
-  editedArticles  Article[]     @relation("ArticleEditor")
-  articleAtom     ArticleAtom[]
+  jsonAtoms          JsonAtom[]
+  jsonContents       JsonContent[] @relation("Author")
+  editedJsonContents JsonContent[] @relation("LastEditor")
+  articles           Article[]     @relation("ArticleAuthor")
+  editedArticles     Article[]     @relation("ArticleEditor")
+  articleAtom        ArticleAtom[]
 
   sessions       Session[]
   accounts       Account[]
@@ -91,9 +91,11 @@ model VerificationToken {
 }
 
 model JsonContent {
-  id Int @id @default(autoincrement())
-  title       String?
-  description String?
+  id              Int     @id @default(autoincrement())
+  slug            String? @unique
+  authorNote      String? @map("author_note")
+  adminOnly       Boolean @default(false) @map("admin_only")
+  permissionLevel Int     @default(3) @map("permission_level")
 
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
@@ -105,8 +107,7 @@ model JsonContent {
   lastEditorId Int  @map("last_editor_id")
   lastEditor   User @relation("LastEditor", fields: [lastEditorId], references: [id])
 
-
-  categoryId Int? @map("category_id")
+  categoryId Int?                 @map("category_id")
   category   JsonContentCategory? @relation(fields: [categoryId], references: [id])
 
   jsonAtoms JsonAtom[]
@@ -116,17 +117,19 @@ model JsonContent {
 }
 
 model JsonAtom {
-  id      Int  @id @default(autoincrement())
-  content Json
+  id          Int     @id @default(autoincrement())
+  title       String?
+  description String?
+  content     Json
 
   version Int @default(1000)
 
   createdAt  DateTime  @default(now()) @map("created_at")
   selectedAt DateTime? @default(now()) @map("selected_at")
 
-  authorId   Int      @map("author_id")
-  author     User     @relation(fields: [authorId], references: [id])
-  jsonContentId Int      @map("json_content_id")
+  authorId      Int         @map("author_id")
+  author        User        @relation(fields: [authorId], references: [id])
+  jsonContentId Int         @map("json_content_id")
   jsonContent   JsonContent @relation(fields: [jsonContentId], references: [id])
 
   @@map("json_atom")
@@ -165,11 +168,11 @@ model Article {
   archivedAt  DateTime? @map("archived_at")
   publishedAt DateTime? @map("published_at")
 
-  authorId     Int       @map("author_id")
-  lastEditedBy Int       @map("last_edited_by")
-  categoryId   Int?      @map("category_id")
-  author       User      @relation("ArticleAuthor", fields: [authorId], references: [id])
-  lastEdited   User      @relation("ArticleEditor", fields: [lastEditedBy], references: [id])
+  authorId     Int              @map("author_id")
+  lastEditedBy Int              @map("last_edited_by")
+  categoryId   Int?             @map("category_id")
+  author       User             @relation("ArticleAuthor", fields: [authorId], references: [id])
+  lastEdited   User             @relation("ArticleEditor", fields: [lastEditedBy], references: [id])
   category     ArticleCategory? @relation(fields: [categoryId], references: [id])
 
   atoms ArticleAtom[]
@@ -217,19 +220,21 @@ model ImageUrl {
   @@map("image_url")
 }
 
-
 model ArticleCategory {
-  id       Int       @id @default(autoincrement())
-  name     String
-  
+  id   Int    @id @default(autoincrement())
+  name String
+
   articles Article[]
 
   @@map("article_category")
 }
 
 model JsonContentCategory {
-  id Int @id @default(autoincrement())
+  id   Int    @id @default(autoincrement())
   name String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   jsonContents JsonContent[]
 
@@ -237,10 +242,10 @@ model JsonContentCategory {
 }
 
 model Tag {
-  id       Int                  @id @default(autoincrement())
-  name     String
+  id   Int    @id @default(autoincrement())
+  name String
 
-  articles ArticleTagJunction[]
+  articles     ArticleTagJunction[]
   jsonContents JsonContentTagJunction[]
 
   @@index([name])
@@ -248,8 +253,8 @@ model Tag {
 }
 
 model ArticleTagJunction {
-  articleId Int @map("article_id")
-  tagId     Int @map("tag_id")
+  articleId Int     @map("article_id")
+  tagId     Int     @map("tag_id")
   article   Article @relation(fields: [articleId], references: [id])
   tag       Tag     @relation(fields: [tagId], references: [id])
 
@@ -258,15 +263,14 @@ model ArticleTagJunction {
 }
 
 model JsonContentTagJunction {
-  jsonContentId Int @map("json_content_id")
-  tagId          Int @map("tag_id")
-  jsonContent    JsonContent @relation(fields: [jsonContentId], references: [id])
-  tag             Tag         @relation(fields: [tagId], references: [id])
+  jsonContentId Int         @map("json_content_id")
+  tagId         Int         @map("tag_id")
+  jsonContent   JsonContent @relation(fields: [jsonContentId], references: [id])
+  tag           Tag         @relation(fields: [tagId], references: [id])
 
   @@id([jsonContentId, tagId])
   @@map("json_content_tag_junction")
 }
-
 
 model Collection {
   id   Int    @id @default(autoincrement())
@@ -274,7 +278,6 @@ model Collection {
 
   apiId Int? @map("api_id")
   api   Api? @relation(fields: [apiId], references: [id])
-
 
   @@map("collection")
 }
