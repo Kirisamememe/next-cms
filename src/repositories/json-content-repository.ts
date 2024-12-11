@@ -17,6 +17,16 @@ export interface IJsonContentRepository {
 
 @injectable()
 export class JsonContentRepository extends ContentRepository implements IJsonContentRepository {
+  private atomsProperties = {
+    include: {
+      author: this.authorProperties
+    },
+    orderBy: [
+      this.orderBy({ column: 'selectedAt', nullable: true }),
+      this.orderBy({ column: 'version' })
+    ],
+    take: 1
+  }
 
 
   findMany(filter: Filter = 'all', options?: FindManyOptions) {
@@ -31,7 +41,7 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
     return prisma.jsonContent.findMany({
       ...this.getFilter(filter),
       include: {
-        jsonAtoms: true,
+        jsonAtoms: this.atomsProperties,
         author: this.authorProperties,
         lastEditor: this.authorProperties
       },
@@ -48,7 +58,7 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
         id: id
       },
       include: {
-        jsonAtoms: true,
+        jsonAtoms: this.atomsProperties,
         author: this.authorProperties,
         lastEditor: this.authorProperties
       }
