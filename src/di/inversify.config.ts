@@ -13,6 +13,8 @@ import {
   IAllowedEmailRepository,
   IAccessTokenRepository,
   IApiRepository,
+  IJsonContentRepository,
+  IJsonAtomRepository
 } from '@/repositories'
 
 // Repository Implementations
@@ -25,6 +27,8 @@ import {
   AllowedEmailRepository,
   AccessTokenRepository,
   ApiRepository,
+  JsonContentRepository,
+  JsonAtomRepository
 } from '@/repositories'
 
 // Service Interfaces
@@ -36,6 +40,7 @@ import {
   IAllowedEmailService,
   IAccessTokenService,
   IApiService,
+  IJsonContentService
 } from '@/services'
 
 
@@ -48,6 +53,7 @@ import {
   AllowedEmailService,
   AccessTokenService,
   ApiService,
+  JsonContentService
 } from '@/services'
 
 
@@ -62,6 +68,8 @@ container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository)
 container.bind<IAllowedEmailRepository>(TYPES.AllowedEmailRepository).to(AllowedEmailRepository)
 container.bind<IAccessTokenRepository>(TYPES.AccessTokenRepository).to(AccessTokenRepository)
 container.bind<IApiRepository>(TYPES.ApiRepository).to(ApiRepository)
+container.bind<IJsonContentRepository>(TYPES.JsonContentRepository).to(JsonContentRepository)
+container.bind<IJsonAtomRepository>(TYPES.JsonAtomRepository).to(JsonAtomRepository)
 
 // Services
 container.bind<IArticleService>(TYPES.ArticleService).to(ArticleService)
@@ -71,6 +79,7 @@ container.bind<IUserService>(TYPES.UserService).to(UserService)
 container.bind<IAllowedEmailService>(TYPES.AllowedEmailService).to(AllowedEmailService)
 container.bind<IAccessTokenService>(TYPES.AccessTokenService).to(AccessTokenService)
 container.bind<IApiService>(TYPES.ApiService).to(ApiService)
+container.bind<IJsonContentService>(TYPES.JsonContentService).to(JsonContentService)
 
 
 

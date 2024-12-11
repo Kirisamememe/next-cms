@@ -8,6 +8,8 @@ export const TYPES = {
   ImageUrlRepository: Symbol.for('ImageUrlRepository'),
   MediaFolderRepository: Symbol.for('MediaFolderRepository'),
   UserRepository: Symbol.for('UserRepository'),
+  JsonContentRepository: Symbol.for('JsonContentRepository'),
+  JsonAtomRepository: Symbol.for('JsonAtomRepository'),
 
   // Services
   AccessTokenService: Symbol.for('AccessTokenService'),
@@ -16,5 +18,6 @@ export const TYPES = {
   ArticleService: Symbol.for('ArticleService'),
   ImageUrlService: Symbol.for('ImageUrlService'),
   MediaFolderService: Symbol.for('MediaFolderService'),
-  UserService: Symbol.for('UserService')
+  UserService: Symbol.for('UserService'),
+  JsonContentService: Symbol.for('JsonContentService')
 } as const

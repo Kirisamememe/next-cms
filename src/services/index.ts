@@ -21,3 +21,6 @@ export type { IAccessTokenService } from './access-token-service'
 
 export { ApiService } from './api-service'
 export type { IApiService } from './api-service'
+
+export { JsonContentService } from './json-content-service'
+export type { IJsonContentService } from './json-content-service'

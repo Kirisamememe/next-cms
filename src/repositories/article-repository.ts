@@ -4,6 +4,7 @@ import { DB, prisma } from '@/prisma'
 import { createId } from '@paralleldrive/cuid2'
 import { Article, articleSubmitFormSchema, Filter, FindManyOptions, ArticleWithAllFields } from '@/types'
 import { z } from 'zod'
+import { ContentRepository } from './content-repository'
 
 export interface IArticleRepository {
   findById(id: number, publishedOnly: boolean): Promise<ArticleWithAllFields | null>
@@ -16,80 +17,7 @@ export interface IArticleRepository {
 
 
 @injectable()
-export class ArticleRepository implements IArticleRepository {
-
-  private orderBy(
-    options: {
-      column: string,
-      order?: 'desc' | 'asc',
-      nullable?: boolean
-    }
-  ) {
-    const {
-      column,
-      order = 'desc',
-      nullable = false
-    } = options || {}
-
-    return (
-      nullable
-        ? ({ [column]: { sort: order, nulls: "last" } })
-        : ({ [column]: order })
-    )
-  }
-
-
-  private getFilter(filter: Filter) {
-    if (filter === 'all') {
-      return {
-        where: {
-          archivedAt: null
-        }
-      }
-    }
-
-    if (filter === 'draft') {
-      return {
-        where: {
-          OR: [
-            { publishedAt: null },
-            { publishedAt: { gt: new Date() } }
-          ],
-          archivedAt: null
-        }
-      }
-    }
-
-    if (filter === 'publish') {
-      return {
-        where: {
-          publishedAt: {
-            lt: new Date()
-          },
-          archivedAt: null
-        }
-      }
-    }
-
-    if (filter === 'archive') {
-      return {
-        where: {
-          archivedAt: { not: null }
-        }
-      }
-    }
-  }
-
-  private authorProperties = {
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      nickname: true,
-      role: true,
-      image: true
-    }
-  }
+export class ArticleRepository extends ContentRepository implements IArticleRepository {
 
   private atomsProperties = {
     include: {

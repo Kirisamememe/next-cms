@@ -14,8 +14,6 @@ export type {
   ArticleAtom,
   ArticleForClient,
   ArticleWithAllFields,
-  Filter,
-  FindManyOptions,
 } from './schema-article'
 export { articleSubmitFormSchema, articlePublicationForm } from './schema-article'
 
@@ -81,4 +79,17 @@ export { mediaFolderSchema } from './schema-media-folder'
 export type { ServiceResponse } from './response-dto'
 
 // Json
-export type { JsonNodeData, ValueType } from './schema-json-content'
+export type {
+  JsonNodeData,
+  ValueType,
+  JsonContent,
+  JsonContentCategory,
+  JsonContentForClient,
+  JsonContentWithAllFields,
+  JsonAtom
+} from './schema-json-content'
+export { jsonContentSchema } from './schema-json-content'
+
+
+// Prisma Options
+export type { FindManyOptions, Filter } from './db-options'

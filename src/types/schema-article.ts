@@ -78,15 +78,4 @@ export type ArticleArchivedForClient = Omit<ArticleForClient, 'publishedAt' | 'a
   archivedAt: Date;
 }
 
-export type Filter = 'all' | 'draft' | 'publish' | 'archive'
-
-export type FindManyOptions = {
-  orderBy?: {
-    column: string,
-    nullable: boolean,
-    order?: 'desc' | 'asc',
-  }[],
-  take?: number,
-}
-
 

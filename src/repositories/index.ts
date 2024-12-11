@@ -24,3 +24,9 @@ export type { IAccessTokenRepository } from './access-token-repository'
 
 export { ApiRepository } from './api-repository'
 export type { IApiRepository } from './api-repository'
+
+export { JsonContentRepository } from './json-content-repository'
+export type { IJsonContentRepository } from './json-content-repository'
+
+export { JsonAtomRepository } from './json-atom-repository'
+export type { IJsonAtomRepository } from './json-atom-repository' 
