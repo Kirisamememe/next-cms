@@ -10,14 +10,15 @@ type Props = {
   value?: Date | null
   defaultDate?: Date | null
   onChange: (...event: any[]) => void
+  clearable?: boolean
 }
 
-export function DateTimePicker({ value, defaultDate, onChange }: Props) {
+export function DateTimePicker({ value, defaultDate, onChange, clearable = true }: Props) {
   return (
     <FlexColumn gap={4} className="relative">
       <Calendar
         mode="single"
-        selected={value || undefined}
+        selected={value || defaultDate || undefined}
         onSelect={(date) => {
           onChange(combineDateAndTime(date, getTimeString(value)))
         }}
@@ -27,11 +28,12 @@ export function DateTimePicker({ value, defaultDate, onChange }: Props) {
       />
       <Input
         type="datetime-local"
+        step="1"
         className="[&::-webkit-calendar-picker-indicator]:hidden"
-        value={value ? format(value, "yyyy-MM-dd'T'HH:mm") : ''}
+        value={value ? format(value, "yyyy-MM-dd'T'HH:mm:ss") : ''}
         onChange={(e) => {
           const dateString = e.target.value;
-          if (dateString.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/)) {
+          if (dateString.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/)) {
             onChange(new Date(dateString));
           }
         }}
@@ -47,7 +49,7 @@ export function DateTimePicker({ value, defaultDate, onChange }: Props) {
           <UndoDot size={20} />
         </Button>
       }
-      {value !== null &&
+      {value !== null && clearable &&
         <Button
           variant={"ghost"}
           size={"icon"}
@@ -56,6 +58,17 @@ export function DateTimePicker({ value, defaultDate, onChange }: Props) {
           className="absolute right-1 bottom-1 size-8 rounded-sm"
         >
           <X size={20} />
+        </Button>
+      }
+      {!clearable &&
+        <Button
+          variant={"ghost"}
+          size={"icon"}
+          type="button"
+          onClick={() => { onChange(new Date()) }}
+          className="absolute right-1 bottom-1 size-8 rounded-sm"
+        >
+          <UndoDot size={20} />
         </Button>
       }
     </FlexColumn>

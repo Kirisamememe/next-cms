@@ -1,7 +1,10 @@
 import { cn } from "@/lib";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
+import type { ComponentPropsWithRef, FC } from "react";
 
+
+type DivProps = ComponentPropsWithRef<"div">
 
 const flexboxVariants = cva(
   "min-w-4 min-h-4 ring-offset-background ring-offset-2 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-2",
@@ -169,19 +172,18 @@ const flexRowVariants = cva(
   }
 )
 
-const FlexRow = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof flexboxVariants> &
-  {
-    border?: boolean,
-    bg?: boolean,
-    shadow?: boolean,
-    trans?: boolean,
-    centerX?: boolean,
-    centerY?: boolean,
-    center?: boolean
-  }
->(({
+
+type FlexRowProps = {
+  border?: boolean,
+  bg?: boolean,
+  shadow?: boolean,
+  trans?: boolean,
+  centerX?: boolean,
+  centerY?: boolean,
+  center?: boolean
+} & VariantProps<typeof flexRowVariants> & DivProps
+
+const FlexRow: FC<FlexRowProps> = (({
   className,
   radius,
   gap,
@@ -195,8 +197,9 @@ const FlexRow = React.forwardRef<
   centerX = false,
   centerY = false,
   center = false,
+  ref,
   ...props
-}, ref) => (
+}) => (
   <div
     ref={ref}
     className={cn(
@@ -272,19 +275,20 @@ const flexColumnVariants = cva(
   }
 )
 
-const FlexColumn = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof flexboxVariants> &
-  {
-    border?: boolean,
-    bg?: boolean,
-    shadow?: boolean
-    trans?: boolean,
-    centerX?: boolean,
-    centerY?: boolean,
-    center?: boolean
-  }
->(({
+
+type FlexColumnProps = {
+  className?: string
+  children?: React.ReactNode
+  border?: boolean,
+  bg?: boolean,
+  shadow?: boolean,
+  trans?: boolean,
+  centerX?: boolean,
+  centerY?: boolean,
+  center?: boolean,
+} & VariantProps<typeof flexColumnVariants> & DivProps
+
+const FlexColumn: FC<FlexColumnProps> = ({
   className,
   radius,
   gap,
@@ -298,10 +302,12 @@ const FlexColumn = React.forwardRef<
   centerX = false,
   centerY = false,
   center = false,
+  ref,
   ...props
-}, ref) => (
+}) => (
   <div
     ref={ref}
+    {...props}
     className={cn(
       flexColumnVariants({ radius, gap, p, px, py }),
       border && "border",
@@ -315,7 +321,7 @@ const FlexColumn = React.forwardRef<
     )}
     {...props}
   />
-))
+)
 FlexColumn.displayName = "FlexColumn"
 
 export { Flexbox, FlexRow, FlexColumn }
