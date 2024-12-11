@@ -2,7 +2,8 @@
 
 import { DateTimePicker } from "@/components/datetime-picker";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+
 import { FlexRow } from "@/components/ui/flexbox";
 import { getLocaleForFns } from "@/i18n";
 import { JsonNodeData } from "@/types";
@@ -20,23 +21,20 @@ export function DateNode({ data, handleValueChange }: Props) {
 
   return (
     <FlexRow className="p-4 border-2 border-t-0 rounded-bl-xl rounded-br-xl">
-      <Dialog>
-        <DialogTrigger asChild>
+      <Popover>
+        <PopoverTrigger asChild>
           <Button variant={'secondary'} className="w-full">
             {format(data.value?.toString() || new Date().toString(), "PPP ppp", { locale: fnsLocale })}
           </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogTitle hidden>
-          </DialogTitle>
-          <DialogDescription hidden>
-          </DialogDescription>
+        </PopoverTrigger>
+        <PopoverContent>
           <DateTimePicker 
             value={new Date(data.value?.toString() || new Date())} 
+            clearable={false}
             onChange={handleValueChange} 
           />
-        </DialogContent>
-      </Dialog>
+        </PopoverContent>
+      </Popover>
     </FlexRow>
   )
 }

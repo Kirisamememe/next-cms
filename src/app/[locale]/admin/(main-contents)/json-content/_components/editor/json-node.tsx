@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Trash2, ChevronDown, ChevronUp } from "lucide-react";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { cn } from "@/lib";
@@ -17,40 +16,43 @@ import { ArrObjNode } from "./node/node-arr-obj";
 import { Heading } from "@/components/ui/typography";
 import { DateNode } from "./node/node-date";
 import { JsonTypeSelector } from "./json-type-selector";
+import { KeyInputFiled } from "./node-key-input";
+import { useJsonEditor } from "../json-editor-provider";
 
 type JsonNodeProps = {
   data: JsonNodeData;
   onChange: (newData: JsonNodeData) => void;
-  onDelete?: () => void;
+  onDelete: () => void;
   index: number;
   parentIsArr?: boolean;
-};
+  isDuplicate?: boolean;
+}
 
 
-export default function JsonNode({ data, onChange, onDelete, index, parentIsArr = false }: JsonNodeProps) {
-  const [isExpanded, setIsExpanded] = useState(data.valueType === 'object' || data.valueType === 'array');
+export function JsonNode({ data, onChange, onDelete, index, parentIsArr = false, isDuplicate = false }: JsonNodeProps) {
+  const [isExpanded, setIsExpanded] = useState(data.valueType === 'object' || data.valueType === 'array')
   const [localKey, setLocalKey] = useState(data.keyName || '')
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false)
 
+  const nodeRef = useRef<HTMLDivElement>(null)
 
-  // 値の変更をハンドルする関数
+  const { dataTransferred } = useJsonEditor()
+
   const handleValueChange = (newValue: string | number | boolean | Date) => {
     onChange({ ...data, value: newValue })
   }
 
-  // キー名の変更をハンドルする関数
   const handleKeyChange = (newKey: string) => {
     setLocalKey(newKey)
-    onChange({ ...data, keyName: newKey });
+    onChange({ ...data, keyName: newKey })
   }
 
-  // タイプの変更をハンドルする関数
   const handleTypeChange = (newType: ValueType) => {
     const updatedData: JsonNodeData = { ...data, valueType: newType };
     if (newType === "array") {
-      updatedData.children = [];
-      delete updatedData.value;
-      setIsExpanded(true);
+      updatedData.children = []
+      delete updatedData.value
+      setIsExpanded(true)
     }
     else if (newType === "object") {
       updatedData.children = [{
@@ -60,31 +62,30 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
         value: "",
       }]
       delete updatedData.value;
-      setIsExpanded(true);
+      setIsExpanded(true)
     }
     else {
       updatedData.value = getDefaultValue(newType);
-      delete updatedData.children;
+      delete updatedData.children
     }
-    onChange(updatedData);
+    onChange(updatedData)
   }
 
   const getDefaultValue = (type: ValueType): string | number | boolean | Date => {
     switch (type) {
       case "string":
-        return "";
+        return ""
       case "number":
-        return 0;
+        return 0
       case "boolean":
-        return false;
+        return false
       case "date":
-        return new Date();
+        return new Date()
       default:
-        return "";
+        return ""
     }
   }
 
-  // 配列やオブジェクトにアイテムを追加する関数
   const handleAddChild = (position: "start" | "end" = "start") => {
     const newChild: JsonNodeData = {
       id: createId(),
@@ -107,10 +108,24 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
     }
   }
 
+  const handleDelete = () => {
+    if (!nodeRef.current) return
+
+    nodeRef.current.animate([
+      { height: `${nodeRef.current.offsetHeight}px`, margin: `${nodeRef.current.style.margin}`, transform: 'translateY(0)', opacity: 1 },
+      { height: '0', transform: 'translateY(-15px)', margin: '0', opacity: 0 },
+    ], {
+      duration: 300,
+      easing: 'ease-in-out',
+      fill: 'forwards',
+    }).onfinish = () => {
+      onDelete()
+    }
+  }
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.stopPropagation()
-    const transferData ={
+    const transferData = {
       ...data,
       index
     }
@@ -124,8 +139,9 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
 
   const handleDragEnd = () => {
     setIsDragging(false)
-    if (onDelete) {
-      onDelete()
+
+    if (dataTransferred.includes(data.id)) {
+      handleDelete()
     }
   }
 
@@ -135,12 +151,11 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
 
 
 
-
   const renderValueEditor = () => {
     if (data.valueType === 'string') {
       return (
         <StringNode
-          data={data} 
+          data={data}
           handleValueChange={handleValueChange}
         />
       )
@@ -163,7 +178,7 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
     else if (data.valueType === "array" || data.valueType === "object") {
       return (
         <ArrObjNode
-          handleAddChild={handleAddChild} data={data} onDataChange={onChange} 
+          handleAddChild={handleAddChild} data={data} onDataChange={onChange}
         />
       )
     }
@@ -172,33 +187,35 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
 
   if (data.id === 'root') {
     return (
-      <FlexColumn 
+      <FlexColumn
         className={cn(
-          "shrink-0 w-fit mb-5",
-      )}>
+          "shrink-0 w-fit -mt-5 mb-5",
+        )}>
         {renderValueEditor()}
       </FlexColumn>
     )
   }
 
+
   return (
-    <FlexColumn 
+    <FlexColumn
+      ref={nodeRef}
       draggable
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       className={cn(
-        "shrink-0 w-full",
-        isDragging && "opacity-20",
-    )}>
+        "shrink-0 w-fit min-h-0 my-3 appear",
+        isDragging && "opacity-50",
+      )}>
 
       <FlexColumn className={cn(
         "relative w-[23rem] sm:w-[26rem]",
       )}>
 
         <FlexRow gap={1} centerY className={cn(
-          "min-h-12 rounded-lg p-1 bg-border",
+          "min-h-12 h-10 rounded-lg p-1 bg-border cursor-grab",
           isExpanded && "rounded-bl-none",
           !(data.valueType === 'object' || data.valueType === 'array') && "rounded-b-none",
         )}>
@@ -226,29 +243,22 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
           )}
 
           {/* キー名の入力フィールド */}
-          {data.keyName !== undefined  && (
-            <Input
-              className={cn(
-                "w-44 border-none rounded-none bg-transparent",
-                !(data.valueType === "array" || data.valueType === "object") && "rounded-tr-none rounded-bl-none rounded-br-none"
-              )}
-              value={localKey}
-              onChange={(e) => handleKeyChange(e.target.value)}
-            />
+          {data.keyName !== undefined && (
+            <KeyInputFiled data={data} handleKeyChange={handleKeyChange} localKey={localKey} isDuplicate={isDuplicate} />
           )}
 
+          {/* {index} */}
           {/* 削除ボタン */}
-          {onDelete && (
-            <Button variant="ghost" size="icon" onClick={onDelete} className="ml-auto mr-1 rounded-md shrink-0 size-8 hover:bg-foreground/10">
-              <Trash2 size={16} />
-            </Button>
-          )}
+          <Button type="button" variant="ghost" size="icon" onClick={handleDelete} className="ml-auto mr-1 rounded-md shrink-0 size-8 hover:bg-foreground/10">
+            <Trash2 size={16} />
+          </Button>
         </FlexRow>
 
 
         {/* 展開・折りたたみボタン */}
         {(data.valueType === 'object' || data.valueType === 'array') && (
           <Button
+            type="button"
             className={cn(
               "absolute -right-12 top-1.5 size-9 shrink-0 rounded-lg",
             )}
@@ -268,7 +278,7 @@ export default function JsonNode({ data, onChange, onDelete, index, parentIsArr 
       </FlexColumn>
 
       {/* オブジェクトや配列の子ノードを表示 */}
-      {isExpanded &&
+      {isExpanded && (data.valueType === 'object' || data.valueType === 'array') &&
         renderValueEditor()
       }
     </FlexColumn>

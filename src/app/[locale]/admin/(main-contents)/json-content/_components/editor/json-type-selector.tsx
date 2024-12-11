@@ -35,7 +35,7 @@ export function JsonTypeSelector({ data, handleTypeChange }: Props) {
           )}
         </SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent sideOffset={-4} alignOffset={-4}>
         <SelectItem value="string">String</SelectItem>
         <SelectItem value="number">Number</SelectItem>
         <SelectItem value="boolean">Boolean</SelectItem>

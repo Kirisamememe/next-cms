@@ -1,53 +1,34 @@
 'use client'
 
-import { useState } from "react";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
-import { JsonNodeData } from "@/types";
 import { JsonPreview } from "../json-preview";
-import { createId } from "@paralleldrive/cuid2";
-import dynamic from "next/dynamic";
-
-const JsonNode = dynamic(() => import('./json-node'), {
-  ssr: false,
-})
+import { convertToJsonValue } from "../../_hooks/json-convert";
+import { JsonNodeData } from "@/types";
+import { JsonNode } from "./json-node";
 
 type Props = {
-  initData?: JsonNodeData;
-};
+  jsonData: JsonNodeData,
+  setJsonData: (jsonData: JsonNodeData) => void
+}
 
-
-
-export function JsonEditor({ initData }: Props) {
-  const [jsonData, setJsonData] = useState<JsonNodeData>(
-    initData ?? { 
-      id: 'root', 
-      valueType: 'object', 
-      children: [{
-        id: createId(),
-        index: 0,
-        keyName: 'newKey',
-        valueType: 'string',
-        value: ''
-      }] 
-    }
-  )
-
-  const handleDragOver = () => {
-    // e.preventDefault()
-  }
+export default function JsonEditor({ jsonData, setJsonData }: Props) {
 
   return (
-    <FlexRow gap={4} className="relative">
-      <FlexColumn 
-        border radius={"lg"} py={6} px={8} className="overflow-scroll basis-2/3" 
-        onDragOver={handleDragOver}>
+    <FlexRow gap={4} className="relative appear">
+      <FlexColumn
+        radius={"lg"} px={2} className="overflow-scroll w-full" >
         <JsonNode
           index={0}
           data={jsonData}
           onChange={(newValue) => setJsonData(newValue)}
+          onDelete={() => { }}
         />
       </FlexColumn>
-      <JsonPreview initData={jsonData} />
+      <div className="absolute top-0 right-0 h-full">
+        <FlexColumn radius={"lg"} className="sticky top-20 h-[calc(100vh-14rem)] w-80 shrink-0 overflow-scroll bg-muted/50 backdrop-blur-md">
+          <JsonPreview initData={convertToJsonValue(jsonData)} />
+        </FlexColumn>
+      </div>
     </FlexRow>
   )
 }

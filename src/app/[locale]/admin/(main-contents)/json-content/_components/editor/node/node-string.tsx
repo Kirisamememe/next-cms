@@ -14,31 +14,16 @@ export const StringNode = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & Props
 >(({ data, handleValueChange, ...props }, ref) => {
-  // const [isDraggingOver, setIsDraggingOver] = useState(false)
-
-  const handleDragOver = (e: React.DragEvent<HTMLTextAreaElement>) => {
-    e.preventDefault()
-    // setIsDraggingOver(true)
-  }
-
-  const handleDragLeave = (e: React.DragEvent<HTMLTextAreaElement>) => {
-    e.preventDefault()
-    // setIsDraggingOver(false)
-  }
-
   return (
-    <div 
-      className="p-0.5 border-2 border-t-0 rounded-bl-xl rounded-br-xl"
+    <div
+      className="p-0.5 border-2 border-t-0 rounded-bl-xl rounded-br-xl bg-background"
       ref={ref}
       {...props}
     >
       <Textarea
         rows={2}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
         className={cn(
-          "w-full resize-none border-none bg-transparent rounded-tl-none rounded-tr-none",
-          // isDraggingOver && "pointer-events-none"
+          "w-full resize-none border-none rounded-tl-none rounded-tr-none",
         )}
         placeholder="Input string"
         value={String(data.value)}
