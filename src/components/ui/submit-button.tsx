@@ -10,12 +10,12 @@ import { AlertCircle } from "lucide-react";
 
 const Submit = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement> & React.ComponentPropsWithoutRef<typeof Button>
->(({ children, ...props }, ref) => {
+  React.ButtonHTMLAttributes<HTMLButtonElement> & React.ComponentPropsWithoutRef<typeof Button> & { error?: { message: string } }
+>(({ children, error, ...props }, ref) => {
   const { pending } = useFormStatus()
   const t = useTranslations()
   const params = useSearchParams()
-  const [errorMsg] = useState(params.get('formError'))
+  const [errorMsg] = useState(error?.message || params.get('formError'))
 
 
   return (
