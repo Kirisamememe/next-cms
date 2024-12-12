@@ -43,7 +43,7 @@ export class ContentRepository {
       }
     }
 
-    if (filter === 'publish') {
+    if (filter === 'published') {
       return {
         where: {
           publishedAt: {

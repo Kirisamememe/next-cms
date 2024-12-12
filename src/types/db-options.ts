@@ -7,4 +7,4 @@ export type FindManyOptions = {
   take?: number,
 }
 
-export type Filter = 'all' | 'draft' | 'publish' | 'archive'
+export type Filter = 'all' | 'draft' | 'published' | 'archive'

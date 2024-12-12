@@ -75,7 +75,7 @@ export class ArticleService implements IArticleService {
 
 
   async getManyPublished(options?: FindManyOptions) {
-    const data = await this._articleRepository.findMany('publish', options)
+    const data = await this._articleRepository.findMany('published', options)
       .then((res) => res.map((article) => ({
         ...article,
         atom: article.atoms[0],
