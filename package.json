@@ -22,6 +22,7 @@
     "@next/mdx": "^15.0.4",
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/adapter-neon": "^5.22.0",
+    "@prisma/client": "^6.0.1",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -93,7 +94,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "15.0.1",
     "postcss": "^8.4.49",
-    "prisma": "^5.22.0",
+    "prisma": "^6.0.1",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2"
   }
