@@ -32,7 +32,7 @@ export function RSCTabLink({ segment, path, children }: TabProps) {
     <Button asChild variant={"ghost"}
       className={cn(
         "w-fit rounded-md h-8 hover:bg-background/40 text-muted-foreground",
-        (pathname.endsWith(segment) || (pathname.endsWith("articles") && segment === 'all')) &&
+        (pathname.endsWith(segment) || (pathname.endsWith(path.split('/')[2]) && segment === 'all')) &&
         "bg-background hover:bg-background font-semibold shadow-md text-foreground"
       )} >
       <Link
