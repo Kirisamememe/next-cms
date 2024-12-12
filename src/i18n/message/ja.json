@@ -60,8 +60,11 @@
     "json-content": {
       "1": "JSONコンテンツ",
       "2": {
+        "new": "新規作成",
         "edit": "編集",
-        "new": "新規作成"
+        "draft": "下書き",
+        "published": "公開中",
+        "archive": "アーカイブ"
       }
     },
     "gallery": {
@@ -339,5 +342,54 @@
       "api": "API管理",
       "token": "アクセストークン"
     }
+  },
+  "jsonContent": {
+    "tabs": {
+      "all": "全部",
+      "draft": "下書き",
+      "published": "公開中",
+      "archive": "アーカイブ"
+    },
+    "form": {
+      "newBtn": "新規コンテンツ",
+      "tabs": {
+        "upload": "アップロード",
+        "editor": "JSONエディタ"
+      },
+      "dnd": {
+        "inactive": "JSONファイルをドラッグしてここにドロップするか\nクリックしてファイルを選択",
+        "active": "JSONファイルをここにドロップする"
+      },
+      "slug": {
+        "name": "スラッグ",
+        "placeholder": "URLに使える名前を入力",
+        "description": "コンテンツのURLパス",
+        "validationMax": "スラッグは64文字以内で入力してください"
+      },
+      "title": {
+        "name": "タイトル",
+        "placeholder": "コンテンツのタイトルを入力",
+        "description": "コンテンツのメインタイトル",
+        "validationMax": "タイトルは64文字以内で入力してください"
+      },
+      "description": {
+        "name": "説明",
+        "placeholder": "コンテンツの短い説明を入力",
+        "description": "コンテンツの短い説明",
+        "validationMax": "説明は256文字以内で入力してください"
+      },
+      "authorNote": {
+        "name": "作成者メモ",
+        "placeholder": "他の編集者にメモを追加",
+        "description": "作成者メモ",
+        "validationMax": "作成者メモは1024文字以内で入力してください"
+      },
+      "category": {
+        "name": "カテゴリ",
+        "placeholder": "カテゴリを選択",
+        "description": "コンテンツにカテゴリを選択"
+      }
+    },
+    "noContent": "コンテンツが見つかりません"
   }
 }

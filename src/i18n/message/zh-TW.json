@@ -63,8 +63,11 @@
     "json-content": {
       "1": "JSON對象",
       "2": {
+        "new": "新增JSON對象",
         "edit": "編輯JSON對象",
-        "new": "新增JSON對象"
+        "draft": "草稿",
+        "published": "已發表",
+        "archive": "已封存"
       }
     },
     "gallery": {
@@ -339,5 +342,54 @@
       "api": "API管理",
       "token": "權杖"
     }
+  },
+  "jsonContent": {
+    "tabs": {
+      "all": "全部",
+      "draft": "草稿",
+      "published": "已發表",
+      "archive": "已封存"
+    },
+    "form": {
+      "newBtn": "新增內容",
+      "tabs": {
+        "upload": "上傳",
+        "editor": "JSON 編輯器"
+      },
+      "dnd": {
+        "inactive": "將 JSON 檔案拖放到這裡，或點擊以選擇檔案",
+        "active": "將 JSON 檔案放到這裡"
+      },
+      "slug": {
+        "name": "網址別名",
+        "placeholder": "輸入 URL 友好名稱",
+        "description": "內容的 URL 路徑",
+        "validationMax": "網址別名長度必須少於 64 個字元"
+      },
+      "title": {
+        "name": "標題",
+        "placeholder": "輸入內容標題",
+        "description": "內容的主要標題",
+        "validationMax": "標題長度必須少於 64 個字元"
+      },
+      "description": {
+        "name": "描述",
+        "placeholder": "輸入內容的簡短描述",
+        "description": "內容的簡短描述",
+        "validationMax": "描述長度必須少於 256 個字元"
+      },
+      "authorNote": {
+        "name": "作者註記",
+        "placeholder": "新增給其他編輯者的註記",
+        "description": "給編輯者的額外註記",
+        "validationMax": "作者註記長度必須少於 1024 個字元"
+      },
+      "category": {
+        "name": "分類",
+        "placeholder": "選擇分類",
+        "description": "選擇內容的分類"
+      }
+    },
+    "noContent": "未找到相關內容"
   }
 }

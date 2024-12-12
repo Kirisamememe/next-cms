@@ -60,8 +60,11 @@
     "json-content": {
       "1": "JSON对象",
       "2": {
+        "new": "新增JSON对象",
         "edit": "编辑JSON对象",
-        "new": "新增JSON对象"
+        "draft": "草稿",
+        "published": "已发布",
+        "archive": "已归档"
       }
     },
     "gallery": {
@@ -195,10 +198,10 @@
       "validationMax": "别名不能超过64个字符"
     },
     "summary": {
-      "name": "摘要",
-      "placeholder": "请输入文章摘要",
-      "description": "文章内容的简短描述",
-      "validationMax": "摘要不能超过256个字符"
+      "name": "描述",
+      "placeholder": "输入内容的简短描述",
+      "description": "内容的简短描述",
+      "validationMax": "描述不能超过256个字符"
     },
     "image": {
       "name": "图片",
@@ -221,8 +224,8 @@
     },
     "authorNote": {
       "name": "作者备注",
-      "placeholder": "添加给其他编辑的备注",
-      "description": "给编辑的附加说明",
+      "placeholder": "为其他编辑添加备注",
+      "description": "作者备注",
       "validationMax": "作者备注不能超过1024个字符"
     },
     "publishedAt": {
@@ -336,5 +339,54 @@
       "api": "API管理",
       "token": "令牌"
     }
+  },
+  "jsonContent": {
+    "tabs": {
+      "all": "全部",
+      "draft": "草稿",
+      "published": "已发布",
+      "archive": "归档"
+    },
+    "form": {
+      "newBtn": "新建内容",
+      "tabs": {
+        "upload": "上传",
+        "editor": "JSON 编辑器"
+      },
+      "dnd": {
+        "inactive": "拖拽一个JSON文件到此处，或点击以选择一个",
+        "active": "将JSON文件拖拽到此处"
+      },
+      "slug": {
+        "name": "别名",
+        "placeholder": "输入URL友好的名称",
+        "description": "内容的URL路径",
+        "validationMax": "别名不能超过64个字符"
+      },
+      "title": {
+        "name": "标题",
+        "placeholder": "输入内容的标题",
+        "description": "内容的主要标题",
+        "validationMax": "Title must be less than 64 characters"
+      },
+      "description": {
+        "name": "描述",
+        "placeholder": "输入内容的简短描述",
+        "description": "内容的简短描述",
+        "validationMax": "描述不能超过256个字符"
+      },
+      "authorNote": {
+        "name": "作者备注",
+        "placeholder": "为其他编辑添加备注",
+        "description": "作者备注",
+        "validationMax": "作者备注不能超过1024个字符"
+      },
+      "category": {
+        "name": "分类",
+        "placeholder": "选择一个分类",
+        "description": "选择内容的分类"
+      }
+    },
+    "noContent": "未找到相关内容"
   }
 }

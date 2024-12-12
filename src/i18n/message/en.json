@@ -60,8 +60,11 @@
     "json-content": {
       "1": "JSON Content",
       "2": {
+        "new": "New JSON Content",
         "edit": "Edit JSON Content",
-        "new": "New JSON Content"
+        "draft": "Draft",
+        "published": "Published",
+        "archive": "Archive"
       }
     },
     "gallery": {
@@ -339,5 +342,54 @@
       "api": "API Management",
       "token": "Token"
     }
+  },
+  "jsonContent": {
+    "tabs": {
+      "all": "All",
+      "draft": "Draft",
+      "published": "Published",
+      "archive": "Archive"
+    },
+    "form": {
+      "newBtn": "New Content",
+      "tabs": {
+        "upload": "Upload",
+        "editor": "JSON Editor"
+      },
+      "dnd": {
+        "inactive": "Drag and drop a JSON file here, or click to select one",
+        "active": "Drop a JSON file here"
+      },
+      "slug": {
+        "name": "Slug",
+        "placeholder": "Enter URL-friendly name",
+        "description": "URL path for the content",
+        "validationMax": "Slug must be less than 64 characters"
+      },
+      "title": {
+        "name": "Title",
+        "placeholder": "Enter the content title",
+        "description": "Main title of the content",
+        "validationMax": "Title must be less than 64 characters"
+      },
+      "description": {
+        "name": "Description",
+        "placeholder": "Enter a brief description of the content",
+        "description": "Short description of the content",
+        "validationMax": "Description must be less than 256 characters"
+      },
+      "authorNote": {
+        "name": "Author note",
+        "placeholder": "Add notes for other editors",
+        "description": "Additional notes for editors",
+        "validationMax": "Author note must be less than 1024 characters"
+      },
+      "category": {
+        "name": "Category",
+        "placeholder": "Select a category",
+        "description": "Select a category for the content"
+      }
+    },
+    "noContent": "No content found"
   }
 }
