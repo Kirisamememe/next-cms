@@ -23,6 +23,11 @@ export const convertToJsonValue = (node: JsonNodeData): any => {
   }
 }
 
+const isValidDateString = (value: string): boolean => {
+  const date = new Date(value);
+  return date instanceof Date && !isNaN(date.getTime());
+};
+
 export const convertToJsonNodeData = (jsonValue: any, option?: { isRoot: boolean }): JsonNodeData => {
   if (Array.isArray(jsonValue)) {
     const arr: JsonNodeData = {
@@ -34,6 +39,14 @@ export const convertToJsonNodeData = (jsonValue: any, option?: { isRoot: boolean
       arr.children?.push(convertToJsonNodeData(value));
     });
     return arr;
+  }
+
+  if (typeof jsonValue === 'string' && isValidDateString(jsonValue)) {
+    return {
+      id: createId(),
+      valueType: 'date',
+      value: new Date(jsonValue),
+    };
   }
 
   if (jsonValue instanceof Date) {
@@ -90,6 +103,9 @@ export const convertToHighlightedJson = (value: any, indent: number = 0): JSX.El
 
   switch (typeof value) {
     case 'string':
+      if (isValidDateString(value)) {
+        return <span className="text-yellow-600">&quot;{new Date(value).toISOString()}&quot;</span>;
+      }
       return (
         <span className="text-lime-600">
           &quot;{value.replace(/"/g, '\\"').replace(/\n/g, '\\n')}&quot;

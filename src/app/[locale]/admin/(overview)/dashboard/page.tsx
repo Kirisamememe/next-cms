@@ -7,7 +7,7 @@ export default async function DashboardPage() {
   const { user } = await getSession()
 
   return (
-    <Flexbox gap={6} className="appear">
+    <Flexbox p={6} gap={6} className="appear">
       <UserInfo name={user.name} nickname={user.nickname} role={user.role} image={user.image} />
       <Dashboard />
     </Flexbox>

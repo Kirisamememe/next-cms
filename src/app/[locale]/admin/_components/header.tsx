@@ -14,6 +14,8 @@ import {
 import { Link, usePathname } from "@/i18n";
 import React, { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib";
+import { useDynamicHeader } from "./dynamic-header-provider";
 
 export function Header() {
   const pathname = usePathname()
@@ -136,8 +138,13 @@ export function Header() {
 
 
 function HeaderContainer({ children }: { children: ReactNode }) {
+  const { atTop, isGoingUp } = useDynamicHeader()
+
   return (
-    <FlexRow className="sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-background/50 backdrop-blur-xl z-50">
+    <FlexRow className={cn(
+      "sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-card/80 backdrop-blur-xl z-50 transition-transform duration-300",
+      (!atTop && !isGoingUp) && "-translate-y-16"
+    )}>
       <FlexRow p={3} gap={2} center>
         <SidebarTrigger className="size-9" />
         <Separator orientation="vertical" className="h-4 mr-1" />

@@ -8,7 +8,7 @@ type Props = {
   className?: string | null
 }
 
-export function ArticleStatus({ publishedAt, isArchived, className }: Props) {
+export function ContentStatus({ publishedAt, isArchived, className }: Props) {
   const t = useTranslations()
 
   if (isArchived) {

@@ -1,38 +1,39 @@
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
 import { UseFormReturn } from "react-hook-form"
 import { useTranslations } from "next-intl"
-import { z } from "zod"
-import { articlePublicationForm } from "@/types"
-import { DateTimePicker } from "../../../../../../components/datetime-picker"
+import { DateTimePicker } from "../../../../../components/datetime-picker"
+import { Submit } from "@/components/ui/submit-button"
 
 
 type Props = {
   form: UseFormReturn<{
-    publishedAt?: Date | null;
+    publishedAt?: Date | null
   }, any, undefined>
-  onSubmit: (values: z.infer<typeof articlePublicationForm>) => void
-  isPending: boolean
+  action: () => void
+  error?: { message: string }
 }
 
 
-export function PublicationDatetimeForm({ form, onSubmit, isPending }: Props) {
+export function PublicationDatetimeForm({ form, action, error }: Props) {
   const t = useTranslations()
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4 p-4">
+      <form action={action} className="flex flex-col gap-4 p-4">
         <FormField
           control={form.control}
           name="publishedAt"
           render={({ field }) => (
             <FormItem className="relative">
-              <DateTimePicker
-                value={field.value}
-                defaultDate={form.formState.defaultValues?.publishedAt}
-                onChange={field.onChange}
-              />
               <FormControl>
+                <DateTimePicker
+                  value={field.value}
+                  defaultDate={form.formState.defaultValues?.publishedAt}
+                  onChange={(value) => {
+                    console.log(value)
+                    field.onChange(value)
+                  }}
+                />
               </FormControl>
               <FormDescription hidden>
                 This is your public display name.
@@ -41,9 +42,9 @@ export function PublicationDatetimeForm({ form, onSubmit, isPending }: Props) {
             </FormItem>
           )}
         />
-        <Button onClick={form.handleSubmit(onSubmit)} isPending={isPending}>
+        <Submit error={error} >
           {t("common.save")}
-        </Button>
+        </Submit>
       </form>
     </Form>
   )

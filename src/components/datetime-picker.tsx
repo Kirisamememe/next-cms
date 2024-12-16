@@ -32,9 +32,9 @@ export function DateTimePicker({ value, defaultDate, onChange, clearable = true 
         className="[&::-webkit-calendar-picker-indicator]:hidden"
         value={value ? format(value, "yyyy-MM-dd'T'HH:mm:ss") : ''}
         onChange={(e) => {
-          const dateString = e.target.value;
-          if (dateString.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/)) {
-            onChange(new Date(dateString));
+          const dateString = e.currentTarget.value
+          if (dateString.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/)) {
+            onChange(new Date(dateString))
           }
         }}
       />

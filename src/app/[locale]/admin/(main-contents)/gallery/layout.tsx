@@ -4,6 +4,7 @@ import { DefaultUploader } from "./_components/default-uploader"
 import { cookies } from "next/headers"
 
 import { mediaFolderService } from "@/di/services"
+import { InsetLayoutWithPadding } from "../../_components/inset-layout-with-padding"
 
 type Props = {
   modal: ReactNode
@@ -17,9 +18,11 @@ export default async function GalleryLayout({ modal, children }: Props) {
 
   return (
     <GalleryProvider folders={folders} GRID_SIZE_SERVER={GRID_SIZE} >
-      {children}
-      {modal}
-      <DefaultUploader />
+      <InsetLayoutWithPadding>
+        {children}
+        {modal}
+        <DefaultUploader />
+      </InsetLayoutWithPadding>
     </GalleryProvider>
   )
 }

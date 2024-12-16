@@ -1,28 +1,11 @@
 'use server'
 
-import { articlePublicationForm, articleSubmitFormSchema } from "@/types"
-import { revalidatePath } from "next/cache"
+import { articleSubmitFormSchema } from "@/types"
 import { getSession } from "@/lib-server-only"
 import { z } from "zod"
 import { articleService } from "@/di/services"
 
 
-
-/**
- * atomを新規作成せず、公開日のみ更新
- * @param articleId
- * @param values 
- * @returns 
- */
-async function updatePublishedAt(
-  articleId: number,
-  values: z.infer<typeof articlePublicationForm>
-) {
-  const { operatorId } = await getSession()
-  const res = await articleService.updatePublishAt(articleId, operatorId, values)
-  revalidatePath('/admin/articles')
-  return res
-}
 
 
 /**
@@ -56,36 +39,9 @@ async function updateArticle(
 
 
 
-/**
- * 記事をアーカイブする
- * @param articleId
- * @returns 
- */
-async function archiveArticle(articleId: number) {
-  const { operatorId } = await getSession()
-  const res = articleService.updateArchivedAt(articleId, operatorId)
-  revalidatePath('/admin/articles')
-  return res
-}
-
-
-/**
- * 記事のアーカイブ状態を解除する
- * @param articleId
- * @returns 
- */
-export async function restoreArticle(articleId: number) {
-  const { operatorId } = await getSession()
-  const res = await articleService.restore(articleId, operatorId)
-  revalidatePath('/admin/articles')
-  return res
-}
-
 
 
 export {
   updateArticleCreateNewAtom,
   updateArticle,
-  updatePublishedAt,
-  archiveArticle
 }

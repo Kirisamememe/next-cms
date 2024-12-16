@@ -13,25 +13,18 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { DateTimePopover } from "./article-form-popover"
+import { DateTimePopover } from "../../../_components/content/datetime-popover"
 import { LabelText } from "@/components/ui/typography"
-import { LastEdit } from "./article-card"
 import { useParams } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
 import { format } from 'date-fns'
+import { CategorySelector } from "../../../_components/category/category-selector"
+import { useCategory } from "../../../_components/category/category-provider"
+import { LastEditor } from "../../../_components/content/last-editor"
 
 
 type Props = {
-  form: UseFormReturn<{
-    body: string;
-    slug: string;
-    summary?: string;
-    title?: string;
-    image?: string;
-    commitMsg?: string;
-    authorNote?: string;
-    publishedAt?: Date | null;
-  }, any, undefined>
+  form: UseFormReturn<z.infer<typeof articleSubmitFormSchema>, any, undefined>
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   article?: ArticleForClient
   isPending: boolean
@@ -40,20 +33,21 @@ type Props = {
 export const ArticleForm = React.forwardRef<
   MDXEditorMethods, MDXEditorProps & Props
 >(({ className, form, isPending, onSubmit, article, ...props }, ref) => {
+  const { categories } = useCategory()
 
   const t = useTranslations()
   const params = useParams<{ locale: string }>()
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row border rounded-lg justify-stretch max-w-[76rem] 2xl:w-[76rem] 2xl:m-auto">
-        <FlexColumn className="p-3 flex-grow @[54rem]:border-r">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row border rounded-lg justify-stretch max-w-[76rem] 2xl:w-[76rem] 2xl:m-auto h-[calc(100vh-7rem)]">
+        <FlexColumn className="p-3 flex-grow @[54rem]:border-r overflow-scroll">
           <MDXEditor
             ref={ref} {...props}
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
-        <Flexbox className="sticky top-[86px] shrink-0 w-full @[54rem]:w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll border-t @[54rem]:border-none">
+        <Flexbox className="sticky top-2 shrink-0 w-full @[54rem]:w-80 2xl:w-96 h-[calc(100vh-7rem)] p-4 gap-4 overflow-scroll border-t @[54rem]:border-none">
           {article?.author && article?.lastEdited && article?.updatedAt &&
             <>
               <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-1">
@@ -67,7 +61,7 @@ export const ArticleForm = React.forwardRef<
                   <LabelText size={14} weight={500}>
                     {t('article.author', { name: article.author?.nickname || article.author.name })}
                   </LabelText>
-                  <LastEdit className="@[52rem]:text-xs" nickname={article.lastEdited?.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={params.locale} />
+                  <LastEditor className="@[52rem]:text-xs" nickname={article.lastEdited?.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={params.locale} />
                 </FlexColumn>
               </FlexRow>
               <Separator className="" />
@@ -170,6 +164,32 @@ export const ArticleForm = React.forwardRef<
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('jsonContent.form.category.name')}
+                </FormLabel>
+                <FormControl>
+                  <CategorySelector
+                    categories={categories}
+                    placeholder={t('jsonContent.form.category.placeholder')}
+                    className="mb-4"
+                    onValueChange={(value) => field.onChange(Number(value))}
+                    defaultValue={field.value ? `${field.value}` : undefined}
+                  />
+                </FormControl>
+                <FormDescription hidden>
+                  {t('jsonContent.form.category.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="publishedAt"
@@ -178,7 +198,7 @@ export const ArticleForm = React.forwardRef<
                 <FormLabel>
                   {t("article.publishedAt.name")}
                 </FormLabel>
-                <DateTimePopover field={field} defaultDate={form.formState.defaultValues?.publishedAt} />
+                <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
                 <FormDescription hidden>{t("article.publishedAt.description")}</FormDescription>
                 <FormMessage />
               </FormItem>

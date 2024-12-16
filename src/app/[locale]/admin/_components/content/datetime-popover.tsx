@@ -8,28 +8,19 @@ import {
 import { cn } from "@/lib"
 import { FormControl } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
-import { ControllerRenderProps } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { getLocaleForFns } from "@/i18n"
-import { DateTimePicker } from "../../../../../../components/datetime-picker"
+import { DateTimePicker } from "../../../../../components/datetime-picker"
 
 
 type Props = {
-  field: ControllerRenderProps<{
-    body: string;
-    slug: string;
-    summary?: string;
-    title?: string;
-    image?: string;
-    commitMsg?: string;
-    authorNote?: string;
-    publishedAt?: Date | null;
-  }, "publishedAt">;
+  value?: Date | null
+  onChange: (...event: any[]) => void
   defaultDate?: Date | null;
 }
 
-export function DateTimePopover({ field, defaultDate }: Props) {
+export function DateTimePopover({ value, onChange, defaultDate }: Props) {
   const t = useTranslations()
   const params = useParams<{ locale: string }>()
 
@@ -41,11 +32,11 @@ export function DateTimePopover({ field, defaultDate }: Props) {
             variant={"outline"}
             className={cn(
               "w-full pl-3 text-left font-normal",
-              !field.value && "text-muted-foreground"
+              !value && "text-muted-foreground"
             )}
           >
-            {field.value ? (
-              format(field.value, "PPP p", { locale: getLocaleForFns(params.locale) })
+            {value ? (
+              format(value, "PPP pp", { locale: getLocaleForFns(params.locale) })
             ) : (
               <span>{t('article.publishedAt.placeholder')}</span>
             )}
@@ -54,7 +45,7 @@ export function DateTimePopover({ field, defaultDate }: Props) {
         </FormControl>
       </PopoverTrigger>
       <PopoverContent className="p-4 w-auto" align="center">
-        <DateTimePicker value={field.value} defaultDate={defaultDate} onChange={field.onChange} />
+        <DateTimePicker value={value} defaultDate={defaultDate} onChange={onChange} />
       </PopoverContent>
     </Popover>
   )

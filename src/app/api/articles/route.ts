@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     if (!data) {
       return NextResponse.json({ error: 'Not Found' }, { status: 404 })
     }
-    return NextResponse.json({ data })
+    return NextResponse.json(data)
   }
 
   const articles = await articleService.getManyPublished()

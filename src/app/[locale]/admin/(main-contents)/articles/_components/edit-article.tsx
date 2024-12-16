@@ -36,7 +36,8 @@ export function EditArticle({ article }: Props) {
       body: article.atom.body || "",
       commitMsg: article.atom.commitMsg || "",
       authorNote: article.authorNote || "",
-      publishedAt: article.publishedAt || null
+      publishedAt: article.publishedAt || null,
+      categoryId: article.categoryId === null ? undefined : article.categoryId
     }
   });
 

@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -12,48 +11,53 @@ import {
 import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
 import { Archive, ArchiveRestore } from "lucide-react"
-import { useSession } from "next-auth/react"
 import { useTranslations } from "next-intl"
-import { useTransition } from "react"
-import { archiveArticle, restoreArticle } from "../_actions/update"
+import { FC, useActionState } from "react"
+import { FormState } from "@/types"
+import { archiveArticle, archiveJsonContent, restoreArticle, restoreJsonContent } from "../../_actions/update"
+import { Submit } from "@/components/ui/submit-button"
 
 type Props = {
-  articleId: number
+  contentId: number
   isArchived: boolean
-}
+  contentType: 'article' | 'json'
+} & React.ComponentPropsWithoutRef<typeof Button>
 
-export function ArchiveAlertDialog({ articleId, isArchived }: Props) {
+export const ArchiveAlertDialog: FC<Props> = ({ contentId, isArchived, contentType, className, ...props }) => {
   const t = useTranslations()
-  const [isPending, startTransition] = useTransition()
-  const session = useSession()
 
-  if (!session.data?.operatorId) {
-    return null
-  }
+  const [state, action] = useActionState<FormState>(async () => {
+    console.log(contentId, isArchived)
+    let res: FormState
 
-  const handleClick = () => {
-    startTransition(async () => {
-      const res = isArchived ?
-        await restoreArticle(articleId) :
-        await archiveArticle(articleId)
+    if (contentType === 'article') {
+      res = isArchived ?
+        await restoreArticle(contentId) :
+        await archiveArticle(contentId)
+    } else {
+      res = isArchived ?
+        await restoreJsonContent(contentId) :
+        await archiveJsonContent(contentId)
+    }
 
-      if (!res) {
-        toast({
-          title: t('common.form.databaseError'),
-          variant: "destructive"
-        })
-        return
-      }
+    if (!res.isSuccess) {
       toast({
-        title: t('common.form.saved')
+        title: t('common.form.databaseError'),
+        variant: "destructive"
       })
+      return { isSuccess: false }
+    }
+    toast({
+      title: t('common.form.saved')
     })
-  }
+    return { isSuccess: true }
+  }, { isSuccess: false })
+
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"outline"} size={"icon"}>
+        <Button className={className} {...props}>
           {isArchived ? <ArchiveRestore size={20} /> : <Archive size={20} />}
         </Button>
       </AlertDialogTrigger>
@@ -70,14 +74,13 @@ export function ArchiveAlertDialog({ articleId, isArchived }: Props) {
           <AlertDialogCancel>
             {t('common.cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button onClick={handleClick} isPending={isPending}>
+          <form action={action}>
+            <Submit error={state.error}>
               {t("common.ok")}
-            </Button>
-          </AlertDialogAction>
+            </Submit>
+          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-
   )
 }

@@ -110,7 +110,7 @@
 }
 
 .mdxeditor-toolbar {
-  @apply bg-muted w-full top-20 mb-4 
+  @apply bg-muted w-full top-0 mb-4 
 }
 
 .mdxeditor-toolbar span button {
@@ -126,7 +126,7 @@
 }
 
 .cm-editor {
-  @apply bg-transparent
+  @apply bg-transparent font-mono
 }
 
 
