@@ -19,6 +19,15 @@
       "databaseError": "数据库错误",
       "permission": "您没有相应权限",
       "notfound": "未找到相应用户"
+    },
+    "category": {
+      "newBtn": "新建分类",
+      "form": {
+        "label": "分类",
+        "placeholder": "输入分类名称",
+        "description": "分类名称输入框",
+        "validationMax": "分类名称必须小于32个字符"
+      }
     }
   },
   "auth": {
@@ -385,6 +394,11 @@
         "name": "分类",
         "placeholder": "选择一个分类",
         "description": "选择内容的分类"
+      },
+      "publishedAt": {
+        "name": "发布时间",
+        "placeholder": "设置发布时间",
+        "description": "切换发布状态"
       }
     },
     "noContent": "未找到相关内容"

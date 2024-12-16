@@ -19,6 +19,15 @@
       "databaseError": "資料庫錯誤",
       "permission": "您沒有相應權限",
       "notfound": "未找到相應用戶"
+    },
+    "category": {
+      "newBtn": "新建分類",
+      "form": {
+        "label": "分類",
+        "placeholder": "輸入分類名稱",
+        "description": "分類名稱輸入框",
+        "validationMax": "分類名稱必須小於32個字元"
+      }
     }
   },
   "auth": {
@@ -388,6 +397,11 @@
         "name": "分類",
         "placeholder": "選擇分類",
         "description": "選擇內容的分類"
+      },
+      "publishedAt": {
+        "name": "發表時間",
+        "placeholder": "設置發表時間",
+        "description": "切換發表狀態"
       }
     },
     "noContent": "未找到相關內容"

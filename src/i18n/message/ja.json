@@ -19,6 +19,15 @@
       "databaseError": "データベースエラーが発生しました。",
       "permission": "権限がありません。",
       "notfound": "該当ユーザーが見つかりません。"
+    },
+    "category": {
+      "newBtn": "カテゴリを追加",
+      "form": {
+        "label": "カテゴリ",
+        "placeholder": "カテゴリ名を入力してください",
+        "description": "カテゴリ名を入力してください",
+        "validationMax": "カテゴリ名は32文字以内で入力してください"
+      }
     }
   },
   "auth": {
@@ -388,6 +397,11 @@
         "name": "カテゴリ",
         "placeholder": "カテゴリを選択",
         "description": "コンテンツにカテゴリを選択"
+      },
+      "publishedAt": {
+        "name": "公開日時",
+        "placeholder": "日時を選択してください",
+        "description": "発表日時を設定する"
       }
     },
     "noContent": "コンテンツが見つかりません"

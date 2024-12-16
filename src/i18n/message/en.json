@@ -19,6 +19,15 @@
       "databaseError": "A database error has occurred.",
       "permission": "Permission error.",
       "notfound": "No matching user found."
+    },
+    "category": {
+      "newBtn": "New Category",
+      "form": {
+        "label": "Category",
+        "placeholder": "Enter category name",
+        "description": "Form field for Category name",
+        "validationMax": "Category name must be less than 32 characters"
+      }
     }
   },
   "auth": {
@@ -388,6 +397,11 @@
         "name": "Category",
         "placeholder": "Select a category",
         "description": "Select a category for the content"
+      },
+      "publishedAt": {
+        "name": "Publication Datetime",
+        "placeholder": "Pick a datetime",
+        "description": "Select a publication datetime for the content"
       }
     },
     "noContent": "No content found"
