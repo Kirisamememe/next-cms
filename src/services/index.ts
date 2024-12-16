@@ -24,3 +24,9 @@ export type { IApiService } from './api-service'
 
 export { JsonContentService } from './json-content-service'
 export type { IJsonContentService } from './json-content-service'
+
+export { JsonContentCategoryService } from './json-content-category-service'
+export type { IJsonContentCategoryService } from './json-content-category-service'
+
+export { ArticleCategoryService } from './article-category-service'
+export type { IArticleCategoryService } from './article-category-service'

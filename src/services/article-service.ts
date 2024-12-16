@@ -1,6 +1,6 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
-import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, articlePublicationForm, ArticlePublishedForClient, articleSubmitFormSchema, FindManyOptions } from '@/types'
+import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, ArticlePublishedForClient, articleSubmitFormSchema, FindManyOptions, publicationDateTimeForm } from '@/types'
 import { TYPES } from '@/di/types'
 import type { IArticleAtomsRepository, IArticleRepository } from '@/repositories'
 import { z } from 'zod'
@@ -17,7 +17,7 @@ export interface IArticleService {
   createWithAtom(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<ArticleAtom | null>
   updateArticleCreateAtom(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
   updateArticle(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
-  updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof articlePublicationForm>): Promise<Article | null>
+  updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof publicationDateTimeForm>): Promise<Article | null>
   updateArchivedAt(articleId: number, operatorId: number): Promise<Article | null>
   restore(articleId: number, operatorId: number): Promise<Article | null>
 }
@@ -194,7 +194,7 @@ export class ArticleService implements IArticleService {
   async updatePublishAt(
     articleId: number,
     operatorId: number,
-    values: z.infer<typeof articlePublicationForm>,
+    values: z.infer<typeof publicationDateTimeForm>,
   ) {
     return await this._articleRepository.updateDate(articleId, operatorId, values)
       .catch(dbExceptionHandler)

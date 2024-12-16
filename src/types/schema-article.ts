@@ -9,13 +9,9 @@ export const articleSubmitFormSchema = z.object({
   slug: z.string().default(createId()),
   image: z.string().optional(),
   body: z.string().min(1, "本文は必須です"),
-  categoryId: z.number().optional(),
+  categoryId: z.number().nullish(),
   commitMsg: z.string().optional(),
   authorNote: z.string().optional(),
-  publishedAt: z.date().nullish()
-})
-
-export const articlePublicationForm = z.object({
   publishedAt: z.date().nullish()
 })
 
@@ -78,4 +74,12 @@ export type ArticleArchivedForClient = Omit<ArticleForClient, 'publishedAt' | 'a
   archivedAt: Date;
 }
 
+
+export type ArticleCategory = {
+  id: number
+  name: string
+
+  createdAt: Date
+  updatedAt: Date
+}
 

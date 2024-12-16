@@ -1,7 +1,7 @@
+import 'server-only'
 import { TYPES } from "@/di/types";
 import { dbExceptionHandler } from "@/exception-handling/exception-handler-db";
 import type { IJsonAtomRepository, IJsonContentRepository } from "@/repositories";
-
 import { Filter, FindManyOptions, JsonAtom, JsonContent, JsonContentForClient, jsonContentSchema } from "@/types";
 import { inject, injectable } from "inversify";
 import { z } from "zod";
@@ -75,6 +75,5 @@ export class JsonContentService implements IJsonContentService {
   async create(operatorId: number, values: z.infer<typeof jsonContentSchema>) {
     return await this._jsonContentRepository.createWithAtom(operatorId, values).catch(dbExceptionHandler)
   }
-
 
 }

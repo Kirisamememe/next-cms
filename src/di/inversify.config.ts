@@ -14,7 +14,9 @@ import {
   IAccessTokenRepository,
   IApiRepository,
   IJsonContentRepository,
-  IJsonAtomRepository
+  IJsonAtomRepository,
+  IJsonContentCategoryRepository,
+  IArticleCategoryRepository
 } from '@/repositories'
 
 // Repository Implementations
@@ -28,7 +30,9 @@ import {
   AccessTokenRepository,
   ApiRepository,
   JsonContentRepository,
-  JsonAtomRepository
+  JsonAtomRepository,
+  JsonContentCategoryRepository,
+  ArticleCategoryRepository
 } from '@/repositories'
 
 // Service Interfaces
@@ -40,7 +44,9 @@ import {
   IAllowedEmailService,
   IAccessTokenService,
   IApiService,
-  IJsonContentService
+  IJsonContentService,
+  IJsonContentCategoryService,
+  IArticleCategoryService
 } from '@/services'
 
 
@@ -53,7 +59,9 @@ import {
   AllowedEmailService,
   AccessTokenService,
   ApiService,
-  JsonContentService
+  JsonContentService,
+  JsonContentCategoryService,
+  ArticleCategoryService
 } from '@/services'
 
 
@@ -70,6 +78,8 @@ container.bind<IAccessTokenRepository>(TYPES.AccessTokenRepository).to(AccessTok
 container.bind<IApiRepository>(TYPES.ApiRepository).to(ApiRepository)
 container.bind<IJsonContentRepository>(TYPES.JsonContentRepository).to(JsonContentRepository)
 container.bind<IJsonAtomRepository>(TYPES.JsonAtomRepository).to(JsonAtomRepository)
+container.bind<IJsonContentCategoryRepository>(TYPES.JsonContentCategoryRepository).to(JsonContentCategoryRepository)
+container.bind<IArticleCategoryRepository>(TYPES.ArticleCategoryRepository).to(ArticleCategoryRepository)
 
 // Services
 container.bind<IArticleService>(TYPES.ArticleService).to(ArticleService)
@@ -80,6 +90,9 @@ container.bind<IAllowedEmailService>(TYPES.AllowedEmailService).to(AllowedEmailS
 container.bind<IAccessTokenService>(TYPES.AccessTokenService).to(AccessTokenService)
 container.bind<IApiService>(TYPES.ApiService).to(ApiService)
 container.bind<IJsonContentService>(TYPES.JsonContentService).to(JsonContentService)
+container.bind<IJsonContentCategoryService>(TYPES.JsonContentCategoryService).to(JsonContentCategoryService)
+container.bind<IArticleCategoryService>(TYPES.ArticleCategoryService).to(ArticleCategoryService)
+
 
 
 

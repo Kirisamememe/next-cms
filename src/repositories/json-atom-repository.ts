@@ -1,3 +1,4 @@
+import 'server-only'
 import { prisma } from "@/prisma";
 import { JsonAtom } from "@/types";
 import { injectable } from "inversify";

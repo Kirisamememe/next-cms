@@ -29,4 +29,10 @@ export { JsonContentRepository } from './json-content-repository'
 export type { IJsonContentRepository } from './json-content-repository'
 
 export { JsonAtomRepository } from './json-atom-repository'
-export type { IJsonAtomRepository } from './json-atom-repository' 
+export type { IJsonAtomRepository } from './json-atom-repository'
+
+export { JsonContentCategoryRepository } from './json-content-category-repository'
+export type { IJsonContentCategoryRepository } from './json-content-category-repository'
+
+export { ArticleCategoryRepository } from './article-category-repository'
+export type { IArticleCategoryRepository } from './article-category-repository'

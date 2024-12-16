@@ -103,6 +103,11 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
         lastEditor: {
           connect: { id: operatorId }
         },
+        ...(values.categoryId && {
+          category: {
+            connect: { id: values.categoryId }
+          }
+        }),
         jsonAtoms: {
           create: {
             content: values.json,
