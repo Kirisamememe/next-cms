@@ -8,17 +8,19 @@ import { authConfig } from "./auth.config"
 import { Role } from "./types/schema-editor"
 
 declare module "next-auth" {
-  interface User {
-    role: Role,
-    nickname?: string
-  }
-
   interface Session {
-    operatorId: number
+    operatorId: number,
+    user: {
+      email?: string,
+      role: Role,
+      name?: string,
+      image?: string,
+      nickname?: string
+    }
   }
 
   interface JWT {
-    absoluteExp: number
+    absoluteExp: number,
   }
 }
 
@@ -102,7 +104,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name,
           role: data.role,
           nickname: data.nickname || "",
-          image: data.image
+          image: data.image || ""
         }
       }
 
