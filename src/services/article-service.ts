@@ -56,23 +56,6 @@ export class ArticleService implements IArticleService {
   }
 
 
-  // async getMany(filter: Filter, options?: FindManyOptions) {
-  //   const data = await this._articleRepository.findMany(filter, options)
-  //     .then((res) => res.map((article) => ({
-  //       ...article,
-  //       atom: article.atoms[0],
-  //       atoms: undefined,
-  //       archivedAt: article.archivedAt as null
-  //     })))
-  //     .catch(dbExceptionHandler)
-
-  //   if (!data) {
-  //     return []
-  //   }
-  //   return data
-  // }
-
-
   async getManyDraft(options?: FindManyOptions) {
     const data = await this._articleRepository.findMany('draft', options)
       .then((res) => res.map((article) => ({
