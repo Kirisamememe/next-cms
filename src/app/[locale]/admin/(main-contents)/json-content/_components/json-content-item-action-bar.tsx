@@ -2,6 +2,7 @@ import { FlexRow } from "@/components/ui/flexbox"
 import { CopyBtn } from "./copy-btn"
 import { PublicationDatetimePopover } from "../../../_components/content/publication-datetime-popover"
 import { ArchiveAlertDialog } from "../../../_components/content/archive-dialog"
+import { updateJsonContentPublishedAt } from "../../../_actions/update"
 
 type Props = {
   id: number
@@ -16,7 +17,12 @@ export const JsonContentItemActionBar = ({ id, content, date, isArchived }: Prop
     <FlexRow
       className="border-t px-5 py-1 gap-2 ">
       <CopyBtn content={content} />
-      <PublicationDatetimePopover variant={"ghost"} size={"icon"} contentId={id} date={date} contentType="json" side="top" sideOffset={-2} />
+      <PublicationDatetimePopover
+        variant={"ghost"} size={"icon"}
+        contentId={id} date={date}
+        side="top" sideOffset={-2}
+        updateAction={updateJsonContentPublishedAt}
+      />
       <ArchiveAlertDialog variant={"ghost"} size={'icon'} className="ml-auto" contentId={id} isArchived={isArchived} contentType="json" />
     </FlexRow>
   )

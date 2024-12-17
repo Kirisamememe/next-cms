@@ -10,6 +10,7 @@ import { ArchiveAlertDialog } from "../../../_components/content/archive-dialog"
 import { LastEditor } from "../../../_components/content/last-editor"
 import { ContentStatusWithId } from "../../../_components/content/content-status-with-id"
 import Image from "next/image"
+import { updateArticlePublishedAt } from "../../../_actions/update"
 
 type Props = {
   article: ArticleForClient
@@ -103,7 +104,12 @@ function ButtonArea({
 }) {
   return (
     <>
-      <PublicationDatetimePopover variant={"outline"} size={"icon"} contentId={articleId} date={publishedAt} contentType="article" side="left" align="start" />
+      <PublicationDatetimePopover
+        variant={"outline"} size={"icon"}
+        contentId={articleId} date={publishedAt}
+        side="left" align="start"
+        updateAction={updateArticlePublishedAt}
+      />
       <ArchiveAlertDialog variant={"outline"} size={"icon"} contentId={articleId} isArchived={isArchived} contentType="article" />
     </>
   )

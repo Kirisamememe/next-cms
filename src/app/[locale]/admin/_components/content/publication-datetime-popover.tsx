@@ -11,15 +11,16 @@ import { z } from "zod"
 import { FC, useActionState, useState } from "react"
 import { toast } from "@/hooks/use-toast"
 import { useTranslations } from "next-intl"
-import { updateArticlePublishedAt, updateJsonContentPublishedAt } from "../../_actions/update"
 
 type Props = {
   contentId: number
   date?: Date | null
-  contentType: 'article' | 'json'
+  updateAction: (contentId: number, values: z.infer<typeof publicationDateTimeForm>) => Promise<FormState>
 } & React.ComponentPropsWithRef<typeof Button> & React.ComponentPropsWithoutRef<typeof PopoverContent>
 
-export const PublicationDatetimePopover: FC<Props> = ({ contentId, date, contentType, side, align, sideOffset, ...props }) => {
+export const PublicationDatetimePopover: FC<Props> = (
+  { contentId, date, side, align, sideOffset, updateAction, ...props }
+) => {
   const t = useTranslations()
   const [open, setOpen] = useState(false)
 
@@ -35,33 +36,29 @@ export const PublicationDatetimePopover: FC<Props> = ({ contentId, date, content
     const validation = await form.trigger()
     if (!validation) return { isSuccess: false }
 
+    setOpen(false)
     const values = form.getValues()
-    let res: FormState
-    if (contentType === 'article') {
-      res = await updateArticlePublishedAt(contentId, values)
-    } else {
-      res = await updateJsonContentPublishedAt(contentId, values)
-    }
+    const res = await updateAction(contentId, values)
 
-    if (!res) {
+    if (!res.isSuccess) {
       toast({
         title: t('common.form.databaseError'),
         variant: "destructive"
       })
+      setOpen(true)
       return res
     }
 
     toast({
       title: t('common.form.saved')
     })
-    setOpen(false)
 
     return res
   }, { isSuccess: false })
 
 
   return (
-    <Popover open={open && !isPending} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button {...props} disabled={isPending}>
           {!isPending
@@ -70,7 +67,7 @@ export const PublicationDatetimePopover: FC<Props> = ({ contentId, date, content
           }
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="flex flex-col gap-3 w-auto p-0" side={side} align={align} sideOffset={sideOffset}>
+      <PopoverContent className="flex flex-col gap-3 w-72 p-0" side={side} align={align} sideOffset={sideOffset}>
         <PublicationDatetimeForm form={form} action={action} error={state.error} />
       </PopoverContent>
     </Popover>

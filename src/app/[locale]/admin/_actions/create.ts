@@ -16,7 +16,7 @@ export async function createArticleCategory(
     return {
       isSuccess: false,
       error: {
-        message: "Create article category failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -35,7 +35,7 @@ export async function createJsonContentCategory(
     return {
       isSuccess: false,
       error: {
-        message: "Create JSON content category failed"
+        message: "common.form.databaseError"
       }
     }
   }

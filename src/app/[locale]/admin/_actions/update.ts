@@ -18,11 +18,12 @@ export async function updateArticlePublishedAt(
 ) {
   const { operatorId } = await getSession()
   const res = await articleService.updatePublishAt(articleId, operatorId, values)
+
   if (!res) {
     return {
       isSuccess: false,
       error: {
-        message: "Update article failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -39,11 +40,12 @@ export async function updateJsonContentPublishedAt(
 ) {
   const { operatorId } = await getSession()
   const res = await jsonContentService.update(jsonContentId, operatorId, values)
+
   if (!res) {
     return {
       isSuccess: false,
       error: {
-        message: "Update json content failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -67,7 +69,7 @@ export async function archiveArticle(articleId: number) {
     return {
       isSuccess: false,
       error: {
-        message: "Update article failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -90,7 +92,7 @@ export async function restoreArticle(articleId: number) {
     return {
       isSuccess: false,
       error: {
-        message: "Restore article failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -108,7 +110,7 @@ export async function archiveJsonContent(jsonContentId: number) {
     return {
       isSuccess: false,
       error: {
-        message: "Update json content failed"
+        message: "common.form.databaseError"
       }
     }
   }
@@ -125,7 +127,7 @@ export async function restoreJsonContent(jsonContentId: number) {
     return {
       isSuccess: false,
       error: {
-        message: "Restore json content failed"
+        message: "common.form.databaseError"
       }
     }
   }
