@@ -345,11 +345,11 @@
       }
     },
     "article": {
-      "title": "文章內容",
+      "title": "文章",
       "description": "管理文章API設定"
     },
     "json": {
-      "title": "JSON API",
+      "title": "JSON內容",
       "description": "管理JSON API設定"
     },
     "tabs": {

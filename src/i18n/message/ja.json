@@ -349,7 +349,7 @@
       "description": "文章APIの設定を管理します"
     },
     "json": {
-      "title": "JSON API",
+      "title": "JSONコンテンツ",
       "description": "JSON APIを管理します"
     },
     "tabs": {

@@ -345,11 +345,11 @@
       }
     },
     "article": {
-      "title": "Article API",
+      "title": "Article",
       "description": "Manage article API settings"
     },
     "json": {
-      "title": "JSON API",
+      "title": "JSON Content",
       "description": "Manage JSON API settings"
     },
     "tabs": {

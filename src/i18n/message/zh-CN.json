@@ -346,7 +346,7 @@
       "description": "管理文章API设置"
     },
     "json": {
-      "title": "JSON API",
+      "title": "JSON内容",
       "description": "管理JSON API设置"
     },
     "tabs": {
