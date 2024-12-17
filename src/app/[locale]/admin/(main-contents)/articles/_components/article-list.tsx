@@ -1,25 +1,34 @@
 import { ArticleCard } from "./article-card";
-import { ArticleForClient } from "@/types";
+import { Filter } from "@/types";
 import { GridColumn } from "@/components/ui/grid";
-import { useTranslations } from "next-intl";
 import { NoContentFound } from "../../../../../../components/no-article-found";
+import { getTranslations } from "next-intl/server";
+import { articleService } from "@/di/services";
+import { sortContents } from "@/lib";
 
 
 type Props = {
-  articles: ArticleForClient[]
+  filter: Filter,
+  sortOpt: 'asc' | 'desc',
+  searchQuery: string,
+  categoryId: number | null
 }
 
-export function ArticleList({ articles }: Props) {
-  const t = useTranslations()
+export async function ArticleList({ filter, sortOpt, searchQuery, categoryId }: Props) {
+  const t = await getTranslations()
+  const articles = await articleService.getMany(filter)
+  const filteredArticles = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
+    article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
+    || article.atom.title?.toLowerCase().includes(searchQuery.toLowerCase())))
 
   return (
     <>
       <GridColumn className="appear @[105rem]:grid-cols-2 gap-3">
-        {articles.map((article) => (
+        {filteredArticles.map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}
       </GridColumn>
-      {articles.length === 0 &&
+      {filteredArticles.length === 0 &&
         <NoContentFound text={t('article.noArticles')} />
       }
     </>

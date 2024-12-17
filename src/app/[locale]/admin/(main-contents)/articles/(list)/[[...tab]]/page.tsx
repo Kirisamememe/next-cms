@@ -1,8 +1,6 @@
-import { articleService } from "@/di/services";
 import { ArticleList } from "../../_components/article-list";
 import { Filter, idSchema } from "@/types";
 import { notFound } from "next/navigation";
-import { sortContents } from "@/lib";
 import { ToolBar } from "../../_components/toolbar";
 import { Suspense } from "react";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
@@ -34,16 +32,11 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
   const searchQuery = search?.toString() || ''
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
 
-  const articles = await articleService.getMany(filter)
-  const filteredArticles = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
-    article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
-    || article.atom.title?.toLowerCase().includes(searchQuery.toLowerCase())))
-
   return (
     <>
       <ToolBar />
       <Suspense key={searchQuery + categoryId + sortOpt} fallback={<CircleSpinLoading />}>
-        <ArticleList articles={filteredArticles} />
+        <ArticleList filter={filter} sortOpt={sortOpt} searchQuery={searchQuery} categoryId={categoryId} />
       </Suspense>
     </>
   )
