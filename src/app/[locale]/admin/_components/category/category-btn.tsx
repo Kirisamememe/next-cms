@@ -42,7 +42,7 @@ export function CategoryBtn({ categoryId, name }: CategoryBtnProps) {
       size={'sm'} variant="outline" onClick={handleOnClick}
       className={cn(
         "rounded-full px-3 h-8 text-muted-foreground bg-card",
-        (category === categoryId.toString()) && "bg-primary hover:bg-primary/90 text-primary-foreground hover:text-primary-foreground font-semibold "
+        (category === categoryId.toString()) && "border-primary bg-primary hover:bg-primary/90 text-primary-foreground hover:text-primary-foreground font-semibold "
       )}>
       {name}
     </Button>

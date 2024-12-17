@@ -9,7 +9,7 @@ export const ToolBar = async () => {
   const categories = await articleCategoryService.fetchMany()
 
   return (
-    <Flexbox className="justify-between gap-3 flex-col-reverse @[52rem]:flex-row @[52rem]:items-center">
+    <Flexbox className="shrink-0 justify-between gap-3 flex-col-reverse @[52rem]:flex-row @[52rem]:items-center">
       <CategoryFilter contentCategories={categories} categoryType='article' />
       <FlexRow gap={3} className="relative w-full @[52rem]:max-w-72">
         <SearchBar />

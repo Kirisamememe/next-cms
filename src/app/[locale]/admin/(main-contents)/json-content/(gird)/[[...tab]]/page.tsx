@@ -5,6 +5,8 @@ import { jsonContentService } from "@/di/services";
 import { notFound } from "next/navigation";
 import { sortContents } from "@/lib";
 import { JsonContentToolbar } from "../../_components/json-content-toolbar";
+import { Suspense } from "react";
+import { CircleSpinLoading } from "@/components/circle-spin-loading";
 
 type Props = {
   params: Promise<{ tab?: string[] }>
@@ -42,7 +44,9 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <Flexbox gap={4} className="appear shrink-0 h-full">
       <JsonContentToolbar />
-      <JsonContentGrid jsonContents={filteredJsonContent} />
+      <Suspense key={searchQuery + categoryId} fallback={<CircleSpinLoading />}>
+        <JsonContentGrid jsonContents={filteredJsonContent} />
+      </Suspense>
     </Flexbox>
   )
 }

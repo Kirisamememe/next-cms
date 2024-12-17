@@ -13,7 +13,7 @@ export const JsonContentGrid = ({ jsonContents }: Props) => {
 
   return (
     <>
-      <GridColumn className="@[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
+      <GridColumn className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
         {jsonContents.map((jsonContent) => (
           <JsonContentItem key={jsonContent.id} jsonContent={jsonContent} />
         ))}

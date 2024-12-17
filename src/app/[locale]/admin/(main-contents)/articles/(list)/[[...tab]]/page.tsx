@@ -4,6 +4,8 @@ import { Filter, idSchema } from "@/types";
 import { notFound } from "next/navigation";
 import { sortContents } from "@/lib";
 import { ToolBar } from "../../_components/toolbar";
+import { Suspense } from "react";
+import { CircleSpinLoading } from "@/components/circle-spin-loading";
 
 type Props = {
   params: Promise<{ tab?: string[] }>
@@ -40,7 +42,9 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
   return (
     <>
       <ToolBar />
-      <ArticleList articles={filteredArticles} />
+      <Suspense key={searchQuery + categoryId} fallback={<CircleSpinLoading />}>
+        <ArticleList articles={filteredArticles} />
+      </Suspense>
     </>
   )
 }
