@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
 import { idSchema } from "@/types";
 import { EditArticle } from "../../../_components/edit-article";
-import { articleService } from "@/di/services";
-
-
+import { articleCategoryService, articleService } from "@/di/services";
 
 type Props = {
   params: Promise<{
@@ -20,11 +18,12 @@ export default async function EditArticlePage({ params }: Props) {
     notFound()
   }
 
+  const categories = await articleCategoryService.fetchMany()
   const data = await articleService.getById(parseId.data)
 
   if (!data) notFound()
 
   return (
-    <EditArticle article={data} />
+    <EditArticle article={data} categories={categories} />
   )
 }

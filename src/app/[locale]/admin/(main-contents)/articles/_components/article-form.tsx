@@ -8,7 +8,7 @@ import { Flexbox, FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
-import { ArticleForClient, articleSubmitFormSchema } from "@/types"
+import { ArticleForClient, articleSubmitFormSchema, ContentCategory } from "@/types"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
@@ -19,7 +19,6 @@ import { useParams } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
 import { format } from 'date-fns'
 import { CategorySelector } from "../../../_components/category/category-selector"
-import { useCategory } from "../../../_components/category/category-provider"
 import { LastEditor } from "../../../_components/content/last-editor"
 
 
@@ -28,12 +27,12 @@ type Props = {
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   article?: ArticleForClient
   isPending: boolean
+  categories: ContentCategory[]
 }
 
 export const ArticleForm = React.forwardRef<
   MDXEditorMethods, MDXEditorProps & Props
->(({ className, form, isPending, onSubmit, article, ...props }, ref) => {
-  const { categories } = useCategory()
+>(({ className, form, isPending, onSubmit, article, categories, ...props }, ref) => {
 
   const t = useTranslations()
   const params = useParams<{ locale: string }>()

@@ -1,7 +1,7 @@
 'use client'
 
 import { useToast } from "@/hooks/use-toast"
-import { articleSubmitFormSchema, ArticleForClient } from "@/types"
+import { articleSubmitFormSchema, ArticleForClient, ContentCategory } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { MDXEditorMethods } from "@mdxeditor/editor"
 import { useRouter } from "next/navigation"
@@ -15,9 +15,10 @@ import { updateArticle, updateArticleCreateNewAtom } from "../_actions/update"
 
 type Props = {
   article: ArticleForClient
+  categories: ContentCategory[]
 }
 
-export function EditArticle({ article }: Props) {
+export function EditArticle({ article, categories }: Props) {
   const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const router = useRouter()
@@ -85,6 +86,7 @@ export function EditArticle({ article }: Props) {
       onSubmit={onSubmit}
       isPending={isPending}
       article={article}
+      categories={categories}
     />
   )
 }
