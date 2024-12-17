@@ -61,10 +61,13 @@ export const PublicationDatetimePopover: FC<Props> = ({ contentId, date, content
 
 
   return (
-    <Popover open={isPending || open} onOpenChange={setOpen}>
+    <Popover open={open && !isPending} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button {...props}>
-          {date ? <CalendarCheck size={20} /> : <CalendarIcon size={20} />}
+        <Button {...props} disabled={isPending}>
+          {!isPending
+            ? (date ? <CalendarCheck size={20} /> : <CalendarIcon size={20} />)
+            : <div className="circle-spin-2 scale-75" />
+          }
         </Button>
       </PopoverTrigger>
       <PopoverContent className="flex flex-col gap-3 w-auto p-0" side={side} align={align} sideOffset={sideOffset}>
