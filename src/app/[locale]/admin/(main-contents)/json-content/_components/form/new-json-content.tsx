@@ -7,18 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ContentCategory, FormState, jsonContentSchema } from "@/types"
 import { z } from "zod"
 import { createJsonContent } from "../../_actions/create"
-import { useRouter } from "@/i18n"
-import { Submit } from "@/components/ui/submit-button"
-import { useTranslations } from "next-intl"
+import { redirect } from "next/navigation"
 
 type Props = {
   categories: ContentCategory[]
 }
 
 export const NewJsonContent = ({ categories }: Props) => {
-  const { push } = useRouter()
-  const t = useTranslations()
-
   const form = useForm<z.infer<typeof jsonContentSchema>>({
     resolver: zodResolver(jsonContentSchema),
     defaultValues: {
@@ -47,17 +42,12 @@ export const NewJsonContent = ({ categories }: Props) => {
         return res
       }
 
-      push(`/admin/json-content`)
-      return res
+      redirect(`/admin/json-content`)
     },
     { isSuccess: false }
   )
 
   return (
-    <JsonContentForm action={action} form={form} categories={categories}>
-      <Submit error={state.error} isPending={isPending}>
-        {t('common.submit')}
-      </Submit>
-    </JsonContentForm>
+    <JsonContentForm action={action} form={form} categories={categories} error={state.error} isPending={isPending} />
   )
 }

@@ -8,7 +8,7 @@ import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData 
 import { JsonFileUploader } from "./json-file-uploader";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
 import { z } from "zod";
@@ -18,6 +18,7 @@ import { LastEditor } from "@/app/[locale]/admin/_components/content/last-editor
 import { DateTimePopover } from "../../../../_components/content/datetime-popover";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { Submit } from "@/components/ui/submit-button";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -28,11 +29,12 @@ type Props = {
   action: () => void
   jsonContent?: JsonContentForClient
   form: UseFormReturn<z.infer<typeof jsonContentSchema>, any, undefined>
-  categories: ContentCategory[],
-  children: ReactNode
+  categories: ContentCategory[]
+  error?: { message: string }
+  isPending: boolean
 }
 
-export const JsonContentForm = ({ action, jsonContent, form, categories, children }: Props) => {
+export const JsonContentForm = ({ action, jsonContent, form, categories, error, isPending }: Props) => {
   const t = useTranslations()
   const locale = useLocale()
 
@@ -230,7 +232,9 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, childre
             <p>version: {jsonContent?.jsonAtom.version}</p>
           )}
 
-          {children}
+          <Submit error={error} isPending={isPending}>
+            {t('common.submit')}
+          </Submit>
         </FlexColumn>
       </form>
     </Form>
