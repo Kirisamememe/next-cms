@@ -106,8 +106,11 @@ export function animateElement(
 
 
 
-export const sortContents = <T extends { updatedAt: Date }>(contents: T[], order: 'asc' | 'desc') => {
-  return [...contents].sort((a, b) => {
+export const sortContents = <T extends { updatedAt: Date }>(
+  contents: T[],
+  order: 'asc' | 'desc'
+) => {
+  return contents.sort((a, b) => {
     const dateA = new Date(a.updatedAt).getTime()
     const dateB = new Date(b.updatedAt).getTime()
     return order === 'asc' ? dateA - dateB : dateB - dateA

@@ -34,14 +34,14 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
 
   const categories = await articleCategoryService.fetchMany()
   const articles = await articleService.getMany(filter)
-  const sorted = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
+  const filteredArticles = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
     article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
     || article.atom.title?.toLowerCase().includes(searchQuery.toLowerCase())))
 
   return (
     <>
       <ToolBar categories={categories} />
-      <ArticleList articles={sorted} />
+      <ArticleList articles={filteredArticles} />
     </>
   )
 }
