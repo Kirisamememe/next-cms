@@ -295,7 +295,7 @@
       }
     }
   },
-  "restfulApi": {
+  "api": {
     "token": {
       "title": "Access Token",
       "description": "Access tokens are used to retrieve data from the API",
@@ -323,30 +323,34 @@
         "copied": "Copied token to clipboard"
       }
     },
-    "mainApi": {
-      "title": "Main Contents",
-      "description": "Manage main content API settings",
-      "card": {
-        "path": "Path",
-        "createdAt": "Created At",
-        "updatedAt": "Updated At",
-        "status": {
-          "title": "Status",
-          "active": "Started {date} ago",
-          "inactive": "Inactive"
-        },
-        "origin": "Allowed Origins",
-        "badge": {
-          "notCreated": "Not Created",
-          "active": "Active",
-          "inactive": "Inactive"
-        },
-        "btn": "Create"
+    "card": {
+      "path": "Path",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "status": {
+        "title": "Status",
+        "active": "Started {date} ago",
+        "inactive": "Inactive"
+      },
+      "origin": "Allowed Origins",
+      "badge": {
+        "notCreated": "Not Created",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "btn": "Create",
+      "names": {
+        "many": "Get Many",
+        "unique": "Get Unique"
       }
     },
-    "customApi": {
-      "title": "Custom Contents",
-      "description": "Manage custom content APIs"
+    "article": {
+      "title": "Article API",
+      "description": "Manage article API settings"
+    },
+    "json": {
+      "title": "JSON API",
+      "description": "Manage JSON API settings"
     },
     "tabs": {
       "api": "API Management",

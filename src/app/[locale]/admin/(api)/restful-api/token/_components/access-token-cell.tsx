@@ -20,7 +20,7 @@ export function AccessTokenCell({ token }: Props) {
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
     toast({
-      title: t('restfulApi.token.toast.copied')
+      title: t('api.token.toast.copied')
     })
   }
 

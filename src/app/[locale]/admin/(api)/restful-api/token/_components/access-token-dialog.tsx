@@ -28,7 +28,7 @@ export function AccessTokenDialog() {
       <DialogTrigger asChild>
         <Button className="mb-4">
           <Plus size={16} />
-          {t('restfulApi.token.generate')}
+          {t('api.token.generate')}
         </Button>
       </DialogTrigger>
       <DialogContent>

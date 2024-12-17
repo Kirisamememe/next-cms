@@ -1,15 +1,17 @@
 import { ReactNode } from "react"
 
 type Props = {
-  mainContent: ReactNode
-  customContent: ReactNode
+  article: ReactNode
+  json: ReactNode
+  gallery: ReactNode
 }
 
-export default function RestfulApiLayout({ mainContent, customContent }: Props) {
+export default function RestfulApiLayout({ article, json, gallery }: Props) {
   return (
     <>
-      {mainContent}
-      {customContent}
+      {article}
+      {json}
+      {gallery}
     </>
   )
 }

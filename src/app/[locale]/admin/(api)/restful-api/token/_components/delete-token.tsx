@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Submit } from "@/components/ui/submit-button"
 import { Trash2 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { deleteAccessToken } from "../../(api)/@mainContent/_actions/delete"
+import { deleteAccessToken } from "../../(api)/_actions/delete"
 
 type Props = {
   token: string
@@ -38,10 +38,10 @@ export function DeleteAccessToken({ token }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {t('restfulApi.token.deleteAlert.title')}
+            {t('api.token.deleteAlert.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('restfulApi.token.deleteAlert.description')}
+            {t('api.token.deleteAlert.description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

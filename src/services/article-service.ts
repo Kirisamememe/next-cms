@@ -9,7 +9,7 @@ import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 
 export interface IArticleService {
-  getById(id: number, publishedOnly?: boolean): Promise<ArticleForClient | null>
+  getById(id: number, options?: { publishedOnly: boolean }): Promise<ArticleForClient | null>
   getMany(filter: Filter, options?: FindManyOptions): Promise<ArticleForClient[]>
   getManyDraft(options?: FindManyOptions): Promise<ArticleDraftForClient[]>
   getManyPublished(options?: FindManyOptions): Promise<ArticlePublishedForClient[]>
@@ -42,7 +42,11 @@ export class ArticleService implements IArticleService {
    * @param id 
    * @returns 
    */
-  async getById(id: number, publishedOnly: boolean = false) {
+  async getById(
+    id: number,
+    options?: { publishedOnly: boolean }
+  ) {
+    const { publishedOnly } = options ?? { publishedOnly: false }
     const article = await this._articleRepository.findById(id, publishedOnly).catch(dbExceptionHandler)
     if (!article || !article?.atoms.length) {
       return null

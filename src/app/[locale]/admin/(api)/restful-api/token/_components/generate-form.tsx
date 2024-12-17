@@ -11,15 +11,15 @@ export function TokenGenerateForm() {
     <>
       <DialogHeader>
         <DialogTitle>
-          {t('restfulApi.token.dialog.titleBeforeGenerate')}
+          {t('api.token.dialog.titleBeforeGenerate')}
         </DialogTitle>
         <DialogDescription>
-          {t('restfulApi.token.dialog.descriptionBeforeGenerate')}
+          {t('api.token.dialog.descriptionBeforeGenerate')}
         </DialogDescription>
       </DialogHeader>
       <Input
         name="name"
-        placeholder={t('restfulApi.token.dialog.namePlaceholder')}
+        placeholder={t('api.token.dialog.namePlaceholder')}
       />
       <DialogFooter className="ml-auto sm:space-x-3">
         <DialogClose asChild >
@@ -28,7 +28,7 @@ export function TokenGenerateForm() {
           </Button>
         </DialogClose>
         <Submit type="submit">
-          {t('restfulApi.token.dialog.generate')}
+          {t('api.token.dialog.generate')}
         </Submit>
       </DialogFooter>
     </>

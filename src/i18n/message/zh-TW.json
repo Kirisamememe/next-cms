@@ -295,7 +295,7 @@
       }
     }
   },
-  "restfulApi": {
+  "api": {
     "token": {
       "title": "存取權杖",
       "description": "用於從API獲取數據",
@@ -323,30 +323,34 @@
         "copied": "權杖已複製至剪貼簿"
       }
     },
-    "mainApi": {
-      "title": "主要內容",
-      "description": "管理主要內容API設定",
-      "card": {
-        "path": "路徑",
-        "createdAt": "建立時間",
-        "updatedAt": "更新時間",
-        "status": {
-          "title": "狀態",
-          "active": "{date}前啟動",
-          "inactive": "未啟動"
-        },
-        "origin": "允許的來源",
-        "badge": {
-          "notCreated": "未建立",
-          "active": "運行中",
-          "inactive": "未啟動"
-        },
-        "btn": "建立"
+    "card": {
+      "path": "路徑",
+      "createdAt": "建立時間",
+      "updatedAt": "更新時間",
+      "status": {
+        "title": "狀態",
+        "active": "{date}前啟動",
+        "inactive": "未啟動"
+      },
+      "origin": "允許的來源",
+      "badge": {
+        "notCreated": "未建立",
+        "active": "運行中",
+        "inactive": "未啟動"
+      },
+      "btn": "建立",
+      "names": {
+        "many": "獲取多個",
+        "unique": "獲取單個"
       }
     },
-    "customApi": {
-      "title": "自定義內容",
-      "description": "管理自定義內容API"
+    "article": {
+      "title": "文章內容",
+      "description": "管理文章API設定"
+    },
+    "json": {
+      "title": "JSON API",
+      "description": "管理JSON API設定"
     },
     "tabs": {
       "api": "API管理",

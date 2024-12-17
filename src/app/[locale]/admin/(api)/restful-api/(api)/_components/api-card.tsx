@@ -9,10 +9,12 @@ import { getTranslations } from "next-intl/server";
 import { apiService } from "@/di/services";
 
 type Props = {
-  name: string
+  name: string,
+  type: 'many' | 'unique'
+  path: string
 }
 
-export async function MainContentApiCard({ name }: Props) {
+export async function ApiCard({ name, type, path }: Props) {
   const t = await getTranslations()
   const data = await apiService.getByName(name)
 
@@ -21,15 +23,15 @@ export async function MainContentApiCard({ name }: Props) {
       <FlexColumn gap={4} p={4} radius={'md'} className="bg-muted/30 justify-between">
         <FlexRow className="justify-between">
           <Heading className="text-lg">
-            {name}
+            {t(`api.card.names.${type}`)}
           </Heading>
           <Badge variant={'custom'} className={cn(
             'h-fit px-2 rounded-full bg-muted/60 text-muted-foreground',
           )}>
-            {t('restfulApi.mainApi.card.badge.notCreated')}
+            {t('api.card.badge.notCreated')}
           </Badge>
         </FlexRow>
-        <CreateMainContentApi apiName={name} />
+        <CreateMainContentApi apiName={name} path={path} />
       </FlexColumn>
     )
   }
@@ -39,15 +41,15 @@ export async function MainContentApiCard({ name }: Props) {
     <FlexColumn gap={4} p={4} radius={'md'} className="bg-muted/30">
       <FlexRow className="justify-between">
         <Heading className="text-lg">
-          {name}
+          {t(`api.card.names.${type}`)}
         </Heading>
         <Badge variant={'custom'} className={cn(
           'h-fit px-2 rounded-full bg-muted',
           data.activatedAt && 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-500'
         )}>
           {data.activatedAt ?
-            t('restfulApi.mainApi.card.badge.active') :
-            t('restfulApi.mainApi.card.badge.inactive')
+            t('api.card.badge.active') :
+            t('api.card.badge.inactive')
           }
         </Badge>
       </FlexRow>

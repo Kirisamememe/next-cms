@@ -4,20 +4,21 @@ import { Submit } from "@/components/ui/submit-button"
 
 type Props = {
   apiName: string
+  path: string
 }
 
-export function CreateMainContentApi({ apiName }: Props) {
+export function CreateMainContentApi({ apiName, path }: Props) {
   const t = useTranslations()
 
   const action = async () => {
     'use server'
-    await createMainContentApi(apiName)
+    await createMainContentApi(apiName, path)
   }
 
   return (
     <form action={action}>
       <Submit className="w-fit">
-        {t('restfulApi.mainApi.card.btn')}
+        {t('api.card.btn')}
       </Submit>
     </form>
   )

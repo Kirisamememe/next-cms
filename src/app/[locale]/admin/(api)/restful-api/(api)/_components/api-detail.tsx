@@ -17,29 +17,29 @@ export function ApiDetails({ api }: Props) {
     <div className="space-y-2 text-sm">
       <DetailItem
         icon={<GitForkIcon />}
-        label={t('restfulApi.mainApi.card.path')}
+        label={t('api.card.path')}
         value={api.path} />
       <DetailItem
         icon={<CalendarIcon />}
-        label={t('restfulApi.mainApi.card.createdAt')}
+        label={t('api.card.createdAt')}
         value={format(api.createdAt, "PPP p", { locale: getLocaleForFns(locale) })} />
       <DetailItem
         icon={<RefreshCwIcon />}
-        label={t('restfulApi.mainApi.card.updatedAt')}
+        label={t('api.card.updatedAt')}
         value={format(api.updatedAt, "PPP p", { locale: getLocaleForFns(locale) })} />
       <DetailItem
         icon={<Power />}
-        label={t('restfulApi.mainApi.card.status.title')}
+        label={t('api.card.status.title')}
         value={api.activatedAt ?
-          t('restfulApi.mainApi.card.status.active', {
+          t('api.card.status.active', {
             date: formatDistanceToNow(api.updatedAt, {
               locale: getLocaleForFns(locale)
             })
           }) :
-          t('restfulApi.mainApi.card.status.inactive')} />
+          t('api.card.status.inactive')} />
       <DetailItem
         icon={<GlobeIcon />}
-        label={t('restfulApi.mainApi.card.origin')}
+        label={t('api.card.origin')}
         value={api.allowedOrigins ? api.allowedOrigins : '*'} />
     </div>
   )

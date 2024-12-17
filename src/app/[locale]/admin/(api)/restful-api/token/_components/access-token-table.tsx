@@ -20,19 +20,19 @@ export async function AccessTokenTable() {
       <TableHeader>
         <TableRow>
           <TableHead>
-            {t('restfulApi.token.table.name')}
+            {t('api.token.table.name')}
           </TableHead>
           <TableHead>
-            {t('restfulApi.token.table.token')}
+            {t('api.token.table.token')}
           </TableHead>
           <TableHead>
-            {t('restfulApi.token.table.createdAt')}
+            {t('api.token.table.createdAt')}
           </TableHead>
           <TableHead>
-            {t('restfulApi.token.table.expiresAt')}
+            {t('api.token.table.expiresAt')}
           </TableHead>
           <TableHead>
-            {t('restfulApi.token.table.createdBy')}
+            {t('api.token.table.createdBy')}
           </TableHead>
         </TableRow>
       </TableHeader>

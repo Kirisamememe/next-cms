@@ -43,10 +43,10 @@ export function DeleteFolderBtn({ path }: Props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {t('restfulApi.token.deleteAlert.title')}
+            {t('api.token.deleteAlert.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('restfulApi.token.deleteAlert.description')}
+            {t('api.token.deleteAlert.description')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -292,7 +292,7 @@
       }
     }
   },
-  "restfulApi": {
+  "api": {
     "token": {
       "title": "访问令牌",
       "description": "用于从API获取数据",
@@ -320,30 +320,34 @@
         "copied": "令牌已拷贝至剪贴板"
       }
     },
-    "mainApi": {
-      "title": "主要内容",
-      "description": "管理主要内容API设置",
-      "card": {
-        "path": "路径",
-        "createdAt": "创建时间",
-        "updatedAt": "更新时间",
-        "status": {
-          "title": "状态",
-          "active": "{date}前启动",
-          "inactive": "未启动"
-        },
-        "origin": "允许的来源",
-        "badge": {
-          "notCreated": "未创建",
-          "active": "运行中",
-          "inactive": "未启动"
-        },
-        "btn": "创建"
+    "card": {
+      "path": "路径",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间",
+      "status": {
+        "title": "状态",
+        "active": "{date}前启动",
+        "inactive": "未启动"
+      },
+      "origin": "允许的来源",
+      "badge": {
+        "notCreated": "未创建",
+        "active": "运行中",
+        "inactive": "未启动"
+      },
+      "btn": "创建",
+      "names": {
+        "many": "获取多个",
+        "unique": "获取单个"
       }
     },
-    "customApi": {
-      "title": "自定义内容",
-      "description": "管理自定义内容API"
+    "article": {
+      "title": "文章",
+      "description": "管理文章API设置"
+    },
+    "json": {
+      "title": "JSON API",
+      "description": "管理JSON API设置"
     },
     "tabs": {
       "api": "API管理",

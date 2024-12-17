@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { accessTokenService, apiService, articleService } from "@/di/services";
+import { accessTokenService, apiService, jsonContentService } from "@/di/services";
 
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
-  const data = await apiService.getByName('manyArticles')
+  const data = await apiService.getByName('manyJsonContents')
   if (!data || !data.activatedAt) {
     return
   }
@@ -22,14 +22,15 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Token is expired or invalid' }, { status: 401 })
   }
 
-  const articles = await articleService.getManyPublished()
+  const jsonContents = await jsonContentService.getMany('published')
 
   const searchParams = req.nextUrl.searchParams
   const search = searchParams.get('search')
   if (search) {
-    const filteredArticles = articles.filter((article) => article.atom.body.includes(search) || article.atom.title?.includes(search))
-    return NextResponse.json({ data: filteredArticles })
+    const filteredJsonContents = jsonContents.filter((jsonContent) => JSON.stringify(jsonContent.jsonAtom.content).includes(search) || jsonContent.jsonAtom.title?.includes(search))
+    return NextResponse.json({ data: filteredJsonContents })
   }
 
-  return NextResponse.json({ articles })
+  return NextResponse.json({ jsonContents })
 }
+

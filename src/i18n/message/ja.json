@@ -295,7 +295,7 @@
       }
     }
   },
-  "restfulApi": {
+  "api": {
     "token": {
       "title": "アクセストークン",
       "description": "APIからデータを取得するために使用されます",
@@ -323,30 +323,34 @@
         "copied": "クリップボードにコピーしました"
       }
     },
-    "mainApi": {
-      "title": "メインコンテンツ",
-      "description": "メインコンテンツAPIの設定を管理します",
-      "card": {
-        "path": "パス",
-        "createdAt": "作成日時",
-        "updatedAt": "更新日時",
-        "status": {
-          "title": "状態",
-          "active": "{date}前に起動",
-          "inactive": "未稼働"
-        },
-        "origin": "許可されたオリジン",
-        "badge": {
-          "notCreated": "未作成",
-          "active": "稼働中",
-          "inactive": "未稼働"
-        },
-        "btn": "作成"
+    "card": {
+      "path": "パス",
+      "createdAt": "作成日時",
+      "updatedAt": "更新日時",
+      "status": {
+        "title": "状態",
+        "active": "{date}前に起動",
+        "inactive": "未稼働"
+      },
+      "origin": "許可されたオリジン",
+      "badge": {
+        "notCreated": "未作成",
+        "active": "稼働中",
+        "inactive": "未稼働"
+      },
+      "btn": "作成",
+      "names": {
+        "many": "複数取得",
+        "unique": "単体取得"
       }
     },
-    "customApi": {
-      "title": "カスタムコンテンツ",
-      "description": "カスタムコンテンツAPIを管理します"
+    "article": {
+      "title": "文章",
+      "description": "文章APIの設定を管理します"
+    },
+    "json": {
+      "title": "JSON API",
+      "description": "JSON APIを管理します"
     },
     "tabs": {
       "api": "API管理",

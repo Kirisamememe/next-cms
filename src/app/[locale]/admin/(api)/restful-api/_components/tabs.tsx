@@ -10,7 +10,7 @@ export function ApiTabs() {
     <RSCTabs>
       {tabs.map((tab) => (
         <RSCTabLink key={tab} segment={tab} path={`/admin/restful-api${tab === 'api' ? '' : `/${tab}`}`}>
-          {t(`restfulApi.tabs.${tab}`)}
+          {t(`api.tabs.${tab}`)}
         </RSCTabLink>
       ))}
     </RSCTabs>

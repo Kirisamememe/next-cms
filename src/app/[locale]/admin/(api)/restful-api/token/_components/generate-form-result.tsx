@@ -20,7 +20,7 @@ export function TokenGenerateFormResult({ newlyCreatedToken }: Props) {
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
     toast({
-      title: t('restfulApi.token.toast.copied')
+      title: t('api.token.toast.copied')
     })
   }
 
@@ -28,10 +28,10 @@ export function TokenGenerateFormResult({ newlyCreatedToken }: Props) {
     <>
       <DialogHeader>
         <DialogTitle>
-          {t('restfulApi.token.dialog.titleAfterGenerate')}
+          {t('api.token.dialog.titleAfterGenerate')}
         </DialogTitle>
         <DialogDescription>
-          {t('restfulApi.token.dialog.descriptionAfterGenerate')}
+          {t('api.token.dialog.descriptionAfterGenerate')}
         </DialogDescription>
       </DialogHeader>
       <div className="flex items-center gap-2 mt-2">

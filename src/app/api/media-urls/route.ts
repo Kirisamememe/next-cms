@@ -6,7 +6,7 @@ import { idSchema } from "@/types";
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
-  const data = await apiService.getByName('gallery')
+  const data = await apiService.getByName('manyMediaUrls')
   if (!data || !data.activatedAt) {
     return
   }

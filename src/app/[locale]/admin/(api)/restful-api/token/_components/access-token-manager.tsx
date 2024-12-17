@@ -10,10 +10,10 @@ export function AccessTokenManager() {
     <Card className="w-full appear">
       <CardHeader>
         <CardTitle>
-          {t('restfulApi.token.title')}
+          {t('api.token.title')}
         </CardTitle>
         <CardDescription>
-          {t('restfulApi.token.description')}
+          {t('api.token.description')}
         </CardDescription>
       </CardHeader>
       <CardContent>
