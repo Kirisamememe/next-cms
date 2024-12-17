@@ -7,7 +7,7 @@ import { CategoryType, FormState } from "@/types"
 import { Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
-import { useActionState, useMemo, useRef } from "react"
+import { useActionState, useRef } from "react"
 import { Popover, PopoverContent, PopoverTrigger, PopoverClose } from "@/components/ui/popover"
 import { createArticleCategory, createJsonContentCategory } from "../../_actions/create"
 import { Submit } from "@/components/ui/submit-button"
@@ -22,16 +22,19 @@ type CategoryBtnProps = {
 
 export function CategoryBtn({ categoryId, name }: CategoryBtnProps) {
   const pathname = usePathname()
-  const params = useSearchParams()
+  const searchParams = useSearchParams()
   const router = useRouter()
-  const category = useMemo(() => params.get('category'), [params])
+  const category = searchParams.get('category')
 
   const handleOnClick = () => {
+    const params = new URLSearchParams(searchParams)
+
     if (categoryId.toString() === category) {
-      router.replace(pathname)
+      params.delete('category')
     } else {
-      router.replace(`?category=${categoryId}`)
+      params.set('category', categoryId.toString())
     }
+    router.replace(`${pathname}?${params.toString()}`)
   }
 
   return (

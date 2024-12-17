@@ -4,20 +4,25 @@ import { Input } from "@/components/ui/input"
 import { usePathname } from "@/i18n"
 import { Filter } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useDebouncedCallback } from 'use-debounce';
 
 export const SearchBar = () => {
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const t = useTranslations()
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.currentTarget.value) {
-      router.replace(pathname)
-      return
+  const handleOnChange = useDebouncedCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams)
+
+    if (e.target?.value) {
+      params.set('search', e.target.value)
+    } else {
+      params.delete('search')
     }
-    router.replace(`${pathname}?search=${e.currentTarget.value}`)
-  }
+    router.replace(`${pathname}?${params.toString()}`)
+  }, 300)
 
   return (
     <>
