@@ -2,13 +2,10 @@ import { Flexbox, FlexRow } from "@/components/ui/flexbox"
 import { CategoryFilter } from "../../../_components/category/category-filter"
 import { SortBtn } from "../../../_components/content/sort-btn"
 import { SearchBar } from "../../../_components/content/search-bar"
-import { ContentCategory } from "@/types"
+import { jsonContentCategoryService } from "@/di/services"
 
-type Props = {
-  categories: ContentCategory[]
-}
-
-export const JsonContentToolbar = ({ categories }: Props) => {
+export const JsonContentToolbar = async () => {
+  const categories = await jsonContentCategoryService.fetchMany()
 
   return (
     <Flexbox className="justify-between gap-3 flex-col-reverse @[52rem]:flex-row @[52rem]:items-center">

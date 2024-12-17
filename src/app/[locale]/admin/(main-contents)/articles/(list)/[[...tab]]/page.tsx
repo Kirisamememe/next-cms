@@ -1,4 +1,4 @@
-import { articleCategoryService, articleService } from "@/di/services";
+import { articleService } from "@/di/services";
 import { ArticleList } from "../../_components/article-list";
 import { Filter, idSchema } from "@/types";
 import { notFound } from "next/navigation";
@@ -32,7 +32,6 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
   const searchQuery = search?.toString() || ''
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
 
-  const categories = await articleCategoryService.fetchMany()
   const articles = await articleService.getMany(filter)
   const filteredArticles = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
     article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,7 +39,7 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <ToolBar categories={categories} />
+      <ToolBar />
       <ArticleList articles={filteredArticles} />
     </>
   )
