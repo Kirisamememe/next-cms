@@ -1,6 +1,6 @@
 import { idSchema } from "@/types";
 import { notFound } from "next/navigation";
-import { jsonContentService } from "@/di/services";
+import { jsonContentCategoryService, jsonContentService } from "@/di/services";
 import { EditJsonContent } from "../../../_components/form/edit-json-content";
 
 type Props = {
@@ -17,12 +17,13 @@ export default async function EditJsonPage({ params }: Props) {
     notFound()
   }
 
+  const categories = await jsonContentCategoryService.fetchMany()
   const data = await jsonContentService.getById(parseId.data)
   if (!data) {
     notFound()
   }
 
   return (
-    <EditJsonContent jsonContent={data} />
+    <EditJsonContent jsonContent={data} categories={categories} />
   )
 }

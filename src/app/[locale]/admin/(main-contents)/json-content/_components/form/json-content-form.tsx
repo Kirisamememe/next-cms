@@ -5,14 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form";
-import { JsonContentForClient, jsonContentSchema, JsonNodeData } from "@/types";
+import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData } from "@/types";
 import { JsonFileUploader } from "./json-file-uploader";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
 import { useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
-import { useCategory } from "@/app/[locale]/admin/_components/category/category-provider";
 import { z } from "zod";
 import dynamic from "next/dynamic";
 import { Separator } from "@/components/ui/separator";
@@ -31,12 +30,12 @@ type Props = {
   jsonContent?: JsonContentForClient
   form: UseFormReturn<z.infer<typeof jsonContentSchema>, any, undefined>
   error?: { message: string }
+  categories: ContentCategory[]
 }
 
-export const JsonContentForm = ({ action, jsonContent, form, error }: Props) => {
+export const JsonContentForm = ({ action, jsonContent, form, error, categories }: Props) => {
   const t = useTranslations()
   const locale = useLocale()
-  const { categories } = useCategory()
 
   const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(jsonContent?.jsonAtom.content ? convertToJsonNodeData(jsonContent.jsonAtom.content) : {
     id: 'root',

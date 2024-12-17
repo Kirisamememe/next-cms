@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { JsonContentForm } from "./json-content-form"
-import { FormState, JsonContentForClient, jsonContentSchema } from "@/types"
+import { ContentCategory, FormState, JsonContentForClient, jsonContentSchema } from "@/types"
 import { useActionState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -11,9 +11,10 @@ import { redirect } from "next/navigation"
 
 type Props = {
   jsonContent: JsonContentForClient
+  categories: ContentCategory[]
 }
 
-export const EditJsonContent = ({ jsonContent }: Props) => {
+export const EditJsonContent = ({ jsonContent, categories }: Props) => {
   const form = useForm<z.infer<typeof jsonContentSchema>>({
     resolver: zodResolver(jsonContentSchema),
     defaultValues: {
@@ -50,7 +51,7 @@ export const EditJsonContent = ({ jsonContent }: Props) => {
 
   return (
     <>
-      <JsonContentForm action={action} jsonContent={jsonContent} form={form} error={state.error} />
+      <JsonContentForm action={action} jsonContent={jsonContent} form={form} error={state.error} categories={categories} />
     </>
   )
 }

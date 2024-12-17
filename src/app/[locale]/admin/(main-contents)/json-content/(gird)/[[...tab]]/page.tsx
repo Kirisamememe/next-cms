@@ -1,9 +1,10 @@
 import { Flexbox } from "@/components/ui/flexbox";
 import { JsonContentGrid } from "../../_components/json-content-grid";
-import { Filter } from "@/types";
-import { jsonContentService } from "@/di/services";
+import { Filter, idSchema } from "@/types";
+import { jsonContentCategoryService, jsonContentService } from "@/di/services";
 import { notFound } from "next/navigation";
 import { sortContents } from "@/lib";
+import { JsonContentToolbar } from "../../_components/json-content-toolbar";
 
 type Props = {
   params: Promise<{ tab?: string[] }>
@@ -26,16 +27,23 @@ export default async function Page({ params, searchParams }: Props) {
     notFound()
   }
 
-  const { sort } = await searchParams
+  const { sort, search, category } = await searchParams
 
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
+  const categoryId = category ? idSchema.parse(Number(category)) : null
+  const searchQuery = search?.toString() || ''
 
+  const categories = await jsonContentCategoryService.fetchMany()
   const data = await jsonContentService.getMany(filter)
-  const sorted = sortContents(data, sortOpt)
+  const filteredJsonContent = sortContents(data, sortOpt).filter((jsonContent) => (!categoryId || jsonContent.categoryId === categoryId) && (
+    JSON.stringify(jsonContent.jsonAtom.content).toLowerCase().includes(searchQuery.toLowerCase())
+    || jsonContent.jsonAtom.title?.toLowerCase().includes(searchQuery.toLowerCase())
+    || jsonContent.jsonAtom.description?.toLowerCase().includes(searchQuery.toLowerCase())))
 
   return (
     <Flexbox gap={4} className="appear shrink-0 h-full">
-      <JsonContentGrid jsonContents={sorted} />
+      <JsonContentToolbar categories={categories} />
+      <JsonContentGrid jsonContents={filteredJsonContent} />
     </Flexbox>
   )
 }

@@ -16,7 +16,7 @@ export const SearchBar = () => {
       router.replace(pathname)
       return
     }
-    router.replace(`/admin/articles?search=${e.currentTarget.value}`)
+    router.replace(`${pathname}?search=${e.currentTarget.value}`)
   }
 
   return (

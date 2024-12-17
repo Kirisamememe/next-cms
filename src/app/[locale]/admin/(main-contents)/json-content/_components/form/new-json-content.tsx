@@ -4,12 +4,16 @@ import { useForm } from "react-hook-form"
 import { JsonContentForm } from "./json-content-form"
 import { useActionState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormState, jsonContentSchema } from "@/types"
+import { ContentCategory, FormState, jsonContentSchema } from "@/types"
 import { z } from "zod"
 import { createJsonContent } from "../../_actions/create"
 import { redirect } from "next/navigation"
 
-export const NewJsonContent = () => {
+type Props = {
+  categories: ContentCategory[]
+}
+
+export const NewJsonContent = ({ categories }: Props) => {
   const form = useForm<z.infer<typeof jsonContentSchema>>({
     resolver: zodResolver(jsonContentSchema),
     defaultValues: {
@@ -42,6 +46,6 @@ export const NewJsonContent = () => {
   )
 
   return (
-    <JsonContentForm action={action} form={form} error={state.error} />
+    <JsonContentForm action={action} form={form} error={state.error} categories={categories} />
   )
 }
