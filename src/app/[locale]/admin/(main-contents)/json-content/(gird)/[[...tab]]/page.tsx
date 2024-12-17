@@ -44,7 +44,7 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <Flexbox gap={4} className="appear shrink-0 h-full">
       <JsonContentToolbar />
-      <Suspense key={searchQuery + categoryId} fallback={<CircleSpinLoading />}>
+      <Suspense key={searchQuery + categoryId + sortOpt} fallback={<CircleSpinLoading />}>
         <JsonContentGrid jsonContents={filteredJsonContent} />
       </Suspense>
     </Flexbox>

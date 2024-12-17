@@ -29,10 +29,7 @@ export function PublicationDatetimeForm({ form, action, error }: Props) {
                 <DateTimePicker
                   value={field.value}
                   defaultDate={form.formState.defaultValues?.publishedAt}
-                  onChange={(value) => {
-                    console.log(value)
-                    field.onChange(value)
-                  }}
+                  onChange={(value) => field.onChange(value)}
                 />
               </FormControl>
               <FormDescription hidden>

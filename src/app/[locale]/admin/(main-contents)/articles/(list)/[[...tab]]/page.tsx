@@ -42,7 +42,7 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
   return (
     <>
       <ToolBar />
-      <Suspense key={searchQuery + categoryId} fallback={<CircleSpinLoading />}>
+      <Suspense key={searchQuery + categoryId + sortOpt} fallback={<CircleSpinLoading />}>
         <ArticleList articles={filteredArticles} />
       </Suspense>
     </>

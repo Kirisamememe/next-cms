@@ -1,6 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { CategorySelector } from "../../../../_components/category/category-selector";
-import { Submit } from "@/components/ui/submit-button";
 import { useLocale, useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
@@ -9,16 +8,16 @@ import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData 
 import { JsonFileUploader } from "./json-file-uploader";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
 import { z } from "zod";
-import dynamic from "next/dynamic";
 import { Separator } from "@/components/ui/separator";
 import { LabelText } from "@/components/ui/typography";
-import Image from "next/image";
 import { LastEditor } from "@/app/[locale]/admin/_components/content/last-editor";
 import { DateTimePopover } from "../../../../_components/content/datetime-popover";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -26,14 +25,14 @@ const JsonEditor = dynamic(() => import("../editor/json-editor"), {
 })
 
 type Props = {
-  action: (payload: FormData) => void
+  action: () => void
   jsonContent?: JsonContentForClient
   form: UseFormReturn<z.infer<typeof jsonContentSchema>, any, undefined>
-  error?: { message: string }
-  categories: ContentCategory[]
+  categories: ContentCategory[],
+  children: ReactNode
 }
 
-export const JsonContentForm = ({ action, jsonContent, form, error, categories }: Props) => {
+export const JsonContentForm = ({ action, jsonContent, form, categories, children }: Props) => {
   const t = useTranslations()
   const locale = useLocale()
 
@@ -218,7 +217,9 @@ export const JsonContentForm = ({ action, jsonContent, form, error, categories }
                 <FormLabel>
                   {t("jsonContent.form.publishedAt.name")}
                 </FormLabel>
-                <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
+                <FormControl>
+                  <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
+                </FormControl>
                 <FormDescription hidden>{t("jsonContent.form.publishedAt.description")}</FormDescription>
                 <FormMessage />
               </FormItem>
@@ -228,9 +229,8 @@ export const JsonContentForm = ({ action, jsonContent, form, error, categories }
           {jsonContent?.jsonAtom.version && (
             <p>version: {jsonContent?.jsonAtom.version}</p>
           )}
-          <Submit error={error}>
-            {t('common.submit')}
-          </Submit>
+
+          {children}
         </FlexColumn>
       </form>
     </Form>

@@ -7,7 +7,9 @@ import { useActionState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { updateJsonContent } from "../../_actions/update"
-import { redirect } from "next/navigation"
+import { useRouter } from "@/i18n"
+import { Submit } from "@/components/ui/submit-button"
+import { useTranslations } from "next-intl"
 
 type Props = {
   jsonContent: JsonContentForClient
@@ -15,6 +17,9 @@ type Props = {
 }
 
 export const EditJsonContent = ({ jsonContent, categories }: Props) => {
+  const { push } = useRouter()
+  const t = useTranslations()
+
   const form = useForm<z.infer<typeof jsonContentSchema>>({
     resolver: zodResolver(jsonContentSchema),
     defaultValues: {
@@ -29,9 +34,10 @@ export const EditJsonContent = ({ jsonContent, categories }: Props) => {
       archivedAt: jsonContent?.archivedAt,
       json: jsonContent?.jsonAtom.content
     },
+    mode: 'onChange'
   })
 
-  const [state, action] = useActionState<FormState>(async () => {
+  const [state, action, isPending] = useActionState<FormState>(async () => {
     const validation = await form.trigger()
     if (!validation) return { isSuccess: false }
 
@@ -39,22 +45,22 @@ export const EditJsonContent = ({ jsonContent, categories }: Props) => {
     if (values.categoryId === 0) {
       values.categoryId = null
     }
-    console.log(values)
     const res = await updateJsonContent(jsonContent.id, values)
     if (!res.isSuccess) {
       return res
     }
 
-    redirect(`/admin/json-content`)
+    push(`/admin/json-content`)
+    return res
   },
     { isSuccess: false }
   )
 
-
-
   return (
-    <>
-      <JsonContentForm action={action} jsonContent={jsonContent} form={form} error={state.error} categories={categories} />
-    </>
+    <JsonContentForm action={action} jsonContent={jsonContent} form={form} categories={categories}>
+      <Submit error={state.error} isPending={isPending}>
+        {t('common.submit')}
+      </Submit>
+    </JsonContentForm>
   )
 }

@@ -10,10 +10,12 @@ import { FC } from "react";
 
 type Props = {
   error?: { message: string }
+  isPending?: boolean
 } & React.ComponentPropsWithRef<typeof Button>
 
-const Submit: FC<Props> = ({ children, error, ref, ...props }) => {
+const Submit: FC<Props> = ({ children, error, isPending = false, ref, ...props }) => {
   const { pending } = useFormStatus()
+  const _pending = pending || isPending
   const t = useTranslations()
 
   return (
@@ -26,8 +28,8 @@ const Submit: FC<Props> = ({ children, error, ref, ...props }) => {
           </AlertDescription>
         </Alert>
       }
-      <Button ref={ref} type="submit" disabled={pending} {...props}>
-        {pending ?
+      <Button ref={ref} type="submit" {...props} disabled={_pending}>
+        {_pending ?
           <div className="circle-spin-2-invert" /> :
           children}
       </Button>
