@@ -1,8 +1,9 @@
-import { articleService } from "@/di/services";
+import { articleCategoryService, articleService } from "@/di/services";
 import { ArticleList } from "../../_components/article-list";
-import { Filter } from "@/types";
+import { Filter, idSchema } from "@/types";
 import { notFound } from "next/navigation";
 import { sortContents } from "@/lib";
+import { ToolBar } from "../../_components/toolbar";
 
 type Props = {
   params: Promise<{ tab?: string[] }>
@@ -25,14 +26,22 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
     notFound()
   }
 
-  const { sort } = await searchParams
+  const { sort, search, category } = await searchParams
 
+  const categoryId = category ? idSchema.parse(Number(category)) : null
+  const searchQuery = search?.toString() || ''
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
 
+  const categories = await articleCategoryService.fetchMany()
   const articles = await articleService.getMany(filter)
-  const sorted = sortContents(articles, sortOpt)
+  const sorted = sortContents(articles, sortOpt).filter((article) => (!categoryId || article.categoryId === categoryId) && (
+    article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
+    || article.atom.title?.toLowerCase().includes(searchQuery.toLowerCase())))
 
   return (
-    <ArticleList articles={sorted} />
+    <>
+      <ToolBar categories={categories} />
+      <ArticleList articles={sorted} />
+    </>
   )
 }

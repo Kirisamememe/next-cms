@@ -4,14 +4,12 @@ import { Heading, Paragraph } from "@/components/ui/typography"
 import { Link } from "@/i18n"
 import { extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib"
 import { ArticleForClient } from "@/types"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
-import { useParams } from "next/navigation"
+import { useLocale, useTranslations } from "next-intl"
 import { PublicationDatetimePopover } from "../../../_components/content/publication-datetime-popover"
 import { ArchiveAlertDialog } from "../../../_components/content/archive-dialog"
-import { useSession } from "next-auth/react"
 import { LastEditor } from "../../../_components/content/last-editor"
 import { ContentStatusWithId } from "../../../_components/content/content-status-with-id"
+import Image from "next/image"
 
 type Props = {
   article: ArticleForClient
@@ -19,11 +17,7 @@ type Props = {
 
 export function ArticleCard({ article }: Props) {
   const t = useTranslations()
-  const params = useParams<{ locale: string }>()
-  const session = useSession()
-  if (!session.data?.operatorId) {
-    return null
-  }
+  const locale = useLocale()
 
   const title = article.atom.title || extractTitleFromMarkdown(article.atom.body)
   const summary = article.atom.summary || extractFirstNCharacters(article.atom.body, 120)
@@ -39,7 +33,7 @@ export function ArticleCard({ article }: Props) {
               <Image src={article.author.image || ""} width={20} height={20} alt="" className="rounded-full" />
               {article.author.nickname || article.author.name}
               <Separator orientation="vertical" className="h-4 mx-1" />
-              <LastEditor nickname={article.lastEdited.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={params.locale} />
+              <LastEditor nickname={article.lastEdited.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={locale} />
             </FlexRow>
           </FlexColumn>
         </Link>
@@ -57,7 +51,7 @@ export function ArticleCard({ article }: Props) {
         <Link href={`/admin/articles/edit/${article.id}`}>
           <FlexColumn>
             <ContentStatusWithId id={article.id} publishedAt={article.publishedAt} isArchived={!!article.archivedAt} className="mt-1 mb-3 w-fit" />
-            <LastEditor className="mb-2" nickname={article.author.nickname} name={article.author.name} updatedAt={article.updatedAt} locale={params.locale} />
+            <LastEditor className="mb-2" nickname={article.author.nickname} name={article.author.name} updatedAt={article.updatedAt} locale={locale} />
             <TitleAndSummary title={title} summary={summary} />
           </FlexColumn>
 
