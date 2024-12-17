@@ -7,7 +7,7 @@ import { inject, injectable } from "inversify";
 import { z } from "zod";
 
 export interface IJsonContentService {
-  getById: (id: number) => Promise<JsonContentForClient | null>
+  getById: (id: number, options?: { publishedOnly: boolean }) => Promise<JsonContentForClient | null>
   getMany: (filter?: Filter, options?: FindManyOptions) => Promise<JsonContentForClient[]>
   update: (jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>) => Promise<JsonContent | null>
   updateAndCreateAtom: (jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>) => Promise<JsonContent | null>
@@ -28,8 +28,9 @@ export class JsonContentService implements IJsonContentService {
     this._jsonAtomRepository = jsonAtomRepository
   }
 
-  async getById(id: number) {
-    const jsonContent = await this._jsonContentRepository.findById(id).catch(dbExceptionHandler)
+  async getById(id: number, options?: { publishedOnly: boolean }) {
+    const { publishedOnly } = options ?? { publishedOnly: false }
+    const jsonContent = await this._jsonContentRepository.findById(id, publishedOnly).catch(dbExceptionHandler)
     if (!jsonContent || !jsonContent?.jsonAtoms?.length) {
       return null
     }

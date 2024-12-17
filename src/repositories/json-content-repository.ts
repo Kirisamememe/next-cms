@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 export interface IJsonContentRepository {
   findMany(filter: Filter, options?: FindManyOptions): Promise<JsonContentWithAllFields[]>
-  findById(id: number): Promise<JsonContentWithAllFields | null>
+  findById(id: number, publishedOnly: boolean): Promise<JsonContentWithAllFields | null>
   update(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   updateAndCreateAtom(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   createWithAtom(operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
@@ -52,10 +52,16 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
     })
   }
 
-  findById(id: number) {
+  findById(id: number, publishedOnly: boolean = false) {
     return prisma.jsonContent.findUnique({
       where: {
-        id: id
+        id: id,
+        ...(publishedOnly && {
+          publishedAt: {
+            lt: new Date()
+          },
+          archivedAt: null
+        })
       },
       include: {
         jsonAtoms: this.atomsProperties,
