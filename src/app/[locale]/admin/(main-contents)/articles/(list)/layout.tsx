@@ -14,7 +14,7 @@ export default function ArticlePageLayout({ children }: Props) {
 
   return (
     <InsetLayoutNoPadding >
-      <NewContentBtnContainer href={'/admin/articles/edit'} label={t('article.newArticle')} />
+      <NewContentBtnContainer href={'/admin/articles/new'} label={t('article.newArticle')} />
       <ArticleTabs />
       <FlexColumn className="relative h-full p-4 @[52rem]:p-6 @[52rem]:-mt-2 gap-4">
         {children}
