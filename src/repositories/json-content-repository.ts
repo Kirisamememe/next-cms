@@ -137,6 +137,14 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
       data: {
         slug: values.slug,
         authorNote: values.authorNote,
+        ...(values.categoryId && {
+          category: {
+            connect: { id: values.categoryId }
+          }
+        }),
+        ...(values.publishedAt && {
+          publishedAt: values.publishedAt
+        }),
         author: {
           connect: { id: operatorId }
         },
