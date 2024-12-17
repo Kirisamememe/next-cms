@@ -1,10 +1,9 @@
 'use client'
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { ArticleCard } from "./article-card";
 import { ArticleForClient, idSchema } from "@/types";
-import { Button } from "@/components/ui/button";
-import { ArrowDownNarrowWide, ArrowDownWideNarrow, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { GridColumn } from "@/components/ui/grid";
 import { Flexbox, FlexRow } from "@/components/ui/flexbox";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,7 @@ import { NoContentFound } from "../../../../../../components/no-article-found";
 import { CategoryFilter } from "../../../_components/category/category-filter";
 import { useCategory } from "../../../_components/category/category-provider";
 import { useSearchParams } from "next/navigation";
+import { SortBtn } from "../../../_components/content/sort-btn";
 
 
 type Props = {
@@ -20,28 +20,14 @@ type Props = {
 }
 
 export function ArticleList({ articles }: Props) {
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const [searchQuery, setSearchQuery] = useState('')
   const t = useTranslations()
   const params = useSearchParams()
   const category = params.get('category')
   const categoryId = category ? idSchema.parse(Number(category)) : null
-
   const { categories } = useCategory()
 
-  const handleSort = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-  }
-
-  const sort = useCallback((articles: ArticleForClient[], order: 'asc' | 'desc') => {
-    return [...articles].sort((a, b) => {
-      const dateA = new Date(a.updatedAt).getTime()
-      const dateB = new Date(b.updatedAt).getTime()
-      return order === 'asc' ? dateA - dateB : dateB - dateA
-    })
-  }, [])
-
-  const articleList = sort(articles, sortOrder)
+  const articleList = articles
     .filter((article) => (!categoryId || article.categoryId === categoryId) && (
       article.atom.body.toLowerCase().includes(searchQuery.toLowerCase())
       || article.atom.title?.toLowerCase().includes(searchQuery.toLowerCase())))
@@ -57,9 +43,7 @@ export function ArticleList({ articles }: Props) {
             placeholder={t('article.filter')}
             onChange={(e) => setSearchQuery(e.currentTarget.value)}
           />
-          <Button onClick={handleSort} variant={"outline"} size={"icon"} className="shrink-0 h-10">
-            {sortOrder === 'asc' ? <ArrowDownNarrowWide /> : <ArrowDownWideNarrow />}
-          </Button>
+          <SortBtn />
         </FlexRow>
       </Flexbox>
 

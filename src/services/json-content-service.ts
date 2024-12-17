@@ -51,7 +51,17 @@ export class JsonContentService implements IJsonContentService {
       return {
         ...jsonContent,
         jsonAtom: jsonContent.jsonAtoms[0],
-        jsonAtoms: undefined
+        jsonAtoms: undefined,
+        ...(filter === 'draft' && {
+          archivedAt: jsonContent.archivedAt as null
+        }),
+        ...(filter === 'published' && {
+          publishedAt: jsonContent.publishedAt as Date,
+          archivedAt: jsonContent.archivedAt as null
+        }),
+        ...(filter === 'archive' && {
+          archivedAt: jsonContent.archivedAt as Date
+        }),
       }
     })
   }

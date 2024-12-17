@@ -6,7 +6,7 @@ import { JsonContentItem } from "./json-content-item"
 import { NoContentFound } from "@/components/no-article-found"
 import { useTranslations } from "next-intl"
 import { JsonContentToolbar } from "./json-content-toolbar"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { idSchema } from "@/types"
 
@@ -15,7 +15,6 @@ type Props = {
 }
 
 export const JsonContentGrid = ({ jsonContents }: Props) => {
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const [searchQuery, setSearchQuery] = useState('')
   const params = useSearchParams()
   const category = params.get('category')
@@ -23,19 +22,7 @@ export const JsonContentGrid = ({ jsonContents }: Props) => {
 
   const t = useTranslations()
 
-  const handleSort = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-  }
-
-  const sort = useCallback((jsonContents: JsonContentForClient[], order: 'asc' | 'desc') => {
-    return [...jsonContents].sort((a, b) => {
-      const dateA = new Date(a.updatedAt).getTime()
-      const dateB = new Date(b.updatedAt).getTime()
-      return order === 'asc' ? dateA - dateB : dateB - dateA
-    })
-  }, [])
-
-  const jsonContentList = sort(jsonContents, sortOrder)
+  const jsonContentList = jsonContents
     .filter((jsonContent) => (!categoryId || jsonContent.categoryId === categoryId) && (
       JSON.stringify(jsonContent.jsonAtom.content).toLowerCase().includes(searchQuery.toLowerCase())
       || jsonContent.jsonAtom.title?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -44,7 +31,7 @@ export const JsonContentGrid = ({ jsonContents }: Props) => {
 
   return (
     <>
-      <JsonContentToolbar sortOrder={sortOrder} handleSort={handleSort} setSearchQuery={setSearchQuery} />
+      <JsonContentToolbar setSearchQuery={setSearchQuery} />
       <GridColumn className="@[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
         {jsonContentList.map((jsonContent) => (
           <JsonContentItem key={jsonContent.id} jsonContent={jsonContent} />

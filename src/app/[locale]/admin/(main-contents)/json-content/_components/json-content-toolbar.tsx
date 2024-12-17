@@ -2,20 +2,18 @@
 
 import { Flexbox, FlexRow } from "@/components/ui/flexbox"
 import { CategoryFilter } from "../../../_components/category/category-filter"
-import { ArrowDownNarrowWide, ArrowDownWideNarrow, Search } from "lucide-react"
+import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { useCategory } from "../../../_components/category/category-provider"
+import { SortBtn } from "../../../_components/content/sort-btn"
 
 type Props = {
-  sortOrder: 'asc' | 'desc'
-  handleSort: () => void
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const JsonContentToolbar = ({ sortOrder, handleSort, setSearchQuery }: Props) => {
+export const JsonContentToolbar = ({ setSearchQuery }: Props) => {
   const t = useTranslations()
   const { categories } = useCategory()
 
@@ -29,9 +27,7 @@ export const JsonContentToolbar = ({ sortOrder, handleSort, setSearchQuery }: Pr
           placeholder={t('article.filter')}
           onChange={(e) => setSearchQuery(e.currentTarget.value)}
         />
-        <Button onClick={handleSort} variant={"outline"} size={"icon"} className="shrink-0 h-10">
-          {sortOrder === 'asc' ? <ArrowDownNarrowWide /> : <ArrowDownWideNarrow />}
-        </Button>
+        <SortBtn />
       </FlexRow>
     </Flexbox>
   )

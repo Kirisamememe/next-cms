@@ -1,7 +1,6 @@
-import { Flexbox } from "@/components/ui/flexbox";
-import { JsonContentGrid } from "../../_components/json-content-grid";
+import { articleService } from "@/di/services";
+import { ArticleList } from "../../_components/article-list";
 import { Filter } from "@/types";
-import { jsonContentService } from "@/di/services";
 import { notFound } from "next/navigation";
 import { sortContents } from "@/lib";
 
@@ -10,7 +9,7 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function ArticlesPage({ params, searchParams }: Props) {
   const { tab } = await params
   if (tab && tab?.length > 1) {
     notFound()
@@ -30,12 +29,10 @@ export default async function Page({ params, searchParams }: Props) {
 
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
 
-  const data = await jsonContentService.getMany(filter)
-  const sorted = sortContents(data, sortOpt)
+  const articles = await articleService.getMany(filter)
+  const sorted = sortContents(articles, sortOpt)
 
   return (
-    <Flexbox gap={4} className="appear shrink-0 h-full">
-      <JsonContentGrid jsonContents={sorted} />
-    </Flexbox>
+    <ArticleList articles={sorted} />
   )
 }

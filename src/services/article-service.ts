@@ -1,6 +1,6 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
-import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, ArticlePublishedForClient, articleSubmitFormSchema, FindManyOptions, publicationDateTimeForm } from '@/types'
+import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, ArticlePublishedForClient, articleSubmitFormSchema, Filter, FindManyOptions, publicationDateTimeForm } from '@/types'
 import { TYPES } from '@/di/types'
 import type { IArticleAtomsRepository, IArticleRepository } from '@/repositories'
 import { z } from 'zod'
@@ -10,7 +10,7 @@ import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 export interface IArticleService {
   getById(id: number, publishedOnly?: boolean): Promise<ArticleForClient | null>
-  getMany(options?: FindManyOptions): Promise<ArticleForClient[]>
+  getMany(filter: Filter, options?: FindManyOptions): Promise<ArticleForClient[]>
   getManyDraft(options?: FindManyOptions): Promise<ArticleDraftForClient[]>
   getManyPublished(options?: FindManyOptions): Promise<ArticlePublishedForClient[]>
   getManyArchived(options?: FindManyOptions): Promise<ArticleArchivedForClient[]>
@@ -55,6 +55,22 @@ export class ArticleService implements IArticleService {
     }
   }
 
+
+  // async getMany(filter: Filter, options?: FindManyOptions) {
+  //   const data = await this._articleRepository.findMany(filter, options)
+  //     .then((res) => res.map((article) => ({
+  //       ...article,
+  //       atom: article.atoms[0],
+  //       atoms: undefined,
+  //       archivedAt: article.archivedAt as null
+  //     })))
+  //     .catch(dbExceptionHandler)
+
+  //   if (!data) {
+  //     return []
+  //   }
+  //   return data
+  // }
 
 
   async getManyDraft(options?: FindManyOptions) {
@@ -114,12 +130,22 @@ export class ArticleService implements IArticleService {
    * @param filter 
    * @returns 
    */
-  async getMany(options?: FindManyOptions) {
-    const data = await this._articleRepository.findMany('all', options)
+  async getMany(filter: Filter, options?: FindManyOptions) {
+    const data = await this._articleRepository.findMany(filter, options)
       .then((res) => res.map((article) => ({
         ...article,
         atom: article.atoms[0],
-        atoms: undefined
+        atoms: undefined,
+        ...(filter === 'draft' && {
+          archivedAt: article.archivedAt as null
+        }),
+        ...(filter === 'published' && {
+          publishedAt: article.publishedAt as Date,
+          archivedAt: article.archivedAt as null
+        }),
+        ...(filter === 'archive' && {
+          archivedAt: article.archivedAt as Date
+        }),
       })))
       .catch(dbExceptionHandler)
 

@@ -10,5 +10,6 @@ export {
   buildFolderTree,
   byteToMB,
   checkOversize,
-  animateElement
+  animateElement,
+  sortContents
 } from './utils'
