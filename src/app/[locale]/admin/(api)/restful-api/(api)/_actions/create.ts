@@ -2,6 +2,7 @@
 
 import { apiService } from "@/di/services"
 import { getSession } from "@/lib-server-only"
+import { dbError } from "@/types"
 import { revalidatePath } from "next/cache"
 
 export async function createMainContentApi(name: string, path: string) {
@@ -13,6 +14,11 @@ export async function createMainContentApi(name: string, path: string) {
       path: path
     }
   )
+  if (!res) {
+    return dbError
+  }
   revalidatePath('/admin/restful-api')
-  return res
+  return {
+    isSuccess: true
+  }
 }

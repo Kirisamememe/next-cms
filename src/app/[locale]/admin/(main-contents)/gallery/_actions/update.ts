@@ -5,7 +5,6 @@ import { imageUrlService, mediaFolderService } from "@/di/services"
 import { getSession } from "@/lib-server-only"
 import { imageUrlSchema } from "@/types"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import { z } from "zod"
 
 export async function revalidateGallery() {
@@ -20,7 +19,12 @@ export async function updateImageUrlFolder(imageId: number, folderPath: string) 
   const { operatorId } = await getSession()
   const res = await imageUrlService.move(imageId, operatorId, folderPath)
   if (!res) {
-    redirect('/admin/gallery?formError=common.form.databaseError')
+    return {
+      isSuccess: false,
+      error: {
+        message: "common.form.databaseError"
+      }
+    }
   }
   revalidatePath('/admin/gallery')
 }
@@ -29,12 +33,22 @@ export async function updateImageUrlFolder(imageId: number, folderPath: string) 
 export async function updateImageUrl(imageId: number, values: z.infer<typeof imageUrlSchema>) {
   const { operatorId } = await getSession()
   await imageUrlSchema.parseAsync(values).catch(() => {
-    redirect('/admin/gallery?formError=common.form.invalidData')
+    return {
+      isSuccess: false,
+      error: {
+        message: "common.form.databaseError"
+      }
+    }
   })
 
   const res = await imageUrlService.update(imageId, operatorId, values)
   if (!res) {
-    redirect('/admin/gallery?formError=common.form.databaseError')
+    return {
+      isSuccess: false,
+      error: {
+        message: "common.form.databaseError"
+      }
+    }
   }
   revalidatePath(`/admin/gallery`)
   return res
@@ -51,7 +65,12 @@ export async function updateFolderPath(path: string, name: string, parentPath: s
   await getSession()
   const res = await mediaFolderService.move(path, name, parentPath)
   if (!res) {
-    redirect('/admin/gallery?formError=common.form.databaseError')
+    return {
+      isSuccess: false,
+      error: {
+        message: "common.form.databaseError"
+      }
+    }
   }
   revalidatePath('/admin/gallery')
 }
@@ -60,7 +79,12 @@ export async function editFolderName(path: string, folderName: string, parentPat
   await getSession()
   const res = await mediaFolderService.update(path, { name: folderName, parentPath })
   if (!res) {
-    redirect('/admin/gallery?formError=common.form.databaseError')
+    return {
+      isSuccess: false,
+      error: {
+        message: "common.form.databaseError"
+      }
+    }
   }
   revalidatePath(`/admin/gallery`)
   return res

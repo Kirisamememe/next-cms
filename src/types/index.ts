@@ -102,6 +102,7 @@ export type { ContentCategory, CategoryType } from './schema-category'
 
 // Form
 export type { FormState } from './form'
+export { dbError } from './form'
 
 // Content Common
 export { publicationDateTimeForm } from './schema-content-common'

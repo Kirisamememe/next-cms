@@ -38,7 +38,10 @@ export const NewJsonContent = ({ categories }: Props) => {
         values.categoryId = null
       }
       console.log(values)
-      await createJsonContent(values)
+      const res = await createJsonContent(values)
+      if (!res.isSuccess) {
+        return res
+      }
 
       redirect(`/admin/json-content`)
     },

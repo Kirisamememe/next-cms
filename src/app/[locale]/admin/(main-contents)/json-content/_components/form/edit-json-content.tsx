@@ -40,7 +40,10 @@ export const EditJsonContent = ({ jsonContent, categories }: Props) => {
       values.categoryId = null
     }
     console.log(values)
-    await updateJsonContent(jsonContent.id, values)
+    const res = await updateJsonContent(jsonContent.id, values)
+    if (!res.isSuccess) {
+      return res
+    }
 
     redirect(`/admin/json-content`)
   },
