@@ -322,6 +322,7 @@
     },
     "card": {
       "path": "路径",
+      "searchParams": "查询参数",
       "createdAt": "创建时间",
       "updatedAt": "更新时间",
       "status": {

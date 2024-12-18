@@ -325,6 +325,7 @@
     },
     "card": {
       "path": "路徑",
+      "searchParams": "搜尋參數",
       "createdAt": "建立時間",
       "updatedAt": "更新時間",
       "status": {

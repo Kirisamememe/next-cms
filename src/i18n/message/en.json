@@ -325,6 +325,7 @@
     },
     "card": {
       "path": "Path",
+      "searchParams": "Params",
       "createdAt": "Created At",
       "updatedAt": "Updated At",
       "status": {
