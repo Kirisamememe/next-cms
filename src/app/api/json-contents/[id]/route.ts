@@ -26,14 +26,16 @@ export async function GET(
   }
 
   const { id } = await segmentData.params
-  const parsedId = idSchema.parse(Number(id))
   if (!id) {
     return NextResponse.json({ error: "Invalid query" })
   }
 
+  const parsedId = idSchema.parse(Number(id))
   const jsonContent = await jsonContentService.getById(parsedId, { publishedOnly: true })
+
   if (!jsonContent) {
     return NextResponse.json({ error: 'Not Found' }, { status: 404 })
   }
+
   return NextResponse.json(jsonContent)
 }

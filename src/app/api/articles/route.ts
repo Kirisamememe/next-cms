@@ -31,5 +31,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ data: filteredArticles })
   }
 
-  return NextResponse.json({ articles })
+  return NextResponse.json(articles)
 }

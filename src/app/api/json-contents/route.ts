@@ -31,6 +31,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ data: filteredJsonContents })
   }
 
-  return NextResponse.json({ jsonContents })
+  return NextResponse.json(jsonContents)
 }
 
