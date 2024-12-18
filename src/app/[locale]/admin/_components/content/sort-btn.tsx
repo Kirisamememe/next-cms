@@ -2,21 +2,23 @@
 
 import { Button } from "@/components/ui/button"
 import { ArrowDownNarrowWide, ArrowDownWideNarrow } from "lucide-react"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 export const SortBtn = () => {
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const sortOrder = searchParams.get('sort')
 
   const handleSort = () => {
+    const params = new URLSearchParams(searchParams)
+
     if (sortOrder === 'asc') {
-      router.replace(`?sort=desc`)
-      setSortOrder('desc')
+      params.delete('sort')
     } else {
-      router.replace(`?sort=asc`)
-      setSortOrder('asc')
+      params.set('sort', 'asc')
     }
+    router.replace(`${pathname}?${params.toString()}`)
   }
 
 
