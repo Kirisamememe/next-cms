@@ -17,7 +17,7 @@ export async function GalleryGrid({ currentPath = '.' }: Props) {
   const decodedPath = currentPath ? decodeURIComponent(currentPath) : currentPath
   const parentPath = decodedPath && decodedPath.split('/').slice(0, -1)?.join('/')
 
-  const imageUrls = await imageUrlService.fetchByFolder(decodedPath)
+  const imageUrls = await imageUrlService.getByFolder(decodedPath)
   const folders = await mediaFolderService.getCurrentPathFolders(decodedPath)
 
   return (

@@ -13,7 +13,7 @@ import { imageUrlService } from "@/di/services";
 
 export async function NewImageDialog() {
   const t = await getTranslations()
-  const imageUrls = await imageUrlService.fetchAllUrls()
+  const imageUrls = await imageUrlService.getMany()
 
   return (
     <NewImageProvider imageUrls={imageUrls} >

@@ -13,9 +13,9 @@ export interface IImageUrlService {
   createMany(operatorId: number, values: z.infer<typeof multipleImageUrlSchema>): Promise<{ count: number } | null>
   update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } } | null>
   move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl | null>
-  fetchByFolder(path: string): Promise<ImageUrl[]>
-  fetchAllUrls(): Promise<string[]>
-  fetchById(imageId: number): Promise<ImageUrl | null>
+  getByFolder(path: string): Promise<ImageUrl[]>
+  getMany(): Promise<string[]>
+  getById(imageId: number): Promise<ImageUrl | null>
   delete(id: number): Promise<ImageUrl | null>
 }
 
@@ -89,7 +89,7 @@ export class ImageUrlService implements IImageUrlService {
   }
 
 
-  async fetchByFolder(path: string) {
+  async getByFolder(path: string) {
     const res = await this._imageUrlRepository.findByPath(path).catch(dbExceptionHandler)
     if (!res) {
       return []
@@ -98,7 +98,7 @@ export class ImageUrlService implements IImageUrlService {
   }
 
 
-  async fetchAllUrls() {
+  async getMany() {
     const res = await this._imageUrlRepository.findAllUrls().catch(dbExceptionHandler)
     if (!res) {
       return []
@@ -106,7 +106,7 @@ export class ImageUrlService implements IImageUrlService {
     return res.map((url) => url.url)
   }
 
-  async fetchById(imageId: number) {
+  async getById(imageId: number) {
     return await this._imageUrlRepository.findUnique(imageId).catch(dbExceptionHandler)
   }
 

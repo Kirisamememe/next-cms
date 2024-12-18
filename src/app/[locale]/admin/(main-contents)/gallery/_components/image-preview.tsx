@@ -7,7 +7,7 @@ type Props = {
 }
 
 export async function ImagePreview({ id }: Props) {
-  const data = await imageUrlService.fetchById(id)
+  const data = await imageUrlService.getById(id)
   if (!data) {
     return null
   }
