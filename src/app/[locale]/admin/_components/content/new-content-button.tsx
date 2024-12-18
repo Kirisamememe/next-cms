@@ -20,10 +20,10 @@ export default function NewContentBtn({ href, label }: Props) {
       asChild
       size={"sm"}
       className={cn(
-        "popover fixed right-6 rounded-full z-[5000] font-semibold transition-transform duration-300",
+        "animate-in slide-in-from-right fixed right-6 rounded-full z-[5000] font-semibold transition-transform duration-300",
         "bottom-8 [&>span]:hidden w-14 h-14 ",
-        "sm:top-3.5 sm:[&>span]:block sm:[&>svg]:size-4 sm:w-auto sm:h-9 sm:pl-4 sm:pr-5",
-        (!atTop && !isGoingUp) && "translate-x-24 sm:-translate-y-16 sm:translate-x-0"
+        "lg:top-3.5 lg:[&>span]:block lg:[&>svg]:size-4 lg:w-auto lg:h-9 lg:pl-4 lg:pr-5",
+        (!atTop && !isGoingUp) && "translate-x-24 lg:-translate-y-16 lg:translate-x-0"
       )}>
       <Link href={href}>
         <SquarePen size={24} />

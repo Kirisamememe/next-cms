@@ -13,7 +13,7 @@ type Props = {
 export const CategoryFilter = ({ contentCategories, categoryType }: Props) => {
 
   return (
-    <FlexRow gap={3}>
+    <FlexRow gap={3} className="w-full overflow-x-scroll">
       {contentCategories.map((category) => (
         <CategoryBtn key={category.id} categoryId={category.id} name={category.name} />
       ))}
