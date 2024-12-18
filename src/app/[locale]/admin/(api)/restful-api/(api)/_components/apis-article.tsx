@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl"
 
 export function ArticleApis() {
   const t = useTranslations()
+  const GET_MANY_PARAMS = '?category=, author=, take=, search='
+  const GET_UNIQUE_PARAMS = '?select=,'
 
   return (
     <Card className="appear">
@@ -18,8 +20,14 @@ export function ArticleApis() {
       </CardHeader>
       <CardContent>
         <GridColumn className="@[48rem]:grid-cols-2">
-          <ApiCard name={'manyArticles'} type={'many'} path={`/api/articles`} />
-          <ApiCard name={'uniqueArticle'} type={'unique'} path={`/api/articles/[id]`} />
+          <ApiCard
+            name={'manyArticles'} type={'many'} path={`/api/articles`}
+            searchParams={GET_MANY_PARAMS}
+          />
+          <ApiCard
+            name={'uniqueArticle'} type={'unique'} path={`/api/articles/[id]`}
+            searchParams={GET_UNIQUE_PARAMS}
+          />
         </GridColumn>
       </CardContent>
     </Card>

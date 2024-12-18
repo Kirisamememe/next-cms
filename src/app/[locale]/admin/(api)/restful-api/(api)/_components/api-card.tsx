@@ -12,9 +12,10 @@ type Props = {
   name: string,
   type: 'many' | 'unique'
   path: string
+  searchParams: string
 }
 
-export async function ApiCard({ name, type, path }: Props) {
+export async function ApiCard({ name, type, path, searchParams }: Props) {
   const t = await getTranslations()
   const data = await apiService.getByName(name)
 
@@ -53,7 +54,7 @@ export async function ApiCard({ name, type, path }: Props) {
           }
         </Badge>
       </FlexRow>
-      <ApiDetails api={data} />
+      <ApiDetails api={data} searchParams={searchParams} />
       <ApiSwitch apiId={data.id} isActive={!!data.activatedAt} />
     </FlexColumn>
   )

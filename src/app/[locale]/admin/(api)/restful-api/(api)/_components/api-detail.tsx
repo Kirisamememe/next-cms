@@ -2,14 +2,15 @@ import { getLocaleForFns } from "@/i18n"
 import { Api } from "@/types"
 import { formatDistanceToNow } from "date-fns"
 import { format } from "date-fns/format"
-import { Power, CalendarIcon, GitForkIcon, GlobeIcon, RefreshCwIcon } from 'lucide-react'
+import { Power, CalendarIcon, GitForkIcon, GlobeIcon, RefreshCwIcon, TextSearch } from 'lucide-react'
 import { useLocale, useTranslations } from "next-intl"
 
 type Props = {
   api: Api
+  searchParams: string
 }
 
-export function ApiDetails({ api }: Props) {
+export function ApiDetails({ api, searchParams }: Props) {
   const locale = useLocale()
   const t = useTranslations()
 
@@ -19,6 +20,10 @@ export function ApiDetails({ api }: Props) {
         icon={<GitForkIcon />}
         label={t('api.card.path')}
         value={api.path} />
+      <DetailItem
+        icon={<TextSearch />}
+        label={t('api.card.searchParams')}
+        value={searchParams} />
       <DetailItem
         icon={<CalendarIcon />}
         label={t('api.card.createdAt')}
@@ -59,7 +64,7 @@ function DetailItem({ icon, label, value }: DetailItemProps) {
         {icon}
       </span>
       <span className="font-medium">{label}:</span>
-      <span className="text-muted-foreground truncate max-w-[200px]">{value}</span>
+      <span className="text-muted-foreground truncate">{value}</span>
     </div>
   )
 }

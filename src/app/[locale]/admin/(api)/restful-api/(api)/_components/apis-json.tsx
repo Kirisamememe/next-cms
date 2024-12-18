@@ -6,6 +6,8 @@ import { ApiCard } from "./api-card"
 
 export function JsonApis() {
   const t = useTranslations()
+  const GET_MANY_PARAMS = '?category=, author=, take=, search='
+  const GET_UNIQUE_PARAMS = '?select=,'
 
   return (
     <Card className="appear">
@@ -19,8 +21,14 @@ export function JsonApis() {
       </CardHeader>
       <CardContent>
         <GridColumn className="@[48rem]:grid-cols-2">
-          <ApiCard name={'manyJsonContents'} type={'many'} path={'/api/json-contents'} />
-          <ApiCard name={'uniqueJsonContent'} type={'unique'} path={'/api/json-contents/[id]'} />
+          <ApiCard
+            name={'manyJsonContents'} type={'many'} path={'/api/json-contents'}
+            searchParams={GET_MANY_PARAMS}
+          />
+          <ApiCard
+            name={'uniqueJsonContent'} type={'unique'} path={'/api/json-contents/[id]'}
+            searchParams={GET_UNIQUE_PARAMS}
+          />
         </GridColumn>
       </CardContent>
     </Card>
