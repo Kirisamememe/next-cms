@@ -81,8 +81,8 @@
       }
     },
     "gallery": {
-      "1": "圖庫",
-      "2": "圖像預覽"
+      "1": "媒體庫",
+      "2": "預覽"
     },
     "media-collection": {
       "1": "媒體集"
@@ -351,6 +351,10 @@
     "json": {
       "title": "JSON內容",
       "description": "管理JSON API設定"
+    },
+    "gallery": {
+      "title": "媒體庫",
+      "description": "管理媒體庫API設定"
     },
     "tabs": {
       "api": "API管理",

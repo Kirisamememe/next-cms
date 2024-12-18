@@ -176,7 +176,7 @@
       "published": "公開中",
       "archive": "アーカイブ"
     },
-    "newArticle": "記事を作成",
+    "newArticle": "文章を作成",
     "filter": "タイトル / 本文で検索",
     "noArticles": "記事が見つかりませんでした",
     "lastEdited": "最終編集：{name} {datetime}",
@@ -351,6 +351,10 @@
     "json": {
       "title": "JSONコンテンツ",
       "description": "JSON APIを管理します"
+    },
+    "gallery": {
+      "title": "ギャラリー",
+      "description": "ギャラリーAPIの設定を管理します"
     },
     "tabs": {
       "api": "API管理",

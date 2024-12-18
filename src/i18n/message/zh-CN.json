@@ -78,8 +78,8 @@
       }
     },
     "gallery": {
-      "1": "图库",
-      "2": "图片预览"
+      "1": "媒体库",
+      "2": "预览"
     },
     "media-collection": {
       "1": "媒体集合"
@@ -168,12 +168,12 @@
   },
   "article": {
     "tabs": {
-      "all": "所有博文",
+      "all": "所有文章",
       "draft": "草稿",
       "published": "已发布",
       "archive": "归档"
     },
-    "newArticle": "撰写新博文",
+    "newArticle": "撰写新文章",
     "filter": "按标题或内容搜索",
     "noArticles": "未找到相关文章",
     "lastEdited": "{name} 于 {datetime} 编辑此文",
@@ -348,6 +348,10 @@
     "json": {
       "title": "JSON内容",
       "description": "管理JSON API设置"
+    },
+    "gallery": {
+      "title": "媒体库",
+      "description": "管理媒体库API设置"
     },
     "tabs": {
       "api": "API管理",
