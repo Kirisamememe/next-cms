@@ -1,28 +1,30 @@
 'use client'
 
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { createPortal } from "react-dom"
+import { FlexColumn } from "./ui/flexbox"
+import { useEffect } from "react"
 
 type Props = {
   children: React.ReactNode
-  href: string
-  routerPush: string
 }
 
-export const Modal = ({ children, href, routerPush }: Props) => {
-  const router = useRouter()
-  const pathname = usePathname()
+export const Modal = ({ children }: Props) => {
 
-  const onOpenChange = (open: boolean) => {
-    if (!open) {
-      router.push(routerPush)
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = 'unset'
     }
-  }
-  return (
-    <Dialog open={pathname === href} onOpenChange={onOpenChange}>
-      <DialogContent>
+  }, [])
+
+  return createPortal(
+    <FlexColumn center className="animate-in fade-in-0 fixed inset-0 w-screen h-screen z-50 bg-background/80">
+      <div className="relative outline outline-1 outline-black/0 dark:outline-black/80 rounded-3xl w-fit bg-background">
+        <div className="before:rounded-3xl before:shadow-[inset_0_0_0_1px_rgba(0,0,0,0.1)] before:dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] before:content-[''] before:absolute before:inset-0 before:w-full before:h-full before:z-10 before:pointer-events-none" />
         {children}
-      </DialogContent>
-    </Dialog>
+      </div>
+    </FlexColumn>,
+    document.body
   )
 }
