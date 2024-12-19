@@ -28,16 +28,19 @@ export const DropArea: FC<Props> = ({ data, onDataChange, index, isDragging, ref
     const isSamePosition = (index === item.index || index === Number(item.index) + 1)
 
     if (isExisting && isSamePosition) return
-    // console.log(item)
-    
+
     let newChildren: JsonNodeData[]
     if (isExisting) {
       // 既存のitemを除外した配列を作成
       newChildren = currentChildren.filter(c => c.id !== item.id)
       // 末尾への追加の場合
-      if (index >= newChildren.length) {
+      if (index > newChildren.length) {
         item.index = newChildren.length
         newChildren.push(item)
+      } else if (index > Number(item.index)) {
+        // それ以外の場合は指定されたindexに挿入
+        item.index = index - 1
+        newChildren.splice(index - 1, 0, item)
       } else {
         // それ以外の場合は指定されたindexに挿入
         item.index = index
@@ -45,7 +48,7 @@ export const DropArea: FC<Props> = ({ data, onDataChange, index, isDragging, ref
       }
 
       onDataChange({ ...data, children: newChildren })
-    } 
+    }
     else {
       const newChild: JsonNodeData = {
         ...item,
@@ -82,7 +85,7 @@ export const DropArea: FC<Props> = ({ data, onDataChange, index, isDragging, ref
     setIsDragOver(true)
   }
 
-  
+
   return (
     <>
       <div className={cn(
@@ -90,7 +93,7 @@ export const DropArea: FC<Props> = ({ data, onDataChange, index, isDragging, ref
         isDragOver && "h-24",
         className
       )}>
-        <div 
+        <div
           ref={ref}
           {...props}
           onDragEnter={handleDragEnter}
@@ -98,9 +101,9 @@ export const DropArea: FC<Props> = ({ data, onDataChange, index, isDragging, ref
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           className={cn(
-          "w-full h-6 shrink-0 py-0 transition-all absolute inset-0",
-          isDragOver && "py-3 h-24"
-        )} />
+            "w-full h-6 shrink-0 py-0 transition-all absolute inset-0",
+            isDragOver && "py-3 h-24"
+          )} />
       </div>
       <div className={cn(
         "h-0 w-[23rem] sm:w-[26rem] pointer-events-none transition-all bg-blue-700/0 outline-blue-700 outline-2",
