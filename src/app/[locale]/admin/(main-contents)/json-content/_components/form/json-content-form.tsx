@@ -38,11 +38,14 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
   const t = useTranslations()
   const locale = useLocale()
 
-  const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(jsonContent?.jsonAtom.content ? convertToJsonNodeData(jsonContent.jsonAtom.content) : {
-    id: 'root',
-    valueType: 'object',
-    children: []
-  })
+  const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(jsonContent?.jsonAtom.content
+    ? convertToJsonNodeData(jsonContent.jsonAtom.content, { isRoot: true })
+    : {
+      id: 'root',
+      valueType: 'object',
+      children: []
+    }
+  )
 
   const setJsonData = (data: JsonNodeData) => {
     setJsonNodeData(data)
