@@ -13,11 +13,6 @@ export async function GET(
     return
   }
 
-  const response = NextResponse.json(api)
-  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
-  response.headers.set('Access-Control-Allow-Methods', 'GET')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-
   const authHeader = req.headers.get('authorization')
   const token = authHeader?.replace('Bearer ', '')
   if (!token) return
