@@ -23,23 +23,19 @@ type ImagePickerContextType = {
   setIsSingleMode: React.Dispatch<SetStateAction<boolean>>
   files: ImageFile[]
   setFiles: React.Dispatch<SetStateAction<ImageFile[]>>
-  expanded: boolean
-  setExpanded: React.Dispatch<SetStateAction<boolean>>
 }
 
 const ImagePickerContext = createContext<ImagePickerContextType | undefined>(undefined)
 
 type Props = {
   children: ReactNode
-  initialExpanded?: boolean
 }
 
-export function ImagePickerProvider({ children, initialExpanded = false }: Props) {
+export function ImagePickerProvider({ children }: Props) {
   const [selectedUrl, setSelectedUrl] = useState('')
   const [selectedUrls, setSelectedUrls] = useState<string[]>([])
   const [isSingleMode, setIsSingleMode] = useState(true)
   const [files, setFiles] = useState<ImageFile[]>([])
-  const [expanded, setExpanded] = useState(initialExpanded)
 
   useEffect(() => {
     return () => {
@@ -57,9 +53,7 @@ export function ImagePickerProvider({ children, initialExpanded = false }: Props
     setIsSingleMode,
     files,
     setFiles,
-    expanded,
-    setExpanded
-  }), [selectedUrl, selectedUrls, isSingleMode, files, expanded])
+  }), [selectedUrl, selectedUrls, isSingleMode, files])
 
   return (
     <ImagePickerContext

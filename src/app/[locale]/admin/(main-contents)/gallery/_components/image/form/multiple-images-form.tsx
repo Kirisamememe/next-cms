@@ -97,7 +97,7 @@ export function MultipleImagesForm({ form, selectedUrls, folderTree, action, pen
 
         <FlexRow gap={3} className="mr-auto mt-auto">
           <Submit isPending={pending} className="w-fit">
-            {t('common.submit')}
+            {t('common.save')}
           </Submit>
           <Button type="button" variant={'outline'} onClick={handleClose}>
             {t('common.close')}

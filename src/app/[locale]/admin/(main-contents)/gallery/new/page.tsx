@@ -7,7 +7,7 @@ import { FlexRow } from "@/components/ui/flexbox";
 export default async function GalleryNewPage() {
   return (
     <Modal>
-      <ImagePickerProvider initialExpanded>
+      <ImagePickerProvider>
         <FlexRow p={5} className="flex gap-0 max-w-3xl h-[38rem] rounded-3xl w-fit">
           <NewImageDialog />
           <ImagePicker expanded />

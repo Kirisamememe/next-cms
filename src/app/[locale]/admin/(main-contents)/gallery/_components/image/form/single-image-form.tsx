@@ -137,7 +137,7 @@ export const SingleImageForm: FC<Props> = ({ form, folderTree, action, imageId, 
 
         <FlexRow gap={3} className="mt-auto">
           <Submit isPending={pending} className="w-fit">
-            {t('common.submit')}
+            {t('common.save')}
           </Submit>
           <Button type="button" variant={'outline'} className="mr-auto" onClick={handleClose}>
             {t('common.close')}

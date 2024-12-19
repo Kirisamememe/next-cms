@@ -22,7 +22,8 @@ export function NewMultipleImages() {
   const router = useRouter()
 
   const { folders: paramFolders } = useParams<{ folders?: string[] }>()
-  const currentPath = paramFolders?.length ? decodeURIComponent(paramFolders.join('/')) : '.'
+  const currentFolders = (paramFolders && paramFolders.length) ? ['.', ...paramFolders] : ['.']
+  const currentPath = decodeURIComponent(currentFolders.join('/'))
 
   const form = useForm<z.infer<typeof multipleImageUrlSchema>>({
     resolver: zodResolver(multipleImageUrlSchema),
