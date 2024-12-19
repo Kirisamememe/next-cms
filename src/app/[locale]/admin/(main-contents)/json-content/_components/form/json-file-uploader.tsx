@@ -61,7 +61,7 @@ export const JsonFileUploader = ({ onValueChange, value }: Props) => {
         variant={'outline'} size={'icon'}
         className={cn(
           "absolute z-50 bg-transparent",
-          notEmpty ? "top-4 right-4 size-9" : "size-14 top-[calc(50%-3rem)] left-1/2 -translate-x-1/2 -translate-y-1/2"
+          notEmpty ? "top-3 right-3 size-9" : "size-14 top-[calc(50%-3rem)] left-1/2 -translate-x-1/2 -translate-y-1/2"
         )}>
         <Upload size={notEmpty ? 16 : 32} />
       </Button>

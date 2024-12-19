@@ -1,13 +1,14 @@
 'use client'
 
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useJsonConvert } from "../_hooks/use-json-convert";
+import { cn } from "@/lib";
 
 type Props = {
   initData: object
-}
+} & React.ComponentPropsWithRef<"div">
 
-export function JsonPreview({ initData }: Props) {
+export const JsonPreview: FC<Props> = ({ initData, className, ...props }) => {
   const { convertToHighlightedJson } = useJsonConvert()
 
   const formattedJson = useMemo(() => {
@@ -15,11 +16,13 @@ export function JsonPreview({ initData }: Props) {
   }, [convertToHighlightedJson, initData]);
 
   return (
-    <pre
-      className={`p-6 text-xs font-mono w-full text-ellipsis h-fit`}
-      lang="en"
-    >
-      {formattedJson}
-    </pre>
+    <div className={cn("h-full overflow-scroll", className)} {...props}>
+      <pre
+        className={`p-6 text-xs font-mono w-full text-ellipsis h-fit`}
+        lang="en"
+      >
+        {formattedJson}
+      </pre>
+    </div>
   )
 }
