@@ -7,19 +7,14 @@ import { UseFormReturn } from "react-hook-form"
 import { FolderSelect } from "../../folder-select"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
-import { MediaFolder } from "@/types"
+import { imageUrlSchema, MediaFolder } from "@/types"
+import { z } from "zod"
 
 
 type Props = {
-  form: UseFormReturn<{
-    name: string;
-    url: string;
-    folderPath: string;
-    archivedAt?: Date | null | undefined;
-  }, any, undefined>
+  form: UseFormReturn<z.infer<typeof imageUrlSchema>, any, undefined>
   folderTree: MediaFolder[]
 }
-
 
 
 export function SingleImageForm({ form, folderTree }: Props) {

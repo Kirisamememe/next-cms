@@ -20,14 +20,12 @@ import { FolderSelect } from "../../folder-select"
 import { FlexColumn } from "@/components/ui/flexbox"
 import { Badge } from "@/components/ui/badge"
 import { LabelText } from "@/components/ui/typography"
-import { MediaFolder } from "@/types"
+import { MediaFolder, multipleImageUrlSchema } from "@/types"
+import { z } from "zod"
 
 
 type Props = {
-  form: UseFormReturn<{
-    urls: string[];
-    folderPath: string;
-  }, any, undefined>
+  form: UseFormReturn<z.infer<typeof multipleImageUrlSchema>, any, undefined>
   selectedUrls: string[]
   folderTree: MediaFolder[]
 }
