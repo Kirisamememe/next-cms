@@ -7,8 +7,8 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
 
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1']
- 
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || []
+
 const corsOptions = {
   'Access-Control-Allow-Methods': 'GET',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -82,13 +82,13 @@ export default function middleware(req: NextRequest) {
       }
       return NextResponse.json({}, { headers: preflightHeaders })
     }
-    
+
     const authHeader = req.headers.get('authorization')
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    
+
     const response = NextResponse.next()
     if (isAllowedOrigin) {
       response.headers.set('Access-Control-Allow-Origin', origin)
