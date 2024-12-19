@@ -9,6 +9,7 @@ type Props = {
 export function EditorCardWithLink({ editor }: Props) {
   return (
     <Link
+      scroll={false}
       href={`/admin/editors/${editor.id}`}
       className="transition-transform [&>div]:hover:bg-muted/60 active:scale-95"
     >

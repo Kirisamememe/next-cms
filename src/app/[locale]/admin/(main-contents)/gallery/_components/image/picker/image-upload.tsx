@@ -1,7 +1,7 @@
 'use client'
 
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
-import { useNewImageContext } from "../new-image-provider"
+import { useImagePickerContext } from "../image-picker-provider"
 import { Button } from "@/components/ui/button"
 import { ImagePlus, ImageUp, X } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -12,14 +12,14 @@ import { checkOversize, cn } from "@/lib"
 import { useGalleryContext } from "../../gallery-provider"
 import { LabelText } from "@/components/ui/typography"
 import { useUploadImage } from "../../../_hooks/use-upload-image"
-import { ImageForUpload } from "./new-image-upload-item"
+import { ImageForUpload } from "./image-upload-item"
 
 
 export function NewImageUpload() {
   const t = useTranslations()
 
   const { filesDragging } = useGalleryContext()
-  const { files, setFiles } = useNewImageContext()
+  const { files, setFiles } = useImagePickerContext()
   const { uploadImage } = useUploadImage({ setFiles })
 
   /**
@@ -103,13 +103,13 @@ export function NewImageUpload() {
       </div>
 
       <div className={cn(
-        "absolute bottom-2 left-2 flex flex-col gap-2 z-50",
+        "absolute bottom-2 right-2 flex flex-col gap-2 z-50 items-end",
         !!files.length ? "w-[calc(100%-1rem)] h-[calc(100%-14rem)]" : "w-fit"
       )}>
 
         {!!files.length &&
           <FlexColumn gap={2}
-            className={cn("p-2 bg-muted/70 backdrop-blur-md rounded-lg h-full")}>
+            className={cn("p-2 bg-muted/70 backdrop-blur-md rounded-lg h-full w-full")}>
 
             <div className="overflow-y-scroll rounded-md">
               <FlexColumn gap={2} className="rounded-sm overflow-hidden">
@@ -133,7 +133,7 @@ export function NewImageUpload() {
           </FlexColumn>
         }
 
-        <FlexRow className="w-fit bg-muted/50 backdrop-blur-md rounded-full shrink-0">
+        <FlexRow className="w-fit bg-muted/50 backdrop-blur-md rounded-full shrink-0 ">
           {!files.length ?
             <div {...getRootProps()}>
               <Input

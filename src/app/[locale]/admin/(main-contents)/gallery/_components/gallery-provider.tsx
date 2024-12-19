@@ -1,10 +1,9 @@
 'use client'
 
-import { createContext, ReactNode, RefObject, SetStateAction, useContext, useEffect, useMemo, useRef, useState } from "react"
-import { ImageFile } from "./image/new-image-provider"
-import { DropData, MediaFolder } from "@/types"
-import Cookies from "js-cookie";
+import { createContext, ReactNode, RefObject, SetStateAction, use, useEffect, useMemo, useRef, useState } from "react"
+import { DropData, MediaFolder, ImageFile } from "@/types"
 import { GRID_COOKIE_NAME } from "./gallery-grid-setting-btn"
+import Cookies from "js-cookie";
 import React from "react"
 
 export type UploadingState = 'normal' | 'uploading' | 'finished'
@@ -39,7 +38,7 @@ const GalleryContext = createContext<GalleryContextType | undefined>(undefined)
 type Props = {
   children: ReactNode
   folders: MediaFolder[],
-  GRID_SIZE_SERVER: number
+  GRID_SIZE_SERVER: number,
 }
 
 function isServer() {
@@ -112,11 +111,11 @@ export function GalleryProvider({ children, folders, GRID_SIZE_SERVER }: Props) 
     setFiles,
     gridSize,
     setGridSize,
-    dragImageRef
+    dragImageRef,
   }), [creatingNewFolder, droppedData, files, filesDragging, folders, gridSize])
 
   return (
-    <GalleryContext.Provider
+    <GalleryContext
       value={contextValue}>
       <div
         onDragOver={e => e.preventDefault()}
@@ -124,12 +123,12 @@ export function GalleryProvider({ children, folders, GRID_SIZE_SERVER }: Props) 
       >
         {children}
       </div>
-    </GalleryContext.Provider>
+    </GalleryContext>
   )
 }
 
 export const useGalleryContext = () => {
-  const context = useContext(GalleryContext)
+  const context = use(GalleryContext)
   if (!context) {
     throw new Error("useGalleryContext must be used within an GalleryProvider")
   }

@@ -2,14 +2,14 @@
 
 import { Tabs } from "@/components/ui/tabs"
 import { ReactNode } from "react"
-import { useNewImageContext } from "./new-image-provider"
+import { useImagePickerContext } from "./image-picker-provider"
 
 type Props = {
   children: ReactNode
 }
 
 export function NewImageFormTabsContainer({ children }: Props) {
-  const { isSingleMode, setIsSingleMode } = useNewImageContext()
+  const { isSingleMode, setIsSingleMode } = useImagePickerContext()
 
   const onValueChange = (value: string) => {
     if (value === 'multiple') {

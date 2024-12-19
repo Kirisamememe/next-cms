@@ -47,3 +47,16 @@ export type ImageUrl = {
 
   author?: EditorConcise
 }
+
+
+export type ImageFile = {
+  url: string
+  file: File
+  uploadingState: {
+    progress: number
+    error?: {
+      message: string
+    }
+  },
+  abortController: AbortController
+}

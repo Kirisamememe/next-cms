@@ -14,6 +14,7 @@ import { Submit } from "@/components/ui/submit-button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { FlexRow } from "@/components/ui/flexbox"
+import { FormError } from "../content/form-error"
 
 type CategoryBtnProps = {
   categoryId: number
@@ -105,13 +106,15 @@ export function CreateCategoryBtn({ categoryType, noCategory = false }: CreateCa
           </Label>
           <Input name="name" placeholder={t('common.category.form.placeholder')} aria-description={t('common.category.form.description')} />
 
+          <FormError message={state.error?.message} />
+
           <FlexRow gap={3} className="ml-auto mt-2">
             <PopoverClose asChild>
               <Button type="button" variant="outline" ref={btnRef}>
                 {t('common.close')}
               </Button>
             </PopoverClose>
-            <Submit error={state.error} className="w-fit">
+            <Submit className="w-fit">
               {t('common.submit')}
             </Submit>
           </FlexRow>

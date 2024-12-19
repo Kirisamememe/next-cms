@@ -19,6 +19,7 @@ import { Submit } from "@/components/ui/submit-button";
 import { z } from "zod";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { FormError } from "@/app/[locale]/admin/_components/content/form-error";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -235,7 +236,9 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
             <p>version: {jsonContent?.jsonAtom.version}</p>
           )}
 
-          <Submit error={error} isPending={isPending}>
+          <FormError message={error?.message} />
+
+          <Submit isPending={isPending}>
             {t('common.submit')}
           </Submit>
         </FlexColumn>

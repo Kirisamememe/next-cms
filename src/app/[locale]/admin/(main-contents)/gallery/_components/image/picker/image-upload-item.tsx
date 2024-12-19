@@ -1,4 +1,4 @@
-import { ImageFile } from "../new-image-provider"
+import { ImageFile } from "../image-picker-provider"
 import { Button } from "@/components/ui/button"
 import { X, CircleAlert, RefreshCcw } from "lucide-react"
 import { useTranslations } from "next-intl"

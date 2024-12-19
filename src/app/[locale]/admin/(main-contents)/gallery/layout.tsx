@@ -2,7 +2,6 @@ import { ReactNode } from "react"
 import { GalleryProvider } from "./_components/gallery-provider"
 import { DefaultUploader } from "./_components/default-uploader"
 import { cookies } from "next/headers"
-
 import { mediaFolderService } from "@/di/services"
 import { InsetLayoutWithPadding } from "../../_components/inset-layout-with-padding"
 
@@ -17,7 +16,7 @@ export default async function GalleryLayout({ modal, children }: Props) {
   const GRID_SIZE = Number(cookieStore.get('GRID_SIZE')?.value || 2)
 
   return (
-    <GalleryProvider folders={folders} GRID_SIZE_SERVER={GRID_SIZE} >
+    <GalleryProvider folders={folders} GRID_SIZE_SERVER={GRID_SIZE}>
       <InsetLayoutWithPadding>
         {children}
         {modal}

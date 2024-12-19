@@ -3,7 +3,7 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { cn } from "@/lib"
 import Image from "next/image"
-import { useNewImageContext } from "../new-image-provider"
+import { useImagePickerContext } from "../image-picker-provider"
 
 type Props = {
   url: string
@@ -16,7 +16,7 @@ export function ImageItem({ url }: Props) {
     selectedUrls,
     setSelectedUrls,
     isSingleMode
-  } = useNewImageContext()
+  } = useImagePickerContext()
 
   const handleClickSingleMode = () => {
     if (selectedUrl === url) {

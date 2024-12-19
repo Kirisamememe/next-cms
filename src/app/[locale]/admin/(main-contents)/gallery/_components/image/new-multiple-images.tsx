@@ -1,30 +1,26 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
 import { buildFolderTree } from "@/lib"
-import { useTranslations } from "next-intl"
-import { useActionState, useRef } from "react"
+import { useActionState } from "react"
 import { useParams } from "next/navigation"
-import { multipleImageUrlSchema } from "@/types"
+import { FormState, multipleImageUrlSchema } from "@/types"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { DialogClose } from "@/components/ui/dialog"
-import { useNewImageContext } from "./new-image-provider"
+import { useImagePickerContext } from "./image-picker-provider"
 import { createManyImageUrls } from "../../_actions/create"
 import { MultipleImagesForm } from "./form/multiple-images-form"
-import { FlexRow } from "@/components/ui/flexbox"
 import { useGalleryContext } from "../gallery-provider"
+import { useRouter } from "@/i18n"
 
 
 export function NewMultipleImages() {
-  const t = useTranslations()
-  const { selectedUrls, setSelectedUrls } = useNewImageContext()
+  const { selectedUrls, setSelectedUrls } = useImagePickerContext()
   const { folders } = useGalleryContext()
   const folderTree = buildFolderTree(folders)
 
-  const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const router = useRouter()
+
   const { folders: paramFolders } = useParams<{ folders?: string[] }>()
   const currentPath = paramFolders?.length ? decodeURIComponent(paramFolders.join('/')) : '.'
 
@@ -37,33 +33,32 @@ export function NewMultipleImages() {
     mode: "onChange"
   })
 
-  const [_, action, pending] = useActionState(async () => {
+  const [state, action, pending] = useActionState<FormState>(async () => {
     form.setValue('urls', selectedUrls)
     const validation = await form.trigger()
-    if (!validation) return
+    if (!validation) return { isSuccess: false }
 
     const values = form.getValues()
 
-    await createManyImageUrls(values)
+    const res = await createManyImageUrls(values)
     setSelectedUrls([])
-  }, null)
+    return res
+  }, { isSuccess: false })
+
+  const handleClose = () => {
+    setSelectedUrls([])
+    router.back()
+  }
 
   return (
-    <Form {...form}>
-      <form action={action} className="flex flex-col gap-5 h-[calc(100%-2.5rem)]">
-        <MultipleImagesForm form={form} selectedUrls={selectedUrls} folderTree={folderTree} />
-
-        <FlexRow gap={3} className="ml-auto mt-auto">
-          <DialogClose asChild>
-            <Button ref={closeBtnRef} variant={'outline'}>
-              {t('common.close')}
-            </Button>
-          </DialogClose>
-          <Button isPending={pending} type="submit" className="w-fit">
-            {t('common.submit')}
-          </Button>
-        </FlexRow>
-      </form>
-    </Form>
+    <MultipleImagesForm
+      form={form}
+      selectedUrls={selectedUrls}
+      folderTree={folderTree}
+      action={action}
+      pending={pending}
+      error={state.error}
+      handleClose={handleClose}
+    />
   )
 }

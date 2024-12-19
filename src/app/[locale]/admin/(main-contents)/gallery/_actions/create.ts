@@ -32,7 +32,7 @@ export async function createImageUrl(values: z.infer<typeof imageUrlSchema>) {
     return dbError
   }
   revalidatePath(`/admin/gallery`)
-  return res
+  return { isSuccess: true }
 }
 
 export async function createManyImageUrls(values: z.infer<typeof multipleImageUrlSchema>) {
@@ -46,6 +46,6 @@ export async function createManyImageUrls(values: z.infer<typeof multipleImageUr
     return dbError
   }
   revalidatePath(`/admin/gallery`)
-  return res
+  return { isSuccess: true }
 }
 

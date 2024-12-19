@@ -67,7 +67,8 @@ export {
 } from './schema-image-url'
 
 export type {
-  ImageUrl
+  ImageUrl,
+  ImageFile
 } from './schema-image-url'
 
 

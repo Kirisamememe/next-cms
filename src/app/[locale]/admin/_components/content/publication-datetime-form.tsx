@@ -3,6 +3,7 @@ import { UseFormReturn } from "react-hook-form"
 import { useTranslations } from "next-intl"
 import { DateTimePicker } from "../../../../../components/datetime-picker"
 import { Submit } from "@/components/ui/submit-button"
+import { FormError } from "./form-error"
 
 
 type Props = {
@@ -39,7 +40,8 @@ export function PublicationDatetimeForm({ form, action, error }: Props) {
             </FormItem>
           )}
         />
-        <Submit error={error} >
+        <FormError message={error?.message} />
+        <Submit>
           {t("common.save")}
         </Submit>
       </form>

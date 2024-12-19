@@ -51,7 +51,7 @@ export async function updateImageUrl(imageId: number, values: z.infer<typeof ima
     }
   }
   revalidatePath(`/admin/gallery`)
-  return res
+  return { isSuccess: true }
 }
 
 

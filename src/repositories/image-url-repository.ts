@@ -60,6 +60,18 @@ export class ImageUrlRepository implements IImageUrlRepository {
     return await db.imageUrl.findUnique({
       where: {
         id: imageId
+      },
+      include: {
+        author: {
+          select: {
+            id: true,
+            name: true,
+            nickname: true,
+            image: true,
+            role: true,
+            email: true
+          }
+        }
       }
     })
   }

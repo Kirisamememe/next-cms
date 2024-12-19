@@ -2,7 +2,15 @@ import 'server-only'
 import { v2 as cloudinary, ImageFormat } from 'cloudinary';
 import { CloudinaryApiResponse, CloudinaryResponse } from '@/types';
 
-class Cloudinary {
+export class Cloudinary {
+  static instance: Cloudinary
+
+  static getInstance() {
+    if (!Cloudinary.instance) {
+      Cloudinary.instance = new Cloudinary()
+    }
+    return Cloudinary.instance
+  }
 
   private client = cloudinary
 
@@ -87,5 +95,3 @@ class Cloudinary {
   }
 
 }
-
-export const cloudinaryClient = new Cloudinary()

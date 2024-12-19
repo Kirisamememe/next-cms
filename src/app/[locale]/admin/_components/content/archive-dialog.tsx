@@ -28,7 +28,7 @@ type Props = {
 export const ArchiveAlertDialog: FC<Props> = ({ contentId, isArchived, contentType, className, ...props }) => {
   const t = useTranslations()
 
-  const [state, action] = useActionState<FormState>(async () => {
+  const [_, action] = useActionState<FormState>(async () => {
     console.log(contentId, isArchived)
     let res: FormState
 
@@ -77,7 +77,7 @@ export const ArchiveAlertDialog: FC<Props> = ({ contentId, isArchived, contentTy
             {t('common.cancel')}
           </AlertDialogCancel>
           <form action={action}>
-            <Submit error={state.error}>
+            <Submit>
               {t("common.ok")}
             </Submit>
           </form>

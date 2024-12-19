@@ -16,14 +16,15 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { useActionState } from "react";
+import { FC, useActionState } from "react";
+import { cn } from "@/lib";
 
 
 type Props = {
   imageId: number
-}
+} & React.ComponentPropsWithoutRef<typeof Button>
 
-export function DeleteImageBtn({ imageId }: Props) {
+export const DeleteImageBtn: FC<Props> = ({ imageId, className }) => {
   const t = useTranslations()
   const [_, action, pending] = useActionState(async () => {
     await deleteImage(imageId)
@@ -34,7 +35,9 @@ export function DeleteImageBtn({ imageId }: Props) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant={"secondary"} size={"icon"}
-          className="bg-background/50 hover:bg-destructive hover:text-destructive-foreground">
+          className={cn(
+            "bg-background/50 hover:bg-destructive hover:text-destructive-foreground", className
+          )}>
           {pending ?
             <div className="circle-spin-2" /> :
             <Trash2 size={20} />}

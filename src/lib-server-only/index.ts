@@ -1,7 +1,7 @@
 import 'server-only'
 
 // cloudinary.ts
-export { cloudinaryClient } from './cloudinary'
+export { Cloudinary } from './cloudinary'
 
 // get-session.ts
 export { getSession } from './get-session'

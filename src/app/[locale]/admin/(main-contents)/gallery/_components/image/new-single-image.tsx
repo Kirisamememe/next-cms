@@ -1,33 +1,25 @@
 'use client'
 
-import { Button } from "@/components/ui/button"
-import { Form } from "@/components/ui/form"
-import { DialogClose } from "@/components/ui/dialog"
-import { imageUrlSchema } from "@/types"
+import { FormState, imageUrlSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useActionState, useEffect, useRef, useState } from "react"
-import { useTranslations } from "next-intl"
+import { useActionState, useEffect } from "react"
 import { useParams } from "next/navigation"
-import { FlexRow } from "@/components/ui/flexbox"
 import { buildFolderTree } from "@/lib"
-import { useNewImageContext } from "./new-image-provider"
+import { useImagePickerContext } from "./image-picker-provider"
 import { createImageUrl } from "../../_actions/create"
 import { SingleImageForm } from "./form/single-image-form"
 import { useGalleryContext } from "../gallery-provider"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
+import { useRouter } from "@/i18n"
 
 export function NewSingleImage() {
-  const t = useTranslations()
-  const { selectedUrl, setSelectedUrl } = useNewImageContext()
+  const { selectedUrl } = useImagePickerContext()
   const { folders } = useGalleryContext()
   const folderTree = buildFolderTree(folders)
 
-  const [error, setError] = useState('')
+  const router = useRouter()
 
-  const closeBtnRef = useRef<HTMLButtonElement>(null)
   const { folders: paramFolders } = useParams<{ folders?: string[] }>()
   const currentFolders = (paramFolders && paramFolders.length) ? ['.', ...paramFolders] : ['.']
   const currentPath = decodeURIComponent(currentFolders.join('/'))
@@ -42,49 +34,39 @@ export function NewSingleImage() {
     mode: "onChange"
   })
 
-  const [_, action, pending] = useActionState(async () => {
+  const [state, action, pending] = useActionState<FormState>(async () => {
     const validation = await form.trigger()
-    if (!validation) return
+    if (!validation) return { isSuccess: false }
 
     const values = form.getValues()
     const parse = await imageUrlSchema.parseAsync(values)
-    const { error } = await createImageUrl(parse)
+    const res = await createImageUrl(parse)
 
-    if (error) {
-      return setError(error.message)
+    if (!res.isSuccess) {
+      return res
     }
-    setSelectedUrl('')
-  }, null)
+
+    return res
+  }, { isSuccess: false })
+
 
   useEffect(() => {
     form.setValue('url', selectedUrl)
   }, [selectedUrl, form])
 
+
+  const handleClose = () => {
+    router.back()
+  }
+
   return (
-    <Form {...form}>
-      <form action={action} className="flex flex-col gap-5 h-[calc(100%-2.5rem)]">
-        <SingleImageForm form={form} folderTree={folderTree} />
-
-        {error && (
-          <Alert variant="destructive">
-            <AlertDescription className="flex gap-2 items-center">
-              <AlertCircle size={16} />
-              {error}
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <FlexRow gap={3} className="ml-auto mt-auto">
-          <DialogClose asChild>
-            <Button type="button" ref={closeBtnRef} variant={'outline'}>
-              {t('common.close')}
-            </Button>
-          </DialogClose>
-          <Button isPending={pending} type="submit" className="w-fit">
-            {t('common.submit')}
-          </Button>
-        </FlexRow>
-      </form>
-    </Form>
+    <SingleImageForm
+      form={form}
+      folderTree={folderTree}
+      action={action}
+      pending={pending}
+      error={state.error}
+      handleClose={handleClose}
+    />
   )
 }
