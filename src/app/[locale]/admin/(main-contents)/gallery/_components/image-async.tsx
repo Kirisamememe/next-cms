@@ -19,10 +19,7 @@ export function AsyncImage({ url }: Props) {
         src={url}
         width={1280} height={1280} alt="image"
         className={"object-contain object-center w-fit h-fit max-w-screen max-h-screen z-[500]"}
-        onLoad={() => {
-          setLoading(false)
-          console.log('loading complete')
-        }}
+        onLoad={() => setLoading(false)}
       />
     </div>
   )
