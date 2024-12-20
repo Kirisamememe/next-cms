@@ -79,7 +79,11 @@
     },
     "gallery": {
       "1": "Gallery",
-      "2": "Image Preview"
+      "2": {
+        "preview": "Preview",
+        "new": "New",
+        "edit": "Edit"
+      }
     },
     "media-collection": {
       "1": "Media Collection"

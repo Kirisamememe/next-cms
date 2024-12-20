@@ -22,6 +22,8 @@ export function Header() {
   const t = useTranslations('breadcrumb')
 
   if (pathname.split('/')[2] === 'gallery') {
+    const staticSegments = ['preview', 'new', 'edit']
+
     return (
       <HeaderContainer>
         {/* リストの数は制限なし */}
@@ -50,7 +52,7 @@ export function Header() {
             )
           }
 
-          if (arr[2] !== 'preview') {
+          if (!staticSegments.includes(arr[2])) {
             if (index < arr.length - 1) {
               return (
                 <React.Fragment key={segment}>
@@ -82,7 +84,7 @@ export function Header() {
             <React.Fragment key={segment}>
               <BreadcrumbSeparator />
               <BreadcrumbPage className="text-base font-semibold">
-                {t(`${arr[1]}.2`)}
+                {t(`${arr[1]}.2.${segment}`)}
               </BreadcrumbPage>
             </React.Fragment>
           )
