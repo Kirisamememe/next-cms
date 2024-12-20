@@ -46,8 +46,8 @@ export function GalleryItem({ imageUrl }: Props) {
 
       <FlexColumn
         px={4} py={2}
-        className="pointer-events-none absolute bottom-0 left-0 group-hover:flex hidden bg-gradient-to-t from-black/80 to-black/0 w-full h-16 text-xs @[40rem]:text-sm font-semibold justify-end">
-        <Badge className="-ml-0.5 w-fit h-fit rounded-sm px-1 py-0 group-hover:flex hidden bg-black/50" variant={'secondary'}>
+        className="pointer-events-none absolute bottom-0 left-0 group-hover:flex hidden bg-gradient-to-t from-black/80 to-black/0 w-full h-16 text-xs @[40rem]:text-sm font-semibold justify-end text-white">
+        <Badge className="-ml-0.5 w-fit h-fit rounded-sm px-1 py-0 group-hover:flex hidden bg-black/50 text-white" variant={'secondary'}>
           {imageUrl.id}
         </Badge>
         <span className="truncate h-fit">
