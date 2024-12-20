@@ -106,19 +106,23 @@
 }
 
 .mdxeditor-popup-container {
-  @apply z-[1000]
+  @apply z-50
 }
 
 .mdxeditor-toolbar {
-  @apply bg-muted w-full top-0 mb-4 
+  @apply bg-muted/60 backdrop-blur-md w-full top-0 mb-4 flex overflow-scroll
+}
+
+.mdxeditor-toolbar div[role="separator"] {
+  @apply border-none min-w-[1px] bg-foreground/20
 }
 
 .mdxeditor-toolbar span button {
-  @apply dark:bg-muted-foreground/30 data-[placeholder=true]:text-muted-foreground
+  @apply bg-white/80 dark:bg-muted-foreground/30 data-[placeholder=true]:text-muted-foreground
 }
 
-.mdxeditor-rich-text-editor {
-
+.mdxeditor-rich-text-editor span button {
+  @apply bg-muted
 }
 
 .mdxeditor-source-editor {
@@ -158,16 +162,16 @@
 }
 
 .mdxeditor-select-content {
-  @apply max-h-96 overflow-scroll
+  @apply max-h-96 overflow-scroll bg-background dark:border
 }
 
 .mdxeditor-select-content div div {
   @apply dark:hover:bg-muted-foreground/20 data-[state=checked]:bg-muted-foreground/20
 }
-
+/* 
 ._codeMirrorToolbar_uazmk_408 button {
   @apply my-2 mr-2
-}
+} */
 
 
 .prose ul li[role=checkbox] {

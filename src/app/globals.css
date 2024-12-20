@@ -1,15 +1,10 @@
-@import './markdown-editor-ui.css';
-@import './markdown-editor-color.css';
+@import '@mdxeditor/editor/style.css';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap');
+@import './markdown-editor-color.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-/* @import '@mdxeditor/editor/style.css';
-@import '@radix-ui/colors/blue-dark.css';
-@import '@radix-ui/colors/slate-dark.css'; */
 
 
 body {

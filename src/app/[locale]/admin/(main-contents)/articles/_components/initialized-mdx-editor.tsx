@@ -164,47 +164,44 @@ export default function InitializedMDXEditor({
 
 function ToolBar() {
   return (
-    <div className='flex flex-wrap'>
-      <DiffSourceToggleWrapper options={["source"]}>
-        <ConditionalContents
-          options={[{ when: whenInAdmonition, contents: () => <ChangeAdmonitionType /> }, { fallback: () => <BlockTypeSelect /> }]}
-        />
+    <DiffSourceToggleWrapper options={["source"]}>
+      <ConditionalContents
+        options={[{ when: whenInAdmonition, contents: () => <ChangeAdmonitionType /> }, { fallback: () => <BlockTypeSelect /> }]}
+      />
 
-        {/* <BoldItalicUnderlineToggles />
+      {/* <BoldItalicUnderlineToggles />
         <Separator /> */}
 
-        <StrikeThroughSupSubToggles />
-        <Separator />
+      <StrikeThroughSupSubToggles />
+      <Separator />
 
-        <ListsToggle />
-        <Separator />
+      <ListsToggle />
+      <Separator />
 
-        <CreateLink />
-        <InsertImage />
-        <Separator />
+      <CreateLink />
+      <InsertImage />
+      <Separator />
 
-        <InsertTable />
-        <InsertThematicBreak />
-        <Separator />
+      <InsertTable />
+      <InsertThematicBreak />
+      <Separator />
 
-        <InsertCodeBlock />
-        <InsertSandpack />
-        <ConditionalContents
-          options={[
-            {
-              when: (editorInFocus) => !whenInAdmonition(editorInFocus),
-              contents: () => (
-                <>
-                  <Separator />
-                  <InsertAdmonition />
-                </>
-              )
-            }
-          ]}
-        />
-      </DiffSourceToggleWrapper>
-    </div>
-
+      <InsertCodeBlock />
+      <InsertSandpack />
+      <ConditionalContents
+        options={[
+          {
+            when: (editorInFocus) => !whenInAdmonition(editorInFocus),
+            contents: () => (
+              <>
+                <Separator />
+                <InsertAdmonition />
+              </>
+            )
+          }
+        ]}
+      />
+    </DiffSourceToggleWrapper>
   )
 }
 

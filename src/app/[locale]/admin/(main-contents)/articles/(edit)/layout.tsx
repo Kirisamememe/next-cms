@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { InsetLayoutWithPadding } from "../../../_components/inset-layout-with-padding"
+import { InsetLayoutNoPadding } from "../../../_components/inset-layout-no-padding"
 
 type Props = {
   children: ReactNode
@@ -8,8 +8,8 @@ type Props = {
 export default function EditArticleLayout({ children }: Props) {
 
   return (
-    <InsetLayoutWithPadding>
+    <InsetLayoutNoPadding>
       {children}
-    </InsetLayoutWithPadding>
+    </InsetLayoutNoPadding>
   )
 }
