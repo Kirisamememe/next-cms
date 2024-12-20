@@ -414,3 +414,71 @@ body {
   -webkit-user-select: none; /* Safari */
   user-select: none;
 }
+
+
+.square-move-3 {
+  --size: 24px;
+  --color: currentColor;
+  --accent-opacity: .25;
+  --animation-timing-function: linear;
+  --animation-duration: 2s;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+.square-move-3::before,
+.square-move-3::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background-color: var(--color);
+  transform: translate(0%, 0%);
+  animation: var(--animation-timing-function) var(--animation-duration) infinite square-move-3-animation;
+}
+
+.square-move-3::before {
+  opacity: var(--accent-opacity);
+  animation-delay: calc(var(--animation-duration) * .125);
+}
+
+@keyframes square-move-3-animation {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  12.5% {
+    transform: translate(100%, 0%);
+  }
+
+  25% {
+    transform: translate(100%, 0%);
+  }
+
+  37.5% {
+    transform: translate(100%, 100%);
+  }
+
+  50% {
+    transform: translate(100%, 100%);
+  }
+
+  62.5% {
+    transform: translate(0%, 100%);
+  }
+
+  75% {
+    transform: translate(0%, 100%);
+  }
+
+  87.5% {
+    transform: translate(0%, 0%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}

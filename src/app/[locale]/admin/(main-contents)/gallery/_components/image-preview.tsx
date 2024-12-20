@@ -1,6 +1,5 @@
 import { imageUrlService } from "@/di/services"
-
-import Image from "next/image"
+import { AsyncImage } from "./image-async"
 
 type Props = {
   id: number
@@ -13,10 +12,6 @@ export async function ImagePreview({ id }: Props) {
   }
 
   return (
-    <Image
-      src={data.url}
-      width={1280} height={1280} alt="image"
-      className="object-contain object-center w-fit h-fit max-w-screen max-h-screen z-[500]"
-    />
+    <AsyncImage url={data.url} />
   )
 }

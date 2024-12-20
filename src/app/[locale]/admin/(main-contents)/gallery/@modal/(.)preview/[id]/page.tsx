@@ -1,16 +1,14 @@
-import { ImagePreview } from "../../../_components/image-preview"
 import { ImagePreviewModal } from "../../../_components/image-preview-modal"
+import PreviewPage from "../../../preview/[id]/page"
 
 type Props = {
   params: Promise<{ id: string }>
 }
 
 export default async function Page({ params }: Props) {
-  const { id } = await params
-
   return (
     <ImagePreviewModal>
-      <ImagePreview id={Number(id)} />
+      <PreviewPage params={params} />
     </ImagePreviewModal >
   )
 }

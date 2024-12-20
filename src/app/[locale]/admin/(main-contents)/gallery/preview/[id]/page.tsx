@@ -5,7 +5,7 @@ type Props = {
 }
 
 
-export default async function Page({ params }: Props) {
+export default async function PreviewPage({ params }: Props) {
   const { id } = await params
 
   return (
