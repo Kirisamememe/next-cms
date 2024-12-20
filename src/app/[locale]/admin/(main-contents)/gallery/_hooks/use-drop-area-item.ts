@@ -35,6 +35,8 @@ export function useDropAreaItem({ areaData }: Props) {
     setIsDragOver(false)
 
     const data: DropData = JSON.parse(e.dataTransfer.getData('text/plain'))
+    if (data.data === areaData) return
+
     setDroppedData((prev) => [...prev, {
       targetPath: areaData,
       transferredData: data
