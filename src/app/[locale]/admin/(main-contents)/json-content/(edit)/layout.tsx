@@ -1,4 +1,4 @@
-import { InsetLayoutWithPadding } from "../../../_components/inset-layout-with-padding"
+import { InsetLayoutNoPadding } from "../../../_components/inset-layout-no-padding"
 
 type Props = {
   children: React.ReactNode
@@ -6,8 +6,8 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <InsetLayoutWithPadding>
+    <InsetLayoutNoPadding>
       {children}
-    </InsetLayoutWithPadding>
+    </InsetLayoutNoPadding>
   )
 }

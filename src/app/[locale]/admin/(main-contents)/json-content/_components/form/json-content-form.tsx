@@ -8,7 +8,7 @@ import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData 
 import { JsonFileUploader } from "./json-file-uploader";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
 import { Separator } from "@/components/ui/separator";
@@ -20,6 +20,7 @@ import { z } from "zod";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { FormError } from "@/app/[locale]/admin/_components/content/form-error";
+import { useDynamicHeader } from "@/app/[locale]/admin/_components/dynamic-header-provider";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -53,11 +54,20 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
     form.setValue('json', convertToJsonValue(data))
   }
 
+  const { setIsStatic } = useDynamicHeader()
+
+  useEffect(() => {
+    setIsStatic(true)
+    return () => {
+      setIsStatic(false)
+    }
+  }, [setIsStatic])
+
   return (
     <Form {...form}>
-      <form action={action} className="appear flex border rounded-lg max-w-[90rem] w-full h-full mx-auto">
-        <Tabs defaultValue="upload" className="flex flex-col max-w-[calc(100%-22.5rem)] w-full h-full border-r gap-0">
-          <TabsList className="bg-transparent h-fit sm:w-full justify-start gap-8 p-0 px-6 rounded-none border-b [&>button]:text-base [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-14">
+      <form action={action} className="appear flex flex-col w-full @[54rem]:flex-row h-fit @[54rem]:h-[calc(100vh-4rem)]">
+        <Tabs defaultValue="upload" className="relative flex flex-col w-full h-full border-r gap-0 overflow-scroll">
+          <TabsList className="sticky top-0 bg-background h-fit sm:w-full justify-start gap-8 p-0 px-6 rounded-none border-b [&>button]:text-base [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-14 z-10">
             <TabsTrigger value="upload" className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]">
               {t('jsonContent.form.tabs.upload')}
             </TabsTrigger>
@@ -65,7 +75,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               {t('jsonContent.form.tabs.editor')}
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="upload" className="flex-grow w-full p-4 mt-0">
+          <TabsContent value="upload" className="flex-grow w-full p-4 mt-0 ">
             <FormField
               control={form.control}
               name="json"
@@ -95,7 +105,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
         </Tabs>
 
 
-        <FlexColumn p={4} gap={4} className="shrink-0 w-[22.5rem]">
+        <FlexColumn p={4} gap={4} className="shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
           {jsonContent?.author && jsonContent?.lastEditor && jsonContent?.updatedAt &&
             <>
               <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-1">
@@ -173,25 +183,6 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
 
           <FormField
             control={form.control}
-            name="authorNote"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('jsonContent.form.authorNote.name')}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={t('jsonContent.form.authorNote.placeholder')} {...field} />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.authorNote.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="categoryId"
             render={({ field }) => (
               <FormItem>
@@ -232,15 +223,36 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="authorNote"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('jsonContent.form.authorNote.name')}
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder={t('jsonContent.form.authorNote.placeholder')} {...field} />
+                </FormControl>
+                <FormDescription hidden>
+                  {t('jsonContent.form.authorNote.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormError message={error?.message} />
+          <FlexColumn className="sticky bottom-0 shrink-0 pt-8 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+            <Submit isPending={isPending}>
+              {t('common.save')}
+            </Submit>
+          </FlexColumn>
+
           {jsonContent?.jsonAtom.version && (
             <p>version: {jsonContent?.jsonAtom.version}</p>
           )}
 
-          <FormError message={error?.message} />
-
-          <Submit isPending={isPending}>
-            {t('common.submit')}
-          </Submit>
         </FlexColumn>
       </form>
     </Form>
