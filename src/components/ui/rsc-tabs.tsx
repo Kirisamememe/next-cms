@@ -19,7 +19,7 @@ export function RSCTabs({ children }: RootProps) {
     <FlexRow
       gap={1}
       className={cn(
-        "sticky top-16 bg-card/80 px-8 shrink-0 w-full z-50 backdrop-blur-md border-b gap-6 transition-transform duration-300",
+        "sticky top-16 bg-card/80 px-8 shrink-0 w-full z-10 backdrop-blur-md gap-6 transition-transform duration-300 shadow-[0_1px_0_0_hsla(var(--foreground)/0.1)]",
         (!atTop && !isGoingUp) && "-translate-y-16"
       )}>
       {children}

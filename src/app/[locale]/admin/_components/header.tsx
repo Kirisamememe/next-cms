@@ -144,7 +144,7 @@ function HeaderContainer({ children }: { children: ReactNode }) {
 
   return (
     <FlexRow className={cn(
-      "sticky shrink-0 top-0 h-16 w-full border-b justify-between items-center bg-card/80 backdrop-blur-xl z-50 transition-transform duration-300",
+      "sticky shrink-0 top-0 h-16 w-full justify-between items-center bg-card/80 backdrop-blur-xl z-50 transition-transform duration-300 shadow-[0_1px_0_0_hsla(var(--foreground)/0.1)]",
       (!atTop && !isGoingUp) && "-translate-y-16"
     )}>
       <FlexRow p={3} gap={2} center>
