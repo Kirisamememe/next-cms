@@ -8,7 +8,7 @@ export function NewImageBtn() {
 
   return (
     <Link href={'/admin/gallery/new'} scroll={false} prefetch>
-      <Button type="button" variant={'outline'}>
+      <Button type="button" variant={'outline'} className="border-foreground/10 bg-background/40">
         <ImagePlus size={16} />
         {t('gallery.imageUrl.btn')}
       </Button>

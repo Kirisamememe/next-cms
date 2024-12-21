@@ -16,7 +16,7 @@ export function GalleryGridWrapper({ children }: Props) {
   return (
     <GridColumn
       gap={0.5}
-      className={cn("gap-0.5 relative",
+      className={cn("appear gap-0.5 relative",
         gridSize === 1 && "grid-cols-4 @[48rem]:grid-cols-6 @[64rem]:grid-cols-7 @[80rem]:grid-cols-8 @[96rem]:grid-cols-9",
         gridSize === 2 && "grid-cols-3 @[48rem]:grid-cols-5 @[64rem]:grid-cols-6 @[80rem]:grid-cols-7 @[96rem]:grid-cols-8",
         gridSize === 3 && "grid-cols-2 @[48rem]:grid-cols-4 @[64rem]:grid-cols-5 @[80rem]:grid-cols-6 @[96rem]:grid-cols-7",

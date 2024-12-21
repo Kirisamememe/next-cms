@@ -31,9 +31,9 @@ export function DynamicHeaderProvider({ children }: Props) {
     const handleScroll = () => {
       const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
       setPrevScrollTop(currentScrollTop)
-      if (currentScrollTop > 12) {
+      if (currentScrollTop > 16) {
         setAtTop(false);
-      } else if (currentScrollTop <= 12) {
+      } else if (currentScrollTop <= 16) {
         setAtTop(true);
       }
 

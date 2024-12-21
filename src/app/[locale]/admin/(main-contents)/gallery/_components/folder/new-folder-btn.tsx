@@ -10,7 +10,10 @@ export function NewFolderBtn() {
   const { setCreatingNewFolder } = useGalleryContext()
 
   return (
-    <Button variant={'outline'} onClick={() => setCreatingNewFolder(true)}>
+    <Button
+      variant={'outline'}
+      className="border-foreground/10 bg-background/40"
+      onClick={() => setCreatingNewFolder(true)}>
       <FolderPlus size={16} />
       {t('gallery.newFolder.btn')}
     </Button>

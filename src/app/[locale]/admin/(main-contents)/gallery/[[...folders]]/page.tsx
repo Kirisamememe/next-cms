@@ -1,4 +1,4 @@
-import { Flexbox } from "@/components/ui/flexbox";
+import { FlexColumn } from "@/components/ui/flexbox";
 import { GalleryGrid } from "../_components/gallery-grid";
 import { GalleryToolbar } from "../_components/toolbar";
 
@@ -12,9 +12,11 @@ export default async function Page({ params }: Props) {
   const currentPath = folders ? `./${folders.join('/')}` : '.'
 
   return (
-    <Flexbox gap={6} className="appear h-full">
+    <>
       <GalleryToolbar />
-      <GalleryGrid currentPath={currentPath} />
-    </Flexbox>
+      <FlexColumn px={6}>
+        <GalleryGrid currentPath={currentPath} />
+      </FlexColumn>
+    </>
   )
 }
