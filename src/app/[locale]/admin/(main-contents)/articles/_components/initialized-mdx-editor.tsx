@@ -138,6 +138,7 @@ const allPlugins = (diffMarkdown: string) => [
 export default function InitializedMDXEditor({
   editorRef,
   markdown,
+  className,
   ...props
 }: { editorRef: ForwardedRef<MDXEditorMethods> | null } & MDXEditorProps) {
   return (
@@ -150,7 +151,7 @@ export default function InitializedMDXEditor({
       }
       ref={editorRef}
       markdown={markdown}
-      className=""
+      className={className}
       contentEditableClassName="prose dark:prose-invert max-w-full font-sans prose-li:aria-[checked=false]:pl-6"
       plugins={allPlugins(markdown)}
       toMarkdownOptions={{

@@ -109,8 +109,12 @@
   @apply z-50
 }
 
+.mdxeditor-popup-container [role="dialog"] {
+  @apply dark:bg-muted px-4 [&>span>svg]:dark:fill-muted
+}
+
 .mdxeditor-toolbar {
-  @apply bg-muted/60 backdrop-blur-md w-full top-0 mb-4 flex overflow-scroll
+  @apply bg-muted/80 backdrop-blur-md w-full top-0 mb-4 flex overflow-scroll
 }
 
 .mdxeditor-toolbar div[role="separator"] {

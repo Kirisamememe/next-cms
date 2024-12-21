@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react"
+import React, { useEffect } from "react"
 import Image from "next/image"
 import { MDXEditor } from "./forward-ref-editor"
 import { MDXEditorMethods, MDXEditorProps } from "@mdxeditor/editor"
@@ -19,6 +19,8 @@ import { useParams } from "next/navigation"
 import { format } from 'date-fns'
 import { CategorySelector } from "../../../_components/category/category-selector"
 import { LastEditor } from "../../../_components/content/last-editor"
+import { useDynamicHeader } from "../../../_components/dynamic-header-provider"
+import { cn } from "@/lib"
 
 
 type Props = {
@@ -35,19 +37,30 @@ export const ArticleForm = React.forwardRef<
 
   const t = useTranslations()
   const params = useParams<{ locale: string }>()
+  const { setIsStatic } = useDynamicHeader()
+
+  useEffect(() => {
+    setIsStatic(true)
+    return () => {
+      setIsStatic(false)
+    }
+  }, [setIsStatic])
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[80rem]:border-x @[54rem]:flex-row justify-stretch max-w-[76rem] @[80rem]:w-[76rem] @[80rem]:m-auto h-fit @[54rem]:h-[calc(100vh-4rem)]">
-        <FlexColumn className="p-4 @[80rem]:p-6 flex-grow @[54rem]:border-r overflow-y-scroll">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row justify-stretch h-fit">
+        <FlexColumn className="p-4 flex-grow @[54rem]:border-r ">
           <MDXEditor
             ref={ref} {...props}
+            className={cn(
+              "max-w-[48rem] @[68rem]:mx-auto [&>div[role=toolbar]]:top-20",
+            )}
             onChange={(text) => form.setValue('body', text)}
           />
         </FlexColumn>
-        <FlexColumn className="relative shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll border-t @[54rem]:border-none">
+        <FlexColumn className="sticky top-16 shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll border-t @[54rem]:border-none">
           {article?.author && article?.lastEdited && article?.updatedAt &&
-            <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-4 py-4 @[80rem]:py-6 border-b bg-card">
+            <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-4 py-4 border-b bg-card">
               <div className="relative">
                 <Image src={article.author.image || ""} width={36} height={36} alt="avatar" className="rounded-full" />
                 {article.author.id !== article.lastEdited.id &&
@@ -80,6 +93,7 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="slug"
@@ -96,6 +110,7 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="summary"
@@ -112,6 +127,7 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="image"
@@ -128,6 +144,7 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="commitMsg"
@@ -144,6 +161,7 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="authorNote"
@@ -202,7 +220,7 @@ export const ArticleForm = React.forwardRef<
             />
           </FlexColumn>
 
-          <FlexColumn className="sticky bottom-0 shrink-0 p-4 @[80rem]:p-5 pt-8 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+          <FlexColumn className="sticky bottom-0 shrink-0 p-4 pt-8 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
             <Button type="submit" isPending={isPending} className="">
               {t("common.save")}
             </Button>
