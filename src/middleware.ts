@@ -26,52 +26,31 @@ export const authPages = [
   '/admin',
 ]
 
+export const authApi = [
+  '/api/generate-article'
+]
+
 
 const { auth } = NextAuth(authConfig)
 
 const authMiddleware = auth((req) => intlMiddleware(req))
 
-const intlMiddleware = createMiddleware(routing);
+const authMIddlewareWithoutIntl = auth
 
-
-// const intlMiddleware = (req: NextRequest) => {
-//   // console.log("！！！！！！！　intlMiddlewareに入った　！！！！！！！")
-//   const { nextUrl } = req;
-//   // console.log(`今回のURL：${nextUrl}`)
-//   // console.log(`今回のpathname：${nextUrl.pathname}`)
-
-//   const pathnameIsMissingLocale = locales.every(
-//     (locale) =>
-//       !nextUrl.pathname.startsWith(`/${locale}/`) && nextUrl.pathname !== `/${locale}`,
-//   );
-
-//   // Redirect if there is no locale
-//   if (pathnameIsMissingLocale) {
-//     // console.log("！！！！！！！　pathnameIsMissingLocaleに入った　！！！！！！！")
-//     const locale = req.cookies.get('NEXT_LOCALE')?.value || getLocale(req);
-//     const query = nextUrl.toString().split('?')[1] || ""
-
-//     const newUrl = new URL(
-//       `/${locale}${nextUrl.pathname.startsWith("/") ? "" : "/"}${nextUrl.pathname}${query ? `?${query}` : ""}`,
-//       req.url,
-//     )
-//     // console.log(`リダイレクト先: ${newUrl}`)
-//     // e.g. incoming request is /products
-//     // The new URL is now /en-US/products
-//     return NextResponse.redirect(newUrl);
-//   }
-
-//   return
-// }
+const intlMiddleware = createMiddleware(routing)
 
 export default function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/api/auth')) {
+  const pathname = req.nextUrl.pathname
+  if (pathname.startsWith('/api/auth')) {
     return
   }
 
-  if (req.nextUrl.pathname.startsWith('/api')) {
+  if (authApi.includes(pathname)) {
+    return (authMIddlewareWithoutIntl as any)(req)
+  }
+
+  if (pathname.startsWith('/api') && !authApi.includes(pathname)) {
     const origin = req.headers.get('origin') ?? ''
-    console.log(`origin: ${origin}`)
     const isAllowedOrigin = allowedOrigins.includes(origin)
 
     const isPreflight = req.method === 'OPTIONS'
@@ -86,7 +65,7 @@ export default function middleware(req: NextRequest) {
     const authHeader = req.headers.get('authorization')
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return new Response(undefined, { status: 500 })
     }
 
     const response = NextResponse.next()

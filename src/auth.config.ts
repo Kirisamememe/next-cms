@@ -1,6 +1,10 @@
 import { NextAuthConfig } from 'next-auth';
 import { locales } from "./i18n/config";
 
+const authApi = [
+  '/api/generate-article'
+]
+
 /**
  * ミドルウェア(edge runtime)用のNextAuthオブジェクト
  * 通常のPrismaClientはここでは使えない
@@ -12,9 +16,15 @@ export const authConfig = {
   providers: [],
   callbacks: {
     authorized({ auth, request }) {
+      const pathname = request.nextUrl.pathname
       const isLoggedIn = !!auth?.user;
-      const isOnAdmin = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin/.+`);
-      const isOnAuthPage = request.nextUrl.pathname.match(`^/(${locales.join('|')})/admin$`);
+      const isOnAdmin = pathname.match(`^/(${locales.join('|')})/admin/.+`);
+      const isOnAuthPage = pathname.match(`^/(${locales.join('|')})/admin$`);
+      const isAuthApi = authApi.includes(pathname)
+
+      if (!isLoggedIn && isAuthApi) {
+        return new Response(undefined, { status: 500 })
+      }
 
       if (isOnAdmin) {
         if (isLoggedIn) return true;
