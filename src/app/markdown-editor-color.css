@@ -125,6 +125,16 @@
   @apply bg-white/80 dark:bg-muted-foreground/30 data-[placeholder=true]:text-muted-foreground
 }
 
+.mdxeditor-rich-text-editor {
+  @apply h-full
+}
+
+/* .mdxeditor-diff-source-wrapper,
+.mdxeditor-diff-source-wrapper div,
+.mdxeditor-diff-source-wrapper * div {
+  @apply h-full
+} */
+
 .mdxeditor-rich-text-editor span button {
   @apply bg-muted
 }
@@ -134,7 +144,11 @@
 }
 
 .cm-editor {
-  @apply bg-transparent font-mono
+  @apply bg-transparent
+}
+
+.cm-editor span {
+  @apply font-mono
 }
 
 
