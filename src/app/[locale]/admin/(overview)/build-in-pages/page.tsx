@@ -1,7 +1,9 @@
+import { InsetLayoutWithPadding } from "../../_components/inset-layout-with-padding";
+
 export default async function Page() {
   return (
-    <div>
+    <InsetLayoutWithPadding>
       BuildInPages
-    </div>
+    </InsetLayoutWithPadding>
   )
 }

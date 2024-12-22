@@ -5,7 +5,7 @@ import { Link } from "@/i18n";
 import { cn } from "@/lib";
 import { SquarePen } from "lucide-react";
 import { createPortal } from "react-dom";
-import { useDynamicHeader } from "../dynamic-header-provider";
+import { useScrollState } from "../scroll-state-provider";
 
 type Props = {
   href: string
@@ -13,7 +13,7 @@ type Props = {
 }
 
 export default function NewContentBtn({ href, label }: Props) {
-  const { atTop, isGoingUp } = useDynamicHeader()
+  const { atTop, isGoingUp } = useScrollState()
 
   return createPortal(
     <Button
