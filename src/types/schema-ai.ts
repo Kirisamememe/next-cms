@@ -15,9 +15,12 @@ export const modelListTuple = [
 
 export type AIModel = typeof modelListTuple[number]
 
+export type AILanguage = Locale | 'unspecified'
+export const languagePrompt = [...locales, 'unspecified'] as const as AILanguage[]
+
 export const aiArticleRequestSchema = z.object({
   model: z.enum(modelListTuple),
-  language: z.enum(locales as readonly [Locale]),
+  language: z.enum(languagePrompt as [AILanguage]),
   context: z.string().optional(),
   prompt: z.string()
 })
