@@ -29,7 +29,7 @@ export class ArticleAtomsRepository implements IArticleAtomsRepository {
    * @param db 
    * @returns 
    */
-  async create(
+  create(
     articleId: number,
     operatorId: number,
     values: z.infer<typeof articleSubmitFormSchema>,
@@ -60,7 +60,7 @@ export class ArticleAtomsRepository implements IArticleAtomsRepository {
    * @param db 
    * @returns 
    */
-  async updateSelectedAt(
+  updateSelectedAt(
     atomId: number,
     db: DB = prisma
   ) {

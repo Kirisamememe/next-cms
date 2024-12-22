@@ -13,6 +13,7 @@ export interface IArticleRepository {
   create(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   update(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   updateDate(articleId: number, operatorId: number, values: { publishedAt?: Date | null, archivedAt?: Date | null }, db?: DB): Promise<Article>
+  getCount(): Promise<number>
 }
 
 
@@ -217,5 +218,9 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
     })
   }
 
+
+  getCount() {
+    return prisma.article.count()
+  }
 
 }

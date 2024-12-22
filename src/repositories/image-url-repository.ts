@@ -16,14 +16,15 @@ export interface IImageUrlRepository {
   update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>, db?: DB): Promise<ImageUrl>
   move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl>
   delete(imageId: number): Promise<ImageUrl>
+  getCount(): Promise<number>
 }
 
 
 @injectable()
 export class ImageUrlRepository implements IImageUrlRepository {
 
-  async findByPath(path: string) {
-    return await prisma.imageUrl.findMany({
+  findByPath(path: string) {
+    return prisma.imageUrl.findMany({
       where: {
         folderPath: path
       },
@@ -47,8 +48,8 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async findUniqueByUrl(url: string, db: DB = prisma) {
-    return await db.imageUrl.findUnique({
+  findUniqueByUrl(url: string, db: DB = prisma) {
+    return db.imageUrl.findUnique({
       where: {
         url: url
       }
@@ -56,8 +57,8 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async findUnique(imageId: number, db: DB = prisma) {
-    return await db.imageUrl.findUnique({
+  findUnique(imageId: number, db: DB = prisma) {
+    return db.imageUrl.findUnique({
       where: {
         id: imageId
       },
@@ -77,8 +78,8 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async findAllUrls() {
-    return await prisma.imageUrl.findMany({
+  findAllUrls() {
+    return prisma.imageUrl.findMany({
       select: {
         url: true
       }
@@ -86,12 +87,12 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async create(
+  create(
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>,
     db: DB = prisma
   ) {
-    return await db.imageUrl.create({
+    return db.imageUrl.create({
       data: {
         name: values.name || createId(),
         url: values.url,
@@ -124,11 +125,11 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async createMany(
+  createMany(
     operatorId: number,
     values: z.infer<typeof multipleImageUrlSchema>
   ) {
-    return await prisma.imageUrl.createMany({
+    return prisma.imageUrl.createMany({
       data: values.urls.map((url) => ({
         name: createId(),
         url: url,
@@ -143,13 +144,13 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async update(
+  update(
     imageId: number,
     operatorId: number,
     values: z.infer<typeof imageUrlSchema>,
     db: DB = prisma
   ) {
-    return await db.imageUrl.update({
+    return db.imageUrl.update({
       where: {
         id: imageId
       },
@@ -169,12 +170,12 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async move(
+  move(
     imageId: number,
     operatorId: number,
     folderPath: string
   ) {
-    return await prisma.imageUrl.update({
+    return prisma.imageUrl.update({
       where: {
         id: imageId
       },
@@ -188,12 +189,16 @@ export class ImageUrlRepository implements IImageUrlRepository {
   }
 
 
-  async delete(imageId: number) {
-    return await prisma.imageUrl.delete({
+  delete(imageId: number) {
+    return prisma.imageUrl.delete({
       where: {
         id: imageId
       }
     })
+  }
+
+  getCount() {
+    return prisma.imageUrl.count()
   }
 
 }

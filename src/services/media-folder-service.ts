@@ -13,6 +13,7 @@ export interface IMediaFolderService {
   update(path: string, values: z.infer<typeof mediaFolderSchema>): Promise<MediaFolder | null>
   move(path: string, name: string, parentPath: string): Promise<MediaFolder | null>
   delete(path: string): Promise<MediaFolder | null>
+  getCount(): Promise<number | null>
 }
 
 @injectable()
@@ -61,4 +62,7 @@ export class MediaFolderService implements IMediaFolderService {
     return await this._mediaFolderRepository.delete(path).catch(dbExceptionHandler)
   }
 
+  async getCount() {
+    return await this._mediaFolderRepository.getCount().catch(dbExceptionHandler)
+  }
 }

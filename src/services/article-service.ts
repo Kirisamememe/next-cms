@@ -20,6 +20,7 @@ export interface IArticleService {
   updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof publicationDateTimeForm>): Promise<Article | null>
   updateArchivedAt(articleId: number, operatorId: number): Promise<Article | null>
   restore(articleId: number, operatorId: number): Promise<Article | null>
+  getCount(): Promise<number | null>
 }
 
 
@@ -241,5 +242,10 @@ export class ArticleService implements IArticleService {
   ) {
     return await this._articleRepository.updateDate(articleId, operatorId, { archivedAt: null })
       .catch(dbExceptionHandler)
+  }
+
+
+  async getCount() {
+    return await this._articleRepository.getCount().catch(dbExceptionHandler)
   }
 }

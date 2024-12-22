@@ -17,6 +17,7 @@ export interface IImageUrlService {
   getMany(): Promise<string[]>
   getById(imageId: number): Promise<ImageUrl | null>
   delete(id: number): Promise<ImageUrl | null>
+  getCount(): Promise<number | null>
 }
 
 
@@ -112,6 +113,10 @@ export class ImageUrlService implements IImageUrlService {
 
   async delete(id: number) {
     return await this._imageUrlRepository.delete(id).catch(dbExceptionHandler)
+  }
+
+  async getCount() {
+    return await this._imageUrlRepository.getCount().catch(dbExceptionHandler)
   }
 
 }

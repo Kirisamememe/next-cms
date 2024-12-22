@@ -14,13 +14,14 @@ export interface IMediaFolderRepository {
   update(path: string, values: z.infer<typeof mediaFolderSchema>): Promise<MediaFolder>
   move(path: string, name: string, parentPath: string): Promise<MediaFolder>
   delete(path: string): Promise<MediaFolder>
+  getCount(): Promise<number>
 }
 
 @injectable()
 export class MediaFolderRepository implements IMediaFolderRepository {
 
-  async findRootFolders() {
-    return await prisma.mediaFolder.findMany({
+  findRootFolders() {
+    return prisma.mediaFolder.findMany({
       where: {
         parentPath: null
       },
@@ -34,8 +35,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async findManyByParentPath(path: string) {
-    return await prisma.mediaFolder.findMany({
+  findManyByParentPath(path: string) {
+    return prisma.mediaFolder.findMany({
       where: {
         parentPath: path
       },
@@ -46,8 +47,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async findUnique(path: string) {
-    return await prisma.mediaFolder.findUnique({
+  findUnique(path: string) {
+    return prisma.mediaFolder.findUnique({
       where: {
         path: path
       },
@@ -58,8 +59,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async findMany() {
-    return await prisma.mediaFolder.findMany()
+  findMany() {
+    return prisma.mediaFolder.findMany()
   }
 
   /**
@@ -69,8 +70,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
    * @param parentPath 
    * @returns 
    */
-  async create(name: string, parentPath: string) {
-    return await prisma.mediaFolder.create({
+  create(name: string, parentPath: string) {
+    return prisma.mediaFolder.create({
       data: {
         path: `${parentPath}/${name}`,
         name: name,
@@ -98,8 +99,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async update(path: string, values: z.infer<typeof mediaFolderSchema>) {
-    return await prisma.mediaFolder.update({
+  update(path: string, values: z.infer<typeof mediaFolderSchema>) {
+    return prisma.mediaFolder.update({
       where: {
         path: path
       },
@@ -112,8 +113,8 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async move(path: string, name: string, parentPath: string) {
-    return await prisma.mediaFolder.update({
+  move(path: string, name: string, parentPath: string) {
+    return prisma.mediaFolder.update({
       where: {
         path: path
       },
@@ -125,13 +126,15 @@ export class MediaFolderRepository implements IMediaFolderRepository {
   }
 
 
-  async delete(path: string) {
-    return await prisma.mediaFolder.delete({
+  delete(path: string) {
+    return prisma.mediaFolder.delete({
       where: {
         path: path
       }
     })
   }
 
-
+  getCount() {
+    return prisma.mediaFolder.count()
+  }
 }

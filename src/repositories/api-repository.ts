@@ -26,7 +26,7 @@ export class ApiRepository implements IApiRepository {
    * 
    * @param name 
    */
-  async findByName(name: string) {
+  findByName(name: string) {
     return prisma.api.findUnique({
       where: {
         name: name
@@ -38,8 +38,8 @@ export class ApiRepository implements IApiRepository {
   }
 
 
-  async findMany() {
-    return await prisma.api.findMany()
+  findMany() {
+    return prisma.api.findMany()
   }
 
 
@@ -48,7 +48,7 @@ export class ApiRepository implements IApiRepository {
    * @param operatorId 
    * @param values 
    */
-  async create(
+  create(
     operatorId: number,
     values: z.infer<typeof apiSchema>
   ) {
@@ -76,7 +76,7 @@ export class ApiRepository implements IApiRepository {
    * @param operatorId 
    * @param values 
    */
-  async update(
+  update(
     apiId: number,
     operatorId: number,
     values: z.infer<typeof updateApiSchema>
@@ -100,4 +100,7 @@ export class ApiRepository implements IApiRepository {
       }
     })
   }
+
+
+
 }

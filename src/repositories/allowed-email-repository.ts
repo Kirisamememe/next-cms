@@ -13,24 +13,24 @@ export interface IAllowedEmailRepository {
 @injectable()
 export class AllowedEmailRepository implements IAllowedEmailRepository {
 
-  async findMany() {
-    return await prisma.allowedEmail.findMany()
+  findMany() {
+    return prisma.allowedEmail.findMany()
   }
 
-  async add(email: string, db: DB = prisma) {
-    return await db.allowedEmail.create({
+  add(email: string, db: DB = prisma) {
+    return db.allowedEmail.create({
       data: {
         email: email
       }
     })
   }
 
-  async update(
+  update(
     email: string,
     userId: number,
     db: DB = prisma
   ) {
-    return await db.allowedEmail.update({
+    return db.allowedEmail.update({
       where: {
         email: email
       },

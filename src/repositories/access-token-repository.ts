@@ -27,7 +27,7 @@ export class AccessTokenRepository implements IAccessTokenRepository {
    * @param expiresAt 
    * @returns 
    */
-  async create(operatorId: number, token: string, name: string, expiresAt: Date) {
+  create(operatorId: number, token: string, name: string, expiresAt: Date) {
     return prisma.accessToken.create({
       data: {
         token: token,
@@ -47,7 +47,7 @@ export class AccessTokenRepository implements IAccessTokenRepository {
    * @param name 
    * @returns 
    */
-  async update(token: string, name: string) {
+  update(token: string, name: string) {
     return prisma.accessToken.update({
       where: {
         token: token
@@ -59,7 +59,7 @@ export class AccessTokenRepository implements IAccessTokenRepository {
   }
 
 
-  async findUnique(token: string) {
+  findUnique(token: string) {
     return prisma.accessToken.findUnique({
       where: {
         token: token
@@ -68,7 +68,7 @@ export class AccessTokenRepository implements IAccessTokenRepository {
   }
 
 
-  async findManyWithAuthor() {
+  findManyWithAuthor() {
     return prisma.accessToken.findMany({
       include: {
         author: {
@@ -86,7 +86,7 @@ export class AccessTokenRepository implements IAccessTokenRepository {
   }
 
 
-  async delete(token: string) {
+  delete(token: string) {
     return prisma.accessToken.delete({
       where: {
         token: token

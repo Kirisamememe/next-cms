@@ -11,6 +11,7 @@ export interface IApiService {
   getByName(name: string): Promise<Api | null>
   toggleActive(apiId: number, operatorId: number, state: boolean): Promise<Api | null>
   createMainApi(operatorId: number, values: z.infer<typeof apiSchema>): Promise<Api | null>
+  getMany(): Promise<Api[]>
 }
 
 
@@ -42,5 +43,14 @@ export class ApiService implements IApiService {
     values: z.infer<typeof apiSchema>
   ) {
     return await this._apiRepository.create(operatorId, values).catch(dbExceptionHandler)
+  }
+
+
+  async getMany() {
+    const data = await this._apiRepository.findMany().catch(dbExceptionHandler)
+    if (!data) {
+      return []
+    }
+    return data
   }
 }

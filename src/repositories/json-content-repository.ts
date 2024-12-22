@@ -13,6 +13,7 @@ export interface IJsonContentRepository {
   update(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   updateAndCreateAtom(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   createWithAtom(operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
+  getCount(): Promise<number>
 }
 
 @injectable()
@@ -165,4 +166,8 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
     })
   }
 
+
+  getCount() {
+    return prisma.jsonContent.count()
+  }
 }

@@ -12,7 +12,7 @@ export interface IUserService {
   getById(id: number): Promise<EditorConcise | null>
   getByEmail(email: string): Promise<EditorConcise | null>
   authenticateEmail(email: string): Promise<AllowedEmail | null>
-  getMany(sort: 'asc' | 'desc'): Promise<EditorConcise[]>
+  getMany(sort?: 'asc' | 'desc'): Promise<EditorConcise[]>
   update(email: string, values: {
     role?: Role
     nickname?: string
