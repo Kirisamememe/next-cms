@@ -30,6 +30,9 @@
         "description": "Form field for Category name",
         "validationMax": "Category name must be less than 32 characters"
       }
+    },
+    "languageSelector": {
+      "unspecified": "Unspecified"
     }
   },
   "auth": {

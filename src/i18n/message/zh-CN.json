@@ -30,6 +30,9 @@
         "description": "分类名称输入框",
         "validationMax": "分类名称必须小于32个字符"
       }
+    },
+    "languageSelector": {
+      "unspecified": "不指定"
     }
   },
   "auth": {

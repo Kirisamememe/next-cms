@@ -30,6 +30,9 @@
         "description": "カテゴリ名を入力してください",
         "validationMax": "カテゴリ名は32文字以内で入力してください"
       }
+    },
+    "languageSelector": {
+      "unspecified": "指定しない"
     }
   },
   "auth": {

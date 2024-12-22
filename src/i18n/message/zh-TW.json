@@ -30,6 +30,9 @@
         "description": "分類名稱輸入框",
         "validationMax": "分類名稱必須小於32個字元"
       }
+    },
+    "languageSelector": {
+      "unspecified": "不指定"
     }
   },
   "auth": {
