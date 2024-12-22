@@ -20,7 +20,7 @@ import { z } from "zod";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { FormError } from "@/app/[locale]/admin/_components/content/form-error";
-import { useDynamicHeader } from "@/app/[locale]/admin/_components/dynamic-header-provider";
+import { useScrollState } from "@/app/[locale]/admin/_components/scroll-state-provider";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -54,14 +54,14 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
     form.setValue('json', convertToJsonValue(data))
   }
 
-  const { setIsStatic } = useDynamicHeader()
+  const { setHeaderFixed } = useScrollState()
 
   useEffect(() => {
-    setIsStatic(true)
+    setHeaderFixed(true)
     return () => {
-      setIsStatic(false)
+      setHeaderFixed(false)
     }
-  }, [setIsStatic])
+  }, [setHeaderFixed])
 
   return (
     <Form {...form}>
