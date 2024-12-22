@@ -251,6 +251,14 @@
       "name": "发布时间",
       "placeholder": "设置发布时间",
       "description": "切换发布状态"
+    },
+    "aiAssistant": {
+      "title": "AI助手",
+      "prompt": {
+        "name": "提示词",
+        "placeholder": "输入提示词",
+        "description": "AI助手用的提示词"
+      }
     }
   },
   "gallery": {

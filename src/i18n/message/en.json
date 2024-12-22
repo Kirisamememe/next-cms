@@ -254,6 +254,14 @@
       "name": "Publication Datetime",
       "placeholder": "Pick a datetime",
       "description": ""
+    },
+    "aiAssistant": {
+      "title": "AI Assistant",
+      "prompt": {
+        "name": "Prompt",
+        "placeholder": "Enter a prompt",
+        "description": "Enter a prompt for the AI assistant"
+      }
     }
   },
   "gallery": {

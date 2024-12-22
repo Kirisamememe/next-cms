@@ -123,7 +123,7 @@ export const AIAssistant = ({ form, mdxRef }: Props) => {
         className="w-[22.5rem] @[80rem]:w-96 border-none outline outline-1 outline-foreground/5 dark:outline-foreground/15 shadow-2xl shadow-black/40 dark:shadow-primary/20 rounded-xl">
         <form className="flex flex-col gap-4">
           <Heading>
-            AI Assistant
+            {t('article.aiAssistant.title')}
           </Heading>
           <AIModelSelector
             {...aiForm.register('model')}
@@ -139,7 +139,11 @@ export const AIAssistant = ({ form, mdxRef }: Props) => {
             defaultValue={locale}
             onValueChange={(value: Locale) => aiForm.setValue('language', value)}
           />
-          <Textarea disabled={isLoading} className="resize-none" placeholder="Enter your prompt" {...aiForm.register('prompt')} />
+          <Textarea
+            disabled={isLoading} className="resize-none"
+            placeholder={t('article.aiAssistant.prompt.placeholder')}
+            {...aiForm.register('prompt')}
+          />
           <FormError message={error?.message} />
           <FlexRow gap={3}>
             {isLoading && (

@@ -254,6 +254,14 @@
       "name": "發表時間",
       "placeholder": "設置發表時間",
       "description": "切換發表狀態"
+    },
+    "aiAssistant": {
+      "title": "AI助手",
+      "prompt": {
+        "name": "提示詞",
+        "placeholder": "輸入提示詞",
+        "description": "輸入提示詞以使用AI助手"
+      }
     }
   },
   "gallery": {

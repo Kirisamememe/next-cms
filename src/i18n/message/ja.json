@@ -254,6 +254,14 @@
       "name": "公開日時",
       "placeholder": "日時を選択してください",
       "description": "現在の日時より前"
+    },
+    "aiAssistant": {
+      "title": "AIアシスタント",
+      "prompt": {
+        "name": "プロンプト",
+        "placeholder": "プロンプトを入力",
+        "description": "AIアシスタント用のプロンプトを入力"
+      }
     }
   },
   "gallery": {
