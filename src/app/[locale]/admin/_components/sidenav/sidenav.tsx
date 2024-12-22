@@ -24,7 +24,7 @@ export function SideNav() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4 group-data-[collapsible=icon]:p-2 transition-all">
         <Link href={"/admin/dashboard"}>
-          <FlexRow gap={3} className="shrink-0">
+          <FlexRow gap={3} centerY className="shrink-0">
             <Logo />
             <LogoText />
           </FlexRow>
