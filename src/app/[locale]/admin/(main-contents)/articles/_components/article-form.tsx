@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useEffect } from "react"
+import React, { FC, useEffect } from "react"
 import Image from "next/image"
 import { MDXEditor } from "./forward-ref-editor"
-import { MDXEditorMethods, MDXEditorProps } from "@mdxeditor/editor"
+import { MDXEditorMethods } from "@mdxeditor/editor"
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
@@ -19,8 +19,10 @@ import { useParams } from "next/navigation"
 import { format } from 'date-fns'
 import { CategorySelector } from "../../../_components/category/category-selector"
 import { LastEditor } from "../../../_components/content/last-editor"
-import { useDynamicHeader } from "../../../_components/dynamic-header-provider"
+import { useScrollState } from "../../../_components/scroll-state-provider"
 import { cn } from "@/lib"
+import { AIAssistant } from "./ai-assistant"
+import { useDebouncedCallback } from 'use-debounce';
 
 
 type Props = {
@@ -28,37 +30,43 @@ type Props = {
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   article?: ArticleForClient
   isPending: boolean
-  categories: ContentCategory[]
+  categories: ContentCategory[],
 }
 
-export const ArticleForm = React.forwardRef<
-  MDXEditorMethods, MDXEditorProps & Props
->(({ className, form, isPending, onSubmit, article, categories, ...props }, ref) => {
-
+export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, categories }) => {
+  const ref = React.useRef<MDXEditorMethods>(null)
   const t = useTranslations()
   const params = useParams<{ locale: string }>()
-  const { setIsStatic } = useDynamicHeader()
+  const { setHeaderFixed } = useScrollState()
 
   useEffect(() => {
-    setIsStatic(true)
+    ref.current?.setMarkdown(form.getValues('body'))
+    setHeaderFixed(true)
     return () => {
-      setIsStatic(false)
+      setHeaderFixed(false)
     }
-  }, [setIsStatic])
+  }, [form, setHeaderFixed])
+
+
+  const handleBodyChange = useDebouncedCallback((text: string) => {
+    form.setValue('body', text)
+  }, 300)
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row justify-stretch h-fit">
-        <FlexColumn className="p-4 flex-grow @[54rem]:border-r ">
+        <FlexColumn className="relative p-4 flex-grow @[54rem]:border-r">
           <MDXEditor
-            ref={ref} {...props}
+            ref={ref}
+            markdown={article?.atom.body || ''}
             className={cn(
-              "max-w-[48rem] @[68rem]:mx-auto [&>div[role=toolbar]]:top-20",
+              "@[72rem]:w-[48rem] @[72rem]:mx-auto [&>div[role=toolbar]]:top-20 [&>div[role=toolbar]]:@[72rem]:min-w-[42rem]",
             )}
-            onChange={(text) => form.setValue('body', text)}
+            onChange={handleBodyChange}
           />
+          <AIAssistant form={form} mdxRef={ref} />
         </FlexColumn>
-        <FlexColumn className="sticky top-16 shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll border-t @[54rem]:border-none">
+        <FlexColumn className="sticky top-16 shrink-0 w-full @[54rem]:w-[22.5rem] @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll border-t @[54rem]:border-none">
           {article?.author && article?.lastEdited && article?.updatedAt &&
             <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-4 py-4 border-b bg-card">
               <div className="relative">
@@ -76,7 +84,7 @@ export const ArticleForm = React.forwardRef<
             </FlexRow>
           }
 
-          <FlexColumn gap={4} className="shrink-0 p-4 @[80rem]:p-5">
+          <FlexColumn gap={4} className="shrink-0 p-4">
             <FormField
               control={form.control}
               name="title"
@@ -147,40 +155,6 @@ export const ArticleForm = React.forwardRef<
 
             <FormField
               control={form.control}
-              name="commitMsg"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("article.commitMsg.name")}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea className="resize-none" placeholder={t("article.commitMsg.placeholder")} {...field} />
-                  </FormControl>
-                  <FormDescription hidden>{t("article.commitMsg.description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="authorNote"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("article.authorNote.name")}
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea className="resize-none" placeholder={t("article.authorNote.placeholder")} {...field} />
-                  </FormControl>
-                  <FormDescription hidden>{t("article.authorNote.description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
@@ -218,9 +192,44 @@ export const ArticleForm = React.forwardRef<
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="commitMsg"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("article.commitMsg.name")}
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea className="resize-none" placeholder={t("article.commitMsg.placeholder")} {...field} />
+                  </FormControl>
+                  <FormDescription hidden>{t("article.commitMsg.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="authorNote"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("article.authorNote.name")}
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea className="resize-none" placeholder={t("article.authorNote.placeholder")} {...field} />
+                  </FormControl>
+                  <FormDescription hidden>{t("article.authorNote.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
           </FlexColumn>
 
-          <FlexColumn className="sticky bottom-0 shrink-0 p-4 pt-8 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+          <FlexColumn className="sticky bottom-0 shrink-0 p-4 py-6 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
             <Button type="submit" isPending={isPending} className="">
               {t("common.save")}
             </Button>
@@ -251,5 +260,4 @@ export const ArticleForm = React.forwardRef<
       </form>
     </Form>
   )
-})
-ArticleForm.displayName = "ArticleForm"
+}

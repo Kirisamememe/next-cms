@@ -26,7 +26,7 @@ export function ArticleCard({ article }: Props) {
   return (
     <>
       <FlexRow className="hidden @[52rem]:flex justify-between items-center bg-card hover:bg-muted/50 gap-8 px-5 py-3 h-fit border rounded-lg shadow-sm">
-        <Link href={`/admin/articles/edit/${article.id}`}>
+        <Link href={`/admin/articles/edit/${article.id}`} className="flex-grow">
           <FlexColumn className="overflow-hidden">
             <TitleAndSummary title={title} summary={summary} />
 

@@ -3,7 +3,6 @@
 import { useToast } from "@/hooks/use-toast"
 import { articleSubmitFormSchema, ContentCategory } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { MDXEditorMethods } from "@mdxeditor/editor"
 import React from "react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -13,12 +12,12 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { createArticle } from "../_actions/create"
 
+
 type Props = {
   categories: ContentCategory[]
 }
 
 export function NewArticle({ categories }: Props) {
-  const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations()
@@ -40,9 +39,6 @@ export function NewArticle({ categories }: Props) {
   });
 
   const onSubmit = (values: z.infer<typeof articleSubmitFormSchema>) => {
-    const markdown = ref.current?.getMarkdown()
-    if (!markdown) return;
-
     startTransition(async () => {
       const res = await createArticle(values)
 
@@ -63,6 +59,11 @@ export function NewArticle({ categories }: Props) {
   }
 
   return (
-    <ArticleForm ref={ref} markdown="" form={form} onSubmit={onSubmit} isPending={isPending} categories={categories} />
+    <ArticleForm
+      form={form}
+      onSubmit={onSubmit}
+      isPending={isPending}
+      categories={categories}
+    />
   )
 }

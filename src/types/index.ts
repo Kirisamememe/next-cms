@@ -107,3 +107,7 @@ export { dbError } from './form'
 
 // Content Common
 export { publicationDateTimeForm } from './schema-content-common'
+
+
+// AI
+export type { AIModel } from './schema-ai'

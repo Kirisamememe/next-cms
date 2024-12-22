@@ -3,7 +3,6 @@
 import { useToast } from "@/hooks/use-toast"
 import { articleSubmitFormSchema, ArticleForClient, ContentCategory } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { MDXEditorMethods } from "@mdxeditor/editor"
 import { useRouter } from "next/navigation"
 import React from "react"
 import { useTransition } from "react"
@@ -13,13 +12,13 @@ import { ArticleForm } from "./article-form"
 import { useTranslations } from "next-intl"
 import { updateArticle, updateArticleCreateNewAtom } from "../_actions/update"
 
+
 type Props = {
   article: ArticleForClient
   categories: ContentCategory[]
 }
 
 export function EditArticle({ article, categories }: Props) {
-  const ref = React.useRef<MDXEditorMethods>(null)
   const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations()
@@ -40,11 +39,9 @@ export function EditArticle({ article, categories }: Props) {
       publishedAt: article.publishedAt || null,
       categoryId: article.categoryId === null ? undefined : article.categoryId
     }
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof articleSubmitFormSchema>) => {
-    const markdown = ref.current?.getMarkdown()
-    if (!markdown) return;
 
     const hasAtomChanged = () => {
       const contentFields = ['title', 'summary', 'image', 'body', 'commitMsg'] as const
@@ -81,8 +78,7 @@ export function EditArticle({ article, categories }: Props) {
 
   return (
     <ArticleForm
-      ref={ref} form={form}
-      markdown={article.atom.body}
+      form={form}
       onSubmit={onSubmit}
       isPending={isPending}
       article={article}

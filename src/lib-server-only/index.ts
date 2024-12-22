@@ -12,3 +12,5 @@ export {
   isSuperAdmin,
   isPermissible
 } from './role-utils'
+
+export { AI } from './ai'

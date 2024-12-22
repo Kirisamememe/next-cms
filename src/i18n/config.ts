@@ -9,7 +9,7 @@ export const i18n = {
 } as const;
 
 export const localeNames = Object.entries(i18n.locales).map(([_, value]) => value)
-export const locales = Object.entries(i18n.locales).map(([key]) => key)
+export const locales = [...Object.keys(i18n.locales)] as const
 
 export type Locale = keyof typeof i18n.locales;
 export type LocaleName = (typeof i18n.locales)[Locale]
