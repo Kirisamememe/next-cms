@@ -2,7 +2,9 @@
   "common": {
     "confirm": "確認",
     "cancel": "取消",
+    "stop": "終止",
     "submit": "發送",
+    "generate": "生成",
     "save": "存儲",
     "continue": "繼續",
     "delete": "刪除",

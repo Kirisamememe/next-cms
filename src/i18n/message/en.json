@@ -2,7 +2,9 @@
   "common": {
     "confirm": "Confirm",
     "cancel": "Cancel",
+    "stop": "Stop",
     "submit": "Submit",
+    "generate": "Generate",
     "save": "Save",
     "continue": "Continue",
     "delete": "Delete",
