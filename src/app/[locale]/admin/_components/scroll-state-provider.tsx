@@ -2,32 +2,30 @@
 
 import { createContext, use, useEffect, useMemo, useState } from "react";
 
-type DynamicHeaderContextType = {
+type ScrollStateContextType = {
   atTop: boolean;
   setAtTop: React.Dispatch<React.SetStateAction<boolean>>;
   prevScrollTop: number;
   setPrevScrollTop: React.Dispatch<React.SetStateAction<number>>;
   isGoingUp: boolean;
   setIsGoingUp: React.Dispatch<React.SetStateAction<boolean>>
-  isStatic: boolean;
-  setIsStatic: React.Dispatch<React.SetStateAction<boolean>>
+  headerFixed: boolean;
+  setHeaderFixed: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const DynamicHeaderContext = createContext<DynamicHeaderContextType | undefined>(undefined);
+export const ScrollStateContext = createContext<ScrollStateContextType | undefined>(undefined);
 
 type Props = {
   children: React.ReactNode
 }
 
-export function DynamicHeaderProvider({ children }: Props) {
+export function ScrollStateProvider({ children }: Props) {
   const [atTop, setAtTop] = useState(true)
   const [prevScrollTop, setPrevScrollTop] = useState(0)
   const [isGoingUp, setIsGoingUp] = useState(true)
-  const [isStatic, setIsStatic] = useState(false)
+  const [headerFixed, setHeaderFixed] = useState(false)
 
   useEffect(() => {
-    if (isStatic) return
-
     const handleScroll = () => {
       const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
       setPrevScrollTop(currentScrollTop)
@@ -49,7 +47,7 @@ export function DynamicHeaderProvider({ children }: Props) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     }
-  }, [isStatic, prevScrollTop])
+  }, [headerFixed, prevScrollTop])
 
 
   const values = useMemo(() => ({
@@ -59,21 +57,21 @@ export function DynamicHeaderProvider({ children }: Props) {
     setPrevScrollTop,
     isGoingUp,
     setIsGoingUp,
-    isStatic,
-    setIsStatic
-  }), [atTop, prevScrollTop, isGoingUp, isStatic])
+    headerFixed,
+    setHeaderFixed
+  }), [atTop, prevScrollTop, isGoingUp, headerFixed])
 
   return (
-    <DynamicHeaderContext value={values}>
+    <ScrollStateContext value={values}>
       {children}
-    </DynamicHeaderContext>
+    </ScrollStateContext>
   )
 }
 
-export const useDynamicHeader = () => {
-  const context = use(DynamicHeaderContext)
+export const useScrollState = () => {
+  const context = use(ScrollStateContext)
   if (!context) {
-    throw new Error("useDynamicHeader must be used within an DynamicHeaderProvider")
+    throw new Error("useScrollState must be used within an ScrollStateProvider")
   }
   return context
 }

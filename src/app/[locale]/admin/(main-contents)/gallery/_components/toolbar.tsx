@@ -4,11 +4,11 @@ import { FlexRow } from "@/components/ui/flexbox";
 import { NewFolderBtn } from "./folder/new-folder-btn";
 import { GalleryGridSettingBtn } from "./gallery-grid-setting-btn";
 import { NewImageBtn } from "./image/new-image-btn";
-import { useDynamicHeader } from "../../../_components/dynamic-header-provider";
+import { useScrollState } from "../../../_components/scroll-state-provider";
 import { cn } from "@/lib";
 
 export function GalleryToolbar() {
-  const { atTop, isGoingUp } = useDynamicHeader()
+  const { atTop, isGoingUp } = useScrollState()
 
   return (
     <FlexRow gap={3} className={cn(

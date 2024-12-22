@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react"
 import { Header } from "./_components/header";
 import { SideNav } from "./_components/sidenav/sidenav";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DynamicHeaderProvider } from "./_components/dynamic-header-provider";
+import { ScrollStateProvider } from "./_components/scroll-state-provider";
 
 export default async function DashboardLayout({
   children,
@@ -20,10 +20,10 @@ export default async function DashboardLayout({
       <SidebarProvider>
         <SideNav />
         <SidebarInset className="@container">
-          <DynamicHeaderProvider>
+          <ScrollStateProvider>
             <Header />
             {children}
-          </DynamicHeaderProvider>
+          </ScrollStateProvider>
         </SidebarInset>
       </SidebarProvider>
     </SessionProvider>

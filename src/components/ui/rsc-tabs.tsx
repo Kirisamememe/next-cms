@@ -6,14 +6,14 @@ import { FlexRow } from "@/components/ui/flexbox"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n"
 import { cn } from "@/lib"
-import { useDynamicHeader } from "@/app/[locale]/admin/_components/dynamic-header-provider"
+import { useScrollState } from "@/app/[locale]/admin/_components/scroll-state-provider"
 
 type RootProps = {
   children: React.ReactNode
 }
 
 export function RSCTabs({ children }: RootProps) {
-  const { atTop, isGoingUp } = useDynamicHeader()
+  const { atTop, isGoingUp } = useScrollState()
 
   return (
     <FlexRow

@@ -15,7 +15,7 @@ import { Link, usePathname } from "@/i18n";
 import React, { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib";
-import { useDynamicHeader } from "./dynamic-header-provider";
+import { useScrollState } from "./scroll-state-provider";
 
 export function Header() {
   const pathname = usePathname()
@@ -140,12 +140,13 @@ export function Header() {
 
 
 function HeaderContainer({ children }: { children: ReactNode }) {
-  const { atTop, isGoingUp } = useDynamicHeader()
+  const { atTop, isGoingUp, headerFixed } = useScrollState()
 
   return (
     <FlexRow className={cn(
       "sticky shrink-0 top-0 h-16 w-full justify-between items-center bg-card/80 backdrop-blur-xl z-50 transition-transform duration-300 shadow-[0_1px_0_0_hsla(var(--foreground)/0.1)]",
-      (!atTop && !isGoingUp) && "-translate-y-16"
+      (!atTop && !isGoingUp && !headerFixed) && "-translate-y-16",
+      headerFixed && "translate-y-0"
     )}>
       <FlexRow p={3} gap={2} center>
         <SidebarTrigger className="size-9" />
