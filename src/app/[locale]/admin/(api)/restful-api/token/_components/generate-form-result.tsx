@@ -18,7 +18,6 @@ export function TokenGenerateFormResult({ newlyCreatedToken }: Props) {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text)
     setCopied(true)
-    setTimeout(() => setCopied(false), 3000)
     toast({
       title: t('api.token.toast.copied')
     })
