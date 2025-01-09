@@ -38,6 +38,9 @@ model User {
   uploadedImages ImageUrl[]    @relation("ImageUploader")
   editedImages   ImageUrl[]    @relation("ImageEditor")
 
+  contentGroups       ContentGroup[] @relation("ContentGroupAuthor")
+  editedContentGroups ContentGroup[] @relation("ContentGroupEditor")
+
   @@map("user")
 }
 
@@ -291,9 +294,18 @@ model Collection {
 }
 
 model ContentGroup {
-  id          Int    @id @default(autoincrement())
-  name        String @unique
-  description String
+  id              Int    @id @default(autoincrement())
+  name            String @unique
+  description     String
+  permissionLevel Int    @default(3) @map("permission_level")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  authorId     Int  @map("author_id")
+  author       User @relation("ContentGroupAuthor", fields: [authorId], references: [id])
+  lastEditorId Int  @map("last_editor_id")
+  lastEditor   User @relation("ContentGroupEditor", fields: [lastEditorId], references: [id])
 
   articles     Article[]
   jsonContents JsonContent[]
