@@ -12,6 +12,7 @@ export const TYPES = {
   JsonContentRepository: Symbol.for('JsonContentRepository'),
   JsonAtomRepository: Symbol.for('JsonAtomRepository'),
   JsonContentCategoryRepository: Symbol.for('JsonContentCategoryRepository'),
+  ContentGroupRepository: Symbol.for('ContentGroupRepository'),
 
   // Services
   AccessTokenService: Symbol.for('AccessTokenService'),
@@ -23,5 +24,6 @@ export const TYPES = {
   MediaFolderService: Symbol.for('MediaFolderService'),
   UserService: Symbol.for('UserService'),
   JsonContentService: Symbol.for('JsonContentService'),
-  JsonContentCategoryService: Symbol.for('JsonContentCategoryService')
+  JsonContentCategoryService: Symbol.for('JsonContentCategoryService'),
+  ContentGroupService: Symbol.for('ContentGroupService'),
 } as const

@@ -36,3 +36,6 @@ export type { IJsonContentCategoryRepository } from './json-content-category-rep
 
 export { ArticleCategoryRepository } from './article-category-repository'
 export type { IArticleCategoryRepository } from './article-category-repository'
+
+export { ContentGroupRepository } from './content-group-repository'
+export type { IContentGroupRepository } from './content-group-repository'

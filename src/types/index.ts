@@ -111,3 +111,8 @@ export { publicationDateTimeForm } from './schema-content-common'
 
 // AI
 export type { AIModel } from './schema-ai'
+
+
+// ContentGroup
+export type { ContentGroup } from './schema-content-group'
+export { contentGroupSchema } from './schema-content-group'

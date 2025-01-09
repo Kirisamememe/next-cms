@@ -30,3 +30,6 @@ export type { IJsonContentCategoryService } from './json-content-category-servic
 
 export { ArticleCategoryService } from './article-category-service'
 export type { IArticleCategoryService } from './article-category-service'
+
+export { ContentGroupService } from './content-group-service'
+export type { IContentGroupService } from './content-group-service'

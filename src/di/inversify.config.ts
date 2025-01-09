@@ -16,7 +16,8 @@ import {
   IJsonContentRepository,
   IJsonAtomRepository,
   IJsonContentCategoryRepository,
-  IArticleCategoryRepository
+  IArticleCategoryRepository,
+  IContentGroupRepository
 } from '@/repositories'
 
 // Repository Implementations
@@ -32,7 +33,8 @@ import {
   JsonContentRepository,
   JsonAtomRepository,
   JsonContentCategoryRepository,
-  ArticleCategoryRepository
+  ArticleCategoryRepository,
+  ContentGroupRepository
 } from '@/repositories'
 
 // Service Interfaces
@@ -46,7 +48,8 @@ import {
   IApiService,
   IJsonContentService,
   IJsonContentCategoryService,
-  IArticleCategoryService
+  IArticleCategoryService,
+  IContentGroupService
 } from '@/services'
 
 
@@ -61,7 +64,8 @@ import {
   ApiService,
   JsonContentService,
   JsonContentCategoryService,
-  ArticleCategoryService
+  ArticleCategoryService,
+  ContentGroupService
 } from '@/services'
 
 
@@ -80,6 +84,7 @@ container.bind<IJsonContentRepository>(TYPES.JsonContentRepository).to(JsonConte
 container.bind<IJsonAtomRepository>(TYPES.JsonAtomRepository).to(JsonAtomRepository)
 container.bind<IJsonContentCategoryRepository>(TYPES.JsonContentCategoryRepository).to(JsonContentCategoryRepository)
 container.bind<IArticleCategoryRepository>(TYPES.ArticleCategoryRepository).to(ArticleCategoryRepository)
+container.bind<IContentGroupRepository>(TYPES.ContentGroupRepository).to(ContentGroupRepository)
 
 // Services
 container.bind<IArticleService>(TYPES.ArticleService).to(ArticleService)
@@ -92,6 +97,7 @@ container.bind<IApiService>(TYPES.ApiService).to(ApiService)
 container.bind<IJsonContentService>(TYPES.JsonContentService).to(JsonContentService)
 container.bind<IJsonContentCategoryService>(TYPES.JsonContentCategoryService).to(JsonContentCategoryService)
 container.bind<IArticleCategoryService>(TYPES.ArticleCategoryService).to(ArticleCategoryService)
+container.bind<IContentGroupService>(TYPES.ContentGroupService).to(ContentGroupService)
 
 
 
