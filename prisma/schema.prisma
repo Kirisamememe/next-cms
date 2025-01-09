@@ -110,8 +110,9 @@ model JsonContent {
   categoryId Int?                 @map("category_id")
   category   JsonContentCategory? @relation(fields: [categoryId], references: [id])
 
-  jsonAtoms JsonAtom[]
-  tags      JsonContentTagJunction[]
+  jsonAtoms     JsonAtom[]
+  tags          JsonContentTagJunction[]
+  contentGroups ContentGroup[]
 
   @@map("json_content")
 }
@@ -175,8 +176,9 @@ model Article {
   lastEdited   User             @relation("ArticleEditor", fields: [lastEditedBy], references: [id])
   category     ArticleCategory? @relation(fields: [categoryId], references: [id])
 
-  atoms ArticleAtom[]
-  tags  ArticleTagJunction[]
+  contentGroups ContentGroup[]
+  tags          ArticleTagJunction[]
+  atoms         ArticleAtom[]
 
   @@map("article")
 }
@@ -192,8 +194,9 @@ model MediaFolder {
   parentPath String?      @map("parent_path")
   parent     MediaFolder? @relation("FolderToFolder", fields: [parentPath], references: [path], onUpdate: Cascade)
 
-  children MediaFolder[] @relation("FolderToFolder")
-  images   ImageUrl[]
+  children      MediaFolder[]  @relation("FolderToFolder")
+  images        ImageUrl[]
+  contentGroups ContentGroup[]
 
   @@unique([name, path])
   @@map("media_folder")
@@ -216,6 +219,8 @@ model ImageUrl {
 
   lastEditedBy Int  @map("last_edited_by")
   lastEdited   User @relation("ImageEditor", fields: [lastEditedBy], references: [id])
+
+  contentGroups ContentGroup[]
 
   @@map("image_url")
 }
@@ -283,6 +288,19 @@ model Collection {
   api   Api? @relation(fields: [apiId], references: [id])
 
   @@map("collection")
+}
+
+model ContentGroup {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  description String
+
+  articles     Article[]
+  jsonContents JsonContent[]
+  images       ImageUrl[]
+  mediaFolders MediaFolder[]
+
+  @@map("content_group")
 }
 
 model Api {
