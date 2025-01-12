@@ -107,7 +107,7 @@ function ButtonArea({
       <PublicationDatetimePopover
         variant={"outline"} size={"icon"}
         contentId={articleId} date={publishedAt}
-        side="left" align="start"
+        side="bottom" align="end"
         updateAction={updateArticlePublishedAt}
       />
       <ArchiveAlertDialog variant={"outline"} size={"icon"} contentId={articleId} isArchived={isArchived} contentType="article" />
