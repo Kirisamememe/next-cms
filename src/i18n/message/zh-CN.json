@@ -96,8 +96,12 @@
     "custom-contents": {
       "1": "自定义内容"
     },
-    "contents-group": {
-      "1": "内容组"
+    "content-group": {
+      "1": "内容组",
+      "2": {
+        "new": "新增",
+        "edit": "编辑"
+      }
     },
     "restful-api": {
       "1": "RESTful API",
@@ -119,7 +123,7 @@
       "buildInPages": "内建网页",
       "editors": "编辑者管理",
       "preference": "偏好设置",
-      "docs": "文档"
+      "log": "日志"
     },
     "contents": {
       "name": "主要内容",
@@ -128,14 +132,24 @@
       "gallery": "图库",
       "mediaCollection": "媒体集",
       "relationalContent": "自定义内容",
-      "contentsGroup": "内容组"
+      "contentGroup": "内容组",
+      "all": "所有",
+      "draft": "草稿",
+      "published": "已发布",
+      "archive": "已归档"
     },
     "api": {
       "name": "RESTful API",
       "restfulApi": "RESTful API",
       "graphQL": "GraphQL",
-      "log": "日志分析",
-      "apiTest": "测试"
+      "apiTest": "测试",
+      "APIManagement": "API管理",
+      "accessToken": "令牌"
+    },
+    "other": {
+      "name": "其他",
+      "docs": "文档",
+      "github": "Github"
     },
     "footer": {
       "theme": "主题",
@@ -429,5 +443,15 @@
       }
     },
     "noContent": "未找到相关内容"
+  },
+  "contentGroup": {
+    "newBtn": "新建内容组",
+    "card": {
+      "article": "文章",
+      "jsonContent": "JSON 内容",
+      "image": "图像",
+      "mediaFolder": "媒体文件夹"
+    },
+    "form": {}
   }
 }

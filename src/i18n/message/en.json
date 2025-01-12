@@ -96,8 +96,12 @@
     "custom-contents": {
       "1": "Single Content"
     },
-    "contents-group": {
-      "1": "Contents Group"
+    "content-group": {
+      "1": "Contents Group",
+      "2": {
+        "new": "New",
+        "edit": "Edit"
+      }
     },
     "restful-api": {
       "1": "RESTful API",
@@ -122,7 +126,7 @@
       "buildInPages": "Build In Pages",
       "editors": "Editor Management",
       "preference": "Preferences",
-      "docs": "Documentation"
+      "log": "Log"
     },
     "contents": {
       "name": "Contents",
@@ -131,14 +135,24 @@
       "gallery": "Gallery",
       "mediaCollection": "Media Collection",
       "relationalContent": "Relational Content",
-      "contentsGroup": "Contents Group"
+      "contentGroup": "Contents Group",
+      "all": "All",
+      "draft": "Draft",
+      "published": "Published",
+      "archive": "Archive"
     },
     "api": {
       "name": "API",
       "restfulApi": "RESTful API",
       "graphQL": "GraphQL",
-      "log": "Log Analytics",
-      "apiTest": "Test"
+      "apiTest": "Test",
+      "APIManagement": "API Management",
+      "accessToken": "Access Token"
+    },
+    "other": {
+      "name": "Other",
+      "docs": "Documentation",
+      "github": "Github"
     },
     "footer": {
       "theme": "Theme",
@@ -432,5 +446,15 @@
       }
     },
     "noContent": "No content found"
+  },
+  "contentGroup": {
+    "newBtn": "New Group",
+    "card": {
+      "article": "Article",
+      "jsonContent": "JSON Content",
+      "image": "Image",
+      "mediaFolder": "Media Folder"
+    },
+    "form": {}
   }
 }

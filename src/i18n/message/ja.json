@@ -96,8 +96,12 @@
     "custom-contents": {
       "1": "カスタムコンテンツ"
     },
-    "contents-group": {
-      "1": "コンテンツグループ"
+    "content-group": {
+      "1": "コンテンツグループ",
+      "2": {
+        "new": "新規作成",
+        "edit": "編集"
+      }
     },
     "restful-api": {
       "1": "RESTful API",
@@ -122,7 +126,7 @@
       "buildInPages": "ビルドインページ",
       "editors": "編集者管理",
       "preference": "環境設定",
-      "docs": "ドキュメント"
+      "log": "ログ"
     },
     "contents": {
       "name": "コンテンツ",
@@ -131,14 +135,24 @@
       "gallery": "ギャラリー",
       "mediaCollection": "メディアコレクション",
       "relationalContent": "カスタムコンテンツ",
-      "contentsGroup": "コンテンツグループ"
+      "contentGroup": "コンテンツグループ",
+      "all": "全て",
+      "draft": "下書き",
+      "published": "公開中",
+      "archive": "アーカイブ"
     },
     "api": {
       "name": "API",
       "restfulApi": "RESTful API",
       "graphQL": "GraphQL",
-      "log": "ログ集計",
-      "apiTest": "テスト"
+      "apiTest": "テスト",
+      "APIManagement": "API管理",
+      "accessToken": "アクセストークン"
+    },
+    "other": {
+      "name": "その他",
+      "docs": "ドキュメント",
+      "github": "Github"
     },
     "footer": {
       "theme": "テーマ",
@@ -432,5 +446,15 @@
       }
     },
     "noContent": "コンテンツが見つかりません"
+  },
+  "contentGroup": {
+    "newBtn": "新規グループ",
+    "card": {
+      "article": "記事",
+      "jsonContent": "JSONコンテンツ",
+      "image": "画像",
+      "mediaFolder": "メディアフォルダ"
+    },
+    "form": {}
   }
 }

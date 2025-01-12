@@ -99,8 +99,12 @@
     "custom-contents": {
       "1": "自定義內容"
     },
-    "contents-group": {
-      "1": "內容組"
+    "content-group": {
+      "1": "內容組",
+      "2": {
+        "new": "新增",
+        "edit": "編輯"
+      }
     },
     "restful-api": {
       "1": "RESTful API",
@@ -122,7 +126,7 @@
       "buildInPages": "內建網頁",
       "editors": "編輯者管理",
       "preference": "偏好設定",
-      "docs": "文檔"
+      "log": "日誌"
     },
     "contents": {
       "name": "主要內容",
@@ -131,14 +135,24 @@
       "gallery": "圖庫",
       "mediaCollection": "媒體集",
       "relationalContent": "自定義內容",
-      "contentsGroup": "內容組"
+      "contentGroup": "內容組",
+      "all": "所有",
+      "draft": "草稿",
+      "published": "已發表",
+      "archive": "已封存"
     },
     "api": {
       "name": "RESTful API",
       "restfulApi": "RESTful API",
       "graphQL": "GraphQL",
-      "log": "日誌分析",
-      "apiTest": "測試"
+      "apiTest": "測試",
+      "APIManagement": "API管理",
+      "accessToken": "權杖"
+    },
+    "other": {
+      "name": "其他",
+      "docs": "文檔",
+      "github": "Github"
     },
     "footer": {
       "theme": "主題",
@@ -432,5 +446,15 @@
       }
     },
     "noContent": "未找到相關內容"
+  },
+  "contentGroup": {
+    "newBtn": "新建內容組",
+    "card": {
+      "article": "文章",
+      "jsonContent": "JSON 內容",
+      "image": "圖像",
+      "mediaFolder": "媒體檔案夾"
+    },
+    "form": {}
   }
 }
