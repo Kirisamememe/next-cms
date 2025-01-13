@@ -10,7 +10,7 @@ export function EditorCardWithLink({ editor }: Props) {
   return (
     <Link
       scroll={false}
-      href={`/admin/editors/${editor.id}`}
+      href={`/admin/editors/edit/${editor.id}`}
       className="transition-transform [&>div]:hover:bg-muted/60 active:scale-95"
     >
       <EditorCard editor={editor} />

@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
-import { EditEditorRole } from "../_components/edit-editor-role";
+import { EditEditorRole } from "../../_components/edit-editor-role";
 import { isAdminGroup, isPermissible, getSession } from "@/lib-server-only";
-import { EditProfile } from "../_components/edit-profile";
+import { EditProfile } from "../../_components/edit-profile";
 import { idSchema } from "@/types";
 import { userService } from "@/di/services";
 
