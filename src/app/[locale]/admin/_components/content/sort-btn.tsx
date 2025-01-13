@@ -44,9 +44,9 @@ export const SortBtn = () => {
 
   return (
     <Select defaultValue={`${orderby || 'updatedAt'}|${sortOrder || 'desc'}`} onValueChange={handleValueChange}>
-      <SelectTrigger className="size-10 p-2">
+      <SelectTrigger className="size-10 p-2 gap-4">
         <span className="shrink-0">
-          {sortOrder === 'asc' ? <ArrowDownNarrowWide /> : <ArrowDownWideNarrow />}
+          {sortOrder === 'asc' ? <ArrowDownNarrowWide size={20} /> : <ArrowDownWideNarrow size={20} />}
         </span>
       </SelectTrigger>
       <SelectContent align="end" sideOffset={4} className="w-44">
