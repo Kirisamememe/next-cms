@@ -30,7 +30,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { sort, search, category } = await searchParams
 
   const sortOpt = sort !== 'asc' ? 'desc' : 'asc'
-  const categoryId = category ? idSchema.parse(Number(category)) : null
+  const categoryId = category ? idSchema.parse(Number(category)) : undefined
   const searchQuery = search?.toString() || ''
 
 

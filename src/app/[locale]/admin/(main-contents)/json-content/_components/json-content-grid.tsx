@@ -5,31 +5,63 @@ import { getTranslations } from "next-intl/server"
 import { jsonContentService } from "@/di/services"
 import { Filter } from "@/types"
 import { sortContents } from "@/lib"
+import { SearchResult } from "../../../_components/content/search-result"
+import { ContentTotal } from "../../../_components/content/content-total"
 
 type Props = {
   filter: Filter
   sortOpt: 'asc' | 'desc'
   searchQuery: string
-  categoryId: number | null
+  categoryId?: number
 }
 
 export const JsonContentGrid = async ({ filter, sortOpt, searchQuery, categoryId }: Props) => {
   const t = await getTranslations()
+  const total = await jsonContentService.getCount(filter, categoryId)
   const data = await jsonContentService.getMany(filter)
-  const filteredJsonContent = sortContents(data, sortOpt).filter((jsonContent) => (!categoryId || jsonContent.categoryId === categoryId) && (
-    JSON.stringify(jsonContent.jsonAtom.content).toLowerCase().includes(searchQuery.toLowerCase())
-    || jsonContent.jsonAtom.title?.toLowerCase().includes(searchQuery.toLowerCase())
-    || jsonContent.jsonAtom.description?.toLowerCase().includes(searchQuery.toLowerCase())))
+  const filteredByCategory = data.filter((jsonContent) => (!categoryId || jsonContent.categoryId === categoryId))
+
+  if (!filteredByCategory.length) {
+    return (
+      <NoContentFound text={t('jsonContent.noContent')} />
+    )
+  }
+
+  if (!searchQuery) {
+    return (
+      <>
+        <GridColumn className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
+          {sortContents(filteredByCategory, sortOpt).map((jsonContent) => (
+            <JsonContentItem key={jsonContent.id} jsonContent={jsonContent} />
+          ))}
+        </GridColumn>
+        <ContentTotal text={t('common.search.total', { total })} />
+      </>
+    )
+  }
+
+  const searchArr = searchQuery.split(/[\s\u3000]+/)
+  const filteredBySearch = filteredByCategory.filter((jsonContent) => (
+    jsonContent.id.toString() === searchQuery ||
+    searchArr.some((word) =>
+      JSON.stringify(jsonContent.jsonAtom.content).toLowerCase().includes(word.toLowerCase()) ||
+      jsonContent.jsonAtom.title?.toLowerCase().includes(word.toLowerCase()) ||
+      jsonContent.jsonAtom.description?.toLowerCase().includes(word.toLowerCase())
+    )
+  ))
 
   return (
     <>
+      <SearchResult
+        filterBadge={t(`article.tabs.${filter}`)}
+        searchQuery={t('common.search.searchQuery', { query: searchQuery })}
+        total={t('common.search.total', { total: filteredBySearch.length })}
+      />
       <GridColumn className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
-        {filteredJsonContent.map((jsonContent) => (
+        {filteredBySearch.map((jsonContent) => (
           <JsonContentItem key={jsonContent.id} jsonContent={jsonContent} />
         ))}
       </GridColumn>
-      {!filteredJsonContent.length && (
-        <NoContentFound text={t('jsonContent.noContent')} />)}
     </>
   )
 }

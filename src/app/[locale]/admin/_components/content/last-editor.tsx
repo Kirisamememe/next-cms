@@ -1,34 +1,32 @@
+import { LabelText } from "@/components/ui/typography"
 import { getLocaleForFns } from "@/i18n"
 import { cn } from "@/lib"
 import { formatDistanceToNow } from "date-fns"
-import { useTranslations } from "next-intl"
+import { UserRoundPen } from "lucide-react"
+import { useLocale } from "next-intl"
 
 export const LastEditor = ({
-  nickname,
   name,
   updatedAt,
-  locale,
   className
 }: {
-  nickname: string | null,
-  name: string | null,
+  name: string,
   updatedAt: Date,
-  locale: string,
   className?: string
 }) => {
-  const t = useTranslations()
+  const locale = useLocale()
 
   return (
-    <>
-      <span className={cn("shrink-0 text-xs @[52rem]:text-sm font-medium @[52rem]:font-normal text-muted-foreground/70", className)}>
-        {t('article.lastEdited', {
-          name: nickname || name,
-          datetime: formatDistanceToNow(updatedAt, {
-            addSuffix: true,
-            locale: getLocaleForFns(locale)
-          })
-        })}
+    <LabelText className={cn("flex items-center gap-1.5 shrink-0 font-medium text-muted-foreground/70", className)}>
+      <UserRoundPen size={12} />
+      <span>
+        {name}
       </span>
-    </>
+      {formatDistanceToNow(updatedAt, {
+        addSuffix: true,
+        locale: getLocaleForFns(locale)
+      })
+      }
+    </LabelText>
   )
 }

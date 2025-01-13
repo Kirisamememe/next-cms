@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { CategorySelector } from "../../../../_components/category/category-selector";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form";
@@ -38,7 +38,6 @@ type Props = {
 
 export const JsonContentForm = ({ action, jsonContent, form, categories, error, isPending }: Props) => {
   const t = useTranslations()
-  const locale = useLocale()
 
   const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(jsonContent?.jsonAtom.content
     ? convertToJsonNodeData(jsonContent.jsonAtom.content, { isRoot: true })
@@ -119,7 +118,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
                   <LabelText size={14} weight={500}>
                     {t('article.author', { name: jsonContent.author?.nickname || jsonContent.author.name })}
                   </LabelText>
-                  <LastEditor className="@[52rem]:text-xs" nickname={jsonContent.lastEditor?.nickname} name={jsonContent.lastEditor.name} updatedAt={jsonContent.updatedAt} locale={locale} />
+                  <LastEditor className="@[52rem]:text-xs" name={jsonContent.lastEditor.nickname || jsonContent.lastEditor.name || ""} updatedAt={jsonContent.updatedAt} />
                 </FlexColumn>
               </FlexRow>
               <Separator className="" />

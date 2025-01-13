@@ -15,7 +15,6 @@ import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
 import { DateTimePopover } from "../../../_components/content/datetime-popover"
 import { LabelText } from "@/components/ui/typography"
-import { useParams } from "next/navigation"
 import { format } from 'date-fns'
 import { CategorySelector } from "../../../_components/category/category-selector"
 import { LastEditor } from "../../../_components/content/last-editor"
@@ -36,7 +35,6 @@ type Props = {
 export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, categories }) => {
   const ref = React.useRef<MDXEditorMethods>(null)
   const t = useTranslations()
-  const params = useParams<{ locale: string }>()
   const { setHeaderFixed } = useScrollState()
 
   useEffect(() => {
@@ -79,7 +77,7 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
                 <LabelText size={14} weight={500}>
                   {t('article.author', { name: article.author?.nickname || article.author.name })}
                 </LabelText>
-                <LastEditor className="@[52rem]:text-xs" nickname={article.lastEdited?.nickname} name={article.lastEdited.name} updatedAt={article.updatedAt} locale={params.locale} />
+                <LastEditor className="@[52rem]:text-xs" name={article.lastEdited.nickname || article.lastEdited.name || ""} updatedAt={article.updatedAt} />
               </FlexColumn>
             </FlexRow>
           }
