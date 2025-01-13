@@ -4,21 +4,22 @@ import { NoContentFound } from "@/components/no-article-found"
 import { getTranslations } from "next-intl/server"
 import { jsonContentService } from "@/di/services"
 import { Filter } from "@/types"
-import { sortContents } from "@/lib"
 import { SearchResult } from "../../../_components/content/search-result"
 import { ContentTotal } from "../../../_components/content/content-total"
 
 type Props = {
   filter: Filter
-  sortOpt: 'asc' | 'desc'
+  orderby: 'updatedAt' | 'createdAt',
+  sort: 'asc' | 'desc'
   searchQuery: string
   categoryId?: number
+  take: number
 }
 
-export const JsonContentGrid = async ({ filter, sortOpt, searchQuery, categoryId }: Props) => {
+export const JsonContentGrid = async ({ filter, orderby, sort, searchQuery, categoryId, take }: Props) => {
   const t = await getTranslations()
   const total = await jsonContentService.getCount(filter, categoryId)
-  const data = await jsonContentService.getMany(filter)
+  const data = await jsonContentService.getMany(filter, ({ take: !searchQuery ? take : undefined, orderby, sort }))
   const filteredByCategory = data.filter((jsonContent) => (!categoryId || jsonContent.categoryId === categoryId))
 
   if (!filteredByCategory.length) {
@@ -31,7 +32,7 @@ export const JsonContentGrid = async ({ filter, sortOpt, searchQuery, categoryId
     return (
       <>
         <GridColumn className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
-          {sortContents(filteredByCategory, sortOpt).map((jsonContent) => (
+          {filteredByCategory.map((jsonContent) => (
             <JsonContentItem key={jsonContent.id} jsonContent={jsonContent} />
           ))}
         </GridColumn>

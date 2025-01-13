@@ -11,17 +11,17 @@ import { SearchResult } from "../../../_components/content/search-result";
 type Props = {
   filter: Filter,
   orderby: 'updatedAt' | 'createdAt',
-  sortOpt: 'asc' | 'desc',
+  sort: 'asc' | 'desc',
   searchQuery: string,
   categoryId?: number,
   take: number
 }
 
-export async function ArticleList({ filter, orderby, sortOpt, searchQuery, categoryId, take }: Props) {
+export async function ArticleList({ filter, orderby, sort, searchQuery, categoryId, take }: Props) {
   const t = await getTranslations()
 
   const total = await articleService.getCount(filter, categoryId)
-  const articles = await articleService.getMany(filter, ({ take: !searchQuery ? take : undefined, orderby, sort: sortOpt }))
+  const articles = await articleService.getMany(filter, ({ take: !searchQuery ? take : undefined, orderby, sort }))
   const filteredByCategory = articles.filter((article) => (!categoryId || article.categoryId === categoryId))
 
   if (!filteredByCategory.length || !total) {
