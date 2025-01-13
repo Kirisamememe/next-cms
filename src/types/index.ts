@@ -16,7 +16,7 @@ export type {
   ArticleWithAllFields,
   ArticleCategory,
 } from './schema-article'
-export { articleSubmitFormSchema } from './schema-article'
+export { articleSubmitFormSchema, TAKE } from './schema-article'
 
 // Auth
 export { signInSchema, signUpSchema } from './schema-auth'
@@ -114,5 +114,5 @@ export type { AIModel } from './schema-ai'
 
 
 // ContentGroup
-export type { ContentGroup } from './schema-content-group'
+export type { ContentGroup, ContentGroupForClient } from './schema-content-group'
 export { contentGroupSchema } from './schema-content-group'

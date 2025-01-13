@@ -20,7 +20,7 @@ export interface IArticleService {
   updatePublishAt(articleId: number, operatorId: number, values: z.infer<typeof publicationDateTimeForm>): Promise<Article | null>
   updateArchivedAt(articleId: number, operatorId: number): Promise<Article | null>
   restore(articleId: number, operatorId: number): Promise<Article | null>
-  getCount(): Promise<number | null>
+  getCount(filter?: Filter, categoryId?: number): Promise<number | null>
 }
 
 
@@ -120,7 +120,7 @@ export class ArticleService implements IArticleService {
    */
   async getMany(filter: Filter, options?: FindManyOptions) {
     const data = await this._articleRepository.findMany(filter, options)
-      .then((res) => res.map((article) => ({
+      .then((res) => res.filter((article) => article.atoms.length > 0).map((article) => ({
         ...article,
         atom: article.atoms[0],
         atoms: undefined,
@@ -245,7 +245,7 @@ export class ArticleService implements IArticleService {
   }
 
 
-  async getCount() {
-    return await this._articleRepository.getCount().catch(dbExceptionHandler)
+  async getCount(filter?: Filter, categoryId?: number) {
+    return await this._articleRepository.getCount(filter, categoryId).catch(dbExceptionHandler)
   }
 }

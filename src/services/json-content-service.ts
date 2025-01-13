@@ -13,7 +13,7 @@ export interface IJsonContentService {
   updateAndCreateAtom: (jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>) => Promise<JsonContent | null>
   updateSelectAt: (atomId: number) => Promise<JsonAtom | null>
   create: (operatorId: number, values: z.infer<typeof jsonContentSchema>) => Promise<JsonContent | null>
-  getCount(): Promise<number | null>
+  getCount(filter?: Filter, categoryId?: number): Promise<number | null>
 }
 
 @injectable()
@@ -89,7 +89,7 @@ export class JsonContentService implements IJsonContentService {
   }
 
 
-  async getCount() {
-    return await this._jsonContentRepository.getCount().catch(dbExceptionHandler)
+  async getCount(filter?: Filter, categoryId?: number) {
+    return await this._jsonContentRepository.getCount(filter, categoryId).catch(dbExceptionHandler)
   }
 }

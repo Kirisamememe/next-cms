@@ -2,6 +2,7 @@ import { z } from "zod";
 import { EditorConcise } from "./schema-editor";
 import { createId } from '@paralleldrive/cuid2';
 
+export const TAKE = 50
 
 export const articleSubmitFormSchema = z.object({
   title: z.string().optional(),

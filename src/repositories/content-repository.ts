@@ -25,40 +25,32 @@ export class ContentRepository {
   getFilter(filter: Filter) {
     if (filter === 'all') {
       return {
-        where: {
-          archivedAt: null
-        }
+        archivedAt: null
       }
     }
 
     if (filter === 'draft') {
       return {
-        where: {
-          OR: [
-            { publishedAt: null },
-            { publishedAt: { gt: new Date() } }
-          ],
-          archivedAt: null
-        }
+        OR: [
+          { publishedAt: null },
+          { publishedAt: { gt: new Date() } }
+        ],
+        archivedAt: null
       }
     }
 
     if (filter === 'published') {
       return {
-        where: {
-          publishedAt: {
-            lt: new Date()
-          },
-          archivedAt: null
-        }
+        publishedAt: {
+          lt: new Date()
+        },
+        archivedAt: null
       }
     }
 
     if (filter === 'archive') {
       return {
-        where: {
-          archivedAt: { not: null }
-        }
+        archivedAt: { not: null }
       }
     }
   }

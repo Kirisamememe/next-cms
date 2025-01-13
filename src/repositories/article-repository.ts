@@ -9,11 +9,10 @@ import { ContentRepository } from './content-repository'
 export interface IArticleRepository {
   findById(id: number, publishedOnly: boolean): Promise<ArticleWithAllFields | null>
   findMany(filter?: Filter, options?: FindManyOptions): Promise<ArticleWithAllFields[]>
-  findManyOrderByUpdatedAt(filter?: Filter): Promise<ArticleWithAllFields[]>
   create(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   update(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   updateDate(articleId: number, operatorId: number, values: { publishedAt?: Date | null, archivedAt?: Date | null }, db?: DB): Promise<Article>
-  getCount(): Promise<number>
+  getCount(filter?: Filter, categoryId?: number): Promise<number>
 }
 
 
@@ -21,9 +20,6 @@ export interface IArticleRepository {
 export class ArticleRepository extends ContentRepository implements IArticleRepository {
 
   private atomsProperties = {
-    include: {
-      author: this.authorProperties
-    },
     orderBy: [
       this.orderBy({ column: 'selectedAt', nullable: true }),
       this.orderBy({ column: 'createdAt' })
@@ -44,23 +40,48 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
     options?: FindManyOptions,
   ) {
     const {
-      orderBy = [
-        { column: 'updatedAt', nullable: false, order: 'desc', },
-        { column: 'createdAt', nullable: false, order: 'desc', }
-      ],
+      orderby = 'updatedAt',
+      nullable = false,
+      sort = 'desc',
       take,
+      skip,
+      searchStr,
+      editorsInfo = true,
     } = options || {}
 
+    const orderBy = [
+      { column: orderby, nullable, order: sort },
+      { column: orderby === 'createdAt' ? 'updatedAt' : 'createdAt', nullable, order: sort }
+    ]
+
     return prisma.article.findMany({
-      ...this.getFilter(filter),
+      where: {
+        ...this.getFilter(filter),
+      },
       include: {
-        atoms: this.atomsProperties,
-        author: this.authorProperties,
-        lastEdited: this.authorProperties
+        atoms: {
+          ...this.atomsProperties,
+          ...(searchStr && {
+            where: {
+              OR: [
+                { title: { contains: searchStr } },
+                { summary: { contains: searchStr } },
+                { body: { contains: searchStr } },
+              ]
+            }
+          })
+        },
+        ...(editorsInfo && {
+          author: this.authorProperties,
+          lastEdited: this.authorProperties
+        })
       },
       orderBy: [...orderBy.map((o) => this.orderBy(o))],
       ...(take && {
         take: take
+      }),
+      ...(skip && {
+        skip: skip
       })
     })
   }
@@ -99,28 +120,6 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
         },
         archivedAt: null
       },
-    })
-  }
-
-
-  /**
-   * 全記事と、各記事の最新版のatomを取得
-   * 最新版atomの判断基準：
-   * 1、publishedAtが最新である
-   * 2、publishedAtが全部nullの場合、created_atが最新である
-   * @returns 
-   */
-  findManyOrderByUpdatedAt(filter: Filter = 'all') {
-    return prisma.article.findMany({
-      ...this.getFilter(filter),
-      include: {
-        atoms: this.atomsProperties,
-        author: this.authorProperties,
-        lastEdited: this.authorProperties
-      },
-      orderBy: {
-        updatedAt: "desc"
-      }
     })
   }
 
@@ -219,8 +218,13 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
   }
 
 
-  getCount() {
-    return prisma.article.count()
+  getCount(filter: Filter = 'all', categoryId?: number) {
+    return prisma.article.count({
+      where: {
+        ...this.getFilter(filter),
+        categoryId
+      }
+    })
   }
 
 }

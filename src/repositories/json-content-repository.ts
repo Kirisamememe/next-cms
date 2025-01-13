@@ -13,7 +13,7 @@ export interface IJsonContentRepository {
   update(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   updateAndCreateAtom(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
   createWithAtom(operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
-  getCount(): Promise<number>
+  getCount(filter?: Filter, categoryId?: number): Promise<number>
 }
 
 @injectable()
@@ -30,17 +30,27 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
   }
 
 
-  findMany(filter: Filter = 'all', options?: FindManyOptions) {
+  findMany(
+    filter: Filter = 'all',
+    options?: FindManyOptions
+  ) {
     const {
-      orderBy = [
-        { column: 'updatedAt', nullable: false, order: 'desc', },
-        { column: 'createdAt', nullable: false, order: 'desc', }
-      ],
+      orderby = 'updatedAt',
+      nullable = false,
+      sort = 'desc',
       take,
+      skip,
     } = options || {}
 
+    const orderBy = [
+      { column: orderby, nullable, order: sort },
+      { column: orderby === 'createdAt' ? 'updatedAt' : 'createdAt', nullable, order: sort }
+    ]
+
     return prisma.jsonContent.findMany({
-      ...this.getFilter(filter),
+      where: {
+        ...this.getFilter(filter)
+      },
       include: {
         jsonAtoms: this.atomsProperties,
         author: this.authorProperties,
@@ -49,6 +59,9 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
       orderBy: [...orderBy.map((o) => this.orderBy(o))],
       ...(take && {
         take: take
+      }),
+      ...(skip && {
+        skip: skip
       })
     })
   }
@@ -167,7 +180,12 @@ export class JsonContentRepository extends ContentRepository implements IJsonCon
   }
 
 
-  getCount() {
-    return prisma.jsonContent.count()
+  getCount(filter: Filter = 'all', categoryId?: number) {
+    return prisma.jsonContent.count({
+      where: {
+        ...this.getFilter(filter),
+        categoryId
+      }
+    })
   }
 }
