@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import { cva, VariantProps } from "class-variance-authority";
-import React from "react";
+import React, { ComponentProps, FC } from "react";
 
 const headingVariants = cva(
   "",
@@ -253,11 +253,10 @@ const labelTextVariants = cva(
   }
 )
 
-const LabelText = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement> & VariantProps<typeof labelTextVariants>
->(({ className, children, size, height, weight, color, mx, mt, mb, ...props }, ref) => (
-  <p
+const LabelText: FC<ComponentProps<'span'> & VariantProps<typeof labelTextVariants>> = (({
+  className, children, size, height, weight, color, mx, mt, mb, ref, ...props
+}) => (
+  <span
     ref={ref}
     className={cn(
       labelTextVariants({ size, height, weight, color, mx, mt, mb }),
@@ -266,7 +265,7 @@ const LabelText = React.forwardRef<
     {...props}
   >
     {children}
-  </p>
+  </span>
 ))
 LabelText.displayName = "LabelText"
 

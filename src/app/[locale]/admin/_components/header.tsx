@@ -97,8 +97,8 @@ export function Header() {
   return (
     <HeaderContainer>
       {/* リストは2つまで */}
-      {pathname.split('/').slice(1, 4).map((segment, index, arr) => {
-        if (index === 0) return null
+      {pathname.split('/').slice(1, 5).map((segment, index, arr) => {
+        if (index === 0 || index >= 3) return null
 
         // リストが一つだけ
         if (arr.length === 2) {
@@ -127,8 +127,16 @@ export function Header() {
           <React.Fragment key={segment}>
             <BreadcrumbSeparator />
             <BreadcrumbPage className="text-base font-semibold">
-              {t(`${arr[1]}.2${segment.match(/^[0-9]+$/) ? '.id' : `.${segment}`}`)}
+              {t(`${arr[1]}.2.${segment}`)}
             </BreadcrumbPage>
+            {arr[3] && arr[3].match(/^[0-9]+$/) && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbPage className="text-base font-semibold">
+                  {arr[3]}
+                </BreadcrumbPage>
+              </>
+            )}
           </React.Fragment>
         )
       })}
