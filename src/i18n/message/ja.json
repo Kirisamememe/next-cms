@@ -33,6 +33,16 @@
     },
     "languageSelector": {
       "unspecified": "指定しない"
+    },
+    "search": {
+      "total": "合計 {total} 件",
+      "searchQuery": "「{query}」の検索結果："
+    },
+    "orderBy": {
+      "asc": "昇順",
+      "desc": "降順",
+      "updatedAt": "更新日",
+      "createdAt": "作成日"
     }
   },
   "auth": {
@@ -52,7 +62,7 @@
     "editors": {
       "1": "編集者管理",
       "2": {
-        "id": "プロフィール",
+        "edit": "プロフィール",
         "new": "編集者追加"
       }
     },

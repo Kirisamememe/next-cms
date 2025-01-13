@@ -33,6 +33,16 @@
     },
     "languageSelector": {
       "unspecified": "Unspecified"
+    },
+    "search": {
+      "total": "Total {total} items: ",
+      "searchQuery": "Search result for \"{query}\""
+    },
+    "orderBy": {
+      "asc": "Ascending",
+      "desc": "Descending",
+      "updatedAt": "Date Updated",
+      "createdAt": "Date Created"
     }
   },
   "auth": {
@@ -52,7 +62,7 @@
     "editors": {
       "1": "Editors Management",
       "2": {
-        "id": "Edit Profile",
+        "edit": "Edit Profile",
         "new": "New Editor"
       }
     },

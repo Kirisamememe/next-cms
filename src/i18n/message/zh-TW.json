@@ -33,6 +33,16 @@
     },
     "languageSelector": {
       "unspecified": "不指定"
+    },
+    "search": {
+      "total": "總計 {total} 篇文章",
+      "searchQuery": "「{query}」的搜尋結果："
+    },
+    "orderBy": {
+      "asc": "升序",
+      "desc": "降序",
+      "updatedAt": "更新時間",
+      "createdAt": "創建時間"
     }
   },
   "auth": {
@@ -52,7 +62,7 @@
     "editors": {
       "1": "編輯者管理",
       "2": {
-        "id": "編輯個人資料",
+        "edit": "編輯個人資料",
         "new": "新增編輯者"
       }
     },
