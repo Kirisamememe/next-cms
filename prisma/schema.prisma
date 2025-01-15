@@ -144,9 +144,11 @@ model ArticleAtom {
   title     String?
   summary   String?
   body      String
-  image     String?
   commitMsg String? @map("commit_msg")
   version   Int     @default(1000)
+
+  imageId Int?      @map("image_id")
+  image   ImageUrl? @relation(fields: [imageId], references: [id])
 
   createdAt  DateTime  @default(now()) @map("created_at")
   selectedAt DateTime? @default(now()) @map("selected_at")
@@ -224,6 +226,7 @@ model ImageUrl {
   lastEdited   User @relation("ImageEditor", fields: [lastEditedBy], references: [id])
 
   contentGroups ContentGroup[]
+  articleAtoms  ArticleAtom[]
 
   @@map("image_url")
 }
@@ -283,16 +286,6 @@ model JsonContentTagJunction {
   @@map("json_content_tag_junction")
 }
 
-model Collection {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  apiId Int? @map("api_id")
-  api   Api? @relation(fields: [apiId], references: [id])
-
-  @@map("collection")
-}
-
 model ContentGroup {
   id              Int    @id @default(autoincrement())
   name            String @unique
@@ -307,9 +300,11 @@ model ContentGroup {
   lastEditorId Int  @map("last_editor_id")
   lastEditor   User @relation("ContentGroupEditor", fields: [lastEditorId], references: [id])
 
+  imageId Int?      @map("image_id")
+  image   ImageUrl? @relation(fields: [imageId], references: [id])
+
   articles     Article[]
   jsonContents JsonContent[]
-  images       ImageUrl[]
   mediaFolders MediaFolder[]
 
   @@map("content_group")
@@ -332,8 +327,6 @@ model Api {
   author       User @relation("ApiAuthor", fields: [authorId], references: [id])
   lastEditorId Int
   lastEditor   User @relation("ApiEditor", fields: [lastEditorId], references: [id])
-
-  collections Collection[]
 
   @@map("api")
 }
