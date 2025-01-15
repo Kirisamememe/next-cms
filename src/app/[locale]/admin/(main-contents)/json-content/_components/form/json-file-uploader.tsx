@@ -66,7 +66,7 @@ export const JsonFileUploader = ({ onValueChange, value }: Props) => {
         <Upload size={notEmpty ? 16 : 32} />
       </Button>
       <Heading weight={500} className={cn(
-        "hidden absolute z-20 text-center whitespace-pre-line",
+        "hidden absolute z-20 text-center whitespace-pre-line w-full px-4",
         (!notEmpty || isDragActive) && "block top-[calc(50%+1rem)] left-1/2 -translate-x-1/2 -translate-y-1/2"
       )}>
         {isDragActive

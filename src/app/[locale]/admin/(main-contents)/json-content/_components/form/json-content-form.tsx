@@ -66,7 +66,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
     <Form {...form}>
       <form action={action} className="appear flex flex-col w-full @[54rem]:flex-row h-fit @[54rem]:h-[calc(100vh-4rem)]">
         <Tabs defaultValue="upload" className="relative flex flex-col w-full h-full border-r gap-0 overflow-scroll">
-          <TabsList className="sticky top-0 bg-background h-fit sm:w-full justify-start gap-8 p-0 px-6 rounded-none border-b [&>button]:text-base [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-14 z-10">
+          <TabsList className="sticky top-0 bg-background h-fit sm:w-full justify-start gap-8 p-0 px-6 rounded-none border-b [&>button]:text-base [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-14 z-30">
             <TabsTrigger value="upload" className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]">
               {t('jsonContent.form.tabs.upload')}
             </TabsTrigger>
@@ -74,7 +74,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               {t('jsonContent.form.tabs.editor')}
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="upload" className="flex-grow w-full p-4 mt-0 ">
+          <TabsContent value="upload" className="min-h-80 flex-grow w-full p-4 mt-0 ">
             <FormField
               control={form.control}
               name="json"
@@ -96,7 +96,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               )}
             />
           </TabsContent>
-          <TabsContent value="jsonEditor" className="flex-grow p-6 mt-0 ">
+          <TabsContent value="jsonEditor" className="min-h-80 flex-grow p-6 mt-0 ">
             <JsonEditorProvider>
               <JsonEditor jsonData={jsonNodeData} setJsonData={setJsonData} />
             </JsonEditorProvider>

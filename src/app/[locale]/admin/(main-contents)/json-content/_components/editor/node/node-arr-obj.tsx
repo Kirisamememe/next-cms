@@ -75,7 +75,7 @@ export function ArrObjNode({ data, onDataChange, handleAddChild }: Props) {
         type="button"
         variant="secondary" onClick={() => handleAddChild("end")}
         className={cn(
-          "w-[26rem] h-6 opacity-40 hover:opacity-100 mt-3",
+          "w-[23rem] sm:w-[26rem] h-6 opacity-40 hover:opacity-100 mt-3",
         )}>
         <Plus size={16} />
       </Button>

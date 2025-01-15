@@ -34,10 +34,13 @@ export default function JsonEditor({ jsonData, setJsonData }: Props) {
         />
       </FlexColumn>
 
-      <div className="absolute top-0 right-0 h-full ">
+      <div className={cn(
+        "absolute top-0 right-0 h-full",
+        !expanded && "size-12"
+      )}>
         <FlexColumn radius={"lg"} className={cn(
-          "sticky top-20  shrink-0 transition-all w-80",
-          expanded ? "h-[calc(100vh-14rem)] backdrop-blur-md bg-muted/50" : "h-0"
+          "absolute top-0 right-0 shrink-0 transition-all w-80",
+          expanded ? "h-[calc(100vh-14rem)] backdrop-blur-md bg-muted/50" : "w-12 h-0"
         )}>
           <Button
             type="button" variant={expanded ? 'ghost' : 'outline'} size={'icon'}
