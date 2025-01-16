@@ -15,6 +15,9 @@ export type {
   ArticleForClient,
   ArticleWithAllFields,
   ArticleCategory,
+  ArticleSimpleItem,
+  ArticleListItem,
+  ArticleListItemForClient
 } from './schema-article'
 export { articleSubmitFormSchema, TAKE } from './schema-article'
 
@@ -29,7 +32,8 @@ export type {
   Editor,
   EditorConcise,
   Role,
-  AllowedEmail
+  AllowedEmail,
+  EditorSimpleListItem
 } from './schema-editor'
 export {
   roleLevel,
@@ -68,7 +72,8 @@ export {
 
 export type {
   ImageUrl,
-  ImageFile
+  ImageFile,
+  ImageUrlSimpleItem
 } from './schema-image-url'
 
 
@@ -88,7 +93,9 @@ export type {
   JsonContentCategory,
   JsonContentForClient,
   JsonContentWithAllFields,
-  JsonAtom
+  JsonAtom,
+  JsonSimpleItem,
+  JsonSimpleItemForClient
 } from './schema-json-content'
 export { jsonContentSchema } from './schema-json-content'
 
@@ -114,5 +121,12 @@ export type { AIModel } from './schema-ai'
 
 
 // ContentGroup
-export type { ContentGroup, ContentGroupForClient } from './schema-content-group'
+export type {
+  ContentGroup,
+  ContentGroupListItem,
+  ContentGroupSingleItemForClient,
+  ContentListItem,
+  ContentGroupSingleItem,
+  ContentType
+} from './schema-content-group'
 export { contentGroupSchema } from './schema-content-group'

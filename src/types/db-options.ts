@@ -10,7 +10,8 @@ export type FindManyOptions = {
   take?: number,
   skip?: number,
   searchStr?: string,
-  editorsInfo?: boolean
+  editorsInfo?: boolean,
+  categoryId?: number
 }
 
 export type Filter = 'all' | 'draft' | 'published' | 'archive'
