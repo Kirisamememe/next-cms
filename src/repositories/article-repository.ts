@@ -2,13 +2,15 @@ import 'server-only'
 import { injectable } from 'inversify'
 import { DB, prisma } from '@/prisma'
 import { createId } from '@paralleldrive/cuid2'
-import { Article, articleSubmitFormSchema, Filter, FindManyOptions, ArticleWithAllFields } from '@/types'
+import { Article, articleSubmitFormSchema, Filter, FindManyOptions, ArticleWithAllFields, ArticleSimpleItem, ArticleListItem } from '@/types'
 import { z } from 'zod'
 import { ContentRepository } from './content-repository'
 
 export interface IArticleRepository {
   findById(id: number, publishedOnly: boolean): Promise<ArticleWithAllFields | null>
-  findMany(filter?: Filter, options?: FindManyOptions): Promise<ArticleWithAllFields[]>
+  findMany(filter?: Filter, options?: FindManyOptions): Promise<ArticleListItem[]>
+  getSimpleItem(id: number): Promise<ArticleSimpleItem | null>
+  getSimpleList(): Promise<ArticleSimpleItem[]>
   create(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   update(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>, db?: DB): Promise<Article>
   updateDate(articleId: number, operatorId: number, values: { publishedAt?: Date | null, archivedAt?: Date | null }, db?: DB): Promise<Article>
@@ -27,6 +29,48 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
     take: 1
   }
 
+  getSimpleList() {
+    return prisma.article.findMany({
+      where: {
+        archivedAt: null,
+      },
+      select: {
+        id: true,
+        atoms: {
+          select: {
+            title: true,
+            body: true
+          },
+          ...this.atomsProperties,
+        }
+      },
+      orderBy: [
+        this.orderBy({ column: 'publishedAt' }),
+        this.orderBy({ column: 'createdAt' }),
+      ],
+    })
+  }
+
+
+  getSimpleItem(id: number) {
+    return prisma.article.findUnique({
+      where: {
+        id: id,
+        archivedAt: null
+      },
+      select: {
+        id: true,
+        atoms: {
+          ...this.atomsProperties,
+          select: {
+            title: true,
+            body: true
+          },
+          take: 1
+        }
+      }
+    })
+  }
 
   /**
    * 全記事と、各記事の最新版のatomを取得
@@ -45,8 +89,8 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
       sort = 'desc',
       take,
       skip,
-      searchStr,
       editorsInfo = true,
+      categoryId
     } = options || {}
 
     const orderBy = [
@@ -57,19 +101,19 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
     return prisma.article.findMany({
       where: {
         ...this.getFilter(filter),
+        categoryId
+      },
+      omit: {
+        authorNote: true
       },
       include: {
         atoms: {
           ...this.atomsProperties,
-          ...(searchStr && {
-            where: {
-              OR: [
-                { title: { contains: searchStr } },
-                { summary: { contains: searchStr } },
-                { body: { contains: searchStr } },
-              ]
-            }
-          })
+          select: {
+            title: true,
+            summary: true,
+            body: true,
+          }
         },
         ...(editorsInfo && {
           author: this.authorProperties,

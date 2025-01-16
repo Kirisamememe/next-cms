@@ -1,14 +1,14 @@
 import { z } from "zod";
-import { EditorConcise } from "./schema-editor";
+import { EditorConcise, EditorSimpleListItem } from "./schema-editor";
 import { createId } from '@paralleldrive/cuid2';
 
-export const TAKE = 50
+export const TAKE = 18
 
 export const articleSubmitFormSchema = z.object({
   title: z.string().optional(),
   summary: z.string().optional(),
   slug: z.string().default(createId()),
-  image: z.string().optional(),
+  imageId: z.number().optional(),
   body: z.string().min(1, "本文は必須です"),
   categoryId: z.number().nullish(),
   commitMsg: z.string().optional(),
@@ -20,7 +20,7 @@ export type ArticleAtom = {
   id: number
   title: string | null
   summary: string | null
-  image: string | null
+  imageId: number | null
   body: string
   commitMsg: string | null
   version: number
@@ -48,6 +48,33 @@ export type Article = {
 
   publishedAt: Date | null
   archivedAt: Date | null
+}
+
+export type ArticleSimpleItem = {
+  id: number
+  atoms: {
+    title: string | null
+    body: string
+  }[]
+}
+
+export type ArticleSimpleItemForClient = {
+  id: number
+  title: string
+  body: string
+}
+
+export type ArticleSimpleAtom = Omit<ArticleAtom, 'articleId' | 'author' | 'authorId' | 'selectedAt' | 'version' | 'createdAt' | 'commitMsg' | 'id' | 'imageId'>
+
+export type ArticleListItem = Omit<Article, 'authorNote'>
+  & {
+    atoms: ArticleSimpleAtom[]
+    author: EditorSimpleListItem
+    lastEdited: EditorSimpleListItem
+  }
+
+export type ArticleListItemForClient = Omit<ArticleListItem, 'atoms'> & {
+  atom: ArticleSimpleAtom
 }
 
 export type ArticleWithAllFields = Article & {
@@ -83,4 +110,3 @@ export type ArticleCategory = {
   createdAt: Date
   updatedAt: Date
 }
-

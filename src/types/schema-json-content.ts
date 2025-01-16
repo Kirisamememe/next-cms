@@ -8,7 +8,21 @@ export type JsonNodeData = {
   valueType: ValueType;
   value?: string | number | boolean | Date;
   children?: JsonNodeData[];
-};
+}
+
+export type JsonSimpleItem = {
+  id: number
+  jsonAtoms: {
+    title: string | null
+    content: any
+  }[]
+}
+
+export type JsonSimpleItemForClient = {
+  id: number
+  title: string
+  content: any
+}
 
 export type ValueType = "string" | "number" | "boolean" | "date" | "array" | "object";
 

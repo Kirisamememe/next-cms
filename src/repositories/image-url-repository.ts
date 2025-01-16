@@ -2,11 +2,12 @@ import 'server-only'
 import { DB, prisma } from '@/prisma'
 import { injectable } from 'inversify'
 import { z } from 'zod'
-import { imageUrlSchema, multipleImageUrlSchema } from '@/types'
+import { imageUrlSchema, ImageUrlSimpleItem, multipleImageUrlSchema } from '@/types'
 import { createId } from '@paralleldrive/cuid2'
 import { ImageUrl } from '@/types'
 
 export interface IImageUrlRepository {
+  getSimpleList(search?: string): Promise<ImageUrlSimpleItem[]>
   findByPath(path: string): Promise<ImageUrl[]>
   findUniqueByUrl(url: string, db?: DB): Promise<ImageUrl | null>
   findUnique(imageId: number, db?: DB): Promise<ImageUrl | null>
@@ -22,6 +23,34 @@ export interface IImageUrlRepository {
 
 @injectable()
 export class ImageUrlRepository implements IImageUrlRepository {
+
+  getSimpleList(search?: string) {
+    const searchArr = search?.toLowerCase().split(/[\s\u3000]+/).filter((word) => !!word.trim())
+    return prisma.imageUrl.findMany({
+      ...(searchArr && {
+        where: {
+          OR: [...searchArr.map((word) => ({
+            OR: [
+              { name: { contains: word } },
+              { folderPath: { contains: word } },
+            ]
+          })),
+          !isNaN(Number(search)) ? { id: { equals: Number(search) } } : {}]
+        }
+      }),
+      orderBy: [
+        { updatedAt: "desc" },
+        { url: "asc" }
+      ],
+      select: {
+        id: true,
+        url: true,
+        name: true,
+        folderPath: true
+      }
+    })
+  }
+
 
   findByPath(path: string) {
     return prisma.imageUrl.findMany({

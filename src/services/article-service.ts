@@ -1,19 +1,20 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
-import { Article, ArticleArchivedForClient, ArticleAtom, ArticleDraftForClient, ArticleForClient, ArticlePublishedForClient, articleSubmitFormSchema, Filter, FindManyOptions, publicationDateTimeForm } from '@/types'
+import { Article, ArticleAtom, ArticleForClient, ArticleListItemForClient, articleSubmitFormSchema, Filter, FindManyOptions, publicationDateTimeForm } from '@/types'
 import { TYPES } from '@/di/types'
 import type { IArticleAtomsRepository, IArticleRepository } from '@/repositories'
 import { z } from 'zod'
 import { prisma } from '@/prisma'
 import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
+import { extractTitleFromMarkdown } from '@/lib'
+import { ContentListItem } from '@/types/schema-content-group'
 
 
 export interface IArticleService {
   getById(id: number, options?: { publishedOnly: boolean }): Promise<ArticleForClient | null>
-  getMany(filter: Filter, options?: FindManyOptions): Promise<ArticleForClient[]>
-  getManyDraft(options?: FindManyOptions): Promise<ArticleDraftForClient[]>
-  getManyPublished(options?: FindManyOptions): Promise<ArticlePublishedForClient[]>
-  getManyArchived(options?: FindManyOptions): Promise<ArticleArchivedForClient[]>
+  getMany(filter: Filter, options?: FindManyOptions): Promise<ArticleListItemForClient[]>
+  getSimpleList(search?: string): Promise<ContentListItem[]>
+  getSimpleItem(id: number): Promise<ContentListItem | null>
   createWithAtom(operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<ArticleAtom | null>
   updateArticleCreateAtom(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
   updateArticle(articleId: number, operatorId: number, values: z.infer<typeof articleSubmitFormSchema>): Promise<Article | null>
@@ -61,55 +62,42 @@ export class ArticleService implements IArticleService {
   }
 
 
-  async getManyDraft(options?: FindManyOptions) {
-    const data = await this._articleRepository.findMany('draft', options)
-      .then((res) => res.map((article) => ({
-        ...article,
-        atom: article.atoms[0],
-        atoms: undefined,
-        archivedAt: article.archivedAt as null
-      })))
+  async getSimpleList(search?: string) {
+    const data = await this._articleRepository.getSimpleList()
+      .then((res) => {
+        if (!search) return res
+
+        const searchArr = search.toLowerCase().split(/[\s\u3000]+/)
+        return res.filter((item) => (
+          item.id.toString() === search ||
+          searchArr.some((word) => (
+            !!word.trim() && (
+              item.atoms[0].title?.toLowerCase().includes(word) ||
+              item.atoms[0].body.toLowerCase().includes(word)
+            )
+          ))
+        ))
+      })
       .catch(dbExceptionHandler)
 
     if (!data) {
       return []
     }
-    return data
+
+    return data.map((article) => ({
+      id: article.id.toString(),
+      title: article.atoms[0]?.title || extractTitleFromMarkdown(article.atoms[0].body),
+    }))
   }
 
+  async getSimpleItem(id: number) {
+    const data = await this._articleRepository.getSimpleItem(id).catch(dbExceptionHandler)
+    if (!data) return null
 
-  async getManyPublished(options?: FindManyOptions) {
-    const data = await this._articleRepository.findMany('published', options)
-      .then((res) => res.map((article) => ({
-        ...article,
-        atom: article.atoms[0],
-        atoms: undefined,
-        publishedAt: article.publishedAt as Date,
-        archivedAt: article.archivedAt as null
-      })))
-      .catch(dbExceptionHandler)
-
-    if (!data) {
-      return []
+    return {
+      id: data.id.toString(),
+      title: data.atoms[0]?.title || extractTitleFromMarkdown(data.atoms[0].body),
     }
-    return data
-  }
-
-
-  async getManyArchived(options?: FindManyOptions) {
-    const data = await this._articleRepository.findMany('archive', options)
-      .then((res) => res.map((article) => ({
-        ...article,
-        atom: article.atoms[0],
-        atoms: undefined,
-        archivedAt: article.archivedAt as Date
-      })))
-      .catch(dbExceptionHandler)
-
-    if (!data) {
-      return []
-    }
-    return data
   }
 
 

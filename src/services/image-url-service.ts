@@ -1,7 +1,7 @@
 import 'server-only'
 import { inject, injectable } from 'inversify'
 import type { IImageUrlRepository } from '@/repositories'
-import { ImageUrl } from '@/types'
+import { ImageUrl, ImageUrlSimpleItem } from '@/types'
 import { imageUrlSchema, multipleImageUrlSchema } from '@/types'
 import { z } from 'zod'
 import { TYPES } from '@/di/types'
@@ -9,6 +9,7 @@ import { prisma } from '@/prisma'
 import { dbExceptionHandler } from '@/exception-handling/exception-handler-db'
 
 export interface IImageUrlService {
+  getSimpleList(search?: string): Promise<ImageUrlSimpleItem[]>
   create(operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } } | null>
   createMany(operatorId: number, values: z.infer<typeof multipleImageUrlSchema>): Promise<{ count: number } | null>
   update(imageId: number, operatorId: number, values: z.infer<typeof imageUrlSchema>): Promise<{ data?: ImageUrl, error?: { message: string } } | null>
@@ -31,6 +32,17 @@ export class ImageUrlService implements IImageUrlService {
     private imageUrlRepository: IImageUrlRepository
   ) {
     this._imageUrlRepository = imageUrlRepository
+  }
+
+
+  async getSimpleList(search?: string) {
+    const data = await this._imageUrlRepository.getSimpleList(search).catch(dbExceptionHandler)
+
+    if (!data) {
+      return []
+    }
+
+    return data
   }
 
 

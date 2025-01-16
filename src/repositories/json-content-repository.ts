@@ -1,5 +1,5 @@
 import 'server-only'
-import { Filter, FindManyOptions } from "@/types"
+import { Filter, FindManyOptions, JsonSimpleItem } from "@/types"
 import { JsonContent, JsonContentWithAllFields, jsonContentSchema } from "@/types"
 import { injectable } from "inversify"
 import { prisma } from '@/prisma'
@@ -8,6 +8,7 @@ import { z } from 'zod'
 
 
 export interface IJsonContentRepository {
+  getSimpleList(): Promise<JsonSimpleItem[]>
   findMany(filter: Filter, options?: FindManyOptions): Promise<JsonContentWithAllFields[]>
   findById(id: number, publishedOnly: boolean): Promise<JsonContentWithAllFields | null>
   update(jsonContentId: number, operatorId: number, values: z.infer<typeof jsonContentSchema>): Promise<JsonContent>
@@ -19,14 +20,34 @@ export interface IJsonContentRepository {
 @injectable()
 export class JsonContentRepository extends ContentRepository implements IJsonContentRepository {
   private atomsProperties = {
-    include: {
-      author: this.authorProperties
-    },
     orderBy: [
       this.orderBy({ column: 'selectedAt', nullable: true }),
       this.orderBy({ column: 'version' })
     ],
     take: 1
+  }
+
+
+  getSimpleList() {
+    return prisma.jsonContent.findMany({
+      where: {
+        archivedAt: null,
+      },
+      select: {
+        id: true,
+        jsonAtoms: {
+          select: {
+            title: true,
+            content: true
+          },
+          ...this.atomsProperties,
+        }
+      },
+      orderBy: [
+        this.orderBy({ column: 'publishedAt' }),
+        this.orderBy({ column: 'createdAt' }),
+      ],
+    })
   }
 
 

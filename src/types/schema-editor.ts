@@ -20,6 +20,12 @@ export type EditorConcise = {
   nickname: string | null;
 }
 
+export type EditorSimpleListItem = {
+  name: string | null;
+  nickname: string | null;
+  image: string | null;
+}
+
 export type AllowedEmail = {
   id: number;
   email: string

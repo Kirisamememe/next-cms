@@ -30,9 +30,6 @@ export class ApiRepository implements IApiRepository {
     return prisma.api.findUnique({
       where: {
         name: name
-      },
-      include: {
-        collections: true
       }
     })
   }

@@ -20,6 +20,19 @@ export interface IMediaFolderRepository {
 @injectable()
 export class MediaFolderRepository implements IMediaFolderRepository {
 
+  getSimpleList() {
+    return prisma.mediaFolder.findMany({
+      orderBy: {
+        updatedAt: 'desc'
+      },
+      select: {
+        path: true,
+        name: true
+      }
+    })
+  }
+
+
   findRootFolders() {
     return prisma.mediaFolder.findMany({
       where: {

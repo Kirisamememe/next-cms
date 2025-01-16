@@ -48,6 +48,13 @@ export type ImageUrl = {
   author?: EditorConcise
 }
 
+export type ImageUrlSimpleItem = {
+  id: number
+  url: string
+  name: string
+  folderPath: string
+}
+
 
 export type ImageFile = {
   url: string
