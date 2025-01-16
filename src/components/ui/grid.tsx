@@ -1,6 +1,6 @@
 import { cn } from "@/lib";
 import { cva, type VariantProps } from "class-variance-authority";
-import React from "react";
+import React, { ComponentPropsWithRef, FC } from "react";
 
 
 const gridColumnVariants = cva(
@@ -160,12 +160,7 @@ type ColumnProps = {
   xxl?: number,
 }
 
-const GridColumn = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof gridColumnVariants> &
-  ColumnProps
->(({
+const GridColumn: FC<ComponentPropsWithRef<"div"> & VariantProps<typeof gridColumnVariants> & ColumnProps> = ({
   className,
   grid,
   sm,
@@ -181,8 +176,9 @@ const GridColumn = React.forwardRef<
   border = false,
   bg = false,
   trans = false,
+  ref,
   ...props
-}, ref) => (
+}) => (
   <div
     ref={ref}
     className={cn(
@@ -194,13 +190,12 @@ const GridColumn = React.forwardRef<
     )}
     {...props}
   />
-))
-GridColumn.displayName = "GridColumn"
+)
 
 
 
 const gridRowVariants = cva(
-  "grid ring-offset-background ring-offset-2 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-2",
+  "grid grid-flow-col ring-offset-background ring-offset-2 focus-visible:outline-none focus-visible:ring-ring focus-visible:ring-2",
   {
     variants: {
       grid: {
@@ -358,12 +353,7 @@ type RowProps = {
   xxl?: number,
 }
 
-const GridRow = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof gridRowVariants> &
-  RowProps
->(({
+const GridRow: FC<ComponentPropsWithRef<"div"> & VariantProps<typeof gridRowVariants> & RowProps> = ({
   className,
   grid,
   sm,
@@ -379,8 +369,9 @@ const GridRow = React.forwardRef<
   border = false,
   bg = false,
   trans = false,
+  ref,
   ...props
-}, ref) => (
+}) => (
   <div
     ref={ref}
     className={cn(
@@ -392,8 +383,7 @@ const GridRow = React.forwardRef<
     )}
     {...props}
   />
-))
-GridRow.displayName = "GridRow"
+)
 
 
 

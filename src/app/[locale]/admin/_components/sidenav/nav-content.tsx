@@ -23,6 +23,10 @@ export const contents = [
     icon: Newspaper,
     items: [
       {
+        title: "new",
+        url: "/admin/articles/new",
+      },
+      {
         title: "draft",
         url: "/admin/articles/draft",
       },
@@ -42,6 +46,10 @@ export const contents = [
     icon: FileJson,
     items: [
       {
+        title: "new",
+        url: "/admin/json-content/new",
+      },
+      {
         title: "draft",
         url: "/admin/json-content/draft",
       },
@@ -59,13 +67,23 @@ export const contents = [
     title: "gallery",
     url: "/admin/gallery",
     icon: Images,
-    items: [],
+    items: [
+      {
+        title: "new",
+        url: "/admin/gallery/new",
+      },
+    ],
   },
   {
     title: "contentGroup",
     url: "/admin/content-group",
     icon: LibraryBig,
-    items: [],
+    items: [
+      {
+        title: "new",
+        url: "/admin/content-group/new",
+      },
+    ],
   },
 ]
 
@@ -75,10 +93,6 @@ export const api = [
     url: "/admin/restful-api",
     icon: Server,
     items: [
-      {
-        title: "APIManagement",
-        url: "/admin/restful-api",
-      },
       {
         title: "accessToken",
         url: "/admin/restful-api/token",

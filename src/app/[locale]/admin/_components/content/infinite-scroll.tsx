@@ -14,7 +14,7 @@ type Props = {
   total: number
 }
 
-export const InfinityScroll = ({ total }: Props) => {
+export const InfiniteScroll = ({ total }: Props) => {
   const t = useTranslations()
 
   const searchParams = useSearchParams()

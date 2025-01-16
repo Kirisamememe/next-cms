@@ -26,12 +26,12 @@ export const NavSubmenu = ({ items, parent }: Props) => {
   return (
     <>
       <CollapsibleTrigger asChild>
-        <SidebarMenuAction className="data-[state=open]:rotate-90 size-6 hover:bg-foreground/10">
+        <SidebarMenuAction className="[&>svg]:data-[state=open]:rotate-90 [&>svg]:[transition:transform_150ms_ease-out] size-8 hover:bg-foreground/10 peer-data-[size=default]/menu-button:top-0.5">
           <ChevronRight />
           <span className="sr-only">Toggle</span>
         </SidebarMenuAction>
       </CollapsibleTrigger>
-      <CollapsibleContent className="my-1 ml-1">
+      <CollapsibleContent className="my-1 ml-1 CollapsibleContent">
         <SidebarMenuSub>
           {items?.map((subItem) => (
             <SidebarMenuSubItem key={subItem.title}>

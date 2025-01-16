@@ -4,33 +4,36 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { usePathname } from "@/i18n"
 import { Filter, X } from "lucide-react"
-import { useTranslations } from "next-intl"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useDebouncedCallback } from 'use-debounce';
-import { useRef } from "react"
+import { ComponentProps, useRef } from "react"
 
-export const SearchBar = () => {
+type Props = {
+  query: string
+  placeholder?: string
+} & ComponentProps<"input">
+
+export const SearchBar = ({ query, placeholder, ...props }: Props) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const t = useTranslations()
-  const searchStr = searchParams.get('search')
+  const searchStr = searchParams.get(query)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleOnChange = useDebouncedCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams)
 
     if (e.target?.value) {
-      params.set('search', e.target.value)
+      params.set(query, e.target.value)
     } else {
-      params.delete('search')
+      params.delete(query)
     }
     router.replace(`${pathname}?${params.toString()}`)
   }, 300)
 
   const clear = () => {
     const params = new URLSearchParams(searchParams)
-    params.delete('search')
+    params.delete(query)
     router.replace(`${pathname}?${params.toString()}`)
 
     if (!inputRef.current) return
@@ -38,20 +41,21 @@ export const SearchBar = () => {
   }
 
   return (
-    <>
+    <div className="relative w-full">
       <Filter size={16} className="absolute left-3 top-3" />
       <Input
         ref={inputRef}
         className="flex-grow pl-10 rounded-lg"
-        placeholder={t('article.filter')}
+        placeholder={placeholder}
         onChange={handleOnChange}
         defaultValue={searchStr?.toString()}
+        {...props}
       />
       {searchStr &&
-        <Button variant={'ghost'} size={'icon'} className="absolute right-14 size-8 top-1 rounded-md hover:bg-foreground/10" onClick={clear}>
+        <Button variant={'ghost'} size={'icon'} className="absolute right-1 size-8 top-1 rounded-md hover:bg-foreground/10" onClick={clear}>
           <X size={16} />
         </Button>
       }
-    </>
+    </div>
   )
 }

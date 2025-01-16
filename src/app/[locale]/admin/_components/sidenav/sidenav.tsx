@@ -5,17 +5,11 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail
 } from "@/components/ui/sidebar"
 import {
   Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { FlexRow } from "@/components/ui/flexbox";
 import { SideNavFooterContainer } from "./sidenav-footer";
@@ -25,7 +19,6 @@ import { NavLink } from "./nav-link"
 import { useTranslations } from "next-intl";
 import { contents, system, api, other } from "./nav-content";
 import { Link } from "@/i18n";
-import { ChevronRight } from "lucide-react";
 import { NavSubmenu } from "./nav-submenu";
 
 export function SideNav() {
