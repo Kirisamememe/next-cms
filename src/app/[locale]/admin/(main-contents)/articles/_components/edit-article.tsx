@@ -32,7 +32,7 @@ export function EditArticle({ article, categories }: Props) {
       title: article.atom.title || "",
       slug: article.slug || "",
       summary: article.atom.summary || "",
-      image: article.atom.image || "",
+      imageId: article.atom.imageId || undefined,
       body: article.atom.body || "",
       commitMsg: article.atom.commitMsg || "",
       authorNote: article.authorNote || "",
@@ -44,7 +44,7 @@ export function EditArticle({ article, categories }: Props) {
   const onSubmit = (values: z.infer<typeof articleSubmitFormSchema>) => {
 
     const hasAtomChanged = () => {
-      const contentFields = ['title', 'summary', 'image', 'body', 'commitMsg'] as const
+      const contentFields = ['title', 'summary', 'imageId', 'body', 'commitMsg'] as const
       return contentFields.some(field =>
         values[field] !== article.atom[field]
       )

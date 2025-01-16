@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { extractTitleFromMarkdown } from "@/lib";
-import { ArticleForClient } from "@/types";
+import { ArticleListItemForClient } from "@/types";
 
 type Props = {
-  article: ArticleForClient
+  article: ArticleListItemForClient
 }
 
 export function ArticleCard({ article }: Props) {

@@ -31,7 +31,6 @@ export function NewArticle({ categories }: Props) {
       title: "",
       slug: "",
       summary: "",
-      image: "",
       body: "",
       commitMsg: "",
       authorNote: "",

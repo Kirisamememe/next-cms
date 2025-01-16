@@ -22,6 +22,7 @@ import { useScrollState } from "../../../_components/scroll-state-provider"
 import { cn } from "@/lib"
 import { AIAssistant } from "./ai-assistant"
 import { useDebouncedCallback } from 'use-debounce';
+// import { ImageSelector } from "../../../_components/content/image-selector"
 
 
 type Props = {
@@ -83,6 +84,8 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
           }
 
           <FlexColumn gap={4} className="shrink-0 p-4">
+            {/* <ImageSelector selectedId={selectedImage} onValueChange={setSelectedImage} images={images} folders={folders} /> */}
+
             <FormField
               control={form.control}
               name="title"
@@ -129,23 +132,6 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
                     <Textarea className="resize-none" placeholder={t("article.summary.placeholder")} {...field} />
                   </FormControl>
                   <FormDescription hidden>{t("article.summary.description")}</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("article.image.name")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input placeholder={t("article.image.placeholder")} {...field} />
-                  </FormControl>
-                  <FormDescription hidden>{t("article.image.description")}</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -1,16 +1,9 @@
-import { articleService } from "@/di/services"
+import { ArticleList } from "./_components/article-list"
 
 
-export default async function ArticlesPage() {
-
-  const articles = await articleService.getManyPublished()
-  if (!articles.length) {
-    return null
-  }
+export default function ArticlesPage() {
 
   return (
-    <div>
-      {articles[0].publishedAt.toISOString()}
-    </div>
+    <ArticleList />
   )
 }

@@ -1,30 +1,28 @@
+'use client'
+
 import { ArticleCard } from "./article-card";
-import { Filter } from "@/types";
+import { ArticleListItemForClient, Filter } from "@/types";
 import { GridColumn } from "@/components/ui/grid";
 import { NoContentFound } from "../../../../../../components/no-article-found";
-import { getTranslations } from "next-intl/server";
-import { articleService } from "@/di/services";
-import { InfinityScroll } from "../../../_components/content/infinity-scroll";
+import { InfiniteScroll } from "../../../_components/content/infinite-scroll";
 import { SearchResult } from "../../../_components/content/search-result";
+import { useTranslations } from "next-intl";
+import { use } from "react";
 
 
 type Props = {
-  filter: Filter,
-  orderby: 'updatedAt' | 'createdAt',
-  sort: 'asc' | 'desc',
+  total: Promise<number | null>
+  articles: Promise<ArticleListItemForClient[]>
   searchQuery: string,
-  categoryId?: number,
-  take: number
+  filter: Filter
 }
 
-export async function ArticleList({ filter, orderby, sort, searchQuery, categoryId, take }: Props) {
-  const t = await getTranslations()
+export function ArticleList({ total, articles, searchQuery, filter }: Props) {
+  const t = useTranslations()
+  const _total = use(total)
+  const _articles = use(articles)
 
-  const total = await articleService.getCount(filter, categoryId)
-  const articles = await articleService.getMany(filter, ({ take: !searchQuery ? take : undefined, orderby, sort }))
-  const filteredByCategory = articles.filter((article) => (!categoryId || article.categoryId === categoryId))
-
-  if (!filteredByCategory.length || !total) {
+  if (!_articles.length || !_total) {
     return (
       <NoContentFound text={t('article.noArticles')} />
     )
@@ -34,17 +32,17 @@ export async function ArticleList({ filter, orderby, sort, searchQuery, category
     return (
       <>
         <GridColumn className="appear @[54rem]:grid-cols-2 @[80rem]:grid-cols-3 gap-3">
-          {filteredByCategory.map((article) => (
+          {_articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </GridColumn>
-        <InfinityScroll total={total} />
+        <InfiniteScroll total={_total} />
       </>
     )
   }
 
-  const searchArr = searchQuery.split(/[\s\u3000]+/)
-  const filteredBySearch = filteredByCategory.filter((article) => (
+  const searchArr = searchQuery.split(/[\s\u3000]+/).filter((word) => !!word.trim())
+  const filteredBySearch = _articles.filter((article) => (
     article.id.toString() === searchQuery ||
     searchArr.some((word) =>
       article.atom.body.toLowerCase().includes(word.toLowerCase()) ||
@@ -52,6 +50,7 @@ export async function ArticleList({ filter, orderby, sort, searchQuery, category
       article.atom.summary?.toLowerCase().includes(word.toLowerCase())
     )
   ))
+
 
   return (
     <>
@@ -65,6 +64,7 @@ export async function ArticleList({ filter, orderby, sort, searchQuery, category
           <ArticleCard key={article.id} article={article} />
         ))}
       </GridColumn>
+      {!filteredBySearch.length && <NoContentFound text={t('article.noArticles')} />}
     </>
   )
 }

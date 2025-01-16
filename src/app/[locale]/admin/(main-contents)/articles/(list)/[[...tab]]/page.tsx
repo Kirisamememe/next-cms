@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ToolBar } from "../../_components/toolbar";
 import { Suspense } from "react";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
+import { articleService } from "@/di/services";
 
 type Props = {
   params: Promise<{ tab?: string[] }>
@@ -34,11 +35,15 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
   const categoryId = category ? idSchema.parse(Number(category)) : undefined
   const takeNumber = take ? Number(take) : TAKE
 
+  const total = articleService.getCount(filter, categoryId)
+  const articles = articleService.getMany(filter, ({ take: !searchQuery ? takeNumber : undefined, orderby: orderbyParam, sort: sortOpt, categoryId }))
+
+
   return (
     <>
       <ToolBar />
       <Suspense key={orderbyParam + searchQuery + categoryId + sortOpt} fallback={<CircleSpinLoading />}>
-        <ArticleList filter={filter} orderby={orderbyParam} sort={sortOpt} searchQuery={searchQuery} categoryId={categoryId} take={takeNumber} />
+        <ArticleList searchQuery={searchQuery} total={total} articles={articles} filter={filter} />
       </Suspense>
     </>
   )

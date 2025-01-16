@@ -4,7 +4,7 @@ import { GridColumn } from "@/components/ui/grid"
 
 
 export async function ArticleList() {
-  const articles = await articleService.getMany('all')
+  const articles = await articleService.getMany('published')
 
   return (
     <GridColumn md={3}>

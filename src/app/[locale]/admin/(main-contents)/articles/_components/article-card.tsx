@@ -2,16 +2,16 @@ import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
 import { Heading, Paragraph } from "@/components/ui/typography"
 import { Link } from "@/i18n"
 import { extractFirstNCharacters, extractTitleFromMarkdown } from "@/lib"
-import { ArticleForClient } from "@/types"
 import { PublicationDatetimePopover } from "../../../_components/content/publication-datetime-popover"
 import { ArchiveAlertDialog } from "../../../_components/content/archive-dialog"
 import { ContentStatusWithId } from "../../../_components/content/content-status-with-id"
 import { updateArticlePublishedAt } from "../../../_actions/update"
 import { CopyBtn } from "../../../_components/content/copy-btn"
 import { AuthorAndDatetime } from "../../../_components/content/author-and-datetime"
+import { ArticleListItemForClient } from "@/types"
 
 type Props = {
-  article: ArticleForClient
+  article: ArticleListItemForClient
 }
 
 export function ArticleCard({ article }: Props) {

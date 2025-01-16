@@ -41,7 +41,7 @@ export const JsonContentGrid = async ({ filter, orderby, sort, searchQuery, cate
     )
   }
 
-  const searchArr = searchQuery.split(/[\s\u3000]+/)
+  const searchArr = searchQuery.split(/[\s\u3000]+/).filter((word) => !!word.trim())
   const filteredBySearch = filteredByCategory.filter((jsonContent) => (
     jsonContent.id.toString() === searchQuery ||
     searchArr.some((word) =>
