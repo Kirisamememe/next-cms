@@ -29,6 +29,7 @@ export function NewArticle({ categories }: Props) {
     mode: "onChange",
     defaultValues: {
       title: "",
+      imageId: null,
       slug: "",
       summary: "",
       body: "",

@@ -32,7 +32,7 @@ export function EditArticle({ article, categories }: Props) {
       title: article.atom.title || "",
       slug: article.slug || "",
       summary: article.atom.summary || "",
-      imageId: article.atom.imageId || undefined,
+      imageId: article.atom.imageId || null,
       body: article.atom.body || "",
       commitMsg: article.atom.commitMsg || "",
       authorNote: article.authorNote || "",
