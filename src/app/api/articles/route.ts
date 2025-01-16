@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Token is expired or invalid' }, { status: 401 })
   }
 
-  const articles = await articleService.getManyPublished()
+  const articles = await articleService.getMany('published')
 
   const searchParams = req.nextUrl.searchParams
   const search = searchParams.get('search')

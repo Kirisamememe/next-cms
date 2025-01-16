@@ -8,7 +8,7 @@ export const articleSubmitFormSchema = z.object({
   title: z.string().optional(),
   summary: z.string().optional(),
   slug: z.string().default(createId()),
-  imageId: z.number().optional(),
+  imageId: z.number().nullable(),
   body: z.string().min(1, "本文は必須です"),
   categoryId: z.number().nullish(),
   commitMsg: z.string().optional(),

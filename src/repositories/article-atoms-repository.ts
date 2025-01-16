@@ -39,7 +39,6 @@ export class ArticleAtomsRepository implements IArticleAtomsRepository {
       data: {
         title: values.title,
         summary: values.summary,
-        image: values.image,
         body: values.body,
         commitMsg: values.commitMsg,
         article: {
@@ -47,7 +46,12 @@ export class ArticleAtomsRepository implements IArticleAtomsRepository {
         },
         author: {
           connect: { id: operatorId }
-        }
+        },
+        ...(values.imageId && {
+          image: {
+            connect: { id: values.imageId }
+          }
+        })
       }
     })
   }
