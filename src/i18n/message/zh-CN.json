@@ -36,7 +36,8 @@
     },
     "search": {
       "total": "总计 {total} 篇文章",
-      "searchQuery": "“{query}”的搜索结果："
+      "searchQuery": "“{query}”的搜索结果：",
+      "placeholder": "按标题或正文搜索"
     },
     "orderBy": {
       "asc": "升序",
@@ -143,6 +144,7 @@
       "mediaCollection": "媒体集",
       "relationalContent": "自定义内容",
       "contentGroup": "内容组",
+      "new": "新建",
       "all": "所有",
       "draft": "草稿",
       "published": "已发布",
@@ -462,6 +464,47 @@
       "image": "图像",
       "mediaFolder": "媒体文件夹"
     },
-    "form": {}
+    "form": {
+      "noContent": "尚未添加内容",
+      "name": {
+        "title": "组名称",
+        "placeholder": "请输入分组名称",
+        "description": "内容分组的名称",
+        "validationMax": "名称不能超过32个字符"
+      },
+      "description": {
+        "title": "描述",
+        "placeholder": "请输入分组描述",
+        "description": "内容分组的描述",
+        "validationMax": "描述不能超过2000个字符"
+      },
+      "permissionLevel": {
+        "title": "权限等级",
+        "description": "内容分组的权限等级",
+        "placeholder": "请选择权限等级",
+        "1": "超级管理员 (等级1)",
+        "2": "管理员 (等级2)",
+        "3": "编辑 (等级3)"
+      },
+      "image": {
+        "title": "图片",
+        "description": "内容分组的特色图片"
+      },
+      "articles": {
+        "title": "文章",
+        "description": "内容组内的文章",
+        "placeholder": "选择文章"
+      },
+      "jsonContents": {
+        "title": "JSON内容",
+        "description": "内容组内的JSON内容",
+        "placeholder": "选择JSON内容"
+      },
+      "mediaFolders": {
+        "title": "媒体文件夹",
+        "description": "内容组内的媒体文件夹",
+        "placeholder": "选择媒体文件夹"
+      }
+    }
   }
 }

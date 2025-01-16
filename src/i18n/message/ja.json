@@ -36,7 +36,8 @@
     },
     "search": {
       "total": "合計 {total} 件",
-      "searchQuery": "「{query}」の検索結果："
+      "searchQuery": "「{query}」の検索結果：",
+      "placeholder": "タイトルや本文で検索"
     },
     "orderBy": {
       "asc": "昇順",
@@ -146,6 +147,7 @@
       "mediaCollection": "メディアコレクション",
       "relationalContent": "カスタムコンテンツ",
       "contentGroup": "コンテンツグループ",
+      "new": "新規作成",
       "all": "全て",
       "draft": "下書き",
       "published": "公開中",
@@ -465,6 +467,47 @@
       "image": "画像",
       "mediaFolder": "メディアフォルダ"
     },
-    "form": {}
+    "form": {
+      "noContent": "コンテンツが追加されていません",
+      "name": {
+        "title": "グループ名",
+        "placeholder": "グループ名を入力",
+        "description": "コンテンツグループの名前",
+        "validationMax": "名前は32文字以内である必要があります"
+      },
+      "description": {
+        "title": "説明",
+        "placeholder": "グループの説明を入力",
+        "description": "コンテンツグループの説明",
+        "validationMax": "説明は2000文字以内である必要があります"
+      },
+      "permissionLevel": {
+        "title": "権限レベル",
+        "description": "コンテンツグループの権限レベル",
+        "placeholder": "権限レベルを選択",
+        "1": "スーパー管理者 (レベル1)",
+        "2": "管理者 (レベル2)",
+        "3": "編集者 (レベル3)"
+      },
+      "image": {
+        "title": "画像",
+        "description": "コンテンツグループのメイン画像"
+      },
+      "articles": {
+        "title": "文章",
+        "description": "コンテンツグループ内の文章を管理します",
+        "placeholder": "文章を選択"
+      },
+      "jsonContents": {
+        "title": "JSONコンテンツ",
+        "description": "コンテンツグループ内のJSONコンテンツを管理します",
+        "placeholder": "JSONコンテンツを選択"
+      },
+      "mediaFolders": {
+        "title": "メディアフォルダ",
+        "description": "コンテンツグループ内のメディアフォルダを管理します",
+        "placeholder": "メディアフォルダを選択"
+      }
+    }
   }
 }

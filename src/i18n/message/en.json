@@ -36,7 +36,8 @@
     },
     "search": {
       "total": "Total {total} items: ",
-      "searchQuery": "Search result for \"{query}\""
+      "searchQuery": "Search result for \"{query}\"",
+      "placeholder": "Search by title or body"
     },
     "orderBy": {
       "asc": "Ascending",
@@ -146,6 +147,7 @@
       "mediaCollection": "Media Collection",
       "relationalContent": "Relational Content",
       "contentGroup": "Contents Group",
+      "new": "New",
       "all": "All",
       "draft": "Draft",
       "published": "Published",
@@ -465,6 +467,47 @@
       "image": "Image",
       "mediaFolder": "Media Folder"
     },
-    "form": {}
+    "form": {
+      "noContent": "No content found",
+      "name": {
+        "title": "Name",
+        "placeholder": "Enter group name",
+        "description": "Name of the content group",
+        "validationMax": "Name must be less than 32 characters"
+      },
+      "description": {
+        "title": "Description",
+        "placeholder": "Enter group description",
+        "description": "Description of the content group",
+        "validationMax": "Description must be less than 2000 characters"
+      },
+      "permissionLevel": {
+        "title": "Permission Level",
+        "description": "Permission level for the content group",
+        "placeholder": "Select a permission level",
+        "1": "Super Admin (Level 1)",
+        "2": "Admin (Level 2)",
+        "3": "Editor (Level 3)"
+      },
+      "image": {
+        "title": "Image",
+        "description": "Featured image for the content group"
+      },
+      "articles": {
+        "title": "Article",
+        "description": "Manage articles in the content group",
+        "placeholder": "Select an article"
+      },
+      "jsonContents": {
+        "title": "JSON Content",
+        "description": "Manage JSON content in the content group",
+        "placeholder": "Select a JSON content"
+      },
+      "mediaFolders": {
+        "title": "Media Folder",
+        "description": "Manage media folder in the content group",
+        "placeholder": "Select a media folder"
+      }
+    }
   }
 }

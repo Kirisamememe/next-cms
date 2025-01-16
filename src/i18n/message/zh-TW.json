@@ -36,7 +36,8 @@
     },
     "search": {
       "total": "總計 {total} 篇文章",
-      "searchQuery": "「{query}」的搜尋結果："
+      "searchQuery": "「{query}」的搜尋結果：",
+      "placeholder": "按標題或內容搜尋"
     },
     "orderBy": {
       "asc": "升序",
@@ -146,6 +147,7 @@
       "mediaCollection": "媒體集",
       "relationalContent": "自定義內容",
       "contentGroup": "內容組",
+      "new": "新增",
       "all": "所有",
       "draft": "草稿",
       "published": "已發表",
@@ -465,6 +467,47 @@
       "image": "圖像",
       "mediaFolder": "媒體檔案夾"
     },
-    "form": {}
+    "form": {
+      "noContent": "尚未添加內容",
+      "name": {
+        "title": "組名稱",
+        "placeholder": "請輸入分組名稱",
+        "description": "內容分組的名稱",
+        "validationMax": "名稱不能超過32個字符"
+      },
+      "description": {
+        "title": "描述",
+        "placeholder": "請輸入分組描述",
+        "description": "內容分組的描述",
+        "validationMax": "描述不能超過2000個字符"
+      },
+      "permissionLevel": {
+        "title": "權限等級",
+        "description": "內容分組的權限等級",
+        "placeholder": "請選擇權限等級",
+        "1": "超級管理員 (等級1)",
+        "2": "管理員 (等級2)",
+        "3": "編輯 (等級3)"
+      },
+      "image": {
+        "title": "圖片",
+        "description": "內容分組的特色圖片"
+      },
+      "articles": {
+        "title": "文章",
+        "description": "管理內容組內的文章",
+        "placeholder": "選擇文章"
+      },
+      "jsonContents": {
+        "title": "JSON內容",
+        "description": "内容組內的JSON內容",
+        "placeholder": "選擇JSON內容"
+      },
+      "mediaFolders": {
+        "title": "媒體文件夾",
+        "description": "内容組內的媒體文件夾",
+        "placeholder": "選擇媒體文件夾"
+      }
+    }
   }
 }
