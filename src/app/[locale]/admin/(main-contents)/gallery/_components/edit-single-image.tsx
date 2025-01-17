@@ -19,7 +19,7 @@ type Props = {
 
 export function EditSingleImage({ imageUrl }: Props) {
   const { folders } = useGalleryContext()
-  const { selectedUrl, setSelectedUrl } = useImagePickerContext()
+  const { selectedUrl } = useImagePickerContext()
   const folderTree = buildFolderTree(folders)
 
   const router = useRouter()
@@ -46,13 +46,11 @@ export function EditSingleImage({ imageUrl }: Props) {
     if (!res.isSuccess) {
       return res
     }
-    setSelectedUrl('')
     router.back()
     return { isSuccess: true }
   }, { isSuccess: false })
 
   const handleClose = () => {
-    setSelectedUrl('')
     router.back()
   }
 
