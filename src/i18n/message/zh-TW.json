@@ -29,7 +29,7 @@
         "label": "分類",
         "placeholder": "輸入分類名稱",
         "description": "分類名稱輸入框",
-        "validationMax": "分類名稱必須小於32個字元"
+        "validation": "分類名稱必須在 1～32 個字元以內"
       }
     },
     "languageSelector": {
@@ -479,13 +479,13 @@
         "title": "組名稱",
         "placeholder": "請輸入分組名稱",
         "description": "內容分組的名稱",
-        "validationMax": "名稱不能超過32個字符"
+        "validation": "名稱必須在 1～32 個字元以內"
       },
       "description": {
         "title": "描述",
         "placeholder": "請輸入分組描述",
         "description": "內容分組的描述",
-        "validationMax": "描述不能超過2000個字符"
+        "validation": "描述必須在 1～2000 個字元以內"
       },
       "permissionLevel": {
         "title": "權限等級",

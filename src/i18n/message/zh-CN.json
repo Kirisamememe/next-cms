@@ -29,7 +29,7 @@
         "label": "分类",
         "placeholder": "输入分类名称",
         "description": "分类名称输入框",
-        "validationMax": "分类名称必须小于32个字符"
+        "validation": "分类名称必须在 1～32 个字符以內"
       }
     },
     "languageSelector": {
@@ -476,13 +476,13 @@
         "title": "组名称",
         "placeholder": "请输入分组名称",
         "description": "内容分组的名称",
-        "validationMax": "名称不能超过32个字符"
+        "validation": "名称必须在1～32个字符以内"
       },
       "description": {
         "title": "描述",
         "placeholder": "请输入分组描述",
         "description": "内容分组的描述",
-        "validationMax": "描述不能超过2000个字符"
+        "validation": "描述必须在1～2000个字符以内"
       },
       "permissionLevel": {
         "title": "权限等级",

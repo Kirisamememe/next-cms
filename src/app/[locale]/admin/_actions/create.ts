@@ -9,8 +9,19 @@ import { z } from "zod";
 
 export async function createArticleCategory(
   values: z.infer<typeof categorySchema>
-): Promise<FormState> {
+) {
+  const safeValues = categorySchema.safeParse(values)
+  if (!safeValues.success) {
+    return {
+      isSuccess: false,
+      error: {
+        message: safeValues.error.flatten().fieldErrors.name?.[0] || 'common.form.invalidData'
+      }
+    }
+  }
+
   await getSession()
+
   const res = await articleCategoryService.create(values)
   if (!res) {
     return {
@@ -29,7 +40,18 @@ export async function createArticleCategory(
 export async function createJsonContentCategory(
   values: z.infer<typeof categorySchema>
 ): Promise<FormState> {
+  const safeValues = categorySchema.safeParse(values)
+  if (!safeValues.success) {
+    return {
+      isSuccess: false,
+      error: {
+        message: safeValues.error.flatten().fieldErrors.name?.[0] || 'common.form.invalidData'
+      }
+    }
+  }
+
   await getSession()
+
   const res = await jsonContentCategoryService.create(values)
   if (!res) {
     return {

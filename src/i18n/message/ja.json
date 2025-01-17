@@ -29,7 +29,7 @@
         "label": "カテゴリ",
         "placeholder": "カテゴリ名を入力してください",
         "description": "カテゴリ名を入力してください",
-        "validationMax": "カテゴリ名は32文字以内で入力してください"
+        "validation": "カテゴリ名は1文字以上32文字以内で入力してください"
       }
     },
     "languageSelector": {
@@ -479,13 +479,13 @@
         "title": "グループ名",
         "placeholder": "グループ名を入力",
         "description": "コンテンツグループの名前",
-        "validationMax": "名前は32文字以内である必要があります"
+        "validation": "名前は1文字以上32文字以内で入力してください"
       },
       "description": {
         "title": "説明",
         "placeholder": "グループの説明を入力",
         "description": "コンテンツグループの説明",
-        "validationMax": "説明は2000文字以内である必要があります"
+        "validation": "説明は1文字以上2000文字以内で入力してください"
       },
       "permissionLevel": {
         "title": "権限レベル",

@@ -2,8 +2,8 @@ import { z } from "zod";
 import { EditorConcise } from "./schema-editor";
 
 export const contentGroupSchema = z.object({
-  name: z.string().max(32, '32文字以下で入力してください'),
-  description: z.string().max(256, '256文字以下で入力してください'),
+  name: z.string().min(1, 'contentGroup.form.name.validation').max(32, 'contentGroup.form.name.validation'),
+  description: z.string().min(1, 'contentGroup.form.description.validation').max(2000, 'contentGroup.form.description.validation'),
   permissionLevel: z.number(),
   imageId: z.number().nullable(),
   articles: z.array(z.number()).default([]),

@@ -29,7 +29,7 @@
         "label": "Category",
         "placeholder": "Enter category name",
         "description": "Form field for Category name",
-        "validationMax": "Category name must be less than 32 characters"
+        "validation": "Category name must be 1-32 characters"
       }
     },
     "languageSelector": {
@@ -479,13 +479,13 @@
         "title": "Name",
         "placeholder": "Enter group name",
         "description": "Name of the content group",
-        "validationMax": "Name must be less than 32 characters"
+        "validation": "Name must be 1-32 characters"
       },
       "description": {
         "title": "Description",
         "placeholder": "Enter group description",
         "description": "Description of the content group",
-        "validationMax": "Description must be less than 2000 characters"
+        "validation": "Description must be 1-2000 characters"
       },
       "permissionLevel": {
         "title": "Permission Level",
