@@ -3,7 +3,6 @@
 import { FlexRow } from "@/components/ui/flexbox";
 import { NewFolderBtn } from "./folder/new-folder-btn";
 import { GalleryGridSettingBtn } from "./gallery-grid-setting-btn";
-import { NewImageBtn } from "./image/new-image-btn";
 import { useScrollState } from "../../../_components/scroll-state-provider";
 import { cn } from "@/lib";
 
@@ -17,7 +16,6 @@ export function GalleryToolbar() {
       (!atTop && isGoingUp) && "top-16"
     )}>
       <NewFolderBtn />
-      <NewImageBtn />
       <GalleryGridSettingBtn className="ml-auto border-foreground/10 bg-background/40" />
     </FlexRow>
   )

@@ -13,7 +13,7 @@ export const ToolBar = async () => {
   return (
     <Flexbox className="shrink-0 justify-between gap-3 flex-col-reverse @[52rem]:flex-row @[52rem]:items-center">
       <CategoryFilter contentCategories={categories} categoryType='article' />
-      <FlexRow gap={3} className="relative w-full @[52rem]:max-w-80">
+      <FlexRow gap={3} className="relative w-full @[52rem]:max-w-80 shrink-0">
         <SearchBar query='search' placeholder={t('common.search.placeholder')} />
         <SortBtn />
       </FlexRow>

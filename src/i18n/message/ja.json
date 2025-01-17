@@ -183,7 +183,7 @@
     "welcome": "お帰りなさい、{name}さん！"
   },
   "editor": {
-    "SUPER_ADMIN": "管理者総括",
+    "SUPER_ADMIN": "システム管理者",
     "ADMIN": "管理者",
     "INSPECTOR": "監察",
     "EDITOR": "編集者",

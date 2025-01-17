@@ -14,7 +14,7 @@ type Props = {
 export const CategoryFilter = ({ contentCategories, categoryType }: Props) => {
 
   return (
-    <ScrollArea className="w-full h-full">
+    <ScrollArea className="w-full h-10">
       <FlexRow gap={3} className="w-full mt-1">
         {contentCategories.map((category) => (
           <CategoryBtn key={category.id} categoryId={category.id} name={category.name} />

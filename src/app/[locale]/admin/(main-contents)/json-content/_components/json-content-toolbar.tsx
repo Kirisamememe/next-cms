@@ -12,7 +12,7 @@ export const JsonContentToolbar = async () => {
   return (
     <Flexbox className="justify-between shrink-0 gap-3 flex-col-reverse @[52rem]:flex-row @[52rem]:items-center">
       <CategoryFilter contentCategories={categories} categoryType='json' />
-      <FlexRow gap={3} className="relative w-full @[52rem]:max-w-80">
+      <FlexRow gap={3} className="relative w-full @[52rem]:max-w-80 shrink-0">
         <SearchBar query='search' placeholder={t('common.search.placeholder')} />
         <SortBtn />
       </FlexRow>
