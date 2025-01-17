@@ -1,28 +1,27 @@
 'use client'
 
 import React, { FC, useEffect } from "react"
-import Image from "next/image"
 import { MDXEditor } from "./forward-ref-editor"
 import { MDXEditorMethods } from "@mdxeditor/editor"
-import { FlexColumn, FlexRow } from "@/components/ui/flexbox"
+import { FlexColumn } from "@/components/ui/flexbox"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { UseFormReturn } from "react-hook-form"
 import { z } from "zod"
-import { ArticleForClient, articleSubmitFormSchema, ContentCategory } from "@/types"
+import { ArticleForClient, articleSubmitFormSchema, ContentCategory, ImageUrlSimpleItem, MediaFolder } from "@/types"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "next-intl"
 import { Textarea } from "@/components/ui/textarea"
 import { DateTimePopover } from "../../../_components/content/datetime-popover"
-import { LabelText } from "@/components/ui/typography"
-import { format } from 'date-fns'
 import { CategorySelector } from "../../../_components/category/category-selector"
-import { LastEditor } from "../../../_components/content/last-editor"
 import { useScrollState } from "../../../_components/scroll-state-provider"
 import { cn } from "@/lib"
 import { AIAssistant } from "./ai-assistant"
 import { useDebouncedCallback } from 'use-debounce';
-// import { ImageSelector } from "../../../_components/content/image-selector"
+import { ImageSelector } from "../../../_components/content/image-selector"
+import { FormAuthorState } from "../../../_components/content/form-editor-state"
+import { FormDataVersionState } from "../../../_components/content/form-data-version-state"
+
 
 
 type Props = {
@@ -30,10 +29,12 @@ type Props = {
   onSubmit: (values: z.infer<typeof articleSubmitFormSchema>) => void
   article?: ArticleForClient
   isPending: boolean
-  categories: ContentCategory[],
+  categories: ContentCategory[]
+  images: Promise<ImageUrlSimpleItem[]>
+  folders: Promise<MediaFolder[]>
 }
 
-export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, categories }) => {
+export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, categories, images, folders }) => {
   const ref = React.useRef<MDXEditorMethods>(null)
   const t = useTranslations()
   const { setHeaderFixed } = useScrollState()
@@ -67,24 +68,33 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
         </FlexColumn>
         <FlexColumn className="sticky top-16 shrink-0 w-full @[54rem]:w-[22.5rem] @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll border-t @[54rem]:border-none">
           {article?.author && article?.lastEdited && article?.updatedAt &&
-            <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-4 py-4 border-b bg-card">
-              <div className="relative">
-                <Image src={article.author.image || ""} width={36} height={36} alt="avatar" className="rounded-full" />
-                {article.author.id !== article.lastEdited.id &&
-                  <Image src={article.lastEdited.image || ""} width={20} height={20} alt="avatar" className="absolute -right-1 -bottom-1 rounded-full ring-background ring-2" />
-                }
-              </div>
-              <FlexColumn gap={0.5}>
-                <LabelText size={14} weight={500}>
-                  {t('article.author', { name: article.author?.nickname || article.author.name })}
-                </LabelText>
-                <LastEditor className="@[52rem]:text-xs" name={article.lastEdited.nickname || article.lastEdited.name || ""} updatedAt={article.updatedAt} />
-              </FlexColumn>
-            </FlexRow>
+            <FormAuthorState
+              authorName={article.author.nickname || article.author.name || "Anonymous"}
+              editorName={article.lastEdited.nickname || article.lastEdited.name || "Anonymous"}
+              updatedAt={article.updatedAt}
+              sameEditor={article.author.id === article.lastEdited.id}
+              authorImage={article.author.image || ""}
+              editorImage={article.lastEdited.image || ""}
+            />
           }
 
           <FlexColumn gap={4} className="shrink-0 p-4">
-            {/* <ImageSelector selectedId={selectedImage} onValueChange={setSelectedImage} images={images} folders={folders} /> */}
+            <FormField
+              control={form.control}
+              name="imageId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("article.image.name")}
+                  </FormLabel>
+                  <FormControl>
+                    <ImageSelector selectedId={field.value} onValueChange={field.onChange} images={images} folders={folders} />
+                  </FormControl>
+                  <FormDescription hidden>{t("article.image.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
@@ -213,32 +223,20 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
 
           </FlexColumn>
 
-          <FlexColumn className="sticky bottom-0 shrink-0 p-4 py-6 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+          <FlexColumn className="sticky bottom-0 shrink-0 p-4 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
             <Button type="submit" isPending={isPending} className="">
               {t("common.save")}
             </Button>
           </FlexColumn>
 
-          <FlexColumn gap={2} className="shrink-0 p-4">
-            {article?.createdAt &&
-              <LabelText>
-                {t('article.createdAt', { date: format(article?.createdAt, 'yyyy-MM-dd HH:mm:ss') })}
-              </LabelText>
-            }
-
-            {article?.atom.version &&
-              <LabelText>
-                {`Version: ${article.atom.version}`}
-              </LabelText>
-            }
-
-            {article?.archivedAt &&
-              <LabelText>
-                {t('article.archivedAt', { date: format(article?.archivedAt, 'yyyy-MM-dd HH:mm:ss') })}
-              </LabelText>
-            }
-          </FlexColumn>
-
+          {article &&
+            <FormDataVersionState
+              createdAt={article.createdAt}
+              updatedAt={article.updatedAt}
+              archivedAt={article.archivedAt}
+              version={article.atom.version}
+            />
+          }
 
         </FlexColumn>
       </form>

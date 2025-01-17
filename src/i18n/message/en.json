@@ -44,6 +44,11 @@
       "desc": "Descending",
       "updatedAt": "Date Updated",
       "createdAt": "Date Created"
+    },
+    "datetime": {
+      "updatedAt": "Updated At {datetime}",
+      "createdAt": "Created At {datetime}",
+      "archivedAt": "Archived At {datetime}"
     }
   },
   "auth": {
@@ -252,7 +257,7 @@
       "validationMax": "Summary must be less than 256 characters"
     },
     "image": {
-      "name": "Image",
+      "name": "Top Image",
       "placeholder": "Enter image URL",
       "description": "Featured image for the article",
       "validationMax": "Image URL must be less than 512 characters"
@@ -490,7 +495,7 @@
         "3": "Editor (Level 3)"
       },
       "image": {
-        "title": "Image",
+        "title": "Top Image",
         "description": "Featured image for the content group"
       },
       "articles": {

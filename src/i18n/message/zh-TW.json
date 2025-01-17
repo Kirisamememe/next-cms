@@ -44,6 +44,11 @@
       "desc": "降序",
       "updatedAt": "更新時間",
       "createdAt": "創建時間"
+    },
+    "datetime": {
+      "updatedAt": "更新時間：{datetime}",
+      "createdAt": "創建時間：{datetime}",
+      "archivedAt": "歸檔時間：{datetime}"
     }
   },
   "auth": {
@@ -252,7 +257,7 @@
       "validationMax": "摘要不能超過256個字元"
     },
     "image": {
-      "name": "圖片",
+      "name": "頂部圖片",
       "placeholder": "請輸入圖片URL",
       "description": "文章的特色圖片",
       "validationMax": "圖片URL不能超過512個字元"
@@ -490,7 +495,7 @@
         "3": "編輯 (等級3)"
       },
       "image": {
-        "title": "圖片",
+        "title": "頂部圖片",
         "description": "內容分組的特色圖片"
       },
       "articles": {

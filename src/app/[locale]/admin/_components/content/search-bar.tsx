@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { usePathname } from "@/i18n"
-import { Filter, X } from "lucide-react"
+import { TextSearch, X } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useDebouncedCallback } from 'use-debounce';
 import { ComponentProps, useRef } from "react"
@@ -42,7 +42,7 @@ export const SearchBar = ({ query, placeholder, ...props }: Props) => {
 
   return (
     <div className="relative w-full">
-      <Filter size={16} className="absolute left-3 top-3" />
+      <TextSearch size={16} className="absolute left-3 top-3" />
       <Input
         ref={inputRef}
         className="flex-grow pl-10 rounded-lg"

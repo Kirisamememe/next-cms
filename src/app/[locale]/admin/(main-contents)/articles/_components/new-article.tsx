@@ -1,7 +1,7 @@
 'use client'
 
 import { useToast } from "@/hooks/use-toast"
-import { articleSubmitFormSchema, ContentCategory } from "@/types"
+import { articleSubmitFormSchema, ContentCategory, ImageUrlSimpleItem, MediaFolder } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React from "react"
 import { useTransition } from "react"
@@ -15,9 +15,11 @@ import { createArticle } from "../_actions/create"
 
 type Props = {
   categories: ContentCategory[]
+  images: Promise<ImageUrlSimpleItem[]>
+  folders: Promise<MediaFolder[]>
 }
 
-export function NewArticle({ categories }: Props) {
+export function NewArticle({ categories, images, folders }: Props) {
   const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations()
@@ -64,6 +66,8 @@ export function NewArticle({ categories }: Props) {
       onSubmit={onSubmit}
       isPending={isPending}
       categories={categories}
+      images={images}
+      folders={folders}
     />
   )
 }

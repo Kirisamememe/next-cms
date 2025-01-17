@@ -44,6 +44,11 @@
       "desc": "降序",
       "updatedAt": "更新时间",
       "createdAt": "创建时间"
+    },
+    "datetime": {
+      "updatedAt": "更新时间：{datetime}",
+      "createdAt": "创建时间：{datetime}",
+      "archivedAt": "归档时间：{datetime}"
     }
   },
   "auth": {
@@ -249,7 +254,7 @@
       "validationMax": "描述不能超过256个字符"
     },
     "image": {
-      "name": "图片",
+      "name": "顶部图片",
       "placeholder": "请输入图片URL",
       "description": "文章的特色图片",
       "validationMax": "图片URL不能超过512个字符"
@@ -487,7 +492,7 @@
         "3": "编辑 (等级3)"
       },
       "image": {
-        "title": "图片",
+        "title": "顶部图片",
         "description": "内容分组的特色图片"
       },
       "articles": {

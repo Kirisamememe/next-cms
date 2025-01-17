@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { ImageUrlSimpleItem, MediaFolder } from "@/types"
-import { use, useEffect } from "react"
+import { use } from "react"
 import { ImageSelectorGrid } from "./image-selector-grid"
 import { GridColumn } from "@/components/ui/grid"
 import Image from "next/image"
@@ -18,10 +18,6 @@ export const ImageSelector = ({ selectedId, onValueChange, images, folders }: Pr
   const _images = use(images)
   const _folders = use(folders)
   const currenImg = _images.find(image => image.id === selectedId)
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <Popover>

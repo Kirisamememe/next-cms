@@ -44,6 +44,11 @@
       "desc": "降順",
       "updatedAt": "更新日",
       "createdAt": "作成日"
+    },
+    "datetime": {
+      "updatedAt": "更新日時 {datetime}",
+      "createdAt": "作成日時 {datetime}",
+      "archivedAt": "アーカイブ日時 {datetime}"
     }
   },
   "auth": {
@@ -252,7 +257,7 @@
       "validationMax": "要約は256文字以内で入力してください"
     },
     "image": {
-      "name": "画像",
+      "name": "トップ画像",
       "placeholder": "画像URLを入力",
       "description": "記事のメイン画像",
       "validationMax": "画像URLは512文字以内で入力してください"
@@ -490,7 +495,7 @@
         "3": "編集者 (レベル3)"
       },
       "image": {
-        "title": "画像",
+        "title": "トップ画像",
         "description": "コンテンツグループのメイン画像"
       },
       "articles": {

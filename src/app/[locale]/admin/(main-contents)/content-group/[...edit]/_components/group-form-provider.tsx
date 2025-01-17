@@ -17,9 +17,8 @@ type GroupFormContextType = {
   state: FormState,
   form: UseFormReturn<z.infer<typeof contentGroupSchema>, any, undefined>
   listMap: Record<ContentType, ContentListItem[]>
-  selectedImage: number | null,
   setListData: (data: ContentListItem[], type: ContentType) => void
-  setSelectedImage: (id: number | null) => void
+  groupValues?: ContentGroupSingleItemForClient
 }
 
 const GroupFormContext = createContext<GroupFormContextType | undefined>(undefined)
@@ -33,7 +32,6 @@ export const GroupFormProvider = ({ children, groupValues }: Props) => {
   const [selectedArticles, _setSelectedArticles] = useState<ContentListItem[]>(groupValues?.articles || [])
   const [selectedJsons, _setSelectedJsons] = useState<ContentListItem[]>(groupValues?.jsonContents || [])
   const [selectedMediaFolders, _setSelectedMediaFolders] = useState<ContentListItem[]>(groupValues?.mediaFolders || [])
-  const [selectedImage, _setSelectedImage] = useState<number | null>(groupValues?.imageId || null)
 
   const t = useTranslations()
   const router = useRouter()
@@ -64,12 +62,6 @@ export const GroupFormProvider = ({ children, groupValues }: Props) => {
       form.setValue(type, data.map((item) => item.id))
     }
   }, [form])
-
-  const setSelectedImage = useCallback((id: number | null) => {
-    _setSelectedImage(id)
-    form.setValue('imageId', id)
-  }, [form])
-
 
 
   const [state, action, pending] = useActionState<FormState>(async () => {
@@ -108,15 +100,14 @@ export const GroupFormProvider = ({ children, groupValues }: Props) => {
       jsonContents: selectedJsons,
       mediaFolders: selectedMediaFolders
     },
-    selectedImage,
-    setSelectedImage,
-    setListData
-  }), [form, pending, selectedArticles, selectedImage, selectedJsons, selectedMediaFolders, setListData, setSelectedImage, state])
+    setListData,
+    groupValues
+  }), [form, groupValues, pending, selectedArticles, selectedJsons, selectedMediaFolders, setListData, state])
 
   return (
     <GroupFormContext value={values}>
       <Form {...form}>
-        <form action={action} className="flex h-full">
+        <form action={action} className="flex flex-col @[54rem]:flex-row @[54rem]:h-[calc(100vh-4rem)]">
           {children}
         </form>
       </Form>

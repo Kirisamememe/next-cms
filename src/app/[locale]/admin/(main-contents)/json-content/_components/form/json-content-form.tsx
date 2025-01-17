@@ -6,21 +6,20 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { UseFormReturn } from "react-hook-form";
 import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData } from "@/types";
 import { JsonFileUploader } from "./json-file-uploader";
-import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
+import { FlexColumn } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
 import { useEffect, useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
-import { Separator } from "@/components/ui/separator";
-import { LabelText } from "@/components/ui/typography";
-import { LastEditor } from "@/app/[locale]/admin/_components/content/last-editor";
 import { DateTimePopover } from "../../../../_components/content/datetime-popover";
 import { Submit } from "@/components/ui/submit-button";
 import { z } from "zod";
-import Image from "next/image";
-import dynamic from "next/dynamic";
 import { FormError } from "@/app/[locale]/admin/_components/content/form-error";
 import { useScrollState } from "@/app/[locale]/admin/_components/scroll-state-provider";
+import { FormAuthorState } from "@/app/[locale]/admin/_components/content/form-editor-state";
+import { Textarea } from "@/components/ui/textarea";
+import dynamic from "next/dynamic";
+import { FormDataVersionState } from "@/app/[locale]/admin/_components/content/form-data-version-state";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -104,153 +103,150 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
         </Tabs>
 
 
-        <FlexColumn p={4} gap={4} className="shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
+        <FlexColumn className="shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
           {jsonContent?.author && jsonContent?.lastEditor && jsonContent?.updatedAt &&
-            <>
-              <FlexRow centerY gap={3} className="text-sm w-full h-fit shrink-0 px-1">
-                <div className="relative">
-                  <Image src={jsonContent.author.image || ""} width={36} height={36} alt="avatar" className="rounded-full" />
-                  {jsonContent.author.id !== jsonContent.lastEditor.id &&
-                    <Image src={jsonContent.lastEditor.image || ""} width={20} height={20} alt="avatar" className="absolute -right-1 -bottom-1 rounded-full ring-background ring-2" />
-                  }
-                </div>
-                <FlexColumn gap={0.5}>
-                  <LabelText size={14} weight={500}>
-                    {t('article.author', { name: jsonContent.author?.nickname || jsonContent.author.name })}
-                  </LabelText>
-                  <LastEditor className="@[52rem]:text-xs" name={jsonContent.lastEditor.nickname || jsonContent.lastEditor.name || ""} updatedAt={jsonContent.updatedAt} />
-                </FlexColumn>
-              </FlexRow>
-              <Separator className="" />
-            </>
+            <FormAuthorState
+              authorName={jsonContent.author.nickname || jsonContent.author.name || "Anonymous"}
+              editorName={jsonContent.lastEditor.nickname || jsonContent.lastEditor.name || "Anonymous"}
+              updatedAt={jsonContent.updatedAt}
+              sameEditor={jsonContent.author.id === jsonContent.lastEditor.id}
+              authorImage={jsonContent.author.image || ""}
+              editorImage={jsonContent.lastEditor.image || ""}
+            />
           }
+          <FlexColumn p={4} gap={4} className="shrink-0">
+            <FormField
+              control={form.control}
+              name="slug"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('jsonContent.form.slug.name')}
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder={t('jsonContent.form.slug.placeholder')} {...field} />
+                  </FormControl>
+                  <FormDescription hidden>
+                    {t('jsonContent.form.slug.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
 
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('jsonContent.form.slug.name')}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={t('jsonContent.form.slug.placeholder')} {...field} />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.slug.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('jsonContent.form.title.name')}</FormLabel>
+                  <FormControl>
+                    <Input placeholder={t('jsonContent.form.title.placeholder')} {...field} />
+                  </FormControl>
+                  <FormDescription hidden>
+                    {t('jsonContent.form.title.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('jsonContent.form.title.name')}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t('jsonContent.form.title.placeholder')} {...field} />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.title.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('jsonContent.form.description.name')}
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea placeholder={t('jsonContent.form.description.placeholder')} {...field} className="resize-none" />
+                  </FormControl>
+                  <FormDescription hidden>
+                    {t('jsonContent.form.description.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('jsonContent.form.description.name')}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={t('jsonContent.form.description.placeholder')} {...field} />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.description.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('jsonContent.form.category.name')}
+                  </FormLabel>
+                  <FormControl>
+                    <CategorySelector
+                      categories={categories}
+                      placeholder={t('jsonContent.form.category.placeholder')}
+                      className="mb-4"
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      defaultValue={field.value ? `${field.value}` : undefined}
+                    />
+                  </FormControl>
+                  <FormDescription hidden>
+                    {t('jsonContent.form.category.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('jsonContent.form.category.name')}
-                </FormLabel>
-                <FormControl>
-                  <CategorySelector
-                    categories={categories}
-                    placeholder={t('jsonContent.form.category.placeholder')}
-                    className="mb-4"
-                    onValueChange={(value) => field.onChange(Number(value))}
-                    defaultValue={field.value ? `${field.value}` : undefined}
-                  />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.category.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="publishedAt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("jsonContent.form.publishedAt.name")}
+                  </FormLabel>
+                  <FormControl>
+                    <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
+                  </FormControl>
+                  <FormDescription hidden>{t("jsonContent.form.publishedAt.description")}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="publishedAt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("jsonContent.form.publishedAt.name")}
-                </FormLabel>
-                <FormControl>
-                  <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
-                </FormControl>
-                <FormDescription hidden>{t("jsonContent.form.publishedAt.description")}</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="authorNote"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('jsonContent.form.authorNote.name')}
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder={t('jsonContent.form.authorNote.placeholder')} {...field} />
+                  </FormControl>
+                  <FormDescription hidden>
+                    {t('jsonContent.form.authorNote.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </FlexColumn>
 
-          <FormField
-            control={form.control}
-            name="authorNote"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('jsonContent.form.authorNote.name')}
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={t('jsonContent.form.authorNote.placeholder')} {...field} />
-                </FormControl>
-                <FormDescription hidden>
-                  {t('jsonContent.form.authorNote.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormError message={error?.message} />
-          <FlexColumn className="sticky bottom-0 shrink-0 pt-8 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+          <FlexColumn p={4} gap={4} className="sticky bottom-0 shrink-0 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+            <FormError message={error?.message} />
             <Submit isPending={isPending}>
               {t('common.save')}
             </Submit>
           </FlexColumn>
 
-          {jsonContent?.jsonAtom.version && (
-            <p>version: {jsonContent?.jsonAtom.version}</p>
-          )}
+          {jsonContent &&
+            <FormDataVersionState
+              createdAt={jsonContent.createdAt}
+              updatedAt={jsonContent.updatedAt}
+              archivedAt={jsonContent.archivedAt}
+              version={jsonContent.jsonAtom.version}
+            />
+          }
 
         </FlexColumn>
       </form>
