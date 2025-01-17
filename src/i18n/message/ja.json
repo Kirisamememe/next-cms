@@ -20,7 +20,8 @@
       "internalError": "内部エラーが発生しました。",
       "databaseError": "データベースエラーが発生しました。",
       "permission": "権限がありません。",
-      "notfound": "該当ユーザーが見つかりません。"
+      "notfound": "該当ユーザーが見つかりません。",
+      "selectImage": "画像を選択"
     },
     "category": {
       "newBtn": "カテゴリを追加",
@@ -440,7 +441,7 @@
         "validationMax": "タイトルは64文字以内で入力してください"
       },
       "description": {
-        "name": "説明",
+        "name": "概要",
         "placeholder": "コンテンツの短い説明を入力",
         "description": "コンテンツの短い説明",
         "validationMax": "説明は256文字以内で入力してください"

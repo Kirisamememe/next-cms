@@ -20,7 +20,8 @@
       "internalError": "An internal error has occurred.",
       "databaseError": "A database error has occurred.",
       "permission": "Permission error.",
-      "notfound": "No matching user found."
+      "notfound": "No matching user found.",
+      "selectImage": "Select Image"
     },
     "category": {
       "newBtn": "New Category",

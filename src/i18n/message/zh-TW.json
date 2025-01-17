@@ -20,7 +20,8 @@
       "internalError": "內部錯誤",
       "databaseError": "資料庫錯誤",
       "permission": "您沒有相應權限",
-      "notfound": "未找到相應用戶"
+      "notfound": "未找到相應用戶",
+      "selectImage": "選擇圖片"
     },
     "category": {
       "newBtn": "新建分類",

@@ -38,11 +38,11 @@ export const ImageSelectorGrid = ({ selectedId, onValueChange, images, folders }
       {currentPath !== '.' &&
         <Button
           variant={'secondary'} size={'icon'}
-          className="rounded-none w-full h-full aspect-square flex-col text-xs gap-1"
+          className="rounded-none w-full h-full aspect-square flex-col text-xs gap-1 bg-muted/50"
           onClick={() => back()}
         >
           <FolderOutput />
-          {'..'}
+          {'../'}
         </Button>
       }
       {filteredFolder.map((folder) => (
@@ -60,8 +60,8 @@ export const ImageSelectorGrid = ({ selectedId, onValueChange, images, folders }
       {filteredImages.map((image) => (
         <AspectRatio ratio={1} key={image.id}
           className={cn(
-            "w-full h-full",
-            selectedId === image.id && "border-2 border-red-600"
+            "cursor-pointer hover:outline outline-2 -outline-offset-2 outline-[hsl(var(--selected2))]",
+            selectedId === image.id && "outline-pulse"
           )}
           onClick={() => handleSelect(image.id)}>
           <Image

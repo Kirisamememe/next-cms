@@ -20,7 +20,8 @@
       "internalError": "内部错误",
       "databaseError": "数据库错误",
       "permission": "您没有相应权限",
-      "notfound": "未找到相应用户"
+      "notfound": "未找到相应用户",
+      "selectImage": "选择图片"
     },
     "category": {
       "newBtn": "新建分类",

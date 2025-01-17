@@ -103,7 +103,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
         </Tabs>
 
 
-        <FlexColumn className="shrink-0 w-full @[54rem]:w-80 @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
+        <FlexColumn className="shrink-0 w-full @[54rem]:w-[22.5rem] @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
           {jsonContent?.author && jsonContent?.lastEditor && jsonContent?.updatedAt &&
             <FormAuthorState
               authorName={jsonContent.author.nickname || jsonContent.author.name || "Anonymous"}

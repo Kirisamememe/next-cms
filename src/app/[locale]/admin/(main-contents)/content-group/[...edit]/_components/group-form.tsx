@@ -37,7 +37,7 @@ export const GroupForm = ({ images, folders }: Props) => {
   const { pending, form, state, groupValues } = useGroupFormContext()
 
   return (
-    <FlexColumn className="sticky top-16 border-t mt-2 @[54rem]:mt-0 @[54rem]:border-t-0 @[54rem]:border-l min-w-[22.5rem] overflow-scroll">
+    <FlexColumn className="sticky top-16 shrink-0 border-t mt-2 @[54rem]:mt-0 @[54rem]:border-t-0 @[54rem]:border-l w-full @[54rem]:w-[22.5rem] @[80rem]:w-96 overflow-scroll">
       {groupValues?.author && groupValues?.lastEditor && groupValues?.updatedAt &&
         <FormAuthorState
           authorName={groupValues.author.nickname || groupValues.author.name || "Anonymous"}
