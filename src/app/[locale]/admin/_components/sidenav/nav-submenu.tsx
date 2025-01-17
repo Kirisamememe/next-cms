@@ -26,7 +26,7 @@ export const NavSubmenu = ({ items, parent }: Props) => {
   return (
     <>
       <CollapsibleTrigger asChild>
-        <SidebarMenuAction className="[&>svg]:data-[state=open]:rotate-90 [&>svg]:[transition:transform_150ms_ease-out] size-8 hover:bg-foreground/10 peer-data-[size=default]/menu-button:top-0.5">
+        <SidebarMenuAction className="[&>svg]:data-[state=open]:rotate-90 [&>svg]:[transition:transform_150ms_ease-out] size-7 hover:bg-foreground/10 peer-data-[size=default]/menu-button:top-1 right-1 rounded-sm">
           <ChevronRight />
           <span className="sr-only">Toggle</span>
         </SidebarMenuAction>

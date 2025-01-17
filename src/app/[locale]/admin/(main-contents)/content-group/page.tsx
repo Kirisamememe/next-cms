@@ -14,7 +14,7 @@ export default async function Page() {
     return (
       <FlexColumn center className="h-full">
         <NewContentBtnContainer href={'/admin/content-group/new'} label={t('contentGroup.newBtn')} />
-        <NoContentFound text={'no content group'} />
+        <NoContentFound text={t('contentGroup.noContent')} />
       </FlexColumn>
     )
   }
