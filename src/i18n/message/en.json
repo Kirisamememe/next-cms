@@ -467,8 +467,8 @@
       "image": "Image",
       "mediaFolder": "Media Folder"
     },
+    "noContent": "No content found",
     "form": {
-      "noContent": "No content found",
       "name": {
         "title": "Name",
         "placeholder": "Enter group name",

@@ -464,8 +464,8 @@
       "image": "图像",
       "mediaFolder": "媒体文件夹"
     },
+    "noContent": "尚未添加内容",
     "form": {
-      "noContent": "尚未添加内容",
       "name": {
         "title": "组名称",
         "placeholder": "请输入分组名称",

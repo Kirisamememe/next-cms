@@ -467,8 +467,8 @@
       "image": "圖像",
       "mediaFolder": "媒體檔案夾"
     },
+    "noContent": "尚未添加內容",
     "form": {
-      "noContent": "尚未添加內容",
       "name": {
         "title": "組名稱",
         "placeholder": "請輸入分組名稱",

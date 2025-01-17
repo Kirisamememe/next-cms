@@ -467,8 +467,8 @@
       "image": "画像",
       "mediaFolder": "メディアフォルダ"
     },
+    "noContent": "コンテンツが追加されていません",
     "form": {
-      "noContent": "コンテンツが追加されていません",
       "name": {
         "title": "グループ名",
         "placeholder": "グループ名を入力",
