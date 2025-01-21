@@ -11,6 +11,10 @@
     "ok": "是",
     "no": "否",
     "close": "关闭",
+    "editor": {
+      "createdBy": "作者 {name}",
+      "lastEdit": "最后编辑 {name}"
+    },
     "form": {
       "success": "成功!",
       "failed": "失败!",
@@ -37,7 +41,7 @@
     },
     "search": {
       "total": "总计 {total} 篇文章",
-      "searchQuery": "“{query}”的搜索结果：",
+      "searchQuery": "“{query}”的搜索结果",
       "placeholder": "按标题或正文搜索"
     },
     "orderBy": {

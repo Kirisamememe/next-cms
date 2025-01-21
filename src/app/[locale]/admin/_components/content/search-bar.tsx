@@ -45,7 +45,7 @@ export const SearchBar = ({ query, placeholder, ...props }: Props) => {
       <TextSearch size={16} className="absolute left-3 top-3" />
       <Input
         ref={inputRef}
-        className="flex-grow pl-10 rounded-lg"
+        className="flex-grow pl-10 rounded-lg hover:border-foreground/30 transition-colors"
         placeholder={placeholder}
         onChange={handleOnChange}
         defaultValue={searchStr?.toString()}

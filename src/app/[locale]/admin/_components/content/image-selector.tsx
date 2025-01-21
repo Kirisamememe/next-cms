@@ -47,7 +47,7 @@ export const ImageSelector = ({ selectedId, onValueChange, images, folders }: Pr
               />
             </div>
           ) : (
-            <Button variant={'outline'} className="w-full bg-card h-40">
+            <Button variant={'outline'} className="w-full bg-card h-40 text-muted-foreground">
               {t('common.form.selectImage')}
             </Button>
           )}

@@ -11,6 +11,10 @@
     "ok": "OK",
     "no": "NO",
     "close": "Close",
+    "editor": {
+      "createdBy": "Created By {name}",
+      "lastEdit": "Last Edit {name}"
+    },
     "form": {
       "success": "Success!",
       "failed": "Failed!",
@@ -36,8 +40,8 @@
       "unspecified": "Unspecified"
     },
     "search": {
-      "total": "Total {total} items: ",
-      "searchQuery": "Search result for \"{query}\"",
+      "total": "Total {total} items",
+      "searchQuery": "Search result for \"{query}\": ",
       "placeholder": "Search by title or body"
     },
     "orderBy": {
@@ -405,6 +409,10 @@
     "gallery": {
       "title": "Gallery",
       "description": "Manage gallery API settings"
+    },
+    "contentGroup": {
+      "title": "Content Group",
+      "description": "Manage content group API settings"
     },
     "tabs": {
       "api": "API Management",

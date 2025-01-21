@@ -1,33 +1,28 @@
 import { Separator } from "@/components/ui/separator"
 import { LabelText } from "@/components/ui/typography"
 import { getLocaleForFns } from "@/i18n"
-import { cn } from "@/lib"
 import { formatDistanceToNow } from "date-fns"
 import { useLocale, useTranslations } from "next-intl"
 
-export const LastEditor = ({
-  name,
-  updatedAt,
-  className
-}: {
-  name: string,
-  updatedAt: Date,
-  className?: string
-}) => {
+type Props = {
+  createdAt: Date
+  authorName: string
+}
+
+export const Author = ({ createdAt, authorName }: Props) => {
   const locale = useLocale()
   const t = useTranslations()
 
   return (
-    <LabelText className={cn("flex items-center gap-2 shrink-0 text-muted-foreground/70", className)}>
+    <LabelText className="flex items-center gap-2 text-muted-foreground shrink-0 font-semibold">
       <span>
-        {t('common.editor.lastEdit', { name })}
+        {t('common.editor.createdBy', { name: authorName })}
       </span>
       <Separator orientation="vertical" className="h-2.5" />
-      {formatDistanceToNow(updatedAt, {
+      {formatDistanceToNow(createdAt, {
         addSuffix: true,
         locale: getLocaleForFns(locale)
-      })
-      }
+      })}
     </LabelText>
   )
 }

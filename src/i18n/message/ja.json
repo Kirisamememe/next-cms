@@ -11,6 +11,10 @@
     "ok": "はい",
     "no": "いいえ",
     "close": "閉じる",
+    "editor": {
+      "createdBy": "作者 {name}",
+      "lastEdit": "最終編集 {name}"
+    },
     "form": {
       "success": "成功!",
       "failed": "失敗!",
@@ -37,7 +41,7 @@
     },
     "search": {
       "total": "合計 {total} 件",
-      "searchQuery": "「{query}」の検索結果：",
+      "searchQuery": "「{query}」の検索結果",
       "placeholder": "タイトルや本文で検索"
     },
     "orderBy": {
@@ -405,6 +409,10 @@
     "gallery": {
       "title": "ギャラリー",
       "description": "ギャラリーAPIの設定を管理します"
+    },
+    "contentGroup": {
+      "title": "コンテンツグループ",
+      "description": "コンテンツグループAPIの設定を管理します"
     },
     "tabs": {
       "api": "API管理",

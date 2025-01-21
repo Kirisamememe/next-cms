@@ -11,6 +11,10 @@
     "ok": "是",
     "no": "否",
     "close": "關閉",
+    "editor": {
+      "createdBy": "作者 {name}",
+      "lastEdit": "最後編輯 {name}"
+    },
     "form": {
       "success": "成功!",
       "failed": "失敗!",
@@ -37,7 +41,7 @@
     },
     "search": {
       "total": "總計 {total} 篇文章",
-      "searchQuery": "「{query}」的搜尋結果：",
+      "searchQuery": "「{query}」的搜尋結果",
       "placeholder": "按標題或內容搜尋"
     },
     "orderBy": {
