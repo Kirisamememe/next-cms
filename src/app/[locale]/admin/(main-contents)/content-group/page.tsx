@@ -5,6 +5,7 @@ import { GridColumn } from "@/components/ui/grid";
 import { contentGroupService } from "@/di/services";
 import { FlexColumn } from "@/components/ui/flexbox";
 import { NoContentFound } from "@/components/no-article-found";
+import { ContentTotal } from "../../_components/content/content-total";
 
 export default async function Page() {
   const t = await getTranslations()
@@ -20,9 +21,12 @@ export default async function Page() {
   }
 
   return (
-    <GridColumn p={6} className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
+    <>
       <NewContentBtnContainer href={'/admin/content-group/new'} label={t('contentGroup.newBtn')} />
-      {data.map(group => <GroupCard key={group.id} groupData={group} />)}
-    </GridColumn>
+      <GridColumn p={6} className="appear @[52rem]:grid-cols-2 @[80rem]:grid-cols-3">
+        {data.map(group => <GroupCard key={group.id} groupData={group} />)}
+      </GridColumn>
+      <ContentTotal text={t('common.search.total', { total: data.length })} />
+    </>
   )
 }

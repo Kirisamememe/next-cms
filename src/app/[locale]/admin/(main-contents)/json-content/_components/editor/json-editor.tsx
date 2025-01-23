@@ -25,7 +25,7 @@ export default function JsonEditor({ jsonData, setJsonData }: Props) {
   return (
     <FlexRow gap={4} className="relative appear">
       <FlexColumn
-        radius={"lg"} px={2} className="overflow-scroll w-full" >
+        radius={"lg"} className="overflow-scroll w-full p-6 " >
         <JsonNode
           index={0}
           data={jsonData}
@@ -35,7 +35,7 @@ export default function JsonEditor({ jsonData, setJsonData }: Props) {
       </FlexColumn>
 
       <div className={cn(
-        "absolute top-0 right-0 h-full",
+        "absolute top-4 right-4 h-full",
         !expanded && "size-12"
       )}>
         <FlexColumn radius={"lg"} className={cn(

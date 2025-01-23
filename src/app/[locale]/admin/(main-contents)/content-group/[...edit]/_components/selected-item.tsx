@@ -39,7 +39,7 @@ export const SelectedItem = ({ type }: Props) => {
           </span>
           <Button
             variant={'ghost'} size={'icon'}
-            className="ml-auto rounded-full size-6 bg-foreground/15 hover:bg-foreground/30"
+            className="shrink-0 ml-auto rounded-full size-6 bg-foreground/15 hover:bg-foreground/30"
             onClick={() => handleDelete(item)}
           >
             <X size={16} />

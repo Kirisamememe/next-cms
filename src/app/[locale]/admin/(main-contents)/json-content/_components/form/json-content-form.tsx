@@ -95,7 +95,7 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               )}
             />
           </TabsContent>
-          <TabsContent value="jsonEditor" className="min-h-80 flex-grow p-6 mt-0 ">
+          <TabsContent value="jsonEditor" className="min-h-80 flex-grow mt-0 ">
             <JsonEditorProvider>
               <JsonEditor jsonData={jsonNodeData} setJsonData={setJsonData} />
             </JsonEditorProvider>

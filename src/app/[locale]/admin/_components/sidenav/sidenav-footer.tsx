@@ -80,7 +80,7 @@ export async function SideNavFooterContainer() {
               <DropdownMenuSeparator />
 
               {/* その他諸々 */}
-              <Link href={`/admin/editors/${session?.operatorId}`}>
+              <Link href={`/admin/editors/edit/${session?.operatorId}`} scroll={false}>
                 <DropdownMenuItem className="h-9">
                   <CircleUser size={16} />
                   {t('sidebar.footer.profile')}
