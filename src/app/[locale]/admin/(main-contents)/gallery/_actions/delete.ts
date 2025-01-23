@@ -17,6 +17,7 @@ export async function deleteImage(id: number) {
     }
   }
   revalidatePath('/admin/gallery')
+  return { isSuccess: true }
 }
 
 

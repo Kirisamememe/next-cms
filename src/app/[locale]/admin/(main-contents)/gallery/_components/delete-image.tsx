@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { FC, useActionState } from "react";
 import { cn } from "@/lib";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "@/i18n";
 
 
 type Props = {
@@ -26,8 +28,17 @@ type Props = {
 
 export const DeleteImageBtn: FC<Props> = ({ imageId, className }) => {
   const t = useTranslations()
+  const router = useRouter()
   const [_, action, pending] = useActionState(async () => {
-    await deleteImage(imageId)
+    const res = await deleteImage(imageId)
+    if (!res?.isSuccess) {
+      toast({
+        title: t('common.form.databaseError'),
+        variant: 'destructive'
+      })
+      return
+    }
+    router.back()
   }, undefined)
 
 
