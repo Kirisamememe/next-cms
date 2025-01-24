@@ -52,6 +52,10 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
     form.setValue('body', text)
   }, 300)
 
+  const handlePublish = () => {
+    form.setValue('publishedAt', new Date())
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="appear flex flex-col @[54rem]:flex-row justify-stretch h-fit">
@@ -223,8 +227,13 @@ export const ArticleForm: FC<Props> = ({ form, isPending, onSubmit, article, cat
 
           </FlexColumn>
 
-          <FlexColumn className="sticky bottom-0 shrink-0 p-4 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
-            <Button type="submit" isPending={isPending} className="">
+          <FlexColumn className="sticky bottom-0 shrink-0 gap-4 p-4 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+            {(!article?.publishedAt || article?.publishedAt > new Date()) &&
+              <Button type="submit" variant={'outline'} className="bg-secondary/50 backdrop-blur-md" isPending={isPending} onClick={handlePublish}>
+                {t("common.publish")}
+              </Button>
+            }
+            <Button type="submit" isPending={isPending}>
               {t("common.save")}
             </Button>
           </FlexColumn>

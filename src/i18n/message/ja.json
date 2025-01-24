@@ -11,6 +11,7 @@
     "ok": "はい",
     "no": "いいえ",
     "close": "閉じる",
+    "publish": "公開",
     "editor": {
       "createdBy": "作者 {name}",
       "lastEdit": "最終編集 {name}"

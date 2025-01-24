@@ -11,6 +11,7 @@
     "ok": "是",
     "no": "否",
     "close": "關閉",
+    "publish": "發佈",
     "editor": {
       "createdBy": "作者 {name}",
       "lastEdit": "最後編輯 {name}"
