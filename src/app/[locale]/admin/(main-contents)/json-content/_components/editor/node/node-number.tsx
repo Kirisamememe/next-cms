@@ -11,7 +11,13 @@ type Props = {
 
 export function NumberNode({ data, handleValueChange }: Props) {
   return (
-    <div className="p-0.5 border-2 border-t-0 rounded-bl-xl rounded-br-xl">
+    <div
+      draggable
+      onDragStart={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+      className="p-0.5 border-2 border-t-0 rounded-bl-xl rounded-br-xl">
       <Input
         type="number"
         placeholder="Input number"

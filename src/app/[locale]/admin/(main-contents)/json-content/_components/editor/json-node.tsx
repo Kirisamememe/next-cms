@@ -214,11 +214,14 @@ export function JsonNode({ data, onChange, onDelete, index, parentIsArr = false,
         "relative w-[23rem] sm:w-[26rem]",
       )}>
 
-        <FlexRow gap={1} centerY className={cn(
-          "min-h-12 h-10 rounded-lg p-1 bg-border cursor-grab",
-          isExpanded && "rounded-bl-none",
-          !(data.valueType === 'object' || data.valueType === 'array') && "rounded-b-none",
-        )}>
+        <FlexRow
+          gap={1}
+          centerY
+          className={cn(
+            "min-h-12 h-10 rounded-lg p-1 bg-border cursor-grab",
+            isExpanded && "rounded-bl-none",
+            !(data.valueType === 'object' || data.valueType === 'array') && "rounded-b-none",
+          )}>
 
           {/* 親が配列 */}
           {parentIsArr && (

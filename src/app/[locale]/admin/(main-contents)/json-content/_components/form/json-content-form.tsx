@@ -6,7 +6,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { UseFormReturn } from "react-hook-form";
 import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData } from "@/types";
 import { JsonFileUploader } from "./json-file-uploader";
-import { FlexColumn } from "@/components/ui/flexbox";
+import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
 import { useEffect, useState } from "react";
 import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
@@ -20,6 +20,7 @@ import { FormAuthorState } from "@/app/[locale]/admin/_components/content/form-e
 import { Textarea } from "@/components/ui/textarea";
 import dynamic from "next/dynamic";
 import { FormDataVersionState } from "@/app/[locale]/admin/_components/content/form-data-version-state";
+import JsonFloatPreview from "../editor/json-float-preview";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
@@ -97,7 +98,10 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
           </TabsContent>
           <TabsContent value="jsonEditor" className="min-h-80 flex-grow mt-0 ">
             <JsonEditorProvider>
-              <JsonEditor jsonData={jsonNodeData} setJsonData={setJsonData} />
+              <FlexRow className="relative">
+                <JsonEditor jsonData={jsonNodeData} setJsonData={setJsonData} />
+                <JsonFloatPreview jsonData={jsonNodeData} />
+              </FlexRow>
             </JsonEditorProvider>
           </TabsContent>
         </Tabs>

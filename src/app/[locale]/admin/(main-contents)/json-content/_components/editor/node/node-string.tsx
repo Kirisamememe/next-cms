@@ -18,12 +18,16 @@ export const StringNode = forwardRef<
     <div
       className="p-0.5 border-2 border-t-0 rounded-bl-xl rounded-br-xl bg-background"
       ref={ref}
+      draggable
+      onDragStart={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
       {...props}
     >
       <Textarea
-        rows={2}
         className={cn(
-          "w-full resize-none border-none rounded-tl-none rounded-tr-none",
+          "w-full min-h-6 resize-none border-none rounded-tl-none rounded-tr-none field-sizing-content",
         )}
         placeholder="Input string"
         value={String(data.value)}
