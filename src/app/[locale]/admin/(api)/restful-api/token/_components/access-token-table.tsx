@@ -41,7 +41,7 @@ export async function AccessTokenTable() {
           <TableRow key={token.token}>
             <TableCell>{token.name}</TableCell>
             <TableCell>
-              <AccessTokenCell token={token.token} />
+              <AccessTokenCell token={token.token.slice(0, 5) + '*'.repeat(32)} />
             </TableCell>
             <TableCell className="text-nowrap">
               {format(token.createdAt, "PPP p", { locale: getLocaleForFns(locale) })}

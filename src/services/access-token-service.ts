@@ -59,10 +59,7 @@ export class AccessTokenService implements IAccessTokenService {
     if (!data) {
       return []
     }
-    return data.map((token) => ({
-      ...token,
-      token: token.token.slice(0, 5) + '*'.repeat(32)
-    }))
+    return data
   }
 
   async delete(token: string) {
