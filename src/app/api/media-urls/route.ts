@@ -17,6 +17,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Token is expired or invalid' }, { status: 401 })
   }
 
+  const searchParams = req.nextUrl.searchParams
+  const folder = searchParams.get('folder')
+  if (folder) {
+    const mediaUrls = await imageUrlService.getUrlsByFolder(folder)
+    return NextResponse.json(mediaUrls)
+  }
+
   const mediaUrls = await imageUrlService.getMany()
 
   return NextResponse.json(mediaUrls)

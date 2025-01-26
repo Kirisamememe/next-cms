@@ -16,6 +16,7 @@ export interface IImageUrlService {
   move(imageId: number, operatorId: number, folderPath: string): Promise<ImageUrl | null>
   getByFolder(path: string): Promise<ImageUrl[]>
   getMany(): Promise<string[]>
+  getUrlsByFolder(path: string): Promise<string[]>
   getById(imageId: number): Promise<ImageUrl | null>
   delete(id: number): Promise<ImageUrl | null>
   getCount(): Promise<number | null>
@@ -108,6 +109,15 @@ export class ImageUrlService implements IImageUrlService {
       return []
     }
     return res
+  }
+
+
+  async getUrlsByFolder(path: string) {
+    const res = await this._imageUrlRepository.findUrlsByPath(path).catch(dbExceptionHandler)
+    if (!res) {
+      return []
+    }
+    return res.map((url) => url.url)
   }
 
 

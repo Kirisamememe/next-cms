@@ -9,6 +9,7 @@ import { ImageUrl } from '@/types'
 export interface IImageUrlRepository {
   getSimpleList(search?: string): Promise<ImageUrlSimpleItem[]>
   findByPath(path: string): Promise<ImageUrl[]>
+  findUrlsByPath(path: string): Promise<{ url: string }[]>
   findUniqueByUrl(url: string, db?: DB): Promise<ImageUrl | null>
   findUnique(imageId: number, db?: DB): Promise<ImageUrl | null>
   findAllUrls(): Promise<{ url: string }[]>
@@ -72,6 +73,21 @@ export class ImageUrlRepository implements IImageUrlRepository {
             email: true
           }
         }
+      }
+    })
+  }
+
+  findUrlsByPath(path: string) {
+    return prisma.imageUrl.findMany({
+      where: {
+        folderPath: path
+      },
+      orderBy: [
+        { updatedAt: "desc" },
+        { url: "asc" }
+      ],
+      select: {
+        url: true
       }
     })
   }
