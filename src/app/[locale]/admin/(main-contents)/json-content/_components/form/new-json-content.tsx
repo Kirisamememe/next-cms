@@ -8,6 +8,7 @@ import { ContentCategory, FormState, jsonContentSchema } from "@/types"
 import { z } from "zod"
 import { createJsonContent } from "../../_actions/create"
 import { redirect } from "next/navigation"
+import { createId } from "@paralleldrive/cuid2"
 
 type Props = {
   categories: ContentCategory[]
@@ -21,10 +22,11 @@ export const NewJsonContent = ({ categories }: Props) => {
       title: '',
       description: '',
       adminOnly: false,
-      permissionLevel: 0,
+      permissionLevel: 3,
       authorNote: '',
       publishedAt: null,
       archivedAt: null,
+      json: {}
     }
   })
 
@@ -36,6 +38,9 @@ export const NewJsonContent = ({ categories }: Props) => {
       const values = form.getValues()
       if (values.categoryId === 0) {
         values.categoryId = null
+      }
+      if (!values.slug) {
+        values.slug = createId()
       }
       const res = await createJsonContent(values)
       if (!res.isSuccess) {
