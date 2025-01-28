@@ -1,4 +1,7 @@
 export const dbExceptionHandler = (error: unknown) => {
-  console.error("Database Error", error)
+  if (error instanceof Error) {
+    console.log(error.stack)
+  }
+  // console.error("Database Error", error)
   return null
 }
