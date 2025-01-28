@@ -24,9 +24,12 @@ export const convertToJsonValue = (node: JsonNodeData): any => {
 }
 
 const isValidDateString = (value: string): boolean => {
-  const date = new Date(value);
-  return date instanceof Date && !isNaN(date.getTime());
-};
+  const date = new Date(value)
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    return false
+  }
+  return value === new Date(value).toISOString()
+}
 
 export const convertToJsonNodeData = (jsonValue: any, option?: { isRoot: boolean }): JsonNodeData => {
   if (Array.isArray(jsonValue)) {
