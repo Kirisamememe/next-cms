@@ -147,9 +147,18 @@ export class ArticleRepository extends ContentRepository implements IArticleRepo
         })
       },
       include: {
-        atoms: this.atomsProperties,
+        atoms: {
+          ...this.atomsProperties,
+          include: {
+            image: {
+              select: {
+                url: true
+              }
+            }
+          }
+        },
         author: this.authorProperties,
-        lastEdited: this.authorProperties
+        lastEdited: this.authorProperties,
       }
     })
   }

@@ -80,7 +80,7 @@ export type ArticleListItemForClient = Omit<ArticleListItem, 'atoms'> & {
 export type ArticleWithAllFields = Article & {
   author: EditorConcise
   lastEdited: EditorConcise
-  atoms: ArticleAtom[]
+  atoms: (ArticleAtom & { image: { url: string } | null })[]
 }
 
 export type ArticleForClient = Omit<ArticleWithAllFields, 'atoms'> & {

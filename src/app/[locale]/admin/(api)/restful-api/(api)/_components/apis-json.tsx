@@ -8,6 +8,8 @@ export function JsonApis() {
   const t = useTranslations()
   const GET_MANY_PARAMS = '?category=, author=, take=, search='
   const GET_UNIQUE_PARAMS = '?select=,'
+  const MANY_NAME = 'manyJsonContents'
+  const SINGLE_NAME = 'uniqueJsonContent'
 
   return (
     <Card className="appear">
@@ -22,11 +24,11 @@ export function JsonApis() {
       <CardContent>
         <GridColumn className="@[48rem]:grid-cols-2">
           <ApiCard
-            name={'manyJsonContents'} type={'many'} path={'/api/json-contents'}
+            name={MANY_NAME} type={'many'} path={'/api/json-contents'}
             searchParams={GET_MANY_PARAMS}
           />
           <ApiCard
-            name={'uniqueJsonContent'} type={'unique'} path={'/api/json-contents/[id]'}
+            name={SINGLE_NAME} type={'unique'} path={'/api/json-contents/[id]'}
             searchParams={GET_UNIQUE_PARAMS}
           />
         </GridColumn>
