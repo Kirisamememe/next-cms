@@ -1,15 +1,31 @@
 import { Input } from "@/components/ui/input";
 import { CategorySelector } from "../../../../_components/category/category-selector";
 import { useTranslations } from "next-intl";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
-import { ContentCategory, JsonContentForClient, jsonContentSchema, JsonNodeData } from "@/types";
+import {
+  ContentCategory,
+  JsonContentForClient,
+  jsonContentSchema,
+  JsonNodeData,
+} from "@/types";
 import { JsonFileUploader } from "./json-file-uploader";
 import { FlexColumn, FlexRow } from "@/components/ui/flexbox";
 import { JsonEditorProvider } from "../json-editor-provider";
 import { useEffect, useState } from "react";
-import { convertToJsonNodeData, convertToJsonValue } from "../../_hooks/json-convert";
+import {
+  convertToJsonNodeData,
+  convertToJsonValue,
+} from "../../_hooks/json-convert";
 import { CircleSpinLoading } from "@/components/circle-spin-loading";
 import { DateTimePopover } from "../../../../_components/content/datetime-popover";
 import { Submit } from "@/components/ui/submit-button";
@@ -24,57 +40,80 @@ import JsonFloatPreview from "../editor/json-float-preview";
 
 const JsonEditor = dynamic(() => import("../editor/json-editor"), {
   ssr: false,
-  loading: () => <CircleSpinLoading />
-})
+  loading: () => <CircleSpinLoading />,
+});
 
 type Props = {
-  action: () => void
-  jsonContent?: JsonContentForClient
-  form: UseFormReturn<z.infer<typeof jsonContentSchema>, any, undefined>
-  categories: ContentCategory[]
-  error?: { message: string }
-  isPending: boolean
-}
+  action: () => void;
+  jsonContent?: JsonContentForClient;
+  form: UseFormReturn<z.infer<typeof jsonContentSchema>>;
+  categories: ContentCategory[];
+  error?: { message: string };
+  isPending: boolean;
+};
 
-export const JsonContentForm = ({ action, jsonContent, form, categories, error, isPending }: Props) => {
-  const t = useTranslations()
+export const JsonContentForm = ({
+  action,
+  jsonContent,
+  form,
+  categories,
+  error,
+  isPending,
+}: Props) => {
+  const t = useTranslations();
 
-  const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(jsonContent?.jsonAtom.content
-    ? convertToJsonNodeData(jsonContent.jsonAtom.content, { isRoot: true })
-    : {
-      id: 'root',
-      valueType: 'object',
-      children: []
-    }
-  )
+  const [jsonNodeData, setJsonNodeData] = useState<JsonNodeData>(
+    jsonContent?.jsonAtom.content
+      ? convertToJsonNodeData(jsonContent.jsonAtom.content, { isRoot: true })
+      : {
+          id: "root",
+          valueType: "object",
+          children: [],
+        }
+  );
 
   const setJsonData = (data: JsonNodeData) => {
-    setJsonNodeData(data)
-    form.setValue('json', convertToJsonValue(data))
-  }
+    setJsonNodeData(data);
+    form.setValue("json", convertToJsonValue(data));
+  };
 
-  const { setHeaderFixed } = useScrollState()
+  const { setHeaderFixed } = useScrollState();
 
   useEffect(() => {
-    setHeaderFixed(true)
+    setHeaderFixed(true);
     return () => {
-      setHeaderFixed(false)
-    }
-  }, [setHeaderFixed])
+      setHeaderFixed(false);
+    };
+  }, [setHeaderFixed]);
 
   return (
     <Form {...form}>
-      <form action={action} className="appear flex flex-col w-full @[54rem]:flex-row h-fit @[54rem]:h-[calc(100vh-4rem)]">
-        <Tabs defaultValue="upload" className="relative flex flex-col w-full h-full border-r gap-0 overflow-scroll">
+      <form
+        action={action}
+        className="appear flex flex-col w-full @[54rem]:flex-row h-fit @[54rem]:h-[calc(100vh-4rem)]"
+      >
+        <Tabs
+          defaultValue="upload"
+          className="relative flex flex-col w-full h-full border-r gap-0 overflow-scroll"
+        >
           <TabsList className="sticky top-0 bg-background h-fit sm:w-full justify-start gap-8 p-0 px-6 rounded-none border-b [&>button]:text-base [&>button]:font-semibold [&>button]:rounded-none [&>button]:h-14 z-30">
-            <TabsTrigger value="upload" className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]">
-              {t('jsonContent.form.tabs.upload')}
+            <TabsTrigger
+              value="upload"
+              className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]"
+            >
+              {t("jsonContent.form.tabs.upload")}
             </TabsTrigger>
-            <TabsTrigger value="jsonEditor" className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]">
-              {t('jsonContent.form.tabs.editor')}
+            <TabsTrigger
+              value="jsonEditor"
+              className="px-0 sm:px-0 lg:px-0 data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--foreground))]"
+            >
+              {t("jsonContent.form.tabs.editor")}
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="upload" className="min-h-80 flex-grow w-full p-4 mt-0 ">
+          <TabsContent
+            value="upload"
+            className="min-h-80 flex-grow w-full p-4 mt-0 "
+          >
             <FormField
               control={form.control}
               name="json"
@@ -83,10 +122,13 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
                   <FormControl>
                     <JsonFileUploader
                       onValueChange={(value) => {
-                        field.onChange(value)
-                        setJsonNodeData(convertToJsonNodeData(value, { isRoot: true }))
+                        field.onChange(value);
+                        setJsonNodeData(
+                          convertToJsonNodeData(value, { isRoot: true })
+                        );
                       }}
-                      value={convertToJsonValue(jsonNodeData)} />
+                      value={convertToJsonValue(jsonNodeData)}
+                    />
                   </FormControl>
                   <FormDescription hidden>
                     This is your public display name.
@@ -106,49 +148,61 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
           </TabsContent>
         </Tabs>
 
-
         <FlexColumn className="shrink-0 w-full @[54rem]:w-[22.5rem] @[80rem]:w-96 h-fit @[54rem]:h-[calc(100vh-4rem)] overflow-scroll">
-          {jsonContent?.author && jsonContent?.lastEditor && jsonContent?.updatedAt &&
-            <FormAuthorState
-              authorName={jsonContent.author.nickname || jsonContent.author.name || "Anonymous"}
-              editorName={jsonContent.lastEditor.nickname || jsonContent.lastEditor.name || "Anonymous"}
-              updatedAt={jsonContent.updatedAt}
-              sameEditor={jsonContent.author.id === jsonContent.lastEditor.id}
-              authorImage={jsonContent.author.image || ""}
-              editorImage={jsonContent.lastEditor.image || ""}
-            />
-          }
+          {jsonContent?.author &&
+            jsonContent?.lastEditor &&
+            jsonContent?.updatedAt && (
+              <FormAuthorState
+                authorName={
+                  jsonContent.author.nickname ||
+                  jsonContent.author.name ||
+                  "Anonymous"
+                }
+                editorName={
+                  jsonContent.lastEditor.nickname ||
+                  jsonContent.lastEditor.name ||
+                  "Anonymous"
+                }
+                updatedAt={jsonContent.updatedAt}
+                sameEditor={jsonContent.author.id === jsonContent.lastEditor.id}
+                authorImage={jsonContent.author.image || ""}
+                editorImage={jsonContent.lastEditor.image || ""}
+              />
+            )}
           <FlexColumn p={4} gap={4} className="shrink-0">
             <FormField
               control={form.control}
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('jsonContent.form.slug.name')}
-                  </FormLabel>
+                  <FormLabel>{t("jsonContent.form.slug.name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('jsonContent.form.slug.placeholder')} {...field} />
+                    <Input
+                      placeholder={t("jsonContent.form.slug.placeholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription hidden>
-                    {t('jsonContent.form.slug.description')}
+                    {t("jsonContent.form.slug.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('jsonContent.form.title.name')}</FormLabel>
+                  <FormLabel>{t("jsonContent.form.title.name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('jsonContent.form.title.placeholder')} {...field} />
+                    <Input
+                      placeholder={t("jsonContent.form.title.placeholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription hidden>
-                    {t('jsonContent.form.title.description')}
+                    {t("jsonContent.form.title.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -161,13 +215,19 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {t('jsonContent.form.description.name')}
+                    {t("jsonContent.form.description.name")}
                   </FormLabel>
                   <FormControl>
-                    <Textarea placeholder={t('jsonContent.form.description.placeholder')} {...field} className="resize-none" />
+                    <Textarea
+                      placeholder={t(
+                        "jsonContent.form.description.placeholder"
+                      )}
+                      {...field}
+                      className="resize-none"
+                    />
                   </FormControl>
                   <FormDescription hidden>
-                    {t('jsonContent.form.description.description')}
+                    {t("jsonContent.form.description.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -179,20 +239,18 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('jsonContent.form.category.name')}
-                  </FormLabel>
+                  <FormLabel>{t("jsonContent.form.category.name")}</FormLabel>
                   <FormControl>
                     <CategorySelector
                       categories={categories}
-                      placeholder={t('jsonContent.form.category.placeholder')}
+                      placeholder={t("jsonContent.form.category.placeholder")}
                       className="mb-4"
                       onValueChange={(value) => field.onChange(Number(value))}
                       defaultValue={field.value ? `${field.value}` : undefined}
                     />
                   </FormControl>
                   <FormDescription hidden>
-                    {t('jsonContent.form.category.description')}
+                    {t("jsonContent.form.category.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -208,9 +266,15 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
                     {t("jsonContent.form.publishedAt.name")}
                   </FormLabel>
                   <FormControl>
-                    <DateTimePopover value={field.value} onChange={field.onChange} defaultDate={form.formState.defaultValues?.publishedAt} />
+                    <DateTimePopover
+                      value={field.value}
+                      onChange={field.onChange}
+                      defaultDate={form.formState.defaultValues?.publishedAt}
+                    />
                   </FormControl>
-                  <FormDescription hidden>{t("jsonContent.form.publishedAt.description")}</FormDescription>
+                  <FormDescription hidden>
+                    {t("jsonContent.form.publishedAt.description")}
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -221,14 +285,15 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
               name="authorNote"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    {t('jsonContent.form.authorNote.name')}
-                  </FormLabel>
+                  <FormLabel>{t("jsonContent.form.authorNote.name")}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('jsonContent.form.authorNote.placeholder')} {...field} />
+                    <Input
+                      placeholder={t("jsonContent.form.authorNote.placeholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription hidden>
-                    {t('jsonContent.form.authorNote.description')}
+                    {t("jsonContent.form.authorNote.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -236,24 +301,25 @@ export const JsonContentForm = ({ action, jsonContent, form, categories, error, 
             />
           </FlexColumn>
 
-          <FlexColumn p={4} gap={4} className="sticky bottom-0 shrink-0 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 ">
+          <FlexColumn
+            p={4}
+            gap={4}
+            className="sticky bottom-0 shrink-0 pt-4 @[80rem]:pt-8 bg-gradient-to-t from-background via-background to-background/0 "
+          >
             <FormError message={error?.message} />
-            <Submit isPending={isPending}>
-              {t('common.save')}
-            </Submit>
+            <Submit isPending={isPending}>{t("common.save")}</Submit>
           </FlexColumn>
 
-          {jsonContent &&
+          {jsonContent && (
             <FormDataVersionState
               createdAt={jsonContent.createdAt}
               updatedAt={jsonContent.updatedAt}
               archivedAt={jsonContent.archivedAt}
               version={jsonContent.jsonAtom.version}
             />
-          }
-
+          )}
         </FlexColumn>
       </form>
     </Form>
-  )
+  );
 };

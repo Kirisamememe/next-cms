@@ -6,26 +6,30 @@ import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
-  name?: string | null
-  nickname?: string | null
-  role?: Role
-  image?: string | null
-}
+  name?: string | null;
+  nickname?: string | null;
+  role?: Role;
+  image?: string | null;
+};
 
 export function UserInfo({ name, nickname, role, image }: Props) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   return (
     <FlexRow border p={8} radius={"lg"} gap={6} centerY bg className="w-full">
-      <Image height={120} width={120} src={image || ""} alt="avatar image" className="rounded-full" />
+      <Image
+        height={120}
+        width={120}
+        src={image ?? ""}
+        alt="avatar image"
+        className="rounded-full"
+      />
       <FlexColumn>
         <Heading size={24} mb={2}>
-          {t('dashboard.welcome', { name: nickname || name })}
+          {t("dashboard.welcome", { name: nickname ?? name ?? "" })}
         </Heading>
-        <Badge className="w-fit">
-          {t(`editor.${role}`)}
-        </Badge>
+        <Badge className="w-fit">{t(`editor.${role ?? ""}`)}</Badge>
       </FlexColumn>
     </FlexRow>
-  )
+  );
 }
