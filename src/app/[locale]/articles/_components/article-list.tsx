@@ -1,5 +1,5 @@
-import { articleService } from "@/di/services"
-import { ArticleCard } from "./article-card"
+import { articleService } from "@/di/services";
+import { ArticleCard } from "./article-card";
 import { GridColumn } from "@/components/ui/grid"
 
 

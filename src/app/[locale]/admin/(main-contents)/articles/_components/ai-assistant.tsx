@@ -37,7 +37,7 @@ export const AIAssistant = ({ form, mdxRef }: Props) => {
 
   const { object, submit, error, isLoading, stop } = useObject({
     api: '/api/generate-article',
-    schema: aiArticleResponseSchema,
+    schema: aiArticleResponseSchema, // 単純に型定義のために使用
     onFinish: ({ object }) => {
       form.setValue('body', object?.body || '')
     }
